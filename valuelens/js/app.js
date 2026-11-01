@@ -491,9 +491,7 @@
       (state.currentItem.name || '').replace(/\(.*?\)|（.*?）/g, '').trim() || 'おすすめ'
     );
     document.getElementById('linkAmazonSearch').href = `https://www.amazon.co.jp/s?k=${cleanQuery}`;
-    document.getElementById('linkRakutenSearch').href = `https://search.rakuten.co.jp/search/mall/${cleanQuery}/`;
-    // メルカリの「売り切れ（SOLD）」実売相場に直結！
-    document.getElementById('linkMercariSoldSearch').href =
+    document.getElementById('linkRakutenSearch').href = `https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%24%7BcleanQuery%7D%2F%60%3B%0A%20%20%20%20%2F%2F%20%E3%83%A1%E3%83%AB%E3%82%AB%E3%83%AA%E3%81%AE%E3%80%8C%E5%A3%B2%E3%82%8A%E5%88%87%E3%82%8C%EF%BC%88SOLD%EF%BC%89%E3%80%8D%E5%AE%9F%E5%A3%B2%E7%9B%B8%E5%A0%B4%E3%81%AB%E7%9B%B4%E7%B5%90%EF%BC%81%0A%20%20%20%20document.getElementById('linkMercariSoldSearch').href =
       `https://jp.mercari.com/search?keyword=${cleanQuery}&status=sold_out%7Ctrading`;
 
     const badge = document.getElementById('smartContextBadge');
