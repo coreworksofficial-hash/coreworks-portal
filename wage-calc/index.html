@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>真の実効時給＆通勤拘束ロス診断シミュレーター ｜ Coreworks Studio</title>
+  <meta name="description" content="給与明細の表面的な時給ではなく、通勤時間・サービス残業・仕事のための出費を差し引いた『人生の真の実効時給』を算出します。">
+  <style>
+    body { background: #0b0f19; color: #f1f5f9; font-family: sans-serif; padding: 24px; max-width: 720px; margin: 0 auto; }
+    h1 { font-size: 1.8rem; margin-bottom: 8px; color: #f472b6; }
+    p { color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px; }
+    .card { background: #151d30; border: 1px solid #23314e; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+    .form-group { margin-bottom: 14px; }
+    label { display: block; font-size: 0.85rem; color: #94a3b8; margin-bottom: 6px; }
+    input { width: 100%; box-sizing: border-box; padding: 10px; background: #0b0f19; border: 1px solid #334155; color: #fff; border-radius: 6px; font-size: 1rem; }
+    .result-box { background: rgba(244,114,182,0.1); border: 2px solid #f472b6; border-radius: 12px; padding: 20px; text-align: center; }
+    .res-val { font-size: 2.2rem; font-weight: 900; color: #f472b6; margin: 8px 0; }
+    .back-link { display: inline-block; margin-bottom: 16px; color: #94a3b8; text-decoration: none; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+  <a href="../" class="back-link">← Coreworks Studio トップへ戻る</a>
+  <h1>⏱️ 真の実効時給＆通勤拘束ロス診断</h1>
+  <p>会社に拘束されている往復通勤時間や、仕事のための身銭（スーツ代・飲み会代）を引いた、あなたの「本当の人生の手取り時給」を計算します。</p>
+
+  <div class="card">
+    <div class="form-group">
+      <label>毎月の手取り月収（円）</label>
+      <input type="number" id="inIncome" value="260000" oninput="calc()">
+    </div>
+    <div class="form-group">
+      <label>月の勤務日数（日）</label>
+      <input type="number" id="inDays" value="20" oninput="calc()">
+    </div>
+    <div class="form-group">
+      <label>1日の定時労働時間（時間）</label>
+      <input type="number" id="inHours" value="8" oninput="calc()">
+    </div>
+    <div class="form-group">
+      <label>月の残業時間（時間）</label>
+      <input type="number" id="inOT" value="20" oninput="calc()">
+    </div>
+    <div class="form-group">
+      <label>1日の往復通勤時間（分）</label>
+      <input type="number" id="inCommute" value="60" oninput="calc()">
+    </div>
+    <div class="form-group">
+      <label>仕事関連の自己負担出費（昼食・衣類・交際費等/月）</label>
+      <input type="number" id="inExpense" value="15000" oninput="calc()">
+    </div>
+  </div>
+
+  <div class="result-box">
+    <div>あなたの「真の実効時給」</div>
+    <div class="res-val" id="resWage">0 円/h</div>
+    <div style="font-size:0.95rem; color:#cbd5e1; margin-top:10px;">
+      見かけ上の名目時給: <strong id="resNominal">0 円/h</strong><br>
+      毎月の総拘束時間: <strong id="resTotalHours" style="color:#38bdf8;">0 時間</strong>（労働＋通勤）
+    </div>
+  </div>
+
+  <script>
+    function calc() {
+      const income = Number(document.getElementById('inIncome').value) || 0;
+      const days = Number(document.getElementById('inDays').value) || 0;
+      const hours = Number(document.getElementById('inHours').value) || 0;
+      const ot = Number(document.getElementById('inOT').value) || 0;
+      const commuteMin = Number(document.getElementById('inCommute').value) || 0;
+      const expense = Number(document.getElementById('inExpense').value) || 0;
+
+      const regularHours = days * hours;
+      const commuteHours = (days * commuteMin) / 60;
+      const totalBoundHours = regularHours + ot + commuteHours;
+
+      const netIncome = Math.max(0, income - expense);
+      const nominalWage = (regularHours + ot) > 0 ? Math.round(income / (regularHours + ot)) : 0;
+      const effectiveWage = totalBoundHours > 0 ? Math.round(netIncome / totalBoundHours) : 0;
+
+      document.getElementById('resWage').innerText = effectiveWage.toLocaleString() + ' 円/h';
+      document.getElementById('resNominal').innerText = nominalWage.toLocaleString() + ' 円/h';
+      document.getElementById('resTotalHours').innerText = Math.round(totalBoundHours) + ' 時間';
+    }
+    calc();
+  </script>
+</body>
+</html>
