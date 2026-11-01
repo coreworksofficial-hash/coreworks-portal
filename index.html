@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Coreworks Studio ｜ 暮らしと買い物の「損得・元取り」科学シミュレーターラボ</title>
-  <meta name="description" content="Coreworks Studioは、「省エネ・時短家電は何ヶ月で元が取れるか」「楽天お買い物マラソンで1,000円買い足すと黒字になるか」「サブスクの買い切り置換」など、買い物と家計の損得を1秒で可視化する無料Webシミュレーターラボです。">
+  <meta name="description" content="Coreworks Studioは、「省エネ・時短家電は何ヶ月で元が取れるか」「冬の暖房・電気代と節電グッズの損益分岐」「楽天お買い物マラソンで1,000円買い足すと黒字になるか」など、買い物と家計の損得を1秒で可視化する無料Webシミュレーターラボです。">
   <style>
     :root { --bg:#0b0f19; --card-bg:#151d30; --border:#23314e; --text:#f1f5f9; --text-muted:#94a3b8; --accent:#38bdf8; --accent-pink:#f472b6; --accent-green:#34d399; --amber:#fbbf24; --radius:16px; }
     * { box-sizing:border-box; margin:0; padding:0; }
@@ -38,15 +38,16 @@
   <div class="hero">
     <div class="badge">🚀 COREWORKS DIGITAL LAB ｜ 買い物と家計の損得科学</div>
     <h1>Coreworks Studio</h1>
-    <p class="hero-sub">「その買い物、何ヶ月で元が取れる？」「お買い物マラソンであと1店舗買うと何円黒字になる？」—— 暮らしの迷いを数学でゼロにする、完全無料・登録不要の損得シミュレーター群を提供しています。</p>
+    <p class="hero-sub">「その買い物、何ヶ月で元が取れる？」「冬の電気代、節電グッズ併用でいくら浮く？」「お買い物マラソンであと1店舗買うと黒字？」—— 暮らしの迷いを数学でゼロにする完全無料・登録不要の損得シミュレーター群です。</p>
   </div>
   <div class="quick-bar">
-    <div class="quick-bar-title">🔥 今すぐ試せる人気の損得・元取り診断：</div>
+    <div class="quick-bar-title">🔥 テーマ別・1秒元取り診断ショートカット：</div>
     <div class="quick-pills">
-      <a href="./payback-calc/" class="q-pill">🚿 節水シャワー・食洗機の元取り月数</a>
+      <a href="./winter-electricity/" class="q-pill">🧣 冬の暖房費 vs 電気毛布（1h 0.9円）</a>
+      <a href="./payback-calc/?p=shower" class="q-pill">🚿 節水シャワーヘッドの元取り月数</a>
+      <a href="./payback-calc/?p=dishwasher" class="q-pill">🍽️ 工事不要食洗機の回収期間</a>
+      <a href="./payback-calc/?p=coffee_bottle" class="q-pill">☕ マイボトル・全自動珈琲の損益分岐</a>
       <a href="./rakuten-maximizer/" class="q-pill">🛍️ 楽天1,000円買い足し＆上限7,000P計算</a>
-      <a href="./valuelens/" class="q-pill">💎 ガジェットのリセール＆日割り実質価値</a>
-      <a href="./subscription-calc/" class="q-pill">✂️ サブスク解約→買い切り置換プラン</a>
     </div>
   </div>
   <div class="grid">
@@ -65,6 +66,14 @@
         <p>「上限7,000P/5,000Pまであといくら買える？」「いま1,000円ポッキリ商品を1店舗買い足すと逆ザヤで黒字になるか？」を即時判定。店舗稼ぎの鉄板1,000円商品＆高還元ふるさと納税カタログ直結。</p>
       </div>
       <div class="card-footer"><span>買い回り上限＆ふるさと納税</span><span>損得を判定する →</span></div>
+    </a>
+    <a href="./winter-electricity/" class="card card-featured">
+      <div>
+        <div class="card-tag tag-calc">🧣 秋冬特化 / ひと冬で1万円以上浮く</div>
+        <h2>冬の暖房・電気代「エアコン vs 節電グッズ」最安組み合わせシミュレーター</h2>
+        <p>エアコン・セラミックヒーター・こたつ・電気毛布（1時間0.9円）の電気代を徹底比較。設定温度下げ＋電気毛布・着る毛布・窓断熱併用で「何日でグッズ代の元が取れてひと冬でいくら浮くか」を試算します。</p>
+      </div>
+      <div class="card-footer"><span>暖房費削減＆節電三種の神器</span><span>電気代を試算する →</span></div>
     </a>
     <a href="./valuelens/" class="card ">
       <div>

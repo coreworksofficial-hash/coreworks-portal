@@ -5,6 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>家電・暮らしの「何ヶ月で元が取れる？」買い替え損益分岐シミュレーター ｜ Coreworks Studio</title>
   <meta name="description" content="省エネ家電（エアコン・冷蔵庫）、時短家電（食洗機・ドラム式洗濯機・ロボット掃除機）、節水シャワーヘッドやマイボトル等の購入費用が、電気・ガス・水道代削減と時短効果で「何ヶ月で元が取れるか」を1秒で計算します。">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "節水シャワーヘッドは何ヶ月で元が取れますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "最大50%節水タイプのシャワーヘッド（5,000円〜20,000円前後）を導入した場合、水道代と給湯ガス代を合わせて1人あたり月約1,500〜2,000円（4人家族なら月約4,500円以上）削減できるため、約3ヶ月〜10ヶ月で完全に元が取れます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "工事不要の卓上食洗機やドラム式洗濯機は何ヶ月で元が取れますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "卓上・タンク式食洗機（約35,000円）は手洗いより水道・給湯代が月約1,100円浮くほか、毎日20分の皿洗い時間がゼロになります。時給1,400円換算で月約14,000円分の時間価値が生まれるため、実質約2.5〜3ヶ月で元が取れます。"
+        }
+      }
+    ]
+  }
+  </script>
   <style>
     :root {
       --bg: #0b0f19;
@@ -736,9 +760,16 @@
       document.getElementById('mainRakutenBtn').href = rakutenUrl(cleanName);
     }
 
-    renderPresets();
-    renderRecommendations(currentPreset);
-    calculate();
+    (function init() {
+      const q = new URLSearchParams(window.location.search).get('p');
+      if (q && PRESETS.some(x => x.id === q)) {
+        selectPreset(q);
+      } else {
+        renderPresets();
+        renderRecommendations(currentPreset);
+        calculate();
+      }
+    })();
   </script>
 <!-- Moshimo Official Rakuten Sponsor -->
 <div style="margin: 40px auto 20px; text-align: center; padding: 18px; background: rgba(21, 29, 48, 0.7); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; max-width: 600px;">
