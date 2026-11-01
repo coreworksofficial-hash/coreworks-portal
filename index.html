@@ -3,116 +3,106 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coreworks Studio ｜ 買い物と暮らしの「1秒損得チェッカー」</title>
-  <meta name="description" content="「これ何ヶ月で元が取れる？」「楽天マラソンで1,000円買い足すと黒字？」「冬の暖房費いくら浮く？」をタップ＆スライダーだけで1秒判定する無料Webツール集。">
+  <title>暮らしとお金の簡単計算ツール集 ｜ Coreworks Studio</title>
+  <meta name="description" content="家電の元取り計算、楽天ポイント上限計算、冬の電気代比較、毎月のサブスク合計など、暮らしのお金を1秒で計算できる無料ツール集です。">
   <style>
     :root { --bg:#0b0f19; --card-bg:#151d30; --border:#263554; --text:#f8fafc; --text-muted:#94a3b8; --accent:#38bdf8; --accent-pink:#f472b6; --accent-green:#34d399; --amber:#fbbf24; --radius:14px; }
     * { box-sizing:border-box; margin:0; padding:0; }
     html, body { overflow-x:hidden; width:100%; background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans",sans-serif; line-height:1.45; }
-    .wrap { max-width:720px; margin:0 auto; padding:24px 14px 60px; }
-    .hero { text-align:center; margin-bottom:20px; }
-    .badge { display:inline-block; background:rgba(56,189,248,.12); border:1px solid rgba(56,189,248,.35); color:var(--accent); padding:4px 12px; border-radius:99px; font-size:.74rem; font-weight:800; margin-bottom:10px; }
-    h1 { font-size:1.75rem; font-weight:900; margin-bottom:6px; color:#fff; }
-    .hero-sub { color:var(--text-muted); font-size:.86rem; }
-    .quick-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-bottom:20px; }
-    .q-btn { background:#111827; border:1.5px solid rgba(52,211,153,.4); color:#fff; text-decoration:none; font-size:.8rem; font-weight:800; padding:10px; border-radius:10px; display:flex; align-items:center; justify-content:space-between; }
-    .q-btn span.arr { color:var(--accent-green); }
-    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:12px; }
-    .card { background:var(--card-bg); border:1.5px solid var(--border); border-radius:var(--radius); padding:16px; display:flex; flex-direction:column; text-decoration:none; color:inherit; transition:transform .15s; }
-    .card-featured { border-color:rgba(56,189,248,.5); background:linear-gradient(180deg,#17223b 0%,#151d30 100%); }
+    .wrap { max-width:640px; margin:0 auto; padding:22px 14px 60px; }
+    .hero { text-align:center; margin-bottom:18px; }
+    .badge { display:inline-block; background:rgba(56,189,248,.12); border:1px solid rgba(56,189,248,.35); color:var(--accent); padding:4px 12px; border-radius:99px; font-size:.72rem; font-weight:800; margin-bottom:8px; }
+    h1 { font-size:1.5rem; font-weight:900; margin-bottom:4px; color:#fff; }
+    .hero-sub { color:var(--text-muted); font-size:.84rem; }
+    .grid { display:flex; flex-direction:column; gap:10px; }
+    .card { background:var(--card-bg); border:1.5px solid var(--border); border-radius:var(--radius); padding:14px 16px; display:flex; flex-direction:column; text-decoration:none; color:inherit; }
+    .card-featured { border-color:rgba(56,189,248,.45); }
     .card:active { transform:scale(.99); }
-    .card-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
-    .card-tag { font-size:.7rem; font-weight:800; padding:3px 8px; border-radius:6px; }
+    .card-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+    .card-tag { font-size:.7rem; font-weight:800; padding:2px 8px; border-radius:6px; }
     .tag-tool { background:rgba(251,191,36,.16); color:var(--amber); }
     .tag-game { background:rgba(244,114,182,.15); color:var(--accent-pink); }
     .tag-calc { background:rgba(52,211,153,.16); color:var(--accent-green); }
     .tag-info { background:rgba(148,163,184,.15); color:#cbd5e1; }
-    .card-go { font-size:.78rem; font-weight:800; color:var(--accent); }
-    .card h2 { font-size:1.08rem; font-weight:900; margin-bottom:6px; color:#fff; }
+    .card-go { font-size:.8rem; font-weight:800; color:var(--accent); }
+    .card h2 { font-size:1.05rem; font-weight:900; margin-bottom:4px; color:#fff; }
     .card p { color:var(--text-muted); font-size:.8rem; line-height:1.4; }
-    footer { margin-top:40px; text-align:center; color:var(--text-muted); font-size:.78rem; border-top:1px solid var(--border); padding-top:20px; }
+    footer { margin-top:36px; text-align:center; color:var(--text-muted); font-size:.78rem; border-top:1px solid var(--border); padding-top:18px; }
     footer a { color:var(--accent); text-decoration:none; }
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="hero">
-      <div class="badge">🚀 COREWORKS DIGITAL LAB</div>
-      <h1>1秒 損得チェッカー</h1>
-      <p class="hero-sub">タップ＆スライダーだけで「どっちが得か」「いつ元が取れるか」が即わかる！</p>
-    </div>
-
-    <div class="quick-grid">
-      <a href="./payback-calc/?p=shower" class="q-btn"><span>🚿 節水シャワー元取り</span><span class="arr">→</span></a>
-      <a href="./payback-calc/?p=dishwasher" class="q-btn"><span>🍽️ 食洗機の元取り</span><span class="arr">→</span></a>
-      <a href="./rakuten-maximizer/" class="q-btn"><span>🛍️ 楽天1,000円得か？</span><span class="arr">→</span></a>
-      <a href="./winter-electricity/" class="q-btn"><span>🧣 冬の暖房費節約</span><span class="arr">→</span></a>
+      <div class="badge">COREWORKS DIGITAL LAB</div>
+      <h1>暮らしとお金の簡単計算ツール</h1>
+      <p class="hero-sub">知りたい項目をタップすると1秒で計算できます</p>
     </div>
 
     <div class="grid">
     <a href="./payback-calc/" class="card card-featured">
       <div class="card-top">
-        <span class="card-tag tag-calc">一番人気</span>
-        <span class="card-go">計算する →</span>
+        <span class="card-tag tag-calc">買い物比較</span>
+        <span class="card-go">開く →</span>
       </div>
-      <h2>⚡ これ何ヶ月で元が取れる？計算機</h2>
-      <p>シャワー・食洗機・水筒・ドラム洗濯機など、タップするだけで元取り月数と5年黒字額が1秒でわかる！</p>
+      <h2>🚿 家電・日用品の「元取り」計算</h2>
+      <p>節水シャワー・食洗機・水筒などを買うと、何ヶ月で元が取れるかを計算します。</p>
     </a>
     <a href="./rakuten-maximizer/" class="card card-featured">
       <div class="card-top">
-        <span class="card-tag tag-tool">買い物前に必須</span>
-        <span class="card-go">判定する →</span>
+        <span class="card-tag tag-tool">楽天市場</span>
+        <span class="card-go">開く →</span>
       </div>
-      <h2>🛍️ 楽天マラソン 損得チェッカー</h2>
-      <p>「1,000円買い足すと実質タダになる？」「上限7,000Pまであといくら？」をスライダー2本で即判定！</p>
+      <h2>🛍️ 楽天のポイント上限・買い回り計算</h2>
+      <p>お買い物マラソンで「あといくら買えるか」「1,000円買い足すと得か」を計算します。</p>
     </a>
     <a href="./winter-electricity/" class="card card-featured">
       <div class="card-top">
-        <span class="card-tag tag-calc">秋冬の節電</span>
-        <span class="card-go">試算する →</span>
+        <span class="card-tag tag-calc">光熱費・節電</span>
+        <span class="card-go">開く →</span>
       </div>
-      <h2>🧣 冬の暖房費 いくら浮く？計算機</h2>
-      <p>エアコン暖房に「電気毛布（1h 0.9円）」「着る毛布」を併用するとひと冬で何万円浮くか即計算！</p>
+      <h2>🧣 冬の電気代・暖房費の比較</h2>
+      <p>エアコン・ヒーターと、電気毛布（1時間0.9円）を使った場合の電気代の差を計算します。</p>
     </a>
     <a href="./subscription-calc/" class="card ">
       <div class="card-top">
-        <span class="card-tag tag-calc">家計ハック</span>
-        <span class="card-go">チェックする →</span>
+        <span class="card-tag tag-calc">固定費の見直し</span>
+        <span class="card-go">開く →</span>
       </div>
-      <h2>✂️ サブスク固定費 断捨離チェッカー</h2>
-      <p>払っている月額サービスをタップして選ぶだけ！1年・10年で消えるお金と買い切り置換プランを表示。</p>
+      <h2>📱 毎月のサブスク代 合計チェック</h2>
+      <p>入っている月額サービスを選ぶだけで、1年間・10年間の支払い総額を計算します。</p>
     </a>
     <a href="./wage-calc/" class="card ">
       <div class="card-top">
-        <span class="card-tag tag-calc">時間資産</span>
-        <span class="card-go">診断する →</span>
+        <span class="card-tag tag-calc">給料・働き方</span>
+        <span class="card-go">開く →</span>
       </div>
-      <h2>⏱️ あなたの「本当の時給」診断</h2>
-      <p>通勤時間と残業を含めた「人生のリアル手取り時給」をスライダー3本で1秒診断！</p>
+      <h2>⏱️ 通勤・残業込みの「本当の時給」計算</h2>
+      <p>手取り月収から通勤時間や残業を引いた、実質の手取り時給を計算します。</p>
     </a>
     <a href="./valuelens/" class="card ">
       <div class="card-top">
-        <span class="card-tag tag-tool">高単価ガジェット向け</span>
+        <span class="card-tag tag-tool">スマホ・家電</span>
         <span class="card-go">開く →</span>
       </div>
-      <h2>💎 ValueLens（買い物価値の精密分析）</h2>
-      <p>メルカリ売却益や複利運用まで含めた本格的な買い物シミュレーター＆A/B比較バトル。</p>
+      <h2>💻 高い買い物の「1日あたり金額」計算</h2>
+      <p>高いスマホや家電を買ってメルカリで売った場合、1日あたり実質いくらかを計算します。</p>
     </a>
     <a href="./donburi-tower/" class="card ">
       <div class="card-top">
-        <span class="card-tag tag-game">ミニゲーム</span>
+        <span class="card-tag tag-game">ゲーム</span>
         <span class="card-go">遊ぶ →</span>
       </div>
-      <h2>🎮 爆盛！どんぶりタワー</h2>
-      <p>落ちてくる具材を積み上げろ！指1本で遊べる物理バランスゲーム（ブラウザ＆Android対応）。</p>
+      <h2>🎮 ミニゲーム：どんぶりタワー</h2>
+      <p>落ちてくる具材を丼の上に積み上げるシンプルなバランスゲームです。</p>
     </a>
     <a href="./about/" class="card ">
       <div class="card-top">
         <span class="card-tag tag-info">サイト情報</span>
         <span class="card-go">見る →</span>
       </div>
-      <h2>📜 運営者情報・ポリシー</h2>
-      <p>Coreworks Studio の運営情報、プライバシーポリシー、お問い合わせ窓口。</p>
+      <h2>📜 運営者情報・プライバシーポリシー</h2>
+      <p>当サイトの運営情報とプライバシーポリシーです。</p>
     </a>
     </div>
 <!-- Moshimo Official Rakuten Sponsor -->
