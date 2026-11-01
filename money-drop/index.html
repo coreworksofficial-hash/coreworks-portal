@@ -24,6 +24,10 @@
     color: #f8fafc;
     font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Meiryo", sans-serif;
     touch-action: manipulation;
+    transition: background 0.3s ease;
+  }
+  body.boss-mode {
+    background: linear-gradient(180deg, #2a0a18 0%, #1e1b4b 100%);
   }
   #app {
     width: 100%;
@@ -48,7 +52,7 @@
     height: 100%;
     width: 100%;
     background: #34d399;
-    transition: width 0.08s linear, background-color 0.2s;
+    transition: width 0.05s linear, background-color 0.2s;
   }
 
   /* 2. Top Badge Row */
@@ -69,6 +73,12 @@
     border-radius: 99px;
     letter-spacing: -0.2px;
     box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+    transition: background-color 0.2s, color 0.2s;
+  }
+  .top-badge.boss {
+    background: #e11d48;
+    color: #ffffff;
+    box-shadow: 0 4px 16px rgba(225, 29, 72, 0.5);
   }
   .sound-btn {
     width: 42px;
@@ -84,7 +94,7 @@
     cursor: pointer;
   }
 
-  /* 3. Headlines + 3-Question Step Dots */
+  /* 3. Headlines + Step Indicator */
   .headlines {
     display: flex;
     align-items: flex-end;
@@ -120,6 +130,11 @@
     color: #fde047;
     white-space: nowrap;
   }
+  .step-pill.boss {
+    background: rgba(225, 29, 72, 0.25);
+    border-color: #fb7185;
+    color: #fda4af;
+  }
 
   /* 4. Status / Countdown Banner (Identical to YouTube Video) */
   #status-banner {
@@ -131,7 +146,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
+    font-size: 21px;
     font-weight: 900;
     color: #f87171;
     margin-bottom: 12px;
@@ -188,8 +203,10 @@
     box-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
   }
   .cell.wrong-cell {
-    background: rgba(239, 68, 68, 0.45);
-    border-color: #f87171;
+    background: #ef4444 !important;
+    border-color: #fca5a5 !important;
+    color: #ffffff !important;
+    transform: scale(0.95);
   }
   .cell.dimmed {
     opacity: 0.18;
@@ -323,11 +340,11 @@
     <button class="sound-btn" id="soundBtn" aria-label="音量">🔊</button>
   </div>
 
-  <!-- 3. Headlines & Step Indicator (1/3, 2/3, 3/3) -->
+  <!-- 3. Headlines & Step Indicator -->
   <div class="headlines">
     <div class="headline-left">
-      <div class="headline-1">1つだけ違う文字を</div>
-      <div class="headline-2">制限時間内にタップ！</div>
+      <div class="headline-1" id="headline1">1つだけ違う文字を</div>
+      <div class="headline-2" id="headline2">制限時間内にタップ！</div>
     </div>
     <div class="step-pill" id="stepPill">第 1 / 3 問</div>
   </div>
@@ -346,7 +363,7 @@
     <button class="hint-btn" id="hintBtn">💡 ヒント (3)</button>
   </div>
 
-  <!-- Stage Clear / Retry Modal -->
+  <!-- Stage Clear / Fail Modal -->
   <div id="modal">
     <div class="modal-card">
       <div class="modal-badge" id="modalBadge">🎉 STAGE CLEAR!</div>
@@ -362,7 +379,7 @@
 <script>
 (() => {
   // ============================================================================
-  // 1. EXPANDED CURATED PUZZLE POOL (60 Pairs across 4 Difficulty Tiers)
+  // 1. CURATED PUZZLE POOL (60 Pairs across 4 Difficulty Tiers)
   // ============================================================================
   const PUZZLES = [
     // Tier 1 (Easy / Warmup)
@@ -417,7 +434,7 @@
   }
 
   // ============================================================================
-  // 2. WEB AUDIO SYNTH (Clean Chimes & Stage Clear Fanfare)
+  // 2. WEB AUDIO SYNTH (Clean Chimes, Boss Alert & Stage Clear Fanfare)
   // ============================================================================
   let audioCtx = null;
   let soundOn = true;
@@ -488,24 +505,25 @@
     initAudio();
     if (!audioCtx) return;
     const now = audioCtx.currentTime;
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(180, now);
-    osc.frequency.setValueAtTime(140, now + 0.08);
-    gain.gain.setValueAtTime(0.12, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    osc.start(now);
-    osc.stop(now + 0.19);
+    [190, 135].forEach((freq, idx) => {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(freq, now + idx * 0.12);
+      gain.gain.setValueAtTime(0.15, now + idx * 0.12);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.12 + 0.22);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now + idx * 0.12);
+      osc.stop(now + idx * 0.12 + 0.24);
+    });
   }
 
   // ============================================================================
-  // 3. PERSISTENT STAGE PROGRESSION STATE
+  // 3. PERSISTENT STAGE PROGRESSION & BOSS STAGE LOGIC
   // ============================================================================
   const SAVE_KEY = 'cw_kanji_stage_save_v2';
-  const QUESTIONS_PER_STAGE = 3;
+  const NORMAL_QUESTIONS_PER_STAGE = 3;
 
   let state = {
     stage: 1,
@@ -533,7 +551,7 @@
 
   loadProgress();
 
-  let stepInStage = 1; // 1, 2, or 3
+  let stepInStage = 1;
   let timeLimit = 10.0;
   let timeRemaining = 10.0;
   let oddIndex = 0;
@@ -548,9 +566,15 @@
   const progBarEl = document.getElementById('top-progress-bar');
   const stageBadgeEl = document.getElementById('stageBadge');
   const stepPillEl = document.getElementById('stepPill');
+  const headline1El = document.getElementById('headline1');
+  const headline2El = document.getElementById('headline2');
   const rankTextEl = document.getElementById('rankText');
   const hintBtnEl = document.getElementById('hintBtn');
   const modalEl = document.getElementById('modal');
+
+  function isBossStage(st) {
+    return st > 0 && st % 5 === 0;
+  }
 
   function getGridConfig(st) {
     if (st === 1) return { cols: 3, rows: 3, fontPx: 46 }; // 9マス
@@ -562,11 +586,20 @@
   }
 
   function pickPuzzle(st) {
+    const boss = isBossStage(st);
     let pool;
-    if (st <= 2) pool = PUZZLES.slice(0, 15);
-    else if (st <= 5) pool = PUZZLES.slice(10, 30);
-    else if (st <= 9) pool = PUZZLES.slice(25, 45);
-    else pool = PUZZLES.slice(35);
+    if (boss) {
+      // Boss stage picks from a slightly trickier tier!
+      pool = st <= 5 ? PUZZLES.slice(15, 45) : PUZZLES.slice(30);
+    } else if (st <= 2) {
+      pool = PUZZLES.slice(0, 15);
+    } else if (st <= 5) {
+      pool = PUZZLES.slice(10, 30);
+    } else if (st <= 9) {
+      pool = PUZZLES.slice(25, 45);
+    } else {
+      pool = PUZZLES.slice(35);
+    }
 
     let chosen = pool[Math.floor(Math.random() * pool.length)];
     for (let tries = 0; tries < 5; tries++) {
@@ -581,8 +614,23 @@
   }
 
   function updateHUD() {
-    stageBadgeEl.textContent = `🧠 STAGE ${state.stage} ｜ 脳トレIQ ${state.iq}`;
-    stepPillEl.textContent = `第 ${stepInStage} / ${QUESTIONS_PER_STAGE} 問`;
+    const boss = isBossStage(state.stage);
+    document.body.classList.toggle('boss-mode', boss);
+    stageBadgeEl.classList.toggle('boss', boss);
+    stepPillEl.classList.toggle('boss', boss);
+
+    if (boss) {
+      stageBadgeEl.textContent = `🔥 BOSS STAGE ${state.stage} ｜ IQ ${state.iq}`;
+      stepPillEl.textContent = `⚡ 5秒・1問勝負！`;
+      headline1El.textContent = '🔥 5秒以内に見つけろ！';
+      headline2El.textContent = 'ボスステージ 1発勝負！';
+    } else {
+      stageBadgeEl.textContent = `🧠 STAGE ${state.stage} ｜ 脳トレIQ ${state.iq}`;
+      stepPillEl.textContent = `第 ${stepInStage} / ${NORMAL_QUESTIONS_PER_STAGE} 問`;
+      headline1El.textContent = '1つだけ違う文字を';
+      headline2El.textContent = '制限時間内にタップ！';
+    }
+
     rankTextEl.textContent = `🏅 ${getTitleForIQ(state.iq)}`;
     hintBtnEl.textContent = `💡 ヒント (${state.hints})`;
     hintBtnEl.disabled = !isQuestionActive || state.hints <= 0;
@@ -593,20 +641,25 @@
     modalEl.classList.remove('show');
     isQuestionActive = true;
 
+    const boss = isBossStage(state.stage);
     const { cols, rows, fontPx } = getGridConfig(state.stage);
     const total = cols * rows;
     currentPair = pickPuzzle(state.stage);
     oddIndex = Math.floor(Math.random() * total);
 
-    // 10s on early stages, gradually tightening to 7.5s on advanced stages
-    timeLimit = Math.max(7.5, 10.5 - Math.floor(state.stage / 5) * 0.5);
+    // Boss Stage is strictly 5.0 seconds 1-shot showdown!
+    if (boss) {
+      timeLimit = 5.0;
+    } else {
+      timeLimit = Math.max(7.5, 10.5 - Math.floor(state.stage / 5) * 0.5);
+    }
     timeRemaining = timeLimit;
     lastTickSec = Math.ceil(timeRemaining);
 
     bannerEl.className = '';
     bannerEl.textContent = `⏱️ 残り ${timeRemaining.toFixed(1)} 秒！`;
     progBarEl.style.width = '100%';
-    progBarEl.style.backgroundColor = '#34d399';
+    progBarEl.style.backgroundColor = boss ? '#fb7185' : '#34d399';
 
     gridEl.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
     gridEl.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
@@ -631,7 +684,7 @@
 
       const ratio = (timeRemaining / timeLimit) * 100;
       progBarEl.style.width = `${ratio}%`;
-      if (timeRemaining <= 3.0) {
+      if (timeRemaining <= 2.5) {
         progBarEl.style.backgroundColor = '#f87171';
       }
 
@@ -644,7 +697,7 @@
       bannerEl.textContent = `⏱️ 残り ${timeRemaining.toFixed(1)} 秒！`;
 
       if (timeRemaining <= 0) {
-        onTimeUp();
+        onFail('timeup');
       }
     }, 50);
   }
@@ -658,6 +711,8 @@
       clearInterval(timerId);
       cellEl.classList.add('correct-cell');
 
+      const boss = isBossStage(state.stage);
+      const totalQuestions = boss ? 1 : NORMAL_QUESTIONS_PER_STAGE;
       const clearSec = Math.max(0.2, timeLimit - timeRemaining).toFixed(1);
       const iqGain = timeRemaining >= timeLimit * 0.6 ? 2 : 1;
       state.iq += iqGain;
@@ -666,68 +721,77 @@
       bannerEl.textContent = `🎉 正解！ ${clearSec}秒で発見！`;
       updateHUD();
 
-      if (stepInStage < QUESTIONS_PER_STAGE) {
+      if (stepInStage < totalQuestions) {
         playCorrectSound();
         setTimeout(() => {
           stepInStage++;
           startQuestion();
-        }, 950);
+        }, 900);
       } else {
-        // STAGE CLEAR! (3/3 completed)
+        // STAGE CLEAR!
         playStageClearFanfare();
         const clearedStage = state.stage;
         state.stage++;
-        state.iq += 2; // Stage clear bonus IQ
-        state.hints = Math.min(5, state.hints + 1); // Recover +1 hint on every stage clear!
+        state.iq += boss ? 4 : 2;
+        state.hints = Math.min(5, state.hints + (boss ? 2 : 1));
         saveProgress();
         updateHUD();
 
         setTimeout(() => {
           showModal({
-            badge: '🎉 STAGE CLEAR!',
-            title: `STAGE ${clearedStage} クリア！`,
+            badge: boss ? '👑 BOSS STAGE 撃破！！' : '🎉 STAGE CLEAR!',
+            title: boss ? `BOSS STAGE ${clearedStage} 突破！` : `STAGE ${clearedStage} クリア！`,
             iqText: `認定IQ ${state.iq}`,
-            comment: `${getTitleForIQ(state.iq)}<br>（💡ヒントが1つ回復しました！）`,
-            btnText: `▶️ STAGE ${state.stage} へ進む`
+            comment: `${getTitleForIQ(state.iq)}<br>（💡ヒントが${boss ? 2 : 1}個回復しました！）`,
+            btnText: isBossStage(state.stage)
+              ? `🔥 次は BOSS STAGE ${state.stage} へ！`
+              : `▶️ STAGE ${state.stage} へ進む`
           });
-        }, 1000);
+        }, 950);
       }
     } else {
-      playWrongSound();
+      // WRONG CELL TAPPED -> Immediate Out & Restart Current Stage from Question 1!
       cellEl.classList.add('wrong-cell');
-      setTimeout(() => cellEl.classList.remove('wrong-cell'), 300);
+      onFail('wrong');
     }
   }
 
-  function onTimeUp() {
+  function onFail(reason) {
     isQuestionActive = false;
     clearInterval(timerId);
     playWrongSound();
 
+    // Highlight the true answer in emerald green so the player can see where it was!
     const cells = gridEl.querySelectorAll('.cell');
     if (cells[oddIndex]) {
       cells[oddIndex].classList.add('correct-cell');
     }
 
     bannerEl.className = 'reveal';
-    bannerEl.textContent = `👀 正解はココでした！（${currentPair.odd}）`;
+    if (reason === 'wrong') {
+      bannerEl.textContent = `❌ お手つき！正解はココでした（${currentPair.odd}）`;
+    } else {
+      bannerEl.textContent = `⏱️ 時間切れ！正解はココでした（${currentPair.odd}）`;
+    }
     updateHUD();
 
-    // Ensure player has at least 2 hints on retry so they never get stuck!
     if (state.hints < 2) {
       state.hints = 2;
       saveProgress();
     }
 
+    const boss = isBossStage(state.stage);
     setTimeout(() => {
       showModal({
-        badge: '⏱️ TIME UP!',
-        title: `STAGE ${state.stage}（第${stepInStage}問）`,
+        badge: reason === 'wrong' ? '❌ お手つき（ミス）！' : '⏱️ TIME UP!',
+        title: boss ? `BOSS STAGE ${state.stage} 失敗` : `STAGE ${state.stage}（第${stepInStage}問で失敗）`,
         iqText: `現在のIQ ${state.iq}`,
-        comment: `今回の違いは「${currentPair.normal}」の中の「${currentPair.odd}」でした！<br>進行度は保存されているので、そのまま再挑戦できます。`,
-        btnText: `🔄 STAGE ${state.stage} を再挑戦する`
+        comment: `今回の違いは「${currentPair.normal}」の中の「${currentPair.odd}」でした！<br>このステージの最初（第1問）から再挑戦します。`,
+        btnText: boss
+          ? `🔄 BOSS STAGE ${state.stage} に再挑戦`
+          : `🔄 STAGE ${state.stage} を第1問からやり直す`
       });
-    }, 1500);
+    }, 1450);
   }
 
   function showModal({ badge, title, iqText, comment, btnText }) {
@@ -739,7 +803,7 @@
     modalEl.classList.add('show');
   }
 
-  // Primary modal button (Next Stage OR Retry Current Stage)
+  // Primary modal button (Next Stage OR Restart Current Stage from Question 1)
   document.getElementById('modalActionBtn').addEventListener('click', () => {
     initAudio();
     stepInStage = 1;
