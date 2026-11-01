@@ -17,15 +17,15 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://coreworks-portal.pages.dev/valuelens/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://coreworks-portal.pages.dev/subscription-calc/</loc>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://coreworks-portal.pages.dev/wage-calc/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://coreworks-portal.pages.dev/valuelens/</loc>
     <priority>0.8</priority>
   </url>
   <url>

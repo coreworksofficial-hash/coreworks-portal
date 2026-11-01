@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>家電・暮らしの「何ヶ月で元が取れる？」買い替え損益分岐シミュレーター ｜ Coreworks Studio</title>
-  <meta name="description" content="省エネ家電（エアコン・冷蔵庫）、時短家電（食洗機・ドラム式洗濯機・ロボット掃除機）、節水シャワーヘッドやマイボトル等の購入費用が、電気・ガス・水道代削減と時短効果で「何ヶ月で元が取れるか」を1秒で計算します。">
+  <title>これ買ったら「何ヶ月で元が取れる？」1秒計算機 ｜ Coreworks Studio</title>
+  <meta name="description" content="シャワーヘッド・食洗機・ロボット掃除機・ドラム式洗濯機・水筒など、買ったら何ヶ月で元が取れて5年でいくら黒字になるかをワンタップで計算します。">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -15,15 +15,15 @@
         "name": "節水シャワーヘッドは何ヶ月で元が取れますか？",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "最大50%節水タイプのシャワーヘッド（5,000円〜20,000円前後）を導入した場合、水道代と給湯ガス代を合わせて1人あたり月約1,500〜2,000円（4人家族なら月約4,500円以上）削減できるため、約3ヶ月〜10ヶ月で完全に元が取れます。"
+          "text": "最大50%節水タイプのシャワーヘッドを導入した場合、水道・ガス代が月約1,800円〜4,000円浮くため、約3〜9ヶ月で元が取れます。"
         }
       },
       {
         "@type": "Question",
-        "name": "工事不要の卓上食洗機やドラム式洗濯機は何ヶ月で元が取れますか？",
+        "name": "工事不要の食洗機は何ヶ月で元が取れますか？",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "卓上・タンク式食洗機（約35,000円）は手洗いより水道・給湯代が月約1,100円浮くほか、毎日20分の皿洗い時間がゼロになります。時給1,400円換算で月約14,000円分の時間価値が生まれるため、実質約2.5〜3ヶ月で元が取れます。"
+          "text": "手洗いより水道・給湯代が月1,100円浮き、毎日20分の皿洗い時間もゼロになるため、時短価値を含めると約3〜4ヶ月で元が取れます。"
         }
       }
     ]
@@ -32,732 +32,256 @@
   <style>
     :root {
       --bg: #0b0f19;
-      --card-bg: #151d30;
-      --card-alt: #1b263b;
-      --border: #23314e;
-      --text: #f1f5f9;
-      --text-muted: #94a3b8;
+      --card: #151d30;
+      --border: #263554;
+      --text: #f8fafc;
+      --muted: #94a3b8;
       --accent: #38bdf8;
-      --emerald: #34d399;
+      --green: #34d399;
       --amber: #fbbf24;
       --rose: #fb7185;
-      --rakuten: #bf0000;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Sans", sans-serif;
-      line-height: 1.6;
-      padding: 20px 16px 60px;
-      max-width: 960px;
-      margin: 0 auto;
-    }
-    .back-link { display: inline-block; margin-bottom: 16px; color: var(--accent); text-decoration: none; font-size: 0.88rem; font-weight: 600; }
-    .hero-head { margin-bottom: 24px; }
-    .badge { display: inline-block; background: rgba(52, 211, 153, 0.15); border: 1px solid rgba(52, 211, 153, 0.4); color: var(--emerald); padding: 4px 12px; border-radius: 99px; font-size: 0.78rem; font-weight: 700; margin-bottom: 10px; }
-    h1 { font-size: 1.85rem; font-weight: 900; margin-bottom: 8px; line-height: 1.3; }
-    .sub-desc { color: var(--text-muted); font-size: 0.92rem; }
+    html, body { overflow-x: hidden; width: 100%; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif; line-height: 1.45; }
+    .container { max-width: 640px; margin: 0 auto; padding: 16px 14px 60px; }
+    .back-link { display: inline-block; margin-bottom: 10px; color: var(--accent); text-decoration: none; font-size: 0.85rem; font-weight: 700; }
+    h1 { font-size: 1.45rem; font-weight: 900; margin-bottom: 4px; color: #fff; }
+    .lead { color: var(--muted); font-size: 0.83rem; margin-bottom: 14px; }
 
-    .section-title { font-size: 1.05rem; font-weight: 800; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; color: #e2e8f0; }
-    .preset-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 10px; margin-bottom: 24px; }
-    .preset-btn {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
+    /* アイコン選択グリッド（2列×4行・文字最小限） */
+    .preset-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 16px; }
+    .p-btn {
+      background: var(--card);
+      border: 1.5px solid var(--border);
       border-radius: 12px;
-      padding: 12px 14px;
-      text-align: left;
-      color: var(--text);
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .preset-btn:hover { border-color: var(--accent); transform: translateY(-2px); }
-    .preset-btn.active { background: rgba(56, 189, 248, 0.14); border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
-    .preset-btn .p-title { font-size: 0.9rem; font-weight: 800; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
-    .preset-btn .p-sub { font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; }
-
-    .layout-grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 20px; margin-bottom: 28px; }
-    @media (max-width: 768px) { .layout-grid { grid-template-columns: 1fr; } }
-
-    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
-    .form-group { margin-bottom: 14px; }
-    .form-group label { display: flex; justify-content: space-between; font-size: 0.84rem; color: #cbd5e1; margin-bottom: 6px; font-weight: 600; }
-    .form-group label span.hint { color: var(--accent); font-weight: 700; }
-    .input-row { display: flex; gap: 8px; align-items: center; }
-    input[type="number"], input[type="text"] {
-      width: 100%;
-      padding: 10px 12px;
-      background: #0b0f19;
-      border: 1px solid #334155;
-      color: #fff;
-      border-radius: 8px;
-      font-size: 0.98rem;
-      font-weight: 700;
-    }
-    input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer; margin-top: 6px; }
-
-    .verdict-box {
-      background: linear-gradient(145deg, rgba(16, 185, 129, 0.14), rgba(56, 189, 248, 0.1));
-      border: 2px solid var(--emerald);
-      border-radius: 16px;
-      padding: 22px;
-      margin-bottom: 16px;
-      text-align: center;
-    }
-    .verdict-label { font-size: 0.88rem; color: #cbd5e1; font-weight: 700; }
-    .verdict-main { font-size: 2.3rem; font-weight: 900; color: var(--emerald); margin: 6px 0; letter-spacing: -0.02em; }
-    .verdict-sub { font-size: 0.92rem; color: #e2e8f0; background: rgba(11, 15, 25, 0.6); padding: 10px 14px; border-radius: 10px; margin-top: 10px; }
-
-    .kpi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
-    .kpi-item { background: rgba(11, 15, 25, 0.65); border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
-    .kpi-label { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px; }
-    .kpi-val { font-size: 1.15rem; font-weight: 800; color: #fff; }
-
-    .timeline-wrap { margin-top: 14px; }
-    .tl-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 0.8rem; }
-    .tl-year { width: 52px; font-weight: 700; color: var(--text-muted); }
-    .tl-bar-bg { flex: 1; height: 14px; background: #0b0f19; border-radius: 99px; overflow: hidden; position: relative; border: 1px solid #23314e; }
-    .tl-bar-fill { height: 100%; border-radius: 99px; transition: width 0.3s ease; }
-    .tl-amount { width: 115px; text-align: right; font-weight: 800; }
-
-    .rec-section {
-      background: linear-gradient(180deg, #151d30 0%, #0f172a 100%);
-      border: 1px solid rgba(56, 189, 248, 0.35);
-      border-radius: 16px;
-      padding: 24px;
-      margin-bottom: 28px;
-    }
-    .rec-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
-    .rec-badge { background: rgba(251, 191, 36, 0.15); color: var(--amber); border: 1px solid rgba(251, 191, 36, 0.4); font-size: 0.76rem; font-weight: 800; padding: 4px 10px; border-radius: 6px; }
-    .rec-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
-    .rec-card {
-      background: #0b0f19;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 18px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      position: relative;
-    }
-    .rec-card.best-choice { border: 2px solid var(--amber); box-shadow: 0 8px 30px rgba(251, 191, 36, 0.12); }
-    .tier-ribbon { font-size: 0.74rem; font-weight: 800; padding: 3px 9px; border-radius: 6px; width: fit-content; margin-bottom: 8px; }
-    .tier-entry { background: rgba(56, 189, 248, 0.15); color: var(--accent); }
-    .tier-best { background: rgba(251, 191, 36, 0.2); color: var(--amber); }
-    .tier-pro { background: rgba(244, 114, 182, 0.15); color: #f472b6; }
-    .rec-card h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: 6px; color: #fff; }
-    .rec-price { font-size: 0.85rem; color: var(--emerald); font-weight: 700; margin-bottom: 8px; }
-    .rec-desc { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 14px; flex-grow: 1; }
-    .btn-rakuten {
+      padding: 10px 10px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 6px;
-      background: linear-gradient(135deg, #df0000 0%, #b80000 100%);
-      color: #fff;
-      text-decoration: none;
-      font-weight: 800;
-      font-size: 0.88rem;
-      padding: 12px 14px;
-      border-radius: 8px;
-      box-shadow: 0 4px 14px rgba(191, 0, 0, 0.35);
-      transition: transform 0.15s ease, opacity 0.15s ease;
+      gap: 8px;
+      color: var(--text);
+      cursor: pointer;
+      text-align: left;
+      min-width: 0;
     }
-    .btn-rakuten:hover { transform: translateY(-2px); opacity: 0.95; }
+    .p-btn.active {
+      background: rgba(52, 211, 153, 0.16);
+      border-color: var(--green);
+      box-shadow: 0 0 0 1px var(--green);
+    }
+    .p-icon { font-size: 1.35rem; flex-shrink: 0; }
+    .p-name { font-size: 0.82rem; font-weight: 800; color: #fff; line-height: 1.25; }
+    .p-tag { font-size: 0.7rem; color: var(--green); font-weight: 700; margin-top: 2px; }
 
-    .cross-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 24px; }
-    .cross-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px; text-decoration: none; color: inherit; display: block; transition: border-color 0.2s; }
-    .cross-card:hover { border-color: var(--accent); }
-    .cross-card h4 { color: var(--accent); font-size: 0.95rem; margin-bottom: 4px; }
-    .cross-card p { color: var(--text-muted); font-size: 0.8rem; }
+    /* ドカンと目に入る結論ボックス */
+    .verdict-box {
+      background: linear-gradient(145deg, rgba(16, 185, 129, 0.18), rgba(56, 189, 248, 0.1));
+      border: 2px solid var(--green);
+      border-radius: 16px;
+      padding: 16px 14px;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .v-label { font-size: 0.8rem; color: #cbd5e1; font-weight: 700; }
+    .v-main { font-size: 2.05rem; font-weight: 900; color: var(--green); margin: 4px 0 8px; letter-spacing: -0.02em; }
+    .v-kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .v-kpi { background: rgba(11, 15, 25, 0.7); border-radius: 10px; padding: 8px 6px; }
+    .v-kpi-lbl { font-size: 0.7rem; color: var(--muted); }
+    .v-kpi-val { font-size: 1rem; font-weight: 900; margin-top: 2px; }
+
+    /* スライダー2本だけの超シンプル調整カード */
+    .sliders-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 14px; margin-bottom: 20px; }
+    .s-row { margin-bottom: 14px; }
+    .s-row:last-child { margin-bottom: 0; }
+    .s-head { display: flex; justify-content: space-between; font-size: 0.83rem; font-weight: 700; margin-bottom: 6px; }
+    .s-val { color: var(--accent); font-weight: 900; }
+    input[type="range"] { width: 100%; accent-color: var(--accent); height: 6px; cursor: pointer; }
+
+    /* 厳選おすすめ3選（スッキリ見やすいカード） */
+    .rec-title { font-size: 1rem; font-weight: 900; margin-bottom: 10px; color: #fff; display: flex; align-items: center; gap: 6px; }
+    .rec-list { display: flex; flex-direction: column; gap: 10px; }
+    .rec-card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .rec-card.best { border-color: var(--amber); background: linear-gradient(180deg, rgba(251,191,36,0.08), var(--card)); }
+    .rec-top { display: flex; justify-content: space-between; align-items: center; gap: 6px; margin-bottom: 6px; }
+    .rec-badge { font-size: 0.7rem; font-weight: 900; padding: 2px 8px; border-radius: 4px; background: rgba(56,189,248,0.16); color: var(--accent); }
+    .rec-card.best .rec-badge { background: var(--amber); color: #0b0f19; }
+    .rec-payback { font-size: 0.76rem; font-weight: 800; color: var(--green); }
+    .rec-name { font-size: 0.95rem; font-weight: 800; color: #fff; margin-bottom: 4px; }
+    .rec-desc { font-size: 0.78rem; color: var(--muted); margin-bottom: 10px; }
+    .btn-rakuten {
+      display: block; width: 100%; text-align: center;
+      background: linear-gradient(135deg, #df0000, #b80000);
+      color: #fff; text-decoration: none; font-weight: 800; font-size: 0.86rem;
+      padding: 11px; border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(191, 0, 0, 0.3);
+    }
   </style>
 </head>
 <body>
-  <a href="../" class="back-link">← Coreworks Studio トップへ戻る</a>
+  <div class="container">
+    <a href="../" class="back-link">← トップへ戻る</a>
+    <h1>⚡ これ何ヶ月で元が取れる？計算機</h1>
+    <p class="lead">気になるアイテムをタップするだけ！元取り期間と5年後の黒字額が1秒でわかります。</p>
 
-  <div class="hero-head">
-    <div class="badge">⚡ 省エネ・時短・生活防衛の損益分岐エンジン</div>
-    <h1>家電・暮らしの「何ヶ月で元が取れる？」買い替え損益分岐シミュレーター</h1>
-    <p class="sub-desc">「高いから迷う…」を数学で解決。購入価格・楽天ポイント還元・毎月の光熱費や出費削減額・浮く家事時間から、<strong>何ヶ月目に黒字化して5年間でいくら得するか</strong>を瞬時に算出します。</p>
-  </div>
+    <!-- 1. アイコンボタン（タップで即切り替え） -->
+    <div class="preset-grid" id="presetGrid"></div>
 
-  <div class="section-title">👇 1. 検証したい買い替え・導入テーマを選択（ワンクリック自動入力）</div>
-  <div class="preset-grid" id="presetGrid"></div>
-
-  <div class="layout-grid">
-    <!-- 左：入力パネル -->
-    <div class="card">
-      <div class="section-title">⚙️ 2. シミュレーション条件の調整</div>
-
-      <div class="form-group">
-        <label>検討中のアイテム名</label>
-        <input type="text" id="inName" value="節水ファインバブルシャワーヘッド" oninput="calculate()">
-      </div>
-
-      <div class="form-group">
-        <label>本体購入価格（税込・円） <span class="hint" id="lblPrice">18,000 円</span></label>
-        <input type="number" id="inPrice" value="18000" step="500" oninput="syncRange('Price'); calculate()">
-        <input type="range" id="rngPrice" min="1000" max="350000" step="1000" value="18000" oninput="syncInput('Price'); calculate()">
-      </div>
-
-      <div class="form-group">
-        <label>楽天ポイント還元率（SPU＋買い回り等） <span class="hint" id="lblPoint">10 %（-1,800円相当）</span></label>
-        <input type="range" id="inPointRate" min="1" max="25" step="1" value="10" oninput="calculate()">
-      </div>
-
-      <div class="form-group">
-        <label>毎月浮くお金（電気・ガス・水道・外食・飲料代など） <span class="hint" id="lblMoneySave">月 1,800 円</span></label>
-        <input type="number" id="inMonthlySave" value="1800" step="100" oninput="syncRange('MonthlySave'); calculate()">
-        <input type="range" id="rngMonthlySave" min="0" max="25000" step="200" value="1800" oninput="syncInput('MonthlySave'); calculate()">
-      </div>
-
-      <div class="form-group">
-        <label>1日あたり浮く家事・作業時間（分/日） <span class="hint" id="lblTimeSave">0 分/日</span></label>
-        <input type="number" id="inDailyMinSave" value="0" step="5" oninput="syncRange('DailyMinSave'); calculate()">
-        <input type="range" id="rngDailyMinSave" min="0" max="90" step="5" value="0" oninput="syncInput('DailyMinSave'); calculate()">
-      </div>
-
-      <div class="form-group">
-        <label>あなたの時間単価（時給換算・円/h） <span class="hint" id="lblWage">1,400 円/h</span></label>
-        <input type="number" id="inHourlyWage" value="1400" step="100" oninput="calculate()">
+    <!-- 2. ドカンと結論 -->
+    <div class="verdict-box">
+      <div class="v-label" id="vLabel">🚿 節水シャワーヘッド（実質 14,850円）は…</div>
+      <div class="v-main" id="vMain">約 8.3 ヶ月で元が取れる！</div>
+      <div class="v-kpis">
+        <div class="v-kpi">
+          <div class="v-kpi-lbl">毎月のプラス効果</div>
+          <div class="v-kpi-val" id="vMonthly" style="color:var(--green);">+1,800 円/月</div>
+        </div>
+        <div class="v-kpi">
+          <div class="v-kpi-lbl">5年間の純利益（黒字）</div>
+          <div class="v-kpi-val" id="v5Year" style="color:var(--amber);">+93,150 円</div>
+        </div>
       </div>
     </div>
 
-    <!-- 右：結果パネル -->
-    <div class="card" style="display:flex; flex-direction:column; justify-content:space-between;">
-      <div>
-        <div class="section-title">📊 3. 損益分岐＆5年リターン判定</div>
-
-        <div class="verdict-box" id="verdictBox">
-          <div class="verdict-label" id="verdictTitle">ポイント還元差し引き後の実質負担 16,200円 は…</div>
-          <div class="verdict-main" id="verdictMonths">約 9.0 ヶ月で元が取れる！</div>
-          <div class="verdict-sub" id="verdictSub">
-            以降は毎月 <strong>+1,800円</strong> ずつ純粋な黒字を生み出し続けます。
-          </div>
+    <!-- 3. スライダー2本だけの直感調整 -->
+    <div class="sliders-card">
+      <div class="s-row">
+        <div class="s-head">
+          <span>💰 商品の価格（楽天10%還元考慮）</span>
+          <span class="s-val" id="lblPrice">16,500 円</span>
         </div>
-
-        <div class="kpi-grid">
-          <div class="kpi-item">
-            <div class="kpi-label">実質初期コスト（ポイント控除後）</div>
-            <div class="kpi-val" id="kpiNetCost" style="color:#38bdf8;">16,200 円</div>
-          </div>
-          <div class="kpi-item">
-            <div class="kpi-label">月間の総合回収メリット（節約＋時短）</div>
-            <div class="kpi-val" id="kpiMonthlyBenefit" style="color:#34d399;">+1,800 円/月</div>
-          </div>
-          <div class="kpi-item">
-            <div class="kpi-label">3年間の累計純利益（黒字額）</div>
-            <div class="kpi-val" id="kpiNet3Y">+48,600 円</div>
-          </div>
-          <div class="kpi-item">
-            <div class="kpi-label">5年間の累計純利益（投資ROI）</div>
-            <div class="kpi-val" id="kpiNet5Y" style="color:#fbbf24;">+91,800 円</div>
-          </div>
-        </div>
-
-        <div class="timeline-wrap">
-          <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:8px; font-weight:700;">📈 年数別の累計回収額 vs 実質購入コスト比較</div>
-          <div id="timelineBars"></div>
-        </div>
+        <input type="range" id="rngPrice" min="2000" max="250000" step="1000" value="16500" oninput="calc()">
       </div>
-
-      <div style="margin-top: 16px;">
-        <a href="#" id="mainRakutenBtn" target="_blank" rel="nofollow sponsored noopener" class="btn-rakuten" style="font-size:0.96rem; padding:14px;">
-          <span>🛍️ 「<span id="btnItemName">節水シャワーヘッド</span>」を楽天市場で最安値・還元検索</span>
-          <span>↗</span>
-        </a>
+      <div class="s-row">
+        <div class="s-head">
+          <span>✨ 毎月浮く金額（節約額＋時短価値）</span>
+          <span class="s-val" id="lblSave" style="color:var(--green);">月 1,800 円</span>
+        </div>
+        <input type="range" id="rngSave" min="500" max="30000" step="500" value="1800" oninput="calc()">
       </div>
     </div>
-  </div>
 
-  <!-- 厳選おすすめモデル比較セクション（アフィリエイト高成約ゾーン） -->
-  <div class="rec-section">
-    <div class="rec-header">
-      <div>
-        <div class="rec-badge">🏆 元取りスピード＆満足度で厳選</div>
-        <h2 style="font-size:1.3rem; font-weight:900; margin-top:6px;" id="recSectionTitle">このカテゴリで「最短で元が取れる」鉄板モデル3選</h2>
-      </div>
-      <div style="font-size:0.8rem; color:var(--text-muted);">※楽天市場のポイント倍率（お買い物マラソン・0と5のつく日）活用でさらに回収期間が短縮します</div>
-    </div>
-    <div class="rec-cards" id="recCardsContainer"></div>
-  </div>
-
-  <div class="section-title">🔗 合わせて使うとさらに数万円浮く関連シミュレーター</div>
-  <div class="cross-links">
-    <a href="../rakuten-maximizer/" class="cross-card">
-      <h4>🎯 楽天お買い物マラソン＆ふるさと納税 上限・損得計算機</h4>
-      <p>「あと1店舗1,000円買うとポイントが何円増える？」「上限7,000Pに達する金額は？」を1秒判定。</p>
-    </a>
-    <a href="../valuelens/" class="cross-card">
-      <h4>💎 ValueLens（バリューレンズ）総合価値診断</h4>
-      <p>リセールバリュー（メルカリ売却益）や10年複利機会費用まで含めた多角的な買い物意思決定ツール。</p>
-    </a>
-    <a href="../subscription-calc/" class="cross-card">
-      <h4>✂️ サブスク固定費・買い切り置換シミュレーター</h4>
-      <p>毎月消えていく月額課金を棚卸しし、買い切りアイテムへの置換で年間何万円浮くか計算。</p>
-    </a>
+    <!-- 4. 最短で元が取れる鉄板モデル3選 -->
+    <div class="rec-title" id="recTitle">🏆 節水シャワーヘッドの元取りモデル3選</div>
+    <div class="rec-list" id="recList"></div>
   </div>
 
   <script>
     const AID = '5876771';
     const PID = '54';
-
-    function rakutenUrl(keyword) {
-      const target = 'https://search.rakuten.co.jp/search/mall/' + encodeURIComponent(keyword) + '/';
-      return 'https://af.moshimo.com/af/c/click?a_id=' + AID + '&p_id=' + PID + '&pc_id=54&pl_id=616&url=' + encodeURIComponent(target);
+    function rakutenUrl(q) {
+      return 'https://af.moshimo.com/af/c/click?a_id=' + AID + '&p_id=' + PID + '&pc_id=54&pl_id=616&url=' +
+        encodeURIComponent('https://search.rakuten.co.jp/search/mall/' + encodeURIComponent(q) + '/');
     }
 
     const PRESETS = [
       {
-        id: 'shower',
-        icon: '🚿',
-        title: '節水シャワーヘッド',
-        sub: 'ガス・水道代を月1,800円削減＆美肌ケア',
-        name: '節水ファインバブルシャワーヘッド',
-        price: 16500,
-        pointRate: 10,
-        monthlySave: 1800,
-        dailyMinSave: 0,
+        id: 'shower', icon: '🚿', name: '節水シャワー', tag: '水道・ガス代 -40%',
+        price: 16500, save: 1800,
         recs: [
-          {
-            tier: '手軽導入・高コスパ',
-            tierClass: 'tier-entry',
-            name: 'アラミック シルキーナノバブル系 節水シャワー',
-            priceText: '目安 5,000〜8,000円前後（約3〜4ヶ月で元取り！）',
-            desc: '手元止水スイッチ付きで最大50%節水。初期投資が安く、一人暮らしでも数ヶ月で完全に元が取れる鉄板エントリー機。',
-            query: 'アラミック 節水シャワーヘッド ナノバブル'
-          },
-          {
-            tier: '👑 王道コスパNo.1（一番人気）',
-            tierClass: 'tier-best',
-            best: true,
-            name: 'MYTREX HIHO FINE BUBBLE+ / ReFa ファインバブル',
-            priceText: '目安 18,000〜30,000円前後（約9〜14ヶ月で元取り！）',
-            desc: '圧倒的なナノバブル数とミスト水流で水道・ガス代を大幅カットしつつ、毛穴ケア・保温効果も手に入る満足度最高クラス。',
-            query: 'ファインバブル シャワーヘッド 節水 ランキング'
-          },
-          {
-            tier: '塩素除去・家族向け決定版',
-            tierClass: 'tier-pro',
-            name: 'ミラブルzero / 浄水ファインバブル上位モデル',
-            priceText: '目安 30,000〜45,000円前後（家族4人なら約1年で回収）',
-            desc: '家族人数が多いほど水道・給湯ガス代の削減額が倍増。肌や髪に優しい塩素低減機能付きハイエンドモデル。',
-            query: 'シャワーヘッド 節水 マイクロナノバブル 塩素除去'
-          }
+          { badge: '👑 一番人気・王道', best: true, name: 'MYTREX / ReFa ファインバブル節水シャワー', pb: '約8ヶ月で元取り', desc: '毛穴ケアと最大50%節水を両立。4人家族なら約4ヶ月で回収！', q: 'ファインバブル シャワーヘッド 節水' },
+          { badge: '手軽導入モデル', name: 'アラミック シルキーナノバブルシャワー', pb: '約3ヶ月で元取り', desc: '手元止水スイッチ付き。6,000円前後で買えて一人暮らしでも即回収。', q: 'アラミック 節水シャワーヘッド' }
         ]
       },
       {
-        id: 'dishwasher',
-        icon: '🍽️',
-        title: '卓上・タンク式食洗機',
-        sub: '毎日20分の皿洗い消滅＋手洗いより節水',
-        name: '工事不要タンク式・卓上食器洗い乾燥機',
-        price: 39800,
-        pointRate: 10,
-        monthlySave: 1100,
-        dailyMinSave: 20,
+        id: 'dishwasher', icon: '🍽️', name: '工事不要食洗機', tag: '毎日20分の皿洗い消滅',
+        price: 38000, save: 9500,
         recs: [
-          {
-            tier: '賃貸・工事不要で即日使える',
-            tierClass: 'tier-entry',
-            name: 'シロカ / アイリスオーヤマ 工事不要タンク式食洗機',
-            priceText: '目安 29,800〜39,800円前後（時短込み約3ヶ月で回収！）',
-            desc: '分岐水栓の工事不要で届いたその日にコンセントを挿すだけ。手洗いより使用水量を約1/5に減らし冬の手荒れもゼロに。',
-            query: '食洗機 工事不要 タンク式'
-          },
-          {
-            tier: '👑 王道コスパNo.1（一人〜少人数）',
-            tierClass: 'tier-best',
-            best: true,
-            name: 'Panasonic パーソナル食洗機 SOLOTA / スリム食洗機',
-            priceText: '目安 35,000〜48,000円前後（約4ヶ月で元取り！）',
-            desc: 'A4ファイルサイズの超省スペース設計。狭いキッチンにも置けて、高温除菌洗浄＆乾燥まで全自動で完結する大ヒット機。',
-            query: 'パナソニック 食洗機 工事不要'
-          },
-          {
-            tier: 'ファミリー・フライパン丸洗い',
-            tierClass: 'tier-pro',
-            name: 'Panasonic 卓上型食器洗い乾燥機 大容量モデル',
-            priceText: '目安 65,000〜88,000円前後（約6〜7ヶ月で回収）',
-            desc: '4〜5人分の食器と調理器具を一気に洗浄。1日30分以上の家事時間を5年間ずっと買い戻せる最強の時短家電。',
-            query: 'パナソニック 食器洗い乾燥機 卓上'
-          }
+          { badge: '👑 一番人気・王道', best: true, name: 'Panasonic SOLOTA / シロカ タンク式食洗機', pb: '時短込み約3.5ヶ月で元取り', desc: '工事不要で届いた日に使える。手洗いより節水＆冬の手荒れもゼロに！', q: '食洗機 工事不要 タンク式 パナソニック シロカ' },
+          { badge: 'ファミリー大容量', name: 'Panasonic 卓上型食器洗い乾燥機', pb: '約5ヶ月で元取り', desc: 'フライパンまで丸洗い。5年間で300時間以上の自由時間を生み出します。', q: 'パナソニック 食器洗い乾燥機 卓上' }
         ]
       },
       {
-        id: 'coffee_bottle',
-        icon: '☕',
-        title: 'カフェ・自販機卒業セット',
-        sub: '毎日350円のカフェ・ペットボトル代を80%圧縮',
-        name: '全自動コーヒーメーカー＆真空断熱マイボトル',
-        price: 19800,
-        pointRate: 10,
-        monthlySave: 6500,
-        dailyMinSave: 5,
+        id: 'coffee_bottle', icon: '☕', name: '水筒＆おうち珈琲', tag: 'コンビニ・カフェ代8割減',
+        price: 15000, save: 6000,
         recs: [
-          {
-            tier: '最短1ヶ月で元が取れる！',
-            tierClass: 'tier-entry',
-            name: 'サーモス / 象印 食洗機対応 真空断熱ケータイマグ',
-            priceText: '目安 2,800〜4,000円前後（約2週間で元取り完了！）',
-            desc: 'パッキン一体型で洗う手間が激減した最新マイボトル。毎日160円の自販機・コンビニ飲料をやめるだけで年間4万円浮く。',
-            query: '象印 シームレスせん 水筒 食洗機対応'
-          },
-          {
-            tier: '👑 王道コスパNo.1（おうちカフェ）',
-            tierClass: 'tier-best',
-            best: true,
-            name: 'シロカ / ツインバード 全自動ミル付きコーヒーメーカー',
-            priceText: '目安 12,000〜22,000円前後（約2.5ヶ月で元取り！）',
-            desc: '豆から挽きたての本格コーヒーが1杯約25円。コンビニやカフェ通いを置き換えるだけで年間6万円以上の黒字に。',
-            query: '全自動コーヒーメーカー ミル付き ランキング'
-          },
-          {
-            tier: '極上カフェラテ完全再現',
-            tierClass: 'tier-pro',
-            name: 'デロンギ マグニフィカS 全自動エスプレッソマシン',
-            priceText: '目安 64,000〜75,000円前後（約9ヶ月で回収し5年使える）',
-            desc: 'ボタン1つでスタバ級のカフェラテ・エスプレッソを抽出。夫婦2人で毎日カフェに行く家庭なら半年で元が取れる名機。',
-            query: 'デロンギ マグニフィカS 全自動コーヒーマシン'
-          }
+          { badge: '👑 最短2週間で回収', best: true, name: '象印 シームレスせん 食洗機対応マイボトル', pb: '約2週間で元取り！', desc: 'パッキン一体型で洗うのが超ラク。毎日160円のペットボトル代がゼロに。', q: '象印 シームレスせん 水筒 食洗機対応' },
+          { badge: '1杯25円の挽きたて', name: 'シロカ / デロンギ 全自動コーヒーメーカー', pb: '約2.5ヶ月で元取り', desc: 'ボタン1つで豆から挽きたて。コンビニやカフェ通いを卒業して年6万円黒字化。', q: '全自動コーヒーメーカー ミル付き' }
         ]
       },
       {
-        id: 'soda',
-        icon: '🫧',
-        title: '炭酸水メーカー導入',
-        sub: '500mlあたり約18円！ペットボトル箱買い＆ゴミ捨てゼロ',
-        name: '家庭用炭酸水メーカー（ソーダストリーム等）',
-        price: 16500,
-        pointRate: 10,
-        monthlySave: 2400,
-        dailyMinSave: 5,
+        id: 'soda', icon: '🫧', name: '炭酸水メーカー', tag: '500ml約18円・ゴミ0',
+        price: 15000, save: 3000,
         recs: [
-          {
-            tier: '手軽導入ベーシック',
-            tierClass: 'tier-entry',
-            name: 'ソーダストリーム GAIA / TERRA スターターキット',
-            priceText: '目安 12,000〜16,500円前後（約5ヶ月で元取り！）',
-            desc: '電源不要でどこでも置けるワンタッチガス装着モデル。毎週重い段ボールを運び、ペットボトルを潰して捨てる労働から解放。',
-            query: 'ソーダストリーム スターターキット'
-          },
-          {
-            tier: '👑 王道コスパNo.1（ジュースも炭酸に）',
-            tierClass: 'tier-best',
-            best: true,
-            name: 'ドリンクメイト シリーズ620 / マグナムグランド',
-            priceText: '目安 15,000〜19,800円前後（142L大型ボンベで最安単価！）',
-            desc: '水だけでなく100%ジュースや白ワイン、気の抜けたビールまで再炭酸化可能。大型マグナムガス対応で1Lあたり約25円の圧倒的安さ。',
-            query: 'ドリンクメイト マグナム スターターセット'
-          },
-          {
-            tier: '電動ワンタッチ最上位',
-            tierClass: 'tier-pro',
-            name: 'ソーダストリーム E-TERRA（電動強炭酸モデル）',
-            priceText: '目安 22,000〜24,200円前後（ボタン1つで均一な強炭酸）',
-            desc: '3段階の炭酸強度をボタン1つで自動注入。毎日ハイボールや強炭酸水を飲む家庭に最適なプレミアム機。',
-            query: 'ソーダストリーム E-TERRA'
-          }
+          { badge: '👑 コスパ最強No.1', best: true, name: 'ドリンクメイト / ソーダストリーム スターター', pb: '約4.5ヶ月で元取り', desc: 'ペットボトル箱買いとゴミ捨てから一生解放。強炭酸ハイボール派に必須！', q: 'ソーダストリーム ドリンクメイト スターターキット' }
         ]
       },
       {
-        id: 'robot_vac',
-        icon: '🤖',
-        title: '水拭きロボット掃除機',
-        sub: '週5回の掃除機＆床拭きを完全自動化',
-        name: 'ゴミ収集＆水拭き対応ロボット掃除機',
-        price: 59800,
-        pointRate: 12,
-        monthlySave: 0,
-        dailyMinSave: 18,
+        id: 'robot_vac', icon: '🤖', name: 'ロボット掃除機', tag: '掃除機＆水拭き自動化',
+        price: 55000, save: 11000,
         recs: [
-          {
-            tier: '3万円台の衝撃コスパ',
-            tierClass: 'tier-entry',
-            name: 'Anker Eufy Clean / SwitchBot ロボット掃除機 K10+',
-            priceText: '目安 29,800〜49,800円前後（約3〜4ヶ月で時短元取り！）',
-            desc: '日本の狭い部屋や椅子の脚周りもスイスイ通れる超小型＆自動ゴミ収集ステーション付き。初めての1台に最適。',
-            query: 'ロボット掃除機 自動ゴミ収集 Anker SwitchBot'
-          },
-          {
-            tier: '👑 王道コスパNo.1（全自動水拭き）',
-            tierClass: 'tier-best',
-            best: true,
-            name: 'エコバックス DEEBOT / Roborock 自動ゴミ収集＆水拭き機',
-            priceText: '目安 54,800〜79,800円前後（セール・還元時が狙い目！）',
-            desc: '高精度マッピングで吸引と水拭きを同時に実行。毎日18分の掃除時間を5年間（計540時間＝67営業日分！）買い戻せます。',
-            query: 'ロボット掃除機 水拭き 自動ゴミ収集 ランキング'
-          },
-          {
-            tier: 'モップ洗浄・温風乾燥まで完全放置',
-            tierClass: 'tier-pro',
-            name: 'Anker Eufy X10 Pro Omni / Dreame 全自動ステーション機',
-            priceText: '目安 89,800〜118,000円前後（メンテナンスすら全自動）',
-            desc: 'ゴミ収集だけでなく、モップの自動洗浄・温風乾燥・給水まで全自動。2ヶ月間ほぼノータッチで床がピカピカに保たれます。',
-            query: 'ロボット掃除機 全自動洗浄乾燥 Eufy X10 Pro Omni'
-          }
+          { badge: '👑 全自動コスパ王', best: true, name: 'Anker Eufy / SwitchBot ゴミ収集＆水拭き機', pb: '時短込み約4.5ヶ月で回収', desc: 'ゴミ捨てすら2ヶ月に1回でOK。毎日床がサラサラに保たれます。', q: 'ロボット掃除機 自動ゴミ収集 水拭き Anker SwitchBot' }
         ]
       },
       {
-        id: 'drum_washer',
-        icon: '🧺',
-        title: 'ドラム式洗濯乾燥機',
-        sub: '「洗濯物を干す・取り込む」を人生から永久消去',
-        name: 'ヒートポンプ式ドラム式洗濯乾燥機',
-        price: 178000,
-        pointRate: 10,
-        monthlySave: 1200,
-        dailyMinSave: 25,
+        id: 'drum_washer', icon: '🧺', name: 'ドラム式洗濯機', tag: '干す・取り込む家事消滅',
+        price: 168000, save: 15000,
         recs: [
-          {
-            tier: '10万円台前半の省スペース機',
-            tierClass: 'tier-entry',
-            name: 'AQUA / アイリスオーヤマ コンパクトドラム式洗濯乾燥機',
-            priceText: '目安 118,000〜148,000円前後（時短換算で約7ヶ月回収！）',
-            desc: '一般的な防水パンにすっきり収まるコンパクト設計。共働きや一人暮らしで「干す時間」をなくしたい方の入門決定版。',
-            query: 'ドラム式洗濯乾燥機 コンパクト AQUA'
-          },
-          {
-            tier: '👑 王道コスパNo.1（省エネヒートポンプ）',
-            tierClass: 'tier-best',
-            best: true,
-            name: 'SHARP / 東芝 ZABOON ヒートポンプ搭載ドラム式洗濯機',
-            priceText: '目安 158,000〜198,000円前後（電気代が安いヒートポンプ式！）',
-            desc: 'ヒーター式に比べて1回あたりの乾燥電気代が約半分（約25〜35円）。毎日使っても電気代が増えず、7年間で圧倒的な黒字に。',
-            query: 'ドラム式洗濯機 ヒートポンプ 東芝 シャープ'
-          },
-          {
-            tier: '洗剤自動投入・最高峰フラッグシップ',
-            tierClass: 'tier-pro',
-            name: 'Panasonic ななめドラム洗濯乾燥機 LXシリーズ',
-            priceText: '目安 238,000〜298,000円前後（リセールも高く満足度頂点）',
-            desc: 'はやふわ乾燥ヒートポンプとトリプル自動投入を搭載。故障が少なく寿命が長いため、1日あたりの実質コストはコーヒー1杯以下。',
-            query: 'パナソニック ドラム式洗濯乾燥機 NA-LX'
-          }
-        ]
-      },
-      {
-        id: 'aircon_fridge',
-        icon: '❄️',
-        title: '10年前のエアコン・冷蔵庫更新',
-        sub: '最新省エネモデルへの買い替えで毎月の電気代を削減',
-        name: '最新省エネエアコン / 省エネ冷蔵庫（買い替え）',
-        price: 89800,
-        pointRate: 10,
-        monthlySave: 2200,
-        dailyMinSave: 5,
-        recs: [
-          {
-            tier: '寝室・書斎の電気代対策（6〜8畳）',
-            tierClass: 'tier-entry',
-            name: 'ダイキン / 日立 白くまくん・霧ヶ峰 標準工事費込セット',
-            priceText: '目安 64,800〜79,800円前後（標準工事費込み・高還元！）',
-            desc: '10年以上前のエアコンから交換するだけで冷暖房効率が劇的改善。真夏・真冬の突然の故障リスクも同時に回避できます。',
-            query: 'エアコン 6畳 工事費込み ダイキン 霧ヶ峰'
-          },
-          {
-            tier: '👑 王道コスパNo.1（自動お掃除＆省エネ）',
-            tierClass: 'tier-best',
-            best: true,
-            name: '省エネ基準達成 フィルター自動お掃除エアコン（10〜14畳）',
-            priceText: '目安 89,800〜128,000円前後（電気代削減＋掃除の手間ゼロ）',
-            desc: 'フィルター目詰まりによる電力ロスを自動で防ぎ、年間を通して消費電力を最小化。リビングのメイン機に最適。',
-            query: 'エアコン 14畳 省エネ 自動お掃除 工事費込み'
-          },
-          {
-            tier: '24時間稼働する冷蔵庫の省エネ化',
-            tierClass: 'tier-pro',
-            name: '三菱 / Panasonic 最新省エネ大型冷蔵庫（400L〜500L）',
-            priceText: '目安 138,000〜188,000円前後（12年前の機種比で電気代最大40%減）',
-            desc: '冷蔵庫は24時間365日コンセントが抜けない家電。10年以上前のモデルからの買い替えで年間約8,000〜15,000円の電気代削減とまとめ買い節約を実現。',
-            query: '冷蔵庫 省エネ 450L 500L 三菱 パナソニック'
-          }
-        ]
-      },
-      {
-        id: 'led_smart',
-        icon: '💡',
-        title: 'スマート家電化＆LEDシーリング',
-        sub: '消し忘れゼロ＆照明電力50%カットを数千円で実現',
-        name: 'SwitchBot スマートリモコン ＆ 調光LEDシーリングライト',
-        price: 9800,
-        pointRate: 10,
-        monthlySave: 1200,
-        dailyMinSave: 5,
-        recs: [
-          {
-            tier: '蛍光灯から交換で即電気代半減',
-            tierClass: 'tier-entry',
-            name: 'アイリスオーヤマ / パナソニック LEDシーリングライト',
-            priceText: '目安 3,500〜6,800円前後（約4〜5ヶ月で完全に元取り！）',
-            desc: '古い丸形蛍光灯シーリングから工具不要でカチッと交換するだけ。消費電力が約半分になり、10年間ランプ交換も不要に。',
-            query: 'LEDシーリングライト 8畳 12畳 調光調色'
-          },
-          {
-            tier: '👑 王道コスパNo.1（エアコン消し忘れ防止）',
-            tierClass: 'tier-best',
-            best: true,
-            name: 'SwitchBot ハブ2 / ハブミニ（温湿度計付きスマートリモコン）',
-            priceText: '目安 5,480〜8,980円前後（外出先からエアコンOFFで即回収！）',
-            desc: '今あるエアコンやテレビ、照明をスマホ＆音声操作化。うっかりエアコンを消し忘れて外出した日を年数回防ぐだけで元が取れます。',
-            query: 'SwitchBot ハブ2 スマートリモコン'
-          },
-          {
-            tier: '待機電力の見える化＆自動遮断',
-            tierClass: 'tier-pro',
-            name: 'SwitchBot スマートプラグミニ（消費電力モニター付き）',
-            priceText: '目安 2,000〜4,500円前後（家電ごとの電気代が丸わかり！）',
-            desc: 'コンセントに挟むだけで「どの家電が毎月何ワット食っているか」をスマホで可視化。使わない時間帯の待機電力をタイマーで完全遮断。',
-            query: 'SwitchBot プラグミニ スマートプラグ'
-          }
+          { badge: '👑 電気代が安いヒートポンプ', best: true, name: '東芝 ZABOON / SHARP / Panasonic ドラム式', pb: '時短込み約10ヶ月で回収', desc: '1回約30円の電気代でフワフワ乾燥。7年間で1,500時間以上の時短に！', q: 'ドラム式洗濯乾燥機 ヒートポンプ' }
         ]
       }
     ];
 
-    let currentPreset = PRESETS[0];
+    let cur = PRESETS[0];
 
     function renderPresets() {
-      const grid = document.getElementById('presetGrid');
-      grid.innerHTML = PRESETS.map(p => `
-        <button type="button" class="preset-btn ${p.id === currentPreset.id ? 'active' : ''}" onclick="selectPreset('${p.id}')">
-          <div class="p-title"><span>${p.icon}</span><span>${p.title}</span></div>
-          <div class="p-sub">${p.sub}</div>
+      document.getElementById('presetGrid').innerHTML = PRESETS.map(p => `
+        <button type="button" class="p-btn ${p.id === cur.id ? 'active' : ''}" onclick="selectPreset('${p.id}')">
+          <span class="p-icon">${p.icon}</span>
+          <div style="min-width:0;">
+            <div class="p-name">${p.name}</div>
+            <div class="p-tag">${p.tag}</div>
+          </div>
         </button>
       `).join('');
     }
 
     function selectPreset(id) {
-      const p = PRESETS.find(x => x.id === id);
-      if (!p) return;
-      currentPreset = p;
-      document.getElementById('inName').value = p.name;
-      document.getElementById('inPrice').value = p.price;
-      document.getElementById('rngPrice').value = p.price;
-      document.getElementById('inPointRate').value = p.pointRate;
-      document.getElementById('inMonthlySave').value = p.monthlySave;
-      document.getElementById('rngMonthlySave').value = p.monthlySave;
-      document.getElementById('inDailyMinSave').value = p.dailyMinSave;
-      document.getElementById('rngDailyMinSave').value = p.dailyMinSave;
+      const found = PRESETS.find(x => x.id === id);
+      if (!found) return;
+      cur = found;
+      document.getElementById('rngPrice').value = cur.price;
+      document.getElementById('rngSave').value = cur.save;
       renderPresets();
-      renderRecommendations(p);
-      calculate();
+      renderRecs();
+      calc();
     }
 
-    function syncRange(key) {
-      const val = document.getElementById('in' + key).value;
-      document.getElementById('rng' + key).value = val;
-    }
-
-    function syncInput(key) {
-      const val = document.getElementById('rng' + key).value;
-      document.getElementById('in' + key).value = val;
-    }
-
-    function renderRecommendations(p) {
-      document.getElementById('recSectionTitle').textContent = `「${p.title}」で最短で元が取れる鉄板モデル3選`;
-      const container = document.getElementById('recCardsContainer');
-      container.innerHTML = p.recs.map(r => `
-        <div class="rec-card ${r.best ? 'best-choice' : ''}">
-          <div>
-            <div class="tier-ribbon ${r.tierClass}">${r.tier}</div>
-            <h3>${r.name}</h3>
-            <div class="rec-price">💰 ${r.priceText}</div>
-            <p class="rec-desc">${r.desc}</p>
+    function renderRecs() {
+      document.getElementById('recTitle').textContent = `🏆 ${cur.name}の元取り鉄板モデル`;
+      document.getElementById('recList').innerHTML = cur.recs.map(r => `
+        <div class="rec-card ${r.best ? 'best' : ''}">
+          <div class="rec-top">
+            <span class="rec-badge">${r.badge}</span>
+            <span class="rec-payback">⚡ ${r.pb}</span>
           </div>
-          <a href="${rakutenUrl(r.query)}" target="_blank" rel="nofollow sponsored noopener" class="btn-rakuten">
-            <span>🛍️ 楽天市場で最安値・還元を見る</span>
-            <span>↗</span>
-          </a>
+          <div class="rec-name">${r.name}</div>
+          <div class="rec-desc">${r.desc}</div>
+          <a href="${rakutenUrl(r.q)}" target="_blank" rel="nofollow sponsored noopener" class="btn-rakuten">🛍️ 楽天市場で最安値・還元を見る ↗</a>
         </div>
       `).join('');
     }
 
-    function calculate() {
-      const name = document.getElementById('inName').value.trim() || '検討アイテム';
-      const price = Math.max(0, Number(document.getElementById('inPrice').value) || 0);
-      const pointRate = Math.max(0, Number(document.getElementById('inPointRate').value) || 0);
-      const monthlySave = Math.max(0, Number(document.getElementById('inMonthlySave').value) || 0);
-      const dailyMinSave = Math.max(0, Number(document.getElementById('inDailyMinSave').value) || 0);
-      const wage = Math.max(500, Number(document.getElementById('inHourlyWage').value) || 1400);
+    function calc() {
+      const price = Number(document.getElementById('rngPrice').value) || 0;
+      const save = Number(document.getElementById('rngSave').value) || 500;
+      const netCost = Math.round(price * 0.9); // 楽天10%還元考慮
 
-      const pointsYen = Math.round(price * (pointRate / 100));
-      const netCost = Math.max(0, price - pointsYen);
+      document.getElementById('lblPrice').textContent = `${price.toLocaleString()} 円（実質 ${netCost.toLocaleString()}円）`;
+      document.getElementById('lblSave').textContent = `月 ${save.toLocaleString()} 円`;
 
-      const monthlyHoursSaved = (dailyMinSave * 30) / 60;
-      const monthlyTimeValue = Math.round(monthlyHoursSaved * wage);
-      const totalMonthlyBenefit = monthlySave + monthlyTimeValue;
+      const months = netCost / save;
+      const profit5Y = (save * 60) - netCost;
 
-      // ラベル更新
-      document.getElementById('lblPrice').textContent = price.toLocaleString() + ' 円';
-      document.getElementById('lblPoint').textContent = `${pointRate} %（-${pointsYen.toLocaleString()}円相当）`;
-      document.getElementById('lblMoneySave').textContent = `月 ${monthlySave.toLocaleString()} 円`;
-      document.getElementById('lblTimeSave').textContent = `${dailyMinSave} 分/日（月${monthlyHoursSaved.toFixed(1)}h＝${monthlyTimeValue.toLocaleString()}円相当）`;
-      document.getElementById('lblWage').textContent = wage.toLocaleString() + ' 円/h';
-
-      document.getElementById('kpiNetCost').textContent = netCost.toLocaleString() + ' 円';
-      document.getElementById('kpiMonthlyBenefit').textContent = '+' + totalMonthlyBenefit.toLocaleString() + ' 円/月';
-
-      const net3Y = totalMonthlyBenefit * 36 - netCost;
-      const net5Y = totalMonthlyBenefit * 60 - netCost;
-      document.getElementById('kpiNet3Y').textContent = (net3Y >= 0 ? '+' : '') + net3Y.toLocaleString() + ' 円';
-      document.getElementById('kpiNet3Y').style.color = net3Y >= 0 ? '#34d399' : '#fb7185';
-      document.getElementById('kpiNet5Y').textContent = (net5Y >= 0 ? '+' : '') + net5Y.toLocaleString() + ' 円';
-      document.getElementById('kpiNet5Y').style.color = net5Y >= 0 ? '#fbbf24' : '#fb7185';
-
-      const vTitle = document.getElementById('verdictTitle');
-      const vMain = document.getElementById('verdictMonths');
-      const vSub = document.getElementById('verdictSub');
-
-      if (totalMonthlyBenefit <= 0) {
-        vTitle.textContent = `実質負担 ${netCost.toLocaleString()}円（月間削減・時短設定が0円）`;
-        vMain.textContent = '回収期間 算出不可';
-        vMain.style.color = '#fb7185';
-        vSub.innerHTML = '左のスライダーで「毎月浮くお金」または「1日浮く家事時間」を1以上に設定してください。';
-      } else {
-        const months = netCost / totalMonthlyBenefit;
-        const days = Math.round(months * 30);
-        vTitle.textContent = `ポイント控除後の実質負担 ${netCost.toLocaleString()}円 は…`;
-        if (months < 1) {
-          vMain.textContent = `わずか 約 ${days} 日で元が取れる！`;
-          vMain.style.color = '#34d399';
-        } else if (months <= 24) {
-          vMain.textContent = `約 ${months.toFixed(1)} ヶ月で元が取れる！`;
-          vMain.style.color = '#34d399';
-        } else {
-          vMain.textContent = `約 ${months.toFixed(1)} ヶ月（${(months / 12).toFixed(1)}年）で回収`;
-          vMain.style.color = months <= 48 ? '#fbbf24' : '#fb7185';
-        }
-        vSub.innerHTML = `元を取った後は、毎月 <strong>+${totalMonthlyBenefit.toLocaleString()}円相当（年間 +${(totalMonthlyBenefit * 12).toLocaleString()}円）</strong> の純利益を生み出し続けます！`;
-      }
-
-      // タイムラインバー描画（1年〜5年）
-      const maxVal = Math.max(netCost, totalMonthlyBenefit * 60, 1);
-      const tlContainer = document.getElementById('timelineBars');
-      let barsHtml = '';
-      for (let y = 1; y <= 5; y++) {
-        const cumBenefit = totalMonthlyBenefit * 12 * y;
-        const net = cumBenefit - netCost;
-        const pct = Math.min(100, Math.round((cumBenefit / maxVal) * 100));
-        const isPlus = net >= 0;
-        const color = isPlus ? 'linear-gradient(90deg, #10b981, #34d399)' : 'linear-gradient(90deg, #f43f5e, #fb7185)';
-        barsHtml += `
-          <div class="tl-row">
-            <div class="tl-year">${y}年目</div>
-            <div class="tl-bar-bg">
-              <div class="tl-bar-fill" style="width:${pct}%; background:${color};"></div>
-            </div>
-            <div class="tl-amount" style="color:${isPlus ? '#34d399' : '#fb7185'};">
-              ${isPlus ? '+' : ''}${net.toLocaleString()}円
-            </div>
-          </div>
-        `;
-      }
-      tlContainer.innerHTML = barsHtml;
-
-      // メイン楽天ボタン更新
-      const cleanName = name.replace(/\(.*?\)|（.*?）/g, '').trim();
-      document.getElementById('btnItemName').textContent = cleanName;
-      document.getElementById('mainRakutenBtn').href = rakutenUrl(cleanName);
+      document.getElementById('vLabel').textContent = `${cur.icon} ${cur.name}（実質 ${netCost.toLocaleString()}円）は…`;
+      document.getElementById('vMain').textContent = months < 1
+        ? `約 ${Math.max(1, Math.round(months * 30))} 日で元が取れる！`
+        : `約 ${months.toFixed(1)} ヶ月で元が取れる！`;
+      document.getElementById('vMonthly').textContent = `+${save.toLocaleString()} 円/月`;
+      document.getElementById('v5Year').textContent = (profit5Y >= 0 ? '+' : '') + profit5Y.toLocaleString() + ' 円';
     }
 
     (function init() {
@@ -766,19 +290,20 @@
         selectPreset(q);
       } else {
         renderPresets();
-        renderRecommendations(currentPreset);
-        calculate();
+        renderRecs();
+        calc();
       }
     })();
   </script>
+
 <!-- Moshimo Official Rakuten Sponsor -->
-<div style="margin: 40px auto 20px; text-align: center; padding: 18px; background: rgba(21, 29, 48, 0.7); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; max-width: 600px;">
-  <div style="font-size: 0.78rem; color: #94a3b8; margin-bottom: 8px;">PR ｜ 楽天市場 公式スポンサーリンク</div>
+<div style="margin: 30px auto 20px; text-align: center; padding: 16px; background: rgba(21, 29, 48, 0.7); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; max-width: 600px;">
+  <div style="font-size: 0.75rem; color: #94a3b8; margin-bottom: 8px;">PR ｜ 楽天市場 公式スポンサーリンク</div>
   <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=618&url=https%3A%2F%2Fwww.rakuten.co.jp%2F" rel="nofollow sponsored" target="_blank" style="display: inline-block;">
     <img src="https://image.moshimo.com/af-img/0032/000000000618.gif" width="120" height="60" style="border:none; border-radius: 6px;" alt="楽天市場">
   </a>
   <img src="https://i.moshimo.com/af/i/impression?a_id=5876771&p_id=54&pc_id=54&pl_id=618" width="1" height="1" style="border:none;" loading="lazy" alt="">
-  <div style="font-size: 0.78rem; color: #94a3b8; margin-top: 6px;">当サイトは楽天市場アフィリエイトプログラムに参加し適格販売により収入を得ています</div>
+  <div style="font-size: 0.72rem; color: #94a3b8; margin-top: 6px;">当サイトは楽天市場アフィリエイトプログラムに参加しています</div>
 </div>
 </body>
 </html>

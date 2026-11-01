@@ -3,162 +3,170 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>真の実効時給＆通勤拘束ロス診断＋時短投資回収シミュレーター ｜ Coreworks Studio</title>
-  <meta name="description" content="給与明細の表面的な時給ではなく、通勤時間・サービス残業・仕事のための出費を差し引いた『人生の真の実効時給』を算出し、あなたの時給で元が取れる時短・疲労軽減アイテムを計算します。">
+  <title>あなたの「本当の手取り時給」診断 ｜ Coreworks Studio</title>
+  <meta name="description" content="通勤時間と残業を含めた「本当の人生の手取り時給」をスライダー3本で1秒診断し、時短家電の回収期間を計算します。">
   <style>
-    body { background: #0b0f19; color: #f1f5f9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Sans", sans-serif; padding: 24px 16px 60px; max-width: 820px; margin: 0 auto; line-height: 1.6; }
-    h1 { font-size: 1.8rem; margin-bottom: 8px; color: #f472b6; font-weight: 900; }
-    p { color: #94a3b8; font-size: 0.92rem; margin-bottom: 20px; }
-    .card { background: #151d30; border: 1px solid #23314e; border-radius: 14px; padding: 20px; margin-bottom: 20px; }
-    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
-    .form-group label { display: block; font-size: 0.84rem; color: #cbd5e1; margin-bottom: 6px; font-weight: 600; }
-    input { width: 100%; box-sizing: border-box; padding: 10px 12px; background: #0b0f19; border: 1px solid #334155; color: #fff; border-radius: 8px; font-size: 1rem; font-weight: 700; }
-    .result-box { background: rgba(244,114,182,0.1); border: 2px solid #f472b6; border-radius: 14px; padding: 22px; text-align: center; margin-bottom: 24px; }
-    .res-val { font-size: 2.4rem; font-weight: 900; color: #f472b6; margin: 6px 0; }
-    .back-link { display: inline-block; margin-bottom: 16px; color: #38bdf8; text-decoration: none; font-size: 0.88rem; font-weight: 600; }
+    :root {
+      --bg: #0b0f19;
+      --card: #151d30;
+      --border: #263554;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --pink: #f472b6;
+      --green: #34d399;
+      --amber: #fbbf24;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { overflow-x: hidden; width: 100%; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif; line-height: 1.45; }
+    .container { max-width: 640px; margin: 0 auto; padding: 16px 14px 60px; }
+    .back-link { display: inline-block; margin-bottom: 10px; color: var(--accent); text-decoration: none; font-size: 0.85rem; font-weight: 700; }
+    h1 { font-size: 1.45rem; font-weight: 900; margin-bottom: 4px; color: #fff; }
+    .lead { color: var(--muted); font-size: 0.83rem; margin-bottom: 14px; }
 
-    .roi-section { background: linear-gradient(180deg, #151d30 0%, #0f172a 100%); border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 16px; padding: 22px; margin-bottom: 24px; }
-    .roi-badge { display: inline-block; background: rgba(56, 189, 248, 0.15); color: #38bdf8; font-size: 0.76rem; font-weight: 800; padding: 4px 10px; border-radius: 6px; margin-bottom: 8px; }
-    .roi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(235px, 1fr)); gap: 14px; margin-top: 14px; }
-    .roi-card { background: #0b0f19; border: 1px solid #23314e; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; }
-    .roi-card h3 { font-size: 0.98rem; color: #fff; margin-bottom: 6px; }
-    .roi-payback { font-size: 0.84rem; color: #34d399; font-weight: 800; margin-bottom: 8px; }
-    .roi-desc { font-size: 0.8rem; color: #94a3b8; margin-bottom: 14px; flex-grow: 1; }
-    .btn-rakuten { display: block; text-align: center; background: linear-gradient(135deg, #df0000, #b80000); color: #fff; text-decoration: none; font-weight: 800; font-size: 0.84rem; padding: 10px 12px; border-radius: 8px; }
-    .btn-rakuten:hover { opacity: 0.92; }
+    /* 1. 結論（最上部） */
+    .result-box {
+      background: linear-gradient(145deg, rgba(244,114,182,0.16), rgba(56,189,248,0.1));
+      border: 2px solid var(--pink);
+      border-radius: 16px;
+      padding: 16px 14px;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .res-lbl { font-size: 0.8rem; color: #cbd5e1; font-weight: 700; }
+    .res-val { font-size: 2.15rem; font-weight: 900; color: var(--pink); margin: 2px 0 8px; }
+    .res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .res-mini { background: rgba(11,15,25,0.7); border-radius: 10px; padding: 8px 6px; }
+    .rm-lbl { font-size: 0.7rem; color: var(--muted); }
+    .rm-num { font-size: 0.96rem; font-weight: 900; margin-top: 2px; }
+
+    /* 2. スライダー3本だけの直感入力 */
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 14px; margin-bottom: 20px; }
+    .s-row { margin-bottom: 14px; }
+    .s-row:last-child { margin-bottom: 0; }
+    .s-head { display: flex; justify-content: space-between; font-size: 0.84rem; font-weight: 800; margin-bottom: 6px; }
+    input[type="range"] { width: 100%; accent-color: var(--pink); height: 6px; cursor: pointer; }
+
+    /* 3. 時短アイテム提案（スッキリ） */
+    .sec-title { font-size: 0.96rem; font-weight: 900; margin-bottom: 10px; color: #fff; }
+    .roi-list { display: flex; flex-direction: column; gap: 10px; }
+    .roi-item { background: var(--card); border: 1.5px solid var(--border); border-radius: 12px; padding: 12px; }
+    .roi-top { display: flex; justify-content: space-between; align-items: center; gap: 6px; margin-bottom: 6px; }
+    .roi-name { font-size: 0.9rem; font-weight: 800; color: #fff; }
+    .roi-badge { font-size: 0.74rem; font-weight: 900; color: var(--green); background: rgba(52,211,153,0.14); padding: 2px 8px; border-radius: 4px; white-space: nowrap; }
+    .roi-desc { font-size: 0.78rem; color: var(--muted); margin-bottom: 10px; }
+    .btn-rakuten { display: block; text-align: center; background: linear-gradient(135deg, #df0000, #b80000); color: #fff; text-decoration: none; font-weight: 800; font-size: 0.84rem; padding: 10px; border-radius: 8px; }
   </style>
 </head>
 <body>
-  <a href="../" class="back-link">← Coreworks Studio トップへ戻る</a>
-  <h1>⏱️ 真の実効時給＆通勤拘束ロス診断</h1>
-  <p>会社に拘束されている往復通勤時間や、仕事のための身銭（スーツ・昼食・飲み会代）を差し引いた<strong>「あなたの人生の本当の手取り時給」</strong>と、その時給で計算した<strong>「時間を買う投資の元取り期間」</strong>を可視化します。</p>
+  <div class="container">
+    <a href="../" class="back-link">← トップへ戻る</a>
+    <h1>⏱️ あなたの「本当の時給」診断</h1>
+    <p class="lead">通勤と残業を含めた「人生のリアル時給」をスライダー3本で1秒診断！</p>
 
-  <div class="card">
-    <div class="form-grid">
-      <div class="form-group">
-        <label>毎月の手取り月収（円）</label>
-        <input type="number" id="inIncome" value="260000" step="5000" oninput="calc()">
-      </div>
-      <div class="form-group">
-        <label>月の勤務日数（日）</label>
-        <input type="number" id="inDays" value="20" oninput="calc()">
-      </div>
-      <div class="form-group">
-        <label>1日の定時労働時間（時間）</label>
-        <input type="number" id="inHours" value="8" oninput="calc()">
-      </div>
-      <div class="form-group">
-        <label>月の残業時間（時間）</label>
-        <input type="number" id="inOT" value="20" oninput="calc()">
-      </div>
-      <div class="form-group">
-        <label>1日の往復通勤時間（分）</label>
-        <input type="number" id="inCommute" value="60" step="10" oninput="calc()">
-      </div>
-      <div class="form-group">
-        <label>仕事関連の自己負担出費（月/円）</label>
-        <input type="number" id="inExpense" value="15000" step="1000" oninput="calc()">
+    <!-- 1. 結果（最上部） -->
+    <div class="result-box">
+      <div class="res-lbl">通勤・残業込みの「真の実効時給」</div>
+      <div class="res-val" id="resWage">1,238 円 / 時間</div>
+      <div class="res-grid">
+        <div class="res-mini">
+          <div class="rm-lbl">月の総拘束時間</div>
+          <div class="rm-num" id="resHours" style="color:var(--accent);">210 時間/月</div>
+        </div>
+        <div class="res-mini">
+          <div class="rm-lbl">年間の通勤ロス換算</div>
+          <div class="rm-num" id="resCommuteLoss" style="color:var(--amber);">約 29.7 万円分</div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="result-box">
-    <div>あなたの「真の実効時給」</div>
-    <div class="res-val" id="resWage">0 円 / 時間</div>
-    <div style="font-size:0.96rem; color:#cbd5e1; margin-top:10px; line-height:1.8;">
-      見かけ上の名目時給: <strong id="resNominal">0 円/h</strong> ｜ 毎月の総拘束時間: <strong id="resTotalHours" style="color:#38bdf8;">0 時間</strong><br>
-      うち通勤だけで毎月 <strong id="resCommuteHours" style="color:#fbbf24;">0 時間</strong>（年間 <strong id="resCommuteYearly" style="color:#fbbf24;">0 時間</strong> ＝ 時給換算 <strong id="resCommuteCost" style="color:#fb7185;">0 円分</strong>）が消えています
+    <!-- 2. スライダー3本 -->
+    <div class="card">
+      <div class="s-row">
+        <div class="s-head">
+          <span>💰 毎月の手取り月収</span>
+          <span style="color:var(--pink);" id="lblInc">26 万円</span>
+        </div>
+        <input type="range" id="inInc" min="15" max="70" step="1" value="26" oninput="calc()">
+      </div>
+
+      <div class="s-row">
+        <div class="s-head">
+          <span>🚃 1日の往復通勤時間</span>
+          <span style="color:var(--accent);" id="lblCom">60 分/日</span>
+        </div>
+        <input type="range" id="inCom" min="0" max="180" step="10" value="60" oninput="calc()">
+      </div>
+
+      <div class="s-row">
+        <div class="s-head">
+          <span>🌙 月の残業時間</span>
+          <span style="color:var(--amber);" id="lblOt">25 時間/月</span>
+        </div>
+        <input type="range" id="inOt" min="0" max="80" step="5" value="25" oninput="calc()">
+      </div>
     </div>
-  </div>
 
-  <div class="roi-section">
-    <div class="roi-badge">⚡ あなたの実効時給から自動逆算</div>
-    <h2 style="font-size:1.25rem; font-weight:900; margin-bottom:6px;">あなたの時給（<span id="lblUserWage">1,225</span>円/h）なら、この「時間を買う投資」は何ヶ月で元が取れる？</h2>
-    <p style="margin-bottom:8px; font-size:0.86rem;">自由な時間が少ない人ほど、「毎日発生する家事時間や通勤ストレスを削る道具」への投資が最も利回りの高い資産運用になります。</p>
-
-    <div class="roi-grid">
-      <div class="roi-card">
-        <div>
-          <h3>🤖 ロボット掃除機 / 工事不要食洗機</h3>
-          <div class="roi-payback" id="paybackChore">⚡ あなたの時給なら 約 3.5ヶ月 で元取り！</div>
-          <p class="roi-desc">毎日25分の皿洗い・床掃除を自動化すると、年間152時間（あなたの時給換算で <strong id="valChoreYearly" style="color:#fff;">約18.6万円分</strong>）の自由時間が毎年手に入ります。</p>
+    <!-- 3. 時給連動の元取り提案 -->
+    <div class="sec-title">⚡ あなたの時給なら「何ヶ月で元が取れる？」</div>
+    <div class="roi-list">
+      <div class="roi-item">
+        <div class="roi-top">
+          <div class="roi-name">🍽️ 工事不要食洗機 / ロボ掃除機</div>
+          <div class="roi-badge" id="pbChore">約 2.6ヶ月で元取り</div>
         </div>
-        <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E3%2583%25AD%25E3%2583%259C%25E3%2583%2583%25E3%2583%2588%25E6%258E%2583%25E9%2599%25A4%25E6%25A9%259F%2520%25E9%25A3%259F%25E6%25B4%2597%25E6%25A9%259F%2520%25E5%25B7%25A5%25E4%25BA%258B%25E4%25B8%258D%25E8%25A6%2581%2F" target="_blank" rel="nofollow sponsored noopener" class="btn-rakuten">🛍️ 時短家電の楽天ランキングを見る ↗</a>
+        <div class="roi-desc">毎日25分の皿洗い・掃除を自動化すると、年間で <strong id="valChore" style="color:#fff;">約18.8万円分</strong> の自由時間が手に入ります。</div>
+        <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E9%25A3%259F%25E6%25B4%2597%25E6%25A9%259F%2520%25E5%25B7%25A5%25E4%25BA%258B%25E4%25B8%258D%25E8%25A6%2581%2520%25E3%2583%25AD%25E3%2583%259C%25E3%2583%2583%25E3%2583%2588%25E6%258E%2583%25E9%2599%25A4%25E6%25A9%259F%2F" target="_blank" rel="nofollow sponsored noopener" class="btn-rakuten">🛍️ 楽天市場で人気モデルを見る ↗</a>
       </div>
 
-      <div class="roi-card">
-        <div>
-          <h3>🎧 ノイキャンイヤホン（通勤時間の資産化）</h3>
-          <div class="roi-payback" id="paybackCommute">⚡ 通勤時間の価値化で 約 1.5ヶ月 で回収！</div>
-          <p class="roi-desc">騒音だらけの電車・バス通勤を、ボタン1つで静寂の読書・スキルアップ・仮眠空間に変換。疲労軽減と集中力アップに直結する必須装備。</p>
+      <div class="roi-item">
+        <div class="roi-top">
+          <div class="roi-name">🎧 ノイキャンイヤホン（通勤の資産化）</div>
+          <div class="roi-badge">約 1.5ヶ月で元取り</div>
         </div>
-        <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E3%2583%258E%25E3%2582%25A4%25E3%2582%25BA%25E3%2582%25AD%25E3%2583%25A3%25E3%2583%25B3%25E3%2582%25BB%25E3%2583%25AA%25E3%2583%25B3%25E3%2582%25B0%2520%25E3%2583%25AF%25E3%2582%25A4%25E3%2583%25A4%25E3%2583%25AC%25E3%2582%25B9%25E3%2582%25A4%25E3%2583%25A4%25E3%2583%259B%25E3%2583%25B3%2F" target="_blank" rel="nofollow sponsored noopener" class="btn-rakuten">🛍️ 高コスパノイキャン機を楽天で見る ↗</a>
-      </div>
-
-      <div class="roi-card">
-        <div>
-          <h3>🖱️ トラックボール ＆ 高機能ワークチェア</h3>
-          <div class="roi-payback" id="paybackDesk">⚡ 残業短縮＆整体代削減で 約 2ヶ月 で回収！</div>
-          <p class="roi-desc">手首や腰の疲労を減らし、PC作業スピードを1日15分短縮するだけで、年間60時間（<strong id="valDeskYearly" style="color:#fff;">約7.3万円相当</strong>）の労働時間を節約できます。</p>
-        </div>
-        <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E3%2583%25AD%25E3%2582%25B8%25E3%2582%25AF%25E3%2583%25BC%25E3%2583%25AB%2520%25E3%2583%2588%25E3%2583%25A9%25E3%2583%2583%25E3%2582%25AF%25E3%2583%259C%25E3%2583%25BC%25E3%2583%25AB%2520%25E3%2582%25AA%25E3%2583%2595%25E3%2582%25A3%25E3%2582%25B9%25E3%2583%2581%25E3%2582%25A7%25E3%2582%25A2%2F" target="_blank" rel="nofollow sponsored noopener" class="btn-rakuten">🛍️ デスク効率化名機を楽天で見る ↗</a>
+        <div class="roi-desc">騒音だらけの電車通勤を、ボタン1つで読書・勉強・休息のカフェ空間に変える必須装備。</div>
+        <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E3%2583%258E%25E3%2582%25A4%25E3%2582%25BA%25E3%2582%25AD%25E3%2583%25A3%25E3%2583%25B3%25E3%2582%25BB%25E3%2583%25AA%25E3%2583%25B3%25E3%2582%25B0%2520%25E3%2582%25A4%25E3%2583%25A4%25E3%2583%259B%25E3%2583%25B3%2F" target="_blank" rel="nofollow sponsored noopener" class="btn-rakuten">🛍️ 楽天市場でノイキャン機を見る ↗</a>
       </div>
     </div>
   </div>
 
   <script>
     function calc() {
-      const income = Number(document.getElementById('inIncome').value) || 0;
-      const days = Number(document.getElementById('inDays').value) || 0;
-      const hours = Number(document.getElementById('inHours').value) || 0;
-      const ot = Number(document.getElementById('inOT').value) || 0;
-      const commuteMin = Number(document.getElementById('inCommute').value) || 0;
-      const expense = Number(document.getElementById('inExpense').value) || 0;
+      const incMan = Number(document.getElementById('inInc').value) || 26;
+      const comMin = Number(document.getElementById('inCom').value) || 60;
+      const otHours = Number(document.getElementById('inOt').value) || 20;
 
-      const regularHours = days * hours;
-      const commuteHours = (days * commuteMin) / 60;
-      const totalBoundHours = regularHours + ot + commuteHours;
+      document.getElementById('lblInc').innerText = `${incMan} 万円`;
+      document.getElementById('lblCom').innerText = `${comMin} 分/日`;
+      document.getElementById('lblOt').innerText = `${otHours} 時間/月`;
 
-      const netIncome = Math.max(0, income - expense);
-      const nominalWage = (regularHours + ot) > 0 ? Math.round(income / (regularHours + ot)) : 0;
-      const effectiveWage = totalBoundHours > 0 ? Math.round(netIncome / totalBoundHours) : 1200;
+      const income = incMan * 10000;
+      const comHoursMonth = (comMin * 20) / 60;
+      const totalHours = 160 + otHours + comHoursMonth;
+      const wage = Math.round(income / totalHours);
+      const yearlyComLossMan = ((comHoursMonth * 12 * wage) / 10000).toFixed(1);
 
-      const yearlyCommuteHours = Math.round(commuteHours * 12);
-      const yearlyCommuteCost = yearlyCommuteHours * effectiveWage;
+      document.getElementById('resWage').innerText = `${wage.toLocaleString()} 円 / 時間`;
+      document.getElementById('resHours').innerText = `${Math.round(totalHours)} 時間/月`;
+      document.getElementById('resCommuteLoss').innerText = `約 ${yearlyComLossMan} 万円分`;
 
-      document.getElementById('resWage').innerText = effectiveWage.toLocaleString() + ' 円 / 時間';
-      document.getElementById('resNominal').innerText = nominalWage.toLocaleString() + ' 円/h';
-      document.getElementById('resTotalHours').innerText = Math.round(totalBoundHours) + ' 時間';
-      document.getElementById('resCommuteHours').innerText = Math.round(commuteHours) + ' 時間';
-      document.getElementById('resCommuteYearly').innerText = yearlyCommuteHours.toLocaleString() + ' 時間';
-      document.getElementById('resCommuteCost').innerText = yearlyCommuteCost.toLocaleString() + ' 円分';
-
-      // 時短ROIカード更新
-      const w = Math.max(800, effectiveWage);
-      document.getElementById('lblUserWage').innerText = w.toLocaleString();
-
-      const choreMonthlyVal = (25 * 30 / 60) * w; // 月12.5時間
-      const choreMonths = (42000 / choreMonthlyVal).toFixed(1);
-      document.getElementById('paybackChore').innerText = `⚡ あなたの時給なら 約 ${choreMonths}ヶ月 で元取り！`;
-      document.getElementById('valChoreYearly').innerText = `約 ${(Math.round(choreMonthlyVal * 12 / 1000) / 10).toFixed(1)}万円分`;
-
-      const deskMonthlyVal = (15 * 20 / 60) * w; // 月5時間
-      const deskMonths = (14000 / deskMonthlyVal).toFixed(1);
-      document.getElementById('paybackDesk').innerText = `⚡ 作業短縮だけで 約 ${deskMonths}ヶ月 で元取り！`;
-      document.getElementById('valDeskYearly').innerText = `約 ${(Math.round(deskMonthlyVal * 12 / 1000) / 10).toFixed(1)}万円相当`;
+      const choreMonthVal = 12.5 * wage; // 毎日25分=月12.5時間
+      const pbM = (38000 / choreMonthVal).toFixed(1);
+      const yearlyChoreMan = ((choreMonthVal * 12) / 10000).toFixed(1);
+      document.getElementById('pbChore').innerText = `約 ${pbM}ヶ月で元取り`;
+      document.getElementById('valChore').innerText = `約 ${yearlyChoreMan}万円分`;
     }
     calc();
   </script>
 
 <!-- Moshimo Official Rakuten Sponsor -->
-<div style="margin: 40px auto 20px; text-align: center; padding: 18px; background: rgba(21, 29, 48, 0.7); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; max-width: 600px;">
-  <div style="font-size: 0.78rem; color: #94a3b8; margin-bottom: 8px;">PR ｜ 楽天市場 公式スポンサーリンク</div>
+<div style="margin: 30px auto 20px; text-align: center; padding: 16px; background: rgba(21, 29, 48, 0.7); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; max-width: 600px;">
+  <div style="font-size: 0.75rem; color: #94a3b8; margin-bottom: 8px;">PR ｜ 楽天市場 公式スポンサーリンク</div>
   <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=618&url=https%3A%2F%2Fwww.rakuten.co.jp%2F" rel="nofollow sponsored" target="_blank" style="display: inline-block;">
     <img src="https://image.moshimo.com/af-img/0032/000000000618.gif" width="120" height="60" style="border:none; border-radius: 6px;" alt="楽天市場">
   </a>
   <img src="https://i.moshimo.com/af/i/impression?a_id=5876771&p_id=54&pc_id=54&pl_id=618" width="1" height="1" style="border:none;" loading="lazy" alt="">
-  <div style="font-size: 0.78rem; color: #94a3b8; margin-top: 6px;">当サイトは楽天市場アフィリエイトプログラムに参加し適格販売により収入を得ています</div>
+  <div style="font-size: 0.72rem; color: #94a3b8; margin-top: 6px;">当サイトは楽天市場アフィリエイトプログラムに参加しています</div>
 </div>
-
 </body>
 </html>
