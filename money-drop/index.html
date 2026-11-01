@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta name="theme-color" content="#090d16">
+<meta name="theme-color" content="#0f172a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<title>爆益！マネードロップ</title>
+<title>瞬間脳トレ！1つだけ違う文字を探せ</title>
 <style>
   * {
     box-sizing: border-box;
@@ -20,278 +20,365 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background: #090d16;
-    color: #ffffff;
-    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Meiryo", sans-serif;
-    touch-action: none;
+    background: linear-gradient(180deg, #0f172a 0%, #1e1b4b 100%);
+    color: #f8fafc;
+    font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Meiryo", sans-serif;
+    touch-action: manipulation;
   }
   #app {
     width: 100%;
     height: 100%;
-    max-width: 520px;
+    max-width: 500px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    padding: 10px 10px 12px;
-    gap: 8px;
-    background: linear-gradient(180deg, #090d16 0%, #131f35 100%);
+    padding: 0 16px 16px;
+    position: relative;
   }
 
-  /* 1. Top Giant Money Bar (Simple & Bold like the YouTube Video) */
-  #top-counter {
-    position: relative;
-    background: rgba(16, 185, 129, 0.18);
-    border: 3px solid #34d399;
-    border-radius: 18px;
-    padding: 8px 14px;
+  /* 1. Top Seek/Timer Progress Bar (Identical to YouTube Video) */
+  #top-progress-wrap {
+    width: calc(100% + 32px);
+    margin-left: -16px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    flex-shrink: 0;
+  }
+  #top-progress-bar {
+    height: 100%;
+    width: 100%;
+    background: #34d399;
+    transition: width 0.1s linear, background-color 0.2s;
+  }
+
+  /* 2. Top Badge Row */
+  .header-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.2);
+    margin-top: 14px;
+    margin-bottom: 10px;
     flex-shrink: 0;
   }
-  .money-wrap {
-    display: flex;
-    align-items: baseline;
-    gap: 6px;
-  }
-  .money-icon {
-    font-size: 28px;
-  }
-  #moneyText {
-    font-size: 32px;
-    font-weight: 900;
-    color: #fde047;
-    text-shadow: 0 2px 10px rgba(251, 191, 36, 0.55);
-    font-variant-numeric: tabular-nums;
-    letter-spacing: -0.5px;
-    transition: transform 0.08s ease;
-  }
-  #moneyText.pop {
-    transform: scale(1.08);
-  }
-  #soundBtn {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    border: 2px solid rgba(255, 255, 255, 0.25);
-    background: rgba(15, 23, 42, 0.85);
-    color: #fff;
-    font-size: 22px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    flex-shrink: 0;
-  }
-
-  /* 2. Center Physics Stage (Huge & Clean) */
-  #stage-box {
-    position: relative;
-    flex: 1;
-    width: 100%;
-    background: #070b14;
-    border: 3px solid rgba(56, 189, 248, 0.45);
-    border-radius: 22px;
-    overflow: hidden;
-    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.85);
-  }
-  #gameCanvas {
-    width: 100%;
-    height: 100%;
-    display: block;
-    cursor: pointer;
-  }
-
-  /* Fever Rush Button Bar */
-  #fever-btn {
-    position: relative;
-    height: 44px;
-    border-radius: 14px;
-    background: #1e293b;
-    border: 2px solid #475569;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    flex-shrink: 0;
-  }
-  #fever-fill {
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 0%;
-    background: linear-gradient(90deg, #ec4899, #f59e0b, #10b981);
-    transition: width 0.15s ease;
-  }
-  #fever-text {
-    position: relative;
-    z-index: 2;
-    font-size: 16px;
-    font-weight: 900;
-    color: #fff;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-  }
-  #fever-btn.ready {
-    border-color: #fde047;
-    animation: pulseGlow 0.9s infinite alternate;
-  }
-  @keyframes pulseGlow {
-    from { transform: scale(1); box-shadow: 0 0 10px rgba(253, 224, 71, 0.4); }
-    to   { transform: scale(1.02); box-shadow: 0 0 22px rgba(253, 224, 71, 0.9); }
-  }
-
-  /* 3. Bottom 3 Big Intuitive Upgrade Buttons (Zero Small Text!) */
-  #upg-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    flex-shrink: 0;
-  }
-  .big-upg-btn {
-    background: linear-gradient(180deg, #fbbf24 0%, #d97706 100%);
-    border: 3px solid #fef08a;
-    border-radius: 16px;
-    padding: 8px 4px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2px;
-    color: #090d16;
-    cursor: pointer;
-    box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
-    transition: transform 0.08s ease, opacity 0.15s;
-  }
-  .big-upg-btn:active {
-    transform: scale(0.95);
-  }
-  .big-upg-btn:disabled {
-    background: #1e293b;
-    border-color: #334155;
-    color: #64748b;
-    box-shadow: none;
-  }
-  .big-upg-icon {
-    font-size: 26px;
-    line-height: 1.1;
-  }
-  .big-upg-name {
-    font-size: 14px;
-    font-weight: 900;
-    letter-spacing: -0.3px;
-  }
-  .big-upg-cost {
+  .top-badge {
+    background: #f59e0b;
+    color: #052e16;
     font-size: 15px;
     font-weight: 900;
-    background: rgba(0, 0, 0, 0.2);
-    color: #fff;
-    padding: 2px 8px;
+    padding: 7px 16px;
     border-radius: 99px;
-    margin-top: 2px;
+    letter-spacing: -0.2px;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
   }
-  .big-upg-btn:disabled .big-upg-cost {
-    background: rgba(255, 255, 255, 0.05);
+  .sound-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: rgba(30, 41, 59, 0.85);
+    border: 2px solid rgba(255, 255, 255, 0.18);
+    color: #fff;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  /* 3. Headlines (Identical to YouTube Video) */
+  .headlines {
+    margin-bottom: 12px;
+    flex-shrink: 0;
+  }
+  .headline-1 {
+    font-size: 26px;
+    font-weight: 900;
+    color: #ffffff;
+    line-height: 1.25;
+    letter-spacing: -0.5px;
+  }
+  .headline-2 {
+    font-size: 26px;
+    font-weight: 900;
+    color: #fbbf24;
+    line-height: 1.25;
+    letter-spacing: -0.5px;
+  }
+
+  /* 4. Status / Countdown Banner (Identical to YouTube Video) */
+  #status-banner {
+    width: 100%;
+    height: 54px;
+    border-radius: 14px;
+    background: rgba(239, 68, 68, 0.2);
+    border: 2px solid rgba(248, 113, 113, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 900;
+    color: #f87171;
+    margin-bottom: 12px;
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+  }
+  #status-banner.correct {
+    background: rgba(16, 185, 129, 0.25);
+    border-color: #34d399;
+    color: #34d399;
+  }
+  #status-banner.reveal {
+    background: rgba(245, 158, 11, 0.25);
+    border-color: #fbbf24;
+    color: #fde047;
+  }
+
+  /* 5. Main Kanji/Character Grid */
+  #grid-wrap {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+  }
+  #grid {
+    width: 100%;
+    height: 100%;
+    max-height: 500px;
+    display: grid;
+    gap: 8px;
+  }
+  .cell {
+    background: rgba(30, 41, 59, 0.88);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #f8fafc;
+    font-weight: 900;
+    cursor: pointer;
+    transition: transform 0.08s ease, background-color 0.15s ease, opacity 0.2s ease;
+  }
+  .cell:active {
+    transform: scale(0.93);
+  }
+  .cell.correct-cell {
+    background: #10b981 !important;
+    border-color: #6ee7b7 !important;
+    color: #052e16 !important;
+    transform: scale(1.04);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+  }
+  .cell.wrong-cell {
+    background: rgba(239, 68, 68, 0.45);
+    border-color: #f87171;
+  }
+  .cell.dimmed {
+    opacity: 0.18;
+    pointer-events: none;
+  }
+
+  /* 6. Bottom Footer Tip / Controls (Identical to YouTube Video Footer) */
+  #footer-bar {
+    margin-top: 12px;
+    background: rgba(56, 189, 248, 0.15);
+    border: 2px solid #38bdf8;
+    border-radius: 16px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  .best-info {
+    font-size: 15px;
+    font-weight: 800;
+    color: #f8fafc;
+  }
+  .hint-btn {
+    background: #38bdf8;
+    color: #090d16;
+    border: none;
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-size: 15px;
+    font-weight: 900;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .hint-btn:disabled {
+    background: #334155;
     color: #64748b;
+    cursor: not-allowed;
+  }
+
+  /* Result / Next Overlay Modal */
+  #modal {
+    display: none;
+    position: absolute;
+    inset: 0;
+    background: rgba(9, 13, 22, 0.88);
+    z-index: 30;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  #modal.show {
+    display: flex;
+  }
+  .modal-card {
+    width: 100%;
+    max-width: 400px;
+    background: #1e293b;
+    border: 3px solid #fbbf24;
+    border-radius: 22px;
+    padding: 24px 20px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+  }
+  .modal-badge {
+    display: inline-block;
+    background: #f59e0b;
+    color: #052e16;
+    font-size: 14px;
+    font-weight: 900;
+    padding: 4px 14px;
+    border-radius: 99px;
+    margin-bottom: 10px;
+  }
+  .modal-title {
+    font-size: 28px;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .modal-iq {
+    font-size: 42px;
+    font-weight: 900;
+    color: #34d399;
+    margin: 10px 0;
+  }
+  .modal-sub {
+    font-size: 16px;
+    color: #cbd5e1;
+    margin-bottom: 20px;
+    line-height: 1.4;
+  }
+  .retry-btn {
+    width: 100%;
+    background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+    color: #052e16;
+    border: none;
+    border-radius: 14px;
+    padding: 15px;
+    font-size: 20px;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
   }
 </style>
 </head>
 <body>
 <div id="app">
-  <!-- 1. Giant Money Counter -->
-  <div id="top-counter">
-    <div class="money-wrap">
-      <span class="money-icon">💰</span>
-      <span id="moneyText">¥0</span>
+  <!-- 1. Top Progress Bar -->
+  <div id="top-progress-wrap">
+    <div id="top-progress-bar"></div>
+  </div>
+
+  <!-- 2. Top Badge & Sound -->
+  <div class="header-row">
+    <div class="top-badge" id="stageBadge">🧠 STAGE 1 ｜ 脳トレIQ 100</div>
+    <button class="sound-btn" id="soundBtn" aria-label="音量">🔊</button>
+  </div>
+
+  <!-- 3. Headlines -->
+  <div class="headlines">
+    <div class="headline-1" id="headline1">1つだけ違う文字を</div>
+    <div class="headline-2" id="headline2">制限時間内にタップ！</div>
+  </div>
+
+  <!-- 4. Countdown / Answer Status Banner -->
+  <div id="status-banner">⏱️ 残り 10.0 秒！</div>
+
+  <!-- 5. Clean Character Grid -->
+  <div id="grid-wrap">
+    <div id="grid"></div>
+  </div>
+
+  <!-- 6. Bottom Footer -->
+  <div id="footer-bar">
+    <div class="best-info" id="bestText">👑 自己ベスト: STAGE 1 (IQ 100)</div>
+    <button class="hint-btn" id="hintBtn">💡 ヒント (3)</button>
+  </div>
+
+  <!-- Game Over / IQ Diagnosis Modal -->
+  <div id="modal">
+    <div class="modal-card">
+      <div class="modal-badge">🧠 あなたの瞬間脳トレ診断結果</div>
+      <div class="modal-title" id="modalStage">到達：STAGE 5</div>
+      <div class="modal-iq" id="modalIQ">認定IQ 125</div>
+      <div class="modal-sub" id="modalComment">素晴らしい観察力です！<br>正解の文字は「徴」でした。</div>
+      <button class="retry-btn" id="retryBtn">🔄 ステージ1から再挑戦</button>
     </div>
-    <button id="soundBtn" aria-label="音量切替">🔊</button>
-  </div>
-
-  <!-- 2. Main Physics Stage (Exact YouTube Video Layout & Proportions) -->
-  <div id="stage-box">
-    <canvas id="gameCanvas"></canvas>
-  </div>
-
-  <!-- 3. Fever Rush Bar -->
-  <button id="fever-btn">
-    <div id="fever-fill"></div>
-    <span id="fever-text">🔥 フィーバーゲージ 0%</span>
-  </button>
-
-  <!-- 4. Three Big One-Tap Upgrade Buttons -->
-  <div id="upg-grid">
-    <button class="big-upg-btn" id="btnSpeed">
-      <span class="big-upg-icon">⚡</span>
-      <span class="big-upg-name" id="nameSpeed">連射 Lv.1</span>
-      <span class="big-upg-cost" id="costSpeed">¥50</span>
-    </button>
-    <button class="big-upg-btn" id="btnRank">
-      <span class="big-upg-icon" id="iconRank">🥈</span>
-      <span class="big-upg-name" id="nameRank">お金進化</span>
-      <span class="big-upg-cost" id="costRank">¥300</span>
-    </button>
-    <button class="big-upg-btn" id="btnMult">
-      <span class="big-upg-icon">💥</span>
-      <span class="big-upg-name" id="nameMult">倍率 Lv.1</span>
-      <span class="big-upg-cost" id="costMult">¥120</span>
-    </button>
   </div>
 </div>
 
 <script>
 (() => {
   // ============================================================================
-  // 1. BIG BOLD ASSET TIERS (Exact style from the YouTube Video!)
+  // 1. QUESTION POOL (Sorted by difficulty: Easy -> Medium -> Hard -> Genius)
   // ============================================================================
-  const TIERS = [
-    { id: 0, name: '¥100',   icon: '🥈', val: 100,       r: 25, color: '#e2e8f0', ring: '#64748b', pitch: 523.25 },
-    { id: 1, name: '¥500',   icon: '🥇', val: 500,       r: 30, color: '#facc15', ring: '#ca8a04', pitch: 587.33 },
-    { id: 2, name: '¥1,000', icon: '💴', val: 2500,      r: 35, color: '#38bdf8', ring: '#0284c7', pitch: 659.25 },
-    { id: 3, name: '¥1万',   icon: '💵', val: 15000,     r: 41, color: '#34d399', ring: '#059669', pitch: 783.99 },
-    { id: 4, name: '純金',   icon: '🧈', val: 120000,    r: 47, color: '#fbbf24', ring: '#d97706', pitch: 880.00 },
-    { id: 5, name: 'ダイヤ', icon: '💎', val: 1000000,   r: 54, color: '#60a5fa', ring: '#2563eb', pitch: 1046.50 },
-    { id: 6, name: '石油王', icon: '👑', val: 10000000,  r: 61, color: '#f472b6', ring: '#db2777', pitch: 1174.66 },
-    { id: 7, name: '宇宙',   icon: '🪐', val: 100000000, r: 68, color: '#fde047', ring: '#ef4444', pitch: 1318.51 }
+  const PUZZLES = [
+    // Level 1 (Easy / Intuitive)
+    { normal: '大', odd: '太' },
+    { normal: '日', odd: '目' },
+    { normal: '人', odd: '入' },
+    { normal: '土', odd: '士' },
+    { normal: '白', odd: '百' },
+    { normal: '王', odd: '玉' },
+    { normal: '刀', odd: '力' },
+    { normal: '千', odd: '干' },
+    { normal: '牛', odd: '午' },
+    { normal: '木', odd: '本' },
+    // Level 2 (Medium)
+    { normal: '氷', odd: '永' },
+    { normal: '未', odd: '末' },
+    { normal: '休', odd: '体' },
+    { normal: '名', odd: '各' },
+    { normal: '右', odd: '石' },
+    { normal: '貝', odd: '見' },
+    { normal: '田', odd: '由' },
+    { normal: '甲', odd: '申' },
+    { normal: '古', odd: '吉' },
+    { normal: '宇', odd: '字' },
+    // Level 3 (Tricky)
+    { normal: '待', odd: '持' },
+    { normal: '鳥', odd: '烏' },
+    { normal: '季', odd: '李' },
+    { normal: '問', odd: '間' },
+    { normal: '晴', odd: '睛' },
+    { normal: '往', odd: '住' },
+    { normal: '柱', odd: '注' },
+    { normal: '複', odd: '復' },
+    { normal: '綱', odd: '網' },
+    { normal: '壁', odd: '璧' },
+    // Level 4 (Genius - includes the exact YouTube video kanji 微 vs 徴!)
+    { normal: '微', odd: '徴' },
+    { normal: '鏡', odd: '境' },
+    { normal: '簿', odd: '薄' },
+    { normal: '緑', odd: '縁' },
+    { normal: '輪', odd: '輸' },
+    { normal: '燥', odd: '噪' },
+    { normal: '崇', odd: '祟' },
+    { normal: '塊', odd: '魂' },
+    { normal: '暦', odd: '歴' },
+    { normal: '穫', odd: '獲' }
   ];
 
   // ============================================================================
-  // 2. STATE & SAVE
-  // ============================================================================
-  const SAVE_KEY = 'cw_money_drop_simple_v2';
-  let state = {
-    money: 0,
-    fever: 0,
-    feverUntil: 0,
-    speedLv: 1,
-    rankLv: 0,
-    multLv: 1
-  };
-
-  try {
-    const raw = localStorage.getItem(SAVE_KEY);
-    if (raw) state = Object.assign({}, state, JSON.parse(raw));
-  } catch (e) {}
-
-  function save() {
-    try { localStorage.setItem(SAVE_KEY, JSON.stringify(state)); } catch (e) {}
-  }
-
-  function fmtYen(n) {
-    n = Math.floor(n);
-    if (n < 10000) return '¥' + n.toLocaleString('ja-JP');
-    if (n < 100000000) {
-      return '¥' + (n / 10000).toFixed(n >= 1000000 ? 0 : 1).replace(/\.0$/, '') + '万';
-    }
-    if (n < 1000000000000) {
-      return '¥' + (n / 100000000).toFixed(1).replace(/\.0$/, '') + '億';
-    }
-    return '¥' + (n / 1000000000000).toFixed(1).replace(/\.0$/, '') + '兆';
-  }
-
-  // ============================================================================
-  // 3. WEB AUDIO ASMR SYNTH
+  // 2. SOUND EFFECTS (Same clean WebAudio tones as the YouTube Video)
   // ============================================================================
   let audioCtx = null;
   let soundOn = true;
@@ -304,552 +391,283 @@
     if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
   }
 
-  function playHitSound(tierId, mult) {
+  function playTickSound() {
+    if (!soundOn || !audioCtx) return;
+    const now = audioCtx.currentTime;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(440, now);
+    gain.gain.setValueAtTime(0.04, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start(now);
+    osc.stop(now + 0.07);
+  }
+
+  function playCorrectSound() {
+    if (!soundOn) return;
+    initAudio();
+    if (!audioCtx) return;
+    const now = audioCtx.currentTime;
+    // Crisp "Pin-Pon!" chime
+    [587.33, 880.0].forEach((freq, idx) => {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now + idx * 0.11);
+      gain.gain.setValueAtTime(0.22, now + idx * 0.11);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.11 + 0.28);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now + idx * 0.11);
+      osc.stop(now + idx * 0.11 + 0.3);
+    });
+  }
+
+  function playWrongSound() {
     if (!soundOn) return;
     initAudio();
     if (!audioCtx) return;
     const now = audioCtx.currentTime;
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
-    const f = TIERS[Math.min(tierId, TIERS.length - 1)].pitch;
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(f, now);
-    osc.frequency.exponentialRampToValueAtTime(f * 1.4, now + 0.09);
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(180, now);
+    osc.frequency.setValueAtTime(140, now + 0.08);
     gain.gain.setValueAtTime(0.12, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.11);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
     osc.connect(gain);
     gain.connect(audioCtx.destination);
     osc.start(now);
-    osc.stop(now + 0.11);
+    osc.stop(now + 0.19);
   }
 
-  function playMergeSound(tierId) {
-    if (!soundOn) return;
+  // ============================================================================
+  // 3. GAME STATE & STAGE GENERATOR
+  // ============================================================================
+  const SAVE_KEY = 'cw_kanji_iq_best_v1';
+  let bestStage = 1;
+  let bestIQ = 100;
+  try {
+    const saved = JSON.parse(localStorage.getItem(SAVE_KEY) || '{}');
+    if (saved.bestStage) bestStage = saved.bestStage;
+    if (saved.bestIQ) bestIQ = saved.bestIQ;
+  } catch (e) {}
+
+  let stage = 1;
+  let iq = 100;
+  let hintsLeft = 3;
+  let timeLimit = 10.0;
+  let timeRemaining = 10.0;
+  let oddIndex = 0;
+  let currentPair = PUZZLES[0];
+  let isStageActive = false;
+  let timerId = null;
+  let lastTickSec = 10;
+
+  const gridEl = document.getElementById('grid');
+  const bannerEl = document.getElementById('status-banner');
+  const progBarEl = document.getElementById('top-progress-bar');
+  const stageBadgeEl = document.getElementById('stageBadge');
+  const bestTextEl = document.getElementById('bestText');
+  const hintBtnEl = document.getElementById('hintBtn');
+  const modalEl = document.getElementById('modal');
+
+  function getGridSizeForStage(st) {
+    if (st === 1) return { cols: 3, rows: 3, fontPx: 46 }; // 9 cells
+    if (st === 2) return { cols: 3, rows: 4, fontPx: 42 }; // 12 cells
+    if (st <= 4)  return { cols: 4, rows: 4, fontPx: 38 }; // 16 cells
+    if (st <= 6)  return { cols: 4, rows: 5, fontPx: 34 }; // 20 cells
+    if (st <= 9)  return { cols: 5, rows: 5, fontPx: 30 }; // 25 cells
+    return { cols: 5, rows: 6, fontPx: 28 };               // 30 cells (Same as YouTube video)
+  }
+
+  function pickPuzzleForStage(st) {
+    let pool;
+    if (st <= 2) pool = PUZZLES.slice(0, 10);
+    else if (st <= 5) pool = PUZZLES.slice(8, 22);
+    else if (st <= 8) pool = PUZZLES.slice(18, 32);
+    else pool = PUZZLES.slice(24);
+    const base = pool[Math.floor(Math.random() * pool.length)];
+    // Randomly swap normal & odd so it's always fresh
+    return Math.random() < 0.5
+      ? { normal: base.normal, odd: base.odd }
+      : { normal: base.odd, odd: base.normal };
+  }
+
+  function updateHUD() {
+    stageBadgeEl.textContent = `🧠 STAGE ${stage} ｜ 脳トレIQ ${iq}`;
+    bestTextEl.textContent = `👑 自己ベスト: STAGE ${bestStage} (IQ ${bestIQ})`;
+    hintBtnEl.textContent = `💡 ヒント (${hintsLeft})`;
+    hintBtnEl.disabled = !isStageActive || hintsLeft <= 0;
+  }
+
+  function startStage() {
+    clearInterval(timerId);
+    modalEl.classList.remove('show');
+    isStageActive = true;
+
+    const { cols, rows, fontPx } = getGridSizeForStage(stage);
+    const total = cols * rows;
+    currentPair = pickPuzzleForStage(stage);
+    oddIndex = Math.floor(Math.random() * total);
+
+    // Time limit: 10 seconds on early stages, 8 seconds on high stages
+    timeLimit = Math.max(7.0, 10.5 - Math.floor(stage / 4) * 0.5);
+    timeRemaining = timeLimit;
+    lastTickSec = Math.ceil(timeRemaining);
+
+    bannerEl.className = '';
+    bannerEl.textContent = `⏱️ 残り ${timeRemaining.toFixed(1)} 秒！`;
+    progBarEl.style.width = '100%';
+    progBarEl.style.backgroundColor = '#34d399';
+
+    gridEl.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+    gridEl.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+    gridEl.innerHTML = '';
+
+    for (let i = 0; i < total; i++) {
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      cell.style.fontSize = `${fontPx}px`;
+      cell.textContent = (i === oddIndex) ? currentPair.odd : currentPair.normal;
+      cell.addEventListener('pointerdown', () => onCellTap(i, cell));
+      gridEl.appendChild(cell);
+    }
+
+    updateHUD();
+
+    const startTime = performance.now();
+    timerId = setInterval(() => {
+      if (!isStageActive) return;
+      const elapsed = (performance.now() - startTime) / 1000;
+      timeRemaining = Math.max(0, timeLimit - elapsed);
+
+      const ratio = (timeRemaining / timeLimit) * 100;
+      progBarEl.style.width = `${ratio}%`;
+      if (timeRemaining <= 3.0) {
+        progBarEl.style.backgroundColor = '#f87171';
+      }
+
+      const secInt = Math.ceil(timeRemaining);
+      if (secInt < lastTickSec && secInt > 0) {
+        lastTickSec = secInt;
+        playTickSound();
+      }
+
+      bannerEl.textContent = `⏱️ 残り ${timeRemaining.toFixed(1)} 秒！`;
+
+      if (timeRemaining <= 0) {
+        onTimeUp();
+      }
+    }, 50);
+  }
+
+  function onCellTap(index, cellEl) {
+    if (!isStageActive) return;
     initAudio();
-    if (!audioCtx) return;
-    const now = audioCtx.currentTime;
-    const f = TIERS[Math.min(tierId, TIERS.length - 1)].pitch;
-    [1, 1.25, 1.5].forEach((r, i) => {
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(f * r, now + i * 0.035);
-      gain.gain.setValueAtTime(0.18, now + i * 0.035);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.035 + 0.22);
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start(now + i * 0.035);
-      osc.stop(now + i * 0.035 + 0.23);
-    });
+
+    if (index === oddIndex) {
+      // Correct!
+      isStageActive = false;
+      clearInterval(timerId);
+      playCorrectSound();
+
+      cellEl.classList.add('correct-cell');
+      const clearSec = Math.max(0.2, timeLimit - timeRemaining).toFixed(1);
+      const iqGain = timeRemaining >= timeLimit * 0.6 ? 6 : (timeRemaining >= timeLimit * 0.3 ? 4 : 3);
+      iq += iqGain;
+
+      if (stage > bestStage || iq > bestIQ) {
+        bestStage = Math.max(bestStage, stage);
+        bestIQ = Math.max(bestIQ, iq);
+        try {
+          localStorage.setItem(SAVE_KEY, JSON.stringify({ bestStage, bestIQ }));
+        } catch (e) {}
+      }
+
+      bannerEl.className = 'correct';
+      bannerEl.textContent = `🎉 正解！ ${clearSec}秒で発見！（IQ +${iqGain}）`;
+      updateHUD();
+
+      setTimeout(() => {
+        stage++;
+        startStage();
+      }, 1150);
+    } else {
+      // Wrong cell tapped -> brief red highlight & -1.0s penalty
+      playWrongSound();
+      cellEl.classList.add('wrong-cell');
+      setTimeout(() => cellEl.classList.remove('wrong-cell'), 300);
+    }
   }
 
-  // ============================================================================
-  // 4. PHYSICS STAGE (Exact Layout & Bouncy Feel of the YouTube Video!)
-  // ============================================================================
-  const canvas = document.getElementById('gameCanvas');
-  const ctx = canvas.getContext('2d');
-  // Fixed internal virtual coordinate space (540 x 720) so proportions & sizes are IDENTICAL on all phones!
-  const W = 540;
-  let H = 720;
+  function onTimeUp() {
+    isStageActive = false;
+    clearInterval(timerId);
+    playWrongSound();
 
-  let balls = [];
-  let bumpers = [];
-  let popups = [];
-  let rings = [];
-  let showTapHint = true;
+    // Highlight the correct answer in green just like the YouTube video!
+    const cells = gridEl.querySelectorAll('.cell');
+    if (cells[oddIndex]) {
+      cells[oddIndex].classList.add('correct-cell');
+    }
 
-  function resizeCanvas() {
-    const rect = canvas.parentElement.getBoundingClientRect();
-    const aspect = rect.height / Math.max(1, rect.width);
-    H = Math.max(580, Math.min(860, Math.round(W * aspect)));
-    canvas.width = W;
-    canvas.height = H;
-    rebuildBumpers();
+    bannerEl.className = 'reveal';
+    bannerEl.textContent = `👀 正解はココでした！（${currentPair.odd}）`;
+    updateHUD();
+
+    setTimeout(() => {
+      document.getElementById('modalStage').textContent = `到達：STAGE ${stage}`;
+      document.getElementById('modalIQ').textContent = `認定IQ ${iq}`;
+      let comment = 'ウォーミングアップ完了！もう一度挑戦してみましょう！';
+      if (iq >= 150) comment = '👑 上位0.1%の超人的な瞬間認識力です！';
+      else if (iq >= 130) comment = '✨ 天才級の観察眼！わずかな違和感を一瞬で見抜いています！';
+      else if (iq >= 115) comment = '👏 平均を大きく上回る鋭い集中力です！';
+      document.getElementById('modalComment').innerHTML = `${comment}<br>（今回の違い：「${currentPair.normal}」の中の「${currentPair.odd}」）`;
+      modalEl.classList.add('show');
+    }, 1500);
   }
 
-  function rebuildBumpers() {
-    const m = state.multLv || 1;
-    bumpers = [
-      { x: 145, y: H * 0.25, r: 34, mult: 1 + m,     color: '#38bdf8', pulse: 0 },
-      { x: 395, y: H * 0.25, r: 34, mult: 1 + m,     color: '#38bdf8', pulse: 0 },
-      { x: 270, y: H * 0.44, r: 44, mult: 3 + m * 2, color: '#fbbf24', pulse: 0 },
-      { x: 120, y: H * 0.62, r: 32, mult: 2 + m,     color: '#a78bfa', pulse: 0 },
-      { x: 420, y: H * 0.62, r: 32, mult: 2 + m,     color: '#a78bfa', pulse: 0 },
-      { x: 205, y: H * 0.79, r: 33, mult: 2 + m,     color: '#34d399', pulse: 0 },
-      { x: 335, y: H * 0.79, r: 33, mult: 2 + m,     color: '#34d399', pulse: 0 }
-    ];
-  }
-
-  function addMoney(amount) {
-    state.money += amount;
-    const el = document.getElementById('moneyText');
-    el.textContent = fmtYen(state.money);
-    el.classList.add('pop');
-    clearTimeout(el._t);
-    el._t = setTimeout(() => el.classList.remove('pop'), 80);
-    refreshButtons();
-  }
-
-  function addPopup(x, y, text, color = '#fde047', size = 24) {
-    if (popups.length > 26) popups.shift();
-    popups.push({ x, y, text, color, size, a: 1.15 });
-  }
-
-  function spawnBall(customX) {
-    if (balls.length >= 34) return;
-    const baseTier = Math.min(state.rankLv || 0, TIERS.length - 3);
-    const tier = (Math.random() < 0.22) ? baseTier + 1 : baseTier;
-    const tr = TIERS[tier];
-    const x = customX !== undefined
-      ? Math.max(tr.r + 16, Math.min(W - tr.r - 16, customX))
-      : (110 + Math.random() * (W - 220));
-    balls.push({
-      x,
-      y: 36,
-      vx: (Math.random() - 0.5) * 6,
-      vy: 2 + Math.random() * 2.5,
-      tier,
-      r: tr.r,
-      cd: 5,
-      life: 0
-    });
-  }
-
-  function triggerFeverShower() {
+  // Hint button: dims half of the remaining normal cells!
+  hintBtnEl.addEventListener('click', () => {
+    if (!isStageActive || hintsLeft <= 0) return;
     initAudio();
-    state.fever = 0;
-    state.feverUntil = Date.now() + 7000;
-    addPopup(W / 2, H * 0.35, '🌈 FEVER 大放出！！', '#fde047', 34);
-    for (let i = 0; i < 12; i++) {
-      setTimeout(() => spawnBall(90 + Math.random() * (W - 180)), i * 90);
+    hintsLeft--;
+    const cells = Array.from(gridEl.querySelectorAll('.cell'));
+    const normalCandidates = cells
+      .map((el, idx) => ({ el, idx }))
+      .filter(x => x.idx !== oddIndex && !x.el.classList.contains('dimmed'));
+
+    // Shuffle and dim half
+    normalCandidates.sort(() => Math.random() - 0.5);
+    const countToDim = Math.max(2, Math.floor(normalCandidates.length * 0.5));
+    for (let i = 0; i < countToDim && i < normalCandidates.length; i++) {
+      normalCandidates[i].el.classList.add('dimmed');
     }
-    updateFeverUI();
-  }
-
-  function stepPhysics() {
-    const isFever = Date.now() < state.feverUntil;
-    const feverMult = isFever ? 2 : 1;
-
-    for (let i = balls.length - 1; i >= 0; i--) {
-      const b = balls[i];
-      b.life++;
-      if (b.cd > 0) b.cd--;
-      b.vy += 0.36;
-      b.vx *= 0.996;
-      b.vy *= 0.996;
-      b.x += b.vx;
-      b.y += b.vy;
-
-      // Side walls
-      if (b.x - b.r < 12) {
-        b.x = 12 + b.r;
-        b.vx = Math.abs(b.vx) * 0.82;
-      } else if (b.x + b.r > W - 12) {
-        b.x = W - 12 - b.r;
-        b.vx = -Math.abs(b.vx) * 0.82;
-      }
-
-      // Bumper hits
-      for (const bmp of bumpers) {
-        const dx = b.x - bmp.x;
-        const dy = b.y - bmp.y;
-        const dist = Math.hypot(dx, dy);
-        const minDist = b.r + bmp.r;
-        if (dist < minDist && dist > 0.01) {
-          const nx = dx / dist;
-          const ny = dy / dist;
-          b.x = bmp.x + nx * (minDist + 2);
-          b.y = bmp.y + ny * (minDist + 2);
-          b.vx = nx * 8.5 + (Math.random() - 0.5) * 2.5;
-          b.vy = ny * 8.5 - 1.5;
-          bmp.pulse = 1;
-
-          const gain = TIERS[b.tier].val * bmp.mult * feverMult;
-          addMoney(gain);
-          if (!isFever) state.fever = Math.min(100, state.fever + 2.5);
-          playHitSound(b.tier, bmp.mult);
-          addPopup(b.x, b.y - 16, '+' + fmtYen(gain), bmp.color, 22);
-        }
-      }
-
-      // Bottom bouncy floor & central Jackpot collector
-      const floorY = H - 38;
-      if (b.y + b.r >= floorY) {
-        // Center gate (x between 160 and 380) collects after a couple bounces or immediately for big payout!
-        const inCenterGate = (b.x > 155 && b.x < W - 155);
-        if (inCenterGate && b.life > 75) {
-          const mult = 5 * (state.multLv || 1) * feverMult;
-          const gain = TIERS[b.tier].val * mult;
-          addMoney(gain);
-          if (!isFever) state.fever = Math.min(100, state.fever + 4);
-          playHitSound(b.tier + 1, 5);
-          addPopup(b.x, floorY - 24, '回収 +' + fmtYen(gain), '#fde047', 26);
-          balls.splice(i, 1);
-          continue;
-        } else {
-          // Bounce toward the center so balls collide & merge at the bottom!
-          b.y = floorY - b.r;
-          b.vy = -Math.max(5.5, Math.abs(b.vy) * 0.72);
-          b.vx += (W / 2 - b.x) * 0.018;
-        }
-      }
-    }
-
-    // Ball-to-Ball Merge Evolution
-    for (let i = 0; i < balls.length; i++) {
-      for (let j = i + 1; j < balls.length; j++) {
-        const a = balls[i];
-        const b = balls[j];
-        if (!a || !b) continue;
-        const dx = b.x - a.x;
-        const dy = b.y - a.y;
-        const dist = Math.hypot(dx, dy);
-        const minDist = a.r + b.r;
-        if (dist < minDist && dist > 0.01) {
-          if (a.tier === b.tier && a.tier < TIERS.length - 1 && a.cd === 0 && b.cd === 0) {
-            a.tier++;
-            const nt = TIERS[a.tier];
-            a.r = nt.r;
-            a.x = (a.x + b.x) * 0.5;
-            a.y = (a.y + b.y) * 0.5;
-            a.vy = -7.5;
-            a.vx = (Math.random() - 0.5) * 4;
-            a.cd = 10;
-
-            const bonus = nt.val * 3 * (state.multLv || 1) * feverMult;
-            addMoney(bonus);
-            if (!isFever) state.fever = Math.min(100, state.fever + 8);
-            playMergeSound(a.tier);
-            addPopup(a.x, a.y - 24, `合体！${nt.icon}${nt.name}`, '#fde047', 28);
-            rings.push({ x: a.x, y: a.y, r: nt.r, maxR: nt.r * 2.4, color: nt.color, a: 1 });
-
-            balls.splice(j, 1);
-            j--;
-            continue;
-          }
-
-          // Elastic bounce
-          const nx = dx / dist;
-          const ny = dy / dist;
-          const ov = (minDist - dist) * 0.5;
-          a.x -= nx * ov;
-          a.y -= ny * ov;
-          b.x += nx * ov;
-          b.y += ny * ov;
-
-          const kx = a.vx - b.vx;
-          const ky = a.vy - b.vy;
-          const p = (nx * kx + ny * ky);
-          if (p > 0) {
-            a.vx -= p * nx * 0.8;
-            a.vy -= p * ny * 0.8;
-            b.vx += p * nx * 0.8;
-            b.vy += p * ny * 0.8;
-          }
-        }
-      }
-    }
-  }
-
-  function drawStage() {
-    const isFever = Date.now() < state.feverUntil;
-    ctx.fillStyle = isFever ? '#1e1b4b' : '#070b14';
-    ctx.fillRect(0, 0, W, H);
-
-    // Subtle grid
-    ctx.strokeStyle = isFever ? 'rgba(253, 224, 71, 0.08)' : 'rgba(56, 189, 248, 0.06)';
-    ctx.lineWidth = 1;
-    for (let x = 0; x < W; x += 60) {
-      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
-    }
-    for (let y = 0; y < H; y += 60) {
-      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
-    }
-
-    // Tap hint at top (big & clear)
-    if (showTapHint) {
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
-      ctx.font = '900 20px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('👆 画面タップでお金を連射ドロップ！', W / 2, 34);
-    }
-
-    // Draw Bumpers (Exact bold style from YouTube Shorts)
-    for (const bmp of bumpers) {
-      if (bmp.pulse > 0) bmp.pulse = Math.max(0, bmp.pulse - 0.1);
-      const pr = bmp.r + bmp.pulse * 10;
-
-      ctx.beginPath();
-      ctx.arc(bmp.x, bmp.y, pr + 6, 0, Math.PI * 2);
-      ctx.fillStyle = bmp.color + '28';
-      ctx.fill();
-
-      ctx.beginPath();
-      ctx.arc(bmp.x, bmp.y, pr, 0, Math.PI * 2);
-      ctx.fillStyle = '#0f172a';
-      ctx.fill();
-      ctx.lineWidth = 5;
-      ctx.strokeStyle = isFever ? '#fde047' : bmp.color;
-      ctx.stroke();
-
-      ctx.fillStyle = '#ffffff';
-      ctx.font = '900 24px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText('×' + (bmp.mult * (isFever ? 2 : 1)), bmp.x, bmp.y + 1);
-    }
-
-    // Merge shockwave rings
-    for (let i = rings.length - 1; i >= 0; i--) {
-      const rg = rings[i];
-      rg.r += (rg.maxR - rg.r) * 0.25;
-      rg.a -= 0.06;
-      if (rg.a <= 0) { rings.splice(i, 1); continue; }
-      ctx.save();
-      ctx.globalAlpha = rg.a;
-      ctx.beginPath();
-      ctx.arc(rg.x, rg.y, rg.r, 0, Math.PI * 2);
-      ctx.lineWidth = 5;
-      ctx.strokeStyle = rg.color;
-      ctx.stroke();
-      ctx.restore();
-    }
-
-    // Draw Balls (Huge, Clear Icons & Text)
-    for (const b of balls) {
-      const tr = TIERS[b.tier];
-      ctx.beginPath();
-      ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
-      ctx.fillStyle = tr.color;
-      ctx.fill();
-      ctx.lineWidth = 4.5;
-      ctx.strokeStyle = tr.ring;
-      ctx.stroke();
-
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.font = Math.floor(b.r * 0.78) + 'px sans-serif';
-      ctx.fillText(tr.icon, b.x, b.y - b.r * 0.14);
-
-      ctx.fillStyle = '#090d16';
-      ctx.font = '900 ' + Math.floor(b.r * 0.42) + 'px sans-serif';
-      ctx.fillText(tr.name, b.x, b.y + b.r * 0.48);
-    }
-
-    // Bottom Bouncy Floor & Center Jackpot Gate
-    const floorY = H - 38;
-    // Left & Right bounce pads
-    ctx.fillStyle = '#1e293b';
-    ctx.fillRect(0, floorY, 155, 38);
-    ctx.fillRect(W - 155, floorY, 155, 38);
-    ctx.fillStyle = '#94a3b8';
-    ctx.font = '900 15px sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('⤴ バウンド', 77, floorY + 20);
-    ctx.fillText('⤴ バウンド', W - 77, floorY + 20);
-
-    // Center Jackpot Gate
-    ctx.fillStyle = '#d97706';
-    ctx.fillRect(155, floorY, W - 310, 38);
-    ctx.strokeStyle = '#fde047';
-    ctx.lineWidth = 3;
-    ctx.strokeRect(155, floorY, W - 310, 38);
-    ctx.fillStyle = '#ffffff';
-    ctx.font = '900 18px sans-serif';
-    ctx.fillText(`👑 ×${5 * (state.multLv || 1)} 回収ポケット`, W / 2, floorY + 20);
-
-    // Draw Big Popups
-    for (let i = popups.length - 1; i >= 0; i--) {
-      const pp = popups[i];
-      pp.y -= 2.2;
-      pp.a -= 0.03;
-      if (pp.a <= 0) { popups.splice(i, 1); continue; }
-      ctx.save();
-      ctx.globalAlpha = Math.min(1, pp.a);
-      ctx.font = `900 ${pp.size}px sans-serif`;
-      ctx.textAlign = 'center';
-      ctx.lineWidth = 5;
-      ctx.strokeStyle = '#000000';
-      ctx.strokeText(pp.text, pp.x, pp.y);
-      ctx.fillStyle = pp.color;
-      ctx.fillText(pp.text, pp.x, pp.y);
-      ctx.restore();
-    }
-  }
-
-  // ============================================================================
-  // 5. UPGRADES & CONTROLS
-  // ============================================================================
-  function getSpeedCost() { return Math.floor(50 * Math.pow(1.85, state.speedLv - 1)); }
-  function getRankCost()  { return Math.floor(300 * Math.pow(4.2, state.rankLv)); }
-  function getMultCost()  { return Math.floor(120 * Math.pow(2.1, state.multLv - 1)); }
-
-  function refreshButtons() {
-    const sc = getSpeedCost();
-    const rc = getRankCost();
-    const mc = getMultCost();
-
-    const btnSpeed = document.getElementById('btnSpeed');
-    document.getElementById('nameSpeed').textContent = `連射 Lv.${state.speedLv}`;
-    document.getElementById('costSpeed').textContent = state.speedLv >= 12 ? 'MAX' : fmtYen(sc);
-    btnSpeed.disabled = state.speedLv >= 12 || state.money < sc;
-
-    const btnRank = document.getElementById('btnRank');
-    const nextTier = TIERS[Math.min(state.rankLv + 1, TIERS.length - 2)];
-    document.getElementById('iconRank').textContent = nextTier.icon;
-    document.getElementById('nameRank').textContent = `${nextTier.name}解放`;
-    document.getElementById('costRank').textContent = state.rankLv >= 5 ? 'MAX' : fmtYen(rc);
-    btnRank.disabled = state.rankLv >= 5 || state.money < rc;
-
-    const btnMult = document.getElementById('btnMult');
-    document.getElementById('nameMult').textContent = `倍率 Lv.${state.multLv}`;
-    document.getElementById('costMult').textContent = fmtYen(mc);
-    btnMult.disabled = state.money < mc;
-  }
-
-  function updateFeverUI() {
-    const isFever = Date.now() < state.feverUntil;
-    const fBtn = document.getElementById('fever-btn');
-    const fFill = document.getElementById('fever-fill');
-    const fText = document.getElementById('fever-text');
-
-    if (isFever) {
-      const rem = Math.max(0, (state.feverUntil - Date.now()) / 1000).toFixed(1);
-      fFill.style.width = '100%';
-      fText.textContent = `🌈 FEVER ラッシュ中！！ (${rem}秒)`;
-      fBtn.classList.add('ready');
-    } else if (state.fever >= 100) {
-      fFill.style.width = '100%';
-      fText.textContent = '🔥 タップでFEVER大放出を発動！！';
-      fBtn.classList.add('ready');
-    } else {
-      fFill.style.width = `${Math.floor(state.fever)}%`;
-      fText.textContent = `🔥 フィーバーゲージ ${Math.floor(state.fever)}%`;
-      fBtn.classList.remove('ready');
-    }
-  }
-
-  document.getElementById('btnSpeed').addEventListener('click', () => {
-    const c = getSpeedCost();
-    if (state.speedLv < 12 && state.money >= c) {
-      state.money -= c;
-      state.speedLv++;
-      playMergeSound(2);
-      save();
-      addMoney(0);
-    }
+    updateHUD();
   });
 
-  document.getElementById('btnRank').addEventListener('click', () => {
-    const c = getRankCost();
-    if (state.rankLv < 5 && state.money >= c) {
-      state.money -= c;
-      state.rankLv++;
-      playMergeSound(state.rankLv + 2);
-      save();
-      addMoney(0);
-      spawnBall(W / 2);
-    }
+  // Retry button
+  document.getElementById('retryBtn').addEventListener('click', () => {
+    initAudio();
+    stage = 1;
+    iq = 100;
+    hintsLeft = 3;
+    startStage();
   });
 
-  document.getElementById('btnMult').addEventListener('click', () => {
-    const c = getMultCost();
-    if (state.money >= c) {
-      state.money -= c;
-      state.multLv++;
-      rebuildBumpers();
-      playMergeSound(4);
-      save();
-      addMoney(0);
-    }
-  });
-
-  document.getElementById('fever-btn').addEventListener('click', () => {
-    if (state.fever >= 100 && Date.now() >= state.feverUntil) {
-      triggerFeverShower();
-    } else {
-      // Even if not full yet, tapping drops a bonus coin!
-      spawnBall();
-    }
-  });
-
+  // Sound toggle
   document.getElementById('soundBtn').addEventListener('click', () => {
     soundOn = !soundOn;
     document.getElementById('soundBtn').textContent = soundOn ? '🔊' : '🔇';
     if (soundOn) initAudio();
   });
 
-  // Tap or Drag on Canvas to rapid-drop coins!
-  let isPointerDown = false;
-  let pointerX = W / 2;
-  let lastTapDrop = 0;
-
-  canvas.addEventListener('pointerdown', (e) => {
-    initAudio();
-    showTapHint = false;
-    isPointerDown = true;
-    const rect = canvas.getBoundingClientRect();
-    pointerX = (e.clientX - rect.left) * (W / rect.width);
-    spawnBall(pointerX);
-    state.fever = Math.min(100, state.fever + 3);
-    lastTapDrop = performance.now();
-  });
-
-  canvas.addEventListener('pointermove', (e) => {
-    if (!isPointerDown) return;
-    const rect = canvas.getBoundingClientRect();
-    pointerX = (e.clientX - rect.left) * (W / rect.width);
-  });
-
-  window.addEventListener('pointerup', () => { isPointerDown = false; });
-
-  // Main Loop
-  let lastAutoDrop = performance.now();
-  let lastUI = performance.now();
-
-  function loop(now) {
-    const isFever = Date.now() < state.feverUntil;
-    const baseInterval = Math.max(160, 750 - (state.speedLv - 1) * 52);
-    const interval = isFever ? baseInterval * 0.45 : baseInterval;
-
-    if (now - lastAutoDrop >= interval) {
-      spawnBall();
-      lastAutoDrop = now;
-    }
-
-    // Hold finger down to rapid-fire drop!
-    if (isPointerDown && now - lastTapDrop >= 140) {
-      spawnBall(pointerX + (Math.random() - 0.5) * 30);
-      lastTapDrop = now;
-    }
-
-    // Auto-trigger fever when reaches 100%!
-    if (state.fever >= 100 && !isFever) {
-      triggerFeverShower();
-    }
-
-    stepPhysics();
-    drawStage();
-
-    if (now - lastUI >= 150) {
-      updateFeverUI();
-      lastUI = now;
-    }
-
-    requestAnimationFrame(loop);
-  }
-
-  window.addEventListener('resize', resizeCanvas);
-  setInterval(save, 4000);
-
-  resizeCanvas();
-  document.getElementById('moneyText').textContent = fmtYen(state.money);
-  refreshButtons();
-  // Start with a burst of 6 coins right away so the screen is immediately lively!
-  for (let i = 0; i < 6; i++) {
-    setTimeout(() => spawnBall(), i * 110);
-  }
-  requestAnimationFrame(loop);
+  // Start Stage 1 immediately
+  startStage();
 })();
 </script>
 </body>
