@@ -5,6 +5,10 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://coreworks-portal.pages.dev/sns-studio/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://coreworks-portal.pages.dev/payback-calc/</loc>
     <priority>0.8</priority>
   </url>

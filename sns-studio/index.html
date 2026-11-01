@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1枚でわかる「お金と暮らしの損得図解」＆SNSシェアスタジオ ｜ Coreworks Studio</title>
+  <meta name="description" content="冬の暖房費比較、すぐ元が取れる神アイテム4選、楽天マラソン1,000円買い足し損益分岐、サブスク10年損失など、パッと1秒でわかる図解カード一覧。">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card: #151d30;
+      --border: #263554;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --green: #34d399;
+      --amber: #fbbf24;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { overflow-x: hidden; width: 100%; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif; line-height: 1.45; }
+    .container { max-width: 680px; margin: 0 auto; padding: 16px 14px 60px; }
+    .back-link { display: inline-block; margin-bottom: 10px; color: var(--accent); text-decoration: none; font-size: 0.85rem; font-weight: 700; }
+    h1 { font-size: 1.45rem; font-weight: 900; margin-bottom: 4px; color: #fff; }
+    .lead { color: var(--muted); font-size: 0.84rem; margin-bottom: 18px; }
+
+    .card-list { display: flex; flex-direction: column; gap: 22px; }
+    .v-card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 16px 14px;
+    }
+    .v-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .v-title { font-size: 1.02rem; font-weight: 900; color: #fff; }
+    .v-badge { font-size: 0.7rem; font-weight: 800; background: rgba(56,189,248,0.16); color: var(--accent); padding: 3px 8px; border-radius: 6px; white-space: nowrap; }
+
+    .img-wrap {
+      width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      margin-bottom: 12px;
+      background: #000;
+    }
+    .img-wrap img { width: 100%; height: auto; display: block; }
+
+    .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+    .btn {
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 11px 8px; border-radius: 10px; font-size: 0.82rem; font-weight: 800;
+      text-decoration: none; cursor: pointer; border: none; text-align: center;
+    }
+    .btn-x { background: #1d9bf0; color: #fff; }
+    .btn-copy { background: #1e293b; color: var(--accent); border: 1px solid var(--accent); }
+    .btn-rakuten {
+      grid-column: 1 / -1;
+      background: linear-gradient(135deg, #df0000, #b80000);
+      color: #fff; padding: 11px; border-radius: 10px; font-size: 0.85rem; font-weight: 800; text-decoration: none; text-align: center; display: block;
+    }
+    .toast {
+      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+      background: var(--green); color: #052e16; font-weight: 900; font-size: 0.85rem;
+      padding: 10px 20px; border-radius: 99px; box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      display: none; z-index: 999;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="../" class="back-link">← トップへ戻る</a>
+    <h1>📊 1秒でわかる「損得図解」一覧</h1>
+    <p class="lead">文字を読まずにパッと比較できる図解カードです。画像の保存やX（旧Twitter）へのワンタップ投稿にも対応しています。</p>
+
+    <div class="card-list" id="cardList"></div>
+  </div>
+
+  <div class="toast" id="toast">📋 投稿文をコピーしました！</div>
+
+  <script>
+    const AID = '5876771';
+    const PID = '54';
+    function rakutenUrl(q) {
+      return 'https://af.moshimo.com/af/c/click?a_id=' + AID + '&p_id=' + PID + '&pc_id=54&pl_id=616&url=' +
+        encodeURIComponent('https://search.rakuten.co.jp/search/mall/' + encodeURIComponent(q) + '/');
+    }
+
+    const ITEMS = [
+      {
+        title: '① 冬の暖房「1時間の電気代」比較',
+        badge: '節電・暖房',
+        img: '../visuals/01_winter_heating_cost.png',
+        calcPath: '../winter-electricity/',
+        rakutenLabel: '🛍️ 丸洗い電気毛布・パネルヒーターを楽天で見る ↗',
+        q: '電気毛布 丸洗い フランネル パネルヒーター',
+        post: '【保存版】冬の暖房「1時間あたりの電気代」を比較した結果…🥶\n\n❌ セラミックヒーター：約34円/h\n❌ オイルヒーター：約28円/h\n🔺 エアコン暖房：約22円/h\n⭕ こたつ・パネルヒーター：約4.9円/h\n👑 電気毛布：約0.9円/h（エアコンの1/24！）\n\n電気毛布と着る毛布を併用するだけで、ひと冬1.2万円以上浮きます👇\nhttps://coreworks-portal.pages.dev/winter-electricity/\n\n#電気代 #節電 #暖房'
+      },
+      {
+        title: '② すぐ元が取れる「神アイテム」4選',
+        badge: '買い物・元取り',
+        img: '../visuals/02_payback_ranking.png',
+        calcPath: '../payback-calc/',
+        rakutenLabel: '🛍️ シームレス水筒・節水シャワー・食洗機を楽天で見る ↗',
+        q: '象印 シームレスせん 水筒 節水シャワー 食洗機',
+        post: '買ったら秒速で元が取れた「暮らしの神アイテム」回収期間まとめ⚡\n\n🥇 パッキン一体型水筒：約14日で元取り（年4万円浮く）\n🥈 全自動コーヒーメーカー：約2.5ヶ月で元取り（1杯25円）\n🥉 工事不要タンク式食洗機：約3.5ヶ月で元取り\n🏅 節水ナノバブルシャワー：約5ヶ月で元取り\n\n何ヶ月で黒字になるか1秒計算機👇\nhttps://coreworks-portal.pages.dev/payback-calc/\n\n#買ってよかったもの #節約術 #時短家電'
+      },
+      {
+        title: '③ 楽天マラソン「1,000円買い足し」損得表',
+        badge: '楽天ポイ活',
+        img: '../visuals/03_rakuten_marathon_hack.png',
+        calcPath: '../rakuten-maximizer/',
+        rakutenLabel: '🛍️ 定番の「1,000円ポッキリ送料無料」を楽天で見る ↗',
+        q: '1000円ポッキリ 送料無料 楽券 ミックスナッツ',
+        post: '楽天お買い物マラソンで「1,000円ポッキリ商品を1店舗買い足すとどうなるか」早見表🛍️\n\nこれまでの購入合計が…\n・3万円の人 ➔ 実質 650円\n・5万円の人 ➔ 実質 450円（半額以下！）\n・8万円の人 ➔ 実質 150円\n・10万円の人 ➔ タダ＋50P黒字（買わないと損！）\n\n自分の残り枠はここで1秒判定できます👇\nhttps://coreworks-portal.pages.dev/rakuten-maximizer/\n\n#楽天お買い物マラソン #楽天市場 #1000円ポッキリ'
+      },
+      {
+        title: '④ 毎月のサブスク「10年間で消える総額」',
+        badge: '固定費見直し',
+        img: '../visuals/04_subscription_10years.png',
+        calcPath: '../subscription-calc/',
+        rakutenLabel: '🛍️ サブスク卒業の「買い切り神器」を楽天で見る ↗',
+        q: '可変式ダンベル ステッパー 全自動コーヒーメーカー',
+        post: '毎月なんとなく払っている固定費、10年間（年利5%換算）で消える総額がエグい😱\n\n・使っていない動画サブスク ➔ 10年で 23.1万円\n・毎日のコンビニ珈琲＆飲料 ➔ 10年で 69.8万円\n・月2回しか行かないジム ➔ 10年で 123.9万円\n\n3つ重なると10年で【216.9万円】消滅します👇\nhttps://coreworks-portal.pages.dev/subscription-calc/\n\n#固定費見直し #サブスク #家計管理'
+      }
+    ];
+
+    function copyText(idx) {
+      navigator.clipboard.writeText(ITEMS[idx].post);
+      const t = document.getElementById('toast');
+      t.style.display = 'block';
+      setTimeout(() => { t.style.display = 'none'; }, 2200);
+    }
+
+    function render() {
+      document.getElementById('cardList').innerHTML = ITEMS.map((it, i) => {
+        const xIntent = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(it.post);
+        return `
+          <div class="v-card">
+            <div class="v-head">
+              <div class="v-title">${it.title}</div>
+              <span class="v-badge">${it.badge}</span>
+            </div>
+            <div class="img-wrap">
+              <img src="${it.img}" alt="${it.title}" loading="lazy">
+            </div>
+            <div class="btn-group">
+              <a href="${xIntent}" target="_blank" rel="noopener" class="btn btn-x">🚀 Xで投稿画面を開く</a>
+              <button type="button" class="btn btn-copy" onclick="copyText(${i})">📋 文章をコピー</button>
+              <a href="${rakutenUrl(it.q)}" target="_blank" rel="nofollow sponsored noopener" class="btn-rakuten">${it.rakutenLabel}</a>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+    render();
+  </script>
+<!-- Moshimo Official Rakuten Sponsor -->
+<div style="margin: 32px auto 20px; text-align: center; padding: 16px; background: rgba(21, 29, 48, 0.7); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; max-width: 600px;">
+  <div style="font-size: 0.75rem; color: #94a3b8; margin-bottom: 8px;">PR ｜ 楽天市場 公式スポンサーリンク</div>
+  <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=618&url=https%3A%2F%2Fwww.rakuten.co.jp%2F" rel="nofollow sponsored" target="_blank" style="display: inline-block;">
+    <img src="https://image.moshimo.com/af-img/0032/000000000618.gif" width="120" height="60" style="border:none; border-radius: 6px;" alt="楽天市場">
+  </a>
+  <img src="https://i.moshimo.com/af/i/impression?a_id=5876771&p_id=54&pc_id=54&pl_id=618" width="1" height="1" style="border:none;" loading="lazy" alt="">
+  <div style="font-size: 0.72rem; color: #94a3b8; margin-top: 6px;">当サイトは楽天市場アフィリエイトプログラムに参加しています</div>
+</div>
+</body>
+</html>
