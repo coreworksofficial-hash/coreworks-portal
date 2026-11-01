@@ -5,22 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#090d16">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-web-app-capable" content="yes">
-<title>爆益！マネードロップ工場 〜物理マージ＆倍率バンパー放置ゲーム〜 ｜ Coreworks Studio</title>
-<meta name="description" content="落ちてくるお金が倍率バンパーで跳ね回り、同じ資産同士がぶつかって合体進化！見ているだけで快感のASMR物理演算×放置インクリメンタルゲーム。">
+<meta name="mobile-web-app-capable" content="yes">
+<title>爆益！マネードロップ</title>
 <style>
-  :root {
-    --bg-dark: #070b14;
-    --panel-bg: #111827;
-    --panel-border: #1f2937;
-    --neon-gold: #fbbf24;
-    --neon-cyan: #38bdf8;
-    --neon-green: #34d399;
-    --neon-pink: #f472b6;
-    --neon-purple: #a78bfa;
-    --text-main: #f8fafc;
-    --text-sub: #94a3b8;
-  }
   * {
     box-sizing: border-box;
     user-select: none;
@@ -33,212 +20,81 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background: #03060c;
-    color: var(--text-main);
-    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
-    touch-action: manipulation;
+    background: #090d16;
+    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Meiryo", sans-serif;
+    touch-action: none;
   }
   #app {
-    position: relative;
     width: 100%;
     height: 100%;
-    max-width: 500px;
+    max-width: 520px;
     margin: 0 auto;
-    background: radial-gradient(circle at 50% 25%, #131c31 0%, #070b14 75%);
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.9);
-    border-left: 1px solid rgba(56, 189, 248, 0.15);
-    border-right: 1px solid rgba(56, 189, 248, 0.15);
-  }
-
-  /* Header Status Bar */
-  #topbar {
-    background: linear-gradient(180deg, rgba(17, 24, 39, 0.96) 0%, rgba(10, 15, 28, 0.96) 100%);
-    border-bottom: 2px solid rgba(251, 191, 36, 0.45);
-    padding: 8px 12px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    z-index: 20;
-    flex-shrink: 0;
-  }
-  .brand-col {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-  .brand-title {
-    font-size: 13px;
-    font-weight: 900;
-    color: var(--neon-gold);
-    letter-spacing: -0.3px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .portal-back {
-    font-size: 10px;
-    color: var(--neon-cyan);
-    text-decoration: none;
-    background: rgba(56, 189, 248, 0.12);
-    border: 1px solid rgba(56, 189, 248, 0.35);
-    padding: 1px 6px;
-    border-radius: 99px;
-    font-weight: 700;
-  }
-  .money-display {
-    text-align: right;
-  }
-  .money-main {
-    font-size: 20px;
-    font-weight: 900;
-    color: #fff;
-    text-shadow: 0 0 12px rgba(251, 191, 36, 0.6);
-    font-variant-numeric: tabular-nums;
-    line-height: 1.1;
-  }
-  .money-sub {
-    font-size: 11px;
-    color: var(--neon-green);
-    font-weight: 800;
-    font-variant-numeric: tabular-nums;
-  }
-
-  /* Sub Action Bar (Shorts Mode / Sound / Fever) */
-  #subbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 5px 10px;
-    background: rgba(9, 13, 22, 0.85);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 10px 10px 12px;
     gap: 8px;
-    z-index: 19;
+    background: linear-gradient(180deg, #090d16 0%, #131f35 100%);
+  }
+
+  /* 1. Top Giant Money Bar (Simple & Bold like the YouTube Video) */
+  #top-counter {
+    position: relative;
+    background: rgba(16, 185, 129, 0.18);
+    border: 3px solid #34d399;
+    border-radius: 18px;
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.2);
     flex-shrink: 0;
   }
-  .fever-wrap {
-    flex: 1;
+  .money-wrap {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     gap: 6px;
   }
-  .fever-label {
-    font-size: 10px;
+  .money-icon {
+    font-size: 28px;
+  }
+  #moneyText {
+    font-size: 32px;
     font-weight: 900;
-    color: var(--neon-pink);
-    white-space: nowrap;
+    color: #fde047;
+    text-shadow: 0 2px 10px rgba(251, 191, 36, 0.55);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.5px;
+    transition: transform 0.08s ease;
   }
-  .fever-bar-bg {
-    flex: 1;
-    height: 10px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 99px;
-    overflow: hidden;
-    border: 1px solid rgba(244, 114, 182, 0.35);
+  #moneyText.pop {
+    transform: scale(1.08);
   }
-  .fever-bar-fill {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, #f472b6, #fbbf24, #34d399);
-    transition: width 0.15s ease;
-  }
-  .tool-btns {
-    display: flex;
-    gap: 5px;
-  }
-  .mini-btn {
-    background: rgba(30, 41, 59, 0.9);
-    color: #e2e8f0;
-    border: 1px solid rgba(148, 163, 184, 0.35);
-    border-radius: 7px;
-    padding: 4px 8px;
-    font-size: 11px;
-    font-weight: 800;
-    cursor: pointer;
+  #soundBtn {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    background: rgba(15, 23, 42, 0.85);
+    color: #fff;
+    font-size: 22px;
     display: flex;
     align-items: center;
-    gap: 3px;
-  }
-  .mini-btn.active {
-    background: linear-gradient(135deg, #e11d48, #be123c);
-    border-color: #fda4af;
-    color: #fff;
-    box-shadow: 0 0 10px rgba(225, 29, 72, 0.5);
-  }
-
-  /* Shorts Overlay Banner (Visible when Shorts Mode is active) */
-  #shorts-overlay {
-    display: none;
-    position: absolute;
-    top: 52px;
-    left: 10px;
-    right: 10px;
-    z-index: 25;
-    pointer-events: none;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-  }
-  #shorts-overlay.show {
-    display: flex;
-  }
-  .shorts-caption-box {
-    background: rgba(7, 11, 20, 0.88);
-    border: 2px solid var(--neon-gold);
-    border-radius: 14px;
-    padding: 8px 14px;
-    text-align: center;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.75);
-    pointer-events: auto;
-    width: 100%;
-  }
-  .shorts-badge {
-    display: inline-block;
-    background: #e11d48;
-    color: #fff;
-    font-size: 10px;
-    font-weight: 900;
-    padding: 2px 8px;
-    border-radius: 99px;
-    margin-bottom: 3px;
-  }
-  .shorts-headline {
-    font-size: 15px;
-    font-weight: 900;
-    color: #fff;
-    line-height: 1.3;
-    text-shadow: 0 2px 4px #000;
-  }
-  .shorts-controls {
-    display: flex;
-    gap: 6px;
-    margin-top: 6px;
     justify-content: center;
-  }
-  .shorts-ctrl-btn {
-    background: rgba(56, 189, 248, 0.2);
-    border: 1px solid var(--neon-cyan);
-    color: #fff;
-    font-size: 11px;
-    font-weight: 800;
-    padding: 4px 10px;
-    border-radius: 6px;
     cursor: pointer;
-  }
-  .shorts-ctrl-btn.rec {
-    background: linear-gradient(135deg, #ef4444, #b91c1c);
-    border-color: #fca5a5;
+    flex-shrink: 0;
   }
 
-  /* Canvas Stage Area */
-  #stage-wrap {
+  /* 2. Center Physics Stage (Huge & Clean) */
+  #stage-box {
     position: relative;
     flex: 1;
     width: 100%;
-    min-height: 260px;
+    background: #070b14;
+    border: 3px solid rgba(56, 189, 248, 0.45);
+    border-radius: 22px;
     overflow: hidden;
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.85);
   }
   #gameCanvas {
     width: 100%;
@@ -247,808 +103,399 @@
     cursor: pointer;
   }
 
-  /* Evolution Chain Bar */
-  #evo-bar {
-    background: rgba(11, 15, 25, 0.95);
-    border-top: 1px solid rgba(56, 189, 248, 0.2);
-    border-bottom: 1px solid rgba(56, 189, 248, 0.2);
-    padding: 4px 8px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    overflow-x: auto;
-    gap: 4px;
-    flex-shrink: 0;
-    z-index: 18;
-  }
-  .evo-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: 34px;
-    padding: 2px 3px;
-    border-radius: 6px;
-    background: rgba(255, 255, 255, 0.03);
-    opacity: 0.35;
-    transition: all 0.2s;
-  }
-  .evo-item.unlocked {
-    opacity: 1;
-    background: rgba(251, 191, 36, 0.12);
-    border: 1px solid rgba(251, 191, 36, 0.35);
-  }
-  .evo-icon {
-    font-size: 14px;
-    line-height: 1.1;
-  }
-  .evo-val {
-    font-size: 8px;
-    font-weight: 800;
-    color: #cbd5e1;
-    white-space: nowrap;
-  }
-
-  /* Bottom Control & Upgrade Panel */
-  #bottom-panel {
-    height: 225px;
-    background: var(--panel-bg);
-    display: flex;
-    flex-direction: column;
-    z-index: 20;
-    flex-shrink: 0;
-  }
-  .tabs {
-    display: flex;
-    background: #0b101d;
-    border-bottom: 1px solid #1e293b;
-  }
-  .tab-btn {
-    flex: 1;
-    padding: 8px 4px;
-    background: none;
-    border: none;
-    color: var(--text-sub);
-    font-size: 12px;
-    font-weight: 800;
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    transition: all 0.15s;
-  }
-  .tab-btn.active {
-    color: var(--neon-gold);
-    border-bottom-color: var(--neon-gold);
-    background: rgba(251, 191, 36, 0.06);
-  }
-  .tab-content {
-    flex: 1;
-    overflow-y: auto;
-    padding: 8px 10px;
-    display: none;
-    flex-direction: column;
-    gap: 6px;
-  }
-  .tab-content.active {
-    display: flex;
-  }
-
-  /* Upgrade Cards */
-  .upg-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: rgba(30, 41, 59, 0.65);
-    border: 1px solid rgba(148, 163, 184, 0.18);
-    border-radius: 10px;
-    padding: 7px 10px;
-    gap: 8px;
-  }
-  .upg-info {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex: 1;
-    min-width: 0;
-  }
-  .upg-icon {
-    font-size: 20px;
-    width: 34px;
-    height: 34px;
+  /* Fever Rush Button Bar */
+  #fever-btn {
+    position: relative;
+    height: 44px;
+    border-radius: 14px;
+    background: #1e293b;
+    border: 2px solid #475569;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(15, 23, 42, 0.8);
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    cursor: pointer;
     flex-shrink: 0;
   }
-  .upg-text {
-    flex: 1;
-    min-width: 0;
+  #fever-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 0%;
+    background: linear-gradient(90deg, #ec4899, #f59e0b, #10b981);
+    transition: width 0.15s ease;
   }
-  .upg-title {
-    font-size: 12px;
+  #fever-text {
+    position: relative;
+    z-index: 2;
+    font-size: 16px;
     font-weight: 900;
     color: #fff;
-    display: flex;
-    align-items: center;
-    gap: 5px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
   }
-  .upg-lvl {
-    font-size: 10px;
-    color: var(--neon-cyan);
-    background: rgba(56, 189, 248, 0.14);
-    padding: 1px 5px;
-    border-radius: 4px;
+  #fever-btn.ready {
+    border-color: #fde047;
+    animation: pulseGlow 0.9s infinite alternate;
   }
-  .upg-desc {
-    font-size: 10px;
-    color: var(--text-sub);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .buy-btn {
-    background: linear-gradient(135deg, #f59e0b, #d97706);
-    color: #000;
-    border: none;
-    border-radius: 8px;
-    padding: 6px 11px;
-    font-size: 11px;
-    font-weight: 900;
-    cursor: pointer;
-    min-width: 86px;
-    text-align: center;
-    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.35);
-    transition: transform 0.1s, opacity 0.15s;
-  }
-  .buy-btn:active {
-    transform: scale(0.96);
-  }
-  .buy-btn:disabled {
-    background: #334155;
-    color: #64748b;
-    box-shadow: none;
-    cursor: not-allowed;
+  @keyframes pulseGlow {
+    from { transform: scale(1); box-shadow: 0 0 10px rgba(253, 224, 71, 0.4); }
+    to   { transform: scale(1.02); box-shadow: 0 0 22px rgba(253, 224, 71, 0.9); }
   }
 
-  /* Real-world ROI Cards */
-  .roi-card {
-    background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.75));
-    border: 1px solid rgba(52, 211, 153, 0.35);
-    border-radius: 10px;
-    padding: 8px 10px;
+  /* 3. Bottom 3 Big Intuitive Upgrade Buttons (Zero Small Text!) */
+  #upg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .big-upg-btn {
+    background: linear-gradient(180deg, #fbbf24 0%, #d97706 100%);
+    border: 3px solid #fef08a;
+    border-radius: 16px;
+    padding: 8px 4px;
     display: flex;
     flex-direction: column;
-    gap: 5px;
-  }
-  .roi-top {
-    display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: center;
+    gap: 2px;
+    color: #090d16;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+    transition: transform 0.08s ease, opacity 0.15s;
   }
-  .roi-name {
-    font-size: 12px;
+  .big-upg-btn:active {
+    transform: scale(0.95);
+  }
+  .big-upg-btn:disabled {
+    background: #1e293b;
+    border-color: #334155;
+    color: #64748b;
+    box-shadow: none;
+  }
+  .big-upg-icon {
+    font-size: 26px;
+    line-height: 1.1;
+  }
+  .big-upg-name {
+    font-size: 14px;
     font-weight: 900;
-    color: var(--neon-green);
+    letter-spacing: -0.3px;
   }
-  .roi-badge {
-    font-size: 10px;
-    font-weight: 800;
-    background: rgba(52, 211, 153, 0.16);
-    color: #6ee7b7;
-    padding: 2px 6px;
+  .big-upg-cost {
+    font-size: 15px;
+    font-weight: 900;
+    background: rgba(0, 0, 0, 0.2);
+    color: #fff;
+    padding: 2px 8px;
     border-radius: 99px;
-  }
-  .roi-desc {
-    font-size: 11px;
-    color: #cbd5e1;
-    line-height: 1.35;
-  }
-  .roi-links {
-    display: flex;
-    gap: 6px;
     margin-top: 2px;
   }
-  .roi-link {
-    flex: 1;
-    text-align: center;
-    text-decoration: none;
-    font-size: 10px;
-    font-weight: 800;
-    padding: 5px 6px;
-    border-radius: 6px;
-  }
-  .roi-link.calc {
-    background: rgba(56, 189, 248, 0.18);
-    color: var(--neon-cyan);
-    border: 1px solid rgba(56, 189, 248, 0.4);
-  }
-  .roi-link.rakuten {
-    background: rgba(251, 191, 36, 0.18);
-    color: var(--neon-gold);
-    border: 1px solid rgba(251, 191, 36, 0.4);
-  }
-
-  /* Shorts Clean Fullscreen Mode */
-  #app.shorts-clean #bottom-panel {
-    height: 145px;
+  .big-upg-btn:disabled .big-upg-cost {
+    background: rgba(255, 255, 255, 0.05);
+    color: #64748b;
   }
 </style>
 </head>
 <body>
 <div id="app">
-  <!-- Header -->
-  <div id="topbar">
-    <div class="brand-col">
-      <div class="brand-title">
-        <span>💰 爆益！マネードロップ工場</span>
-      </div>
-      <div style="display:flex; gap:6px; align-items:center;">
-        <a href="../" class="portal-back">← ツール一覧へ</a>
-        <a href="./BakuekiMoneyDrop.apk" download="BakuekiMoneyDrop.apk" class="portal-back" style="background:rgba(52,211,153,0.18); border-color:rgba(52,211,153,0.5); color:#6ee7b7;">📲 Androidアプリ版(.apk)</a>
-      </div>
+  <!-- 1. Giant Money Counter -->
+  <div id="top-counter">
+    <div class="money-wrap">
+      <span class="money-icon">💰</span>
+      <span id="moneyText">¥0</span>
     </div>
-    <div class="money-display">
-      <div class="money-main" id="moneyText">¥0</div>
-      <div class="money-sub" id="ppsText">+¥0 / 秒（合体＆バンパー配当）</div>
-    </div>
+    <button id="soundBtn" aria-label="音量切替">🔊</button>
   </div>
 
-  <!-- Sub Action Bar -->
-  <div id="subbar">
-    <div class="fever-wrap">
-      <span class="fever-label" id="feverLabel">🔥 FEVER 0%</span>
-      <div class="fever-bar-bg">
-        <div class="fever-bar-fill" id="feverBar"></div>
-      </div>
-    </div>
-    <div class="tool-btns">
-      <button class="mini-btn" id="btnBurst" title="画面内に一気にコインシャワーを降らせる">⚡ 爆盛ラッシュ</button>
-      <button class="mini-btn" id="btnShorts" title="YouTubeショート・TikTok撮影用テロップ＆録画">🎬 映え録画</button>
-      <button class="mini-btn" id="btnSound">🔊 音ON</button>
-    </div>
-  </div>
-
-  <!-- Shorts Viral Overlay -->
-  <div id="shorts-overlay">
-    <div class="shorts-caption-box">
-      <span class="shorts-badge" id="shortsBadge">🔥 検証：放置でお金はどれだけ増える？</span>
-      <div class="shorts-headline" id="shortsHeadline">1円玉を「倍率バンパー工場」に放置した結果www</div>
-      <div class="shorts-controls">
-        <button class="shorts-ctrl-btn" id="btnChangeCaption">💬 テロップ変更</button>
-        <button class="shorts-ctrl-btn rec" id="btnRecordVideo">🔴 12秒ショート動画を録画保存</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Physics Canvas Stage -->
-  <div id="stage-wrap">
+  <!-- 2. Main Physics Stage (Exact YouTube Video Layout & Proportions) -->
+  <div id="stage-box">
     <canvas id="gameCanvas"></canvas>
   </div>
 
-  <!-- Asset Evolution Bar -->
-  <div id="evo-bar"></div>
+  <!-- 3. Fever Rush Bar -->
+  <button id="fever-btn">
+    <div id="fever-fill"></div>
+    <span id="fever-text">🔥 フィーバーゲージ 0%</span>
+  </button>
 
-  <!-- Bottom Upgrades & Real-Life ROI Panel -->
-  <div id="bottom-panel">
-    <div class="tabs">
-      <button class="tab-btn active" data-tab="tab-factory">⚙️ 工場強化</button>
-      <button class="tab-btn" data-tab="tab-invest">⚡ 神アイテム投資</button>
-      <button class="tab-btn" data-tab="tab-roi">💡 現実の元取り図鑑</button>
-    </div>
-
-    <!-- Tab 1: Factory Upgrades -->
-    <div class="tab-content active" id="tab-factory"></div>
-
-    <!-- Tab 2: Real-life God Items (Passive Income + Multiplier) -->
-    <div class="tab-content" id="tab-invest"></div>
-
-    <!-- Tab 3: Real-Life ROI Encyclopedia & Share -->
-    <div class="tab-content" id="tab-roi"></div>
+  <!-- 4. Three Big One-Tap Upgrade Buttons -->
+  <div id="upg-grid">
+    <button class="big-upg-btn" id="btnSpeed">
+      <span class="big-upg-icon">⚡</span>
+      <span class="big-upg-name" id="nameSpeed">連射 Lv.1</span>
+      <span class="big-upg-cost" id="costSpeed">¥50</span>
+    </button>
+    <button class="big-upg-btn" id="btnRank">
+      <span class="big-upg-icon" id="iconRank">🥈</span>
+      <span class="big-upg-name" id="nameRank">お金進化</span>
+      <span class="big-upg-cost" id="costRank">¥300</span>
+    </button>
+    <button class="big-upg-btn" id="btnMult">
+      <span class="big-upg-icon">💥</span>
+      <span class="big-upg-name" id="nameMult">倍率 Lv.1</span>
+      <span class="big-upg-cost" id="costMult">¥120</span>
+    </button>
   </div>
 </div>
 
 <script>
 (() => {
   // ============================================================================
-  // 1. ASSET TIERS (Merge Evolution Chain: 0 to 10)
+  // 1. BIG BOLD ASSET TIERS (Exact style from the YouTube Video!)
   // ============================================================================
   const TIERS = [
-    { id: 0, name: '1円玉',       icon: '🪙', label: '¥1',     val: 1,          r: 13, color: '#cbd5e1', ring: '#94a3b8', pitch: 523.25 },
-    { id: 1, name: '10円玉',      icon: '🥉', label: '¥10',    val: 12,         r: 15, color: '#d97706', ring: '#b45309', pitch: 587.33 },
-    { id: 2, name: '100円玉',     icon: '🥈', label: '¥100',   val: 120,        r: 18, color: '#e2e8f0', ring: '#64748b', pitch: 659.25 },
-    { id: 3, name: '500円玉',     icon: '🥇', label: '¥500',   val: 700,        r: 21, color: '#facc15', ring: '#ca8a04', pitch: 698.46 },
-    { id: 4, name: '千円札',      icon: '💴', label: '¥1,000', val: 3500,       r: 24, color: '#38bdf8', ring: '#0284c7', pitch: 783.99 },
-    { id: 5, name: '一万円札',    icon: '💵', label: '¥1万',   val: 20000,      r: 27, color: '#34d399', ring: '#059669', pitch: 880.00 },
-    { id: 6, name: '純金バー',    icon: '🧈', label: '¥15万',  val: 150000,     r: 31, color: '#fbbf24', ring: '#d97706', pitch: 987.77 },
-    { id: 7, name: 'ダイヤ原石',  icon: '💎', label: '¥120万', val: 1200000,    r: 35, color: '#60a5fa', ring: '#2563eb', pitch: 1046.50 },
-    { id: 8, name: '高級タワマン',icon: '🏢', label: '¥1,500万',val: 15000000,  r: 39, color: '#c084fc', ring: '#7c3aed', pitch: 1174.66 },
-    { id: 9, name: '油田リゾート',icon: '🛢️', label: '¥2億',   val: 200000000,  r: 44, color: '#f472b6', ring: '#db2777', pitch: 1318.51 },
-    { id: 10,name: '宇宙銀行',    icon: '🪐', label: '¥30億',  val: 3000000000, r: 50, color: '#fde047', ring: '#ef4444', pitch: 1567.98 }
-  ];
-
-  const AID = '5876771';
-  const PID = '54';
-  function rakutenUrl(kw) {
-    const u = 'https://search.rakuten.co.jp/search/mall/' + encodeURIComponent(kw) + '/';
-    return `https://af.moshimo.com/af/c/click?a_id=${AID}&p_id=${PID}&pc_id=54&pl_id=616&url=${encodeURIComponent(u)}`;
-  }
-
-  // Real-life smart investments that boost factory passive income & link to calculators
-  const REAL_ITEMS = [
-    {
-      id: 'bottle',
-      name: 'パッキン一体型 断熱水筒',
-      icon: '🫗',
-      baseCost: 800,
-      ppsBoost: 150,
-      multBoost: 0.10,
-      paybackText: '現実での元取り期間：約14日（年4万円浮く）',
-      desc: '毎日160円のペットボトル代をゼロに！パッキン一体型で洗う手間も3秒。',
-      calcUrl: '../payback-calc/',
-      rakutenKw: '象印 シームレスせん 水筒'
-    },
-    {
-      id: 'blanket',
-      name: '丸洗い電気毛布（1時間0.9円）',
-      icon: '⚡',
-      baseCost: 6500,
-      ppsBoost: 1400,
-      multBoost: 0.15,
-      paybackText: '現実での元取り期間：約3週間（ひと冬1.2万円節電）',
-      desc: 'セラミックヒーター（34円/h）を電気毛布（0.9円/h）に変えるだけで冬の電気代が激減！',
-      calcUrl: '../winter-electricity/',
-      rakutenKw: '電気毛布 丸洗い フランネル'
-    },
-    {
-      id: 'shower',
-      name: '節水ナノバブルシャワーヘッド',
-      icon: '🚿',
-      baseCost: 48000,
-      ppsBoost: 12000,
-      multBoost: 0.25,
-      paybackText: '現実での元取り期間：約5ヶ月（ガス・水道代最大50%減）',
-      desc: '取り替えるだけで毎月のガス代・水道代が勝手に約1,800円ずつ浮き続ける不労節約装備。',
-      calcUrl: '../payback-calc/',
-      rakutenKw: '節水シャワーヘッド ナノバブル'
-    },
-    {
-      id: 'coffee',
-      name: '全自動ミル付きコーヒーメーカー',
-      icon: '☕',
-      baseCost: 420000,
-      ppsBoost: 110000,
-      multBoost: 0.35,
-      paybackText: '現実での元取り期間：約2.5ヶ月（1杯25円で挽きたて）',
-      desc: 'コンビニやカフェのコーヒー（150〜450円）を自宅全自動に変えて年間5万円以上の黒字化！',
-      calcUrl: '../subscription-calc/',
-      rakutenKw: '全自動コーヒーメーカー ミル付き'
-    },
-    {
-      id: 'dishwasher',
-      name: '工事不要タンク式食洗機',
-      icon: '🍽️',
-      baseCost: 4500000,
-      ppsBoost: 1250000,
-      multBoost: 0.50,
-      paybackText: '現実での元取り期間：約3.5ヶ月（毎日20分の皿洗い消滅）',
-      desc: '年間120時間の自由時間を生み出し、手洗いより水道代も大幅に節約できる神家電。',
-      calcUrl: '../wage-calc/',
-      rakutenKw: '食洗機 工事不要 タンク式'
-    }
-  ];
-
-  // Shorts Viral Captions
-  const SHORTS_CAPTIONS = [
-    { badge: '🔥 検証：放置でお金はどれだけ増える？', text: '1円玉を「倍率バンパー工場」に放置した結果www' },
-    { badge: '🧠 快感ASMR：音量を上げて見てね', text: 'お金同士がぶつかって「純金→ダイヤ」に進化する瞬間が気持ちよすぎるw' },
-    { badge: '⚡ 倍率100倍フィーバー突入！', text: '黄金ラッシュを発動したら秒間収益がバグったwww' },
-    { badge: '💡 暮らしの損得 × 物理ゲーム', text: '現実でも秒速で元が取れる「神アイテム」に投資しまくった結果！' }
+    { id: 0, name: '¥100',   icon: '🥈', val: 100,       r: 25, color: '#e2e8f0', ring: '#64748b', pitch: 523.25 },
+    { id: 1, name: '¥500',   icon: '🥇', val: 500,       r: 30, color: '#facc15', ring: '#ca8a04', pitch: 587.33 },
+    { id: 2, name: '¥1,000', icon: '💴', val: 2500,      r: 35, color: '#38bdf8', ring: '#0284c7', pitch: 659.25 },
+    { id: 3, name: '¥1万',   icon: '💵', val: 15000,     r: 41, color: '#34d399', ring: '#059669', pitch: 783.99 },
+    { id: 4, name: '純金',   icon: '🧈', val: 120000,    r: 47, color: '#fbbf24', ring: '#d97706', pitch: 880.00 },
+    { id: 5, name: 'ダイヤ', icon: '💎', val: 1000000,   r: 54, color: '#60a5fa', ring: '#2563eb', pitch: 1046.50 },
+    { id: 6, name: '石油王', icon: '👑', val: 10000000,  r: 61, color: '#f472b6', ring: '#db2777', pitch: 1174.66 },
+    { id: 7, name: '宇宙',   icon: '🪐', val: 100000000, r: 68, color: '#fde047', ring: '#ef4444', pitch: 1318.51 }
   ];
 
   // ============================================================================
-  // 2. GAME STATE & PERSISTENCE
+  // 2. STATE & SAVE
   // ============================================================================
-  const SAVE_KEY = 'cw_money_drop_v1';
+  const SAVE_KEY = 'cw_money_drop_simple_v2';
   let state = {
     money: 0,
-    totalEarned: 0,
-    maxTierUnlocked: 0,
     fever: 0,
-    feverActiveUntil: 0,
-    upgrades: {
-      spawnRate: 1,   // Auto spawn interval reduction
-      startTier: 0,   // Initial coin tier (0 = 1yen, 1 = 10yen, etc.)
-      bumperMult: 1,  // Bumper payout multiplier
-      gateBoost: 1,   // Bottom collector gate multiplier
-      pinCount: 1     // Extra multiplier bumpers on stage
-    },
-    realItems: {
-      bottle: 0,
-      blanket: 0,
-      shower: 0,
-      coffee: 0,
-      dishwasher: 0
-    },
-    lastSaved: Date.now()
+    feverUntil: 0,
+    speedLv: 1,
+    rankLv: 0,
+    multLv: 1
   };
 
-  function loadState() {
-    try {
-      const raw = localStorage.getItem(SAVE_KEY);
-      if (raw) {
-        const parsed = JSON.parse(raw);
-        state = Object.assign({}, state, parsed);
-        state.upgrades = Object.assign({ spawnRate: 1, startTier: 0, bumperMult: 1, gateBoost: 1, pinCount: 1 }, parsed.upgrades || {});
-        state.realItems = Object.assign({ bottle: 0, blanket: 0, shower: 0, coffee: 0, dishwasher: 0 }, parsed.realItems || {});
-      }
-    } catch (e) {}
+  try {
+    const raw = localStorage.getItem(SAVE_KEY);
+    if (raw) state = Object.assign({}, state, JSON.parse(raw));
+  } catch (e) {}
+
+  function save() {
+    try { localStorage.setItem(SAVE_KEY, JSON.stringify(state)); } catch (e) {}
   }
 
-  function saveState() {
-    try {
-      state.lastSaved = Date.now();
-      localStorage.setItem(SAVE_KEY, JSON.stringify(state));
-    } catch (e) {}
-  }
-
-  loadState();
-
-  // ============================================================================
-  // 3. WEB AUDIO SYNTHESIZER (ASMR Coin Clinks, Chords & MediaStream Output)
-  // ============================================================================
-  let audioCtx = null;
-  let audioDest = null; // For MediaRecorder audio capture
-  let soundEnabled = true;
-
-  function initAudio() {
-    if (!audioCtx) {
-      const AC = window.AudioContext || window.webkitAudioContext;
-      audioCtx = new AC();
-      if (audioCtx.createMediaStreamDestination) {
-        audioDest = audioCtx.createMediaStreamDestination();
-      }
-    }
-    if (audioCtx && audioCtx.state === 'suspended') {
-      audioCtx.resume();
-    }
-  }
-
-  function connectOut(node) {
-    node.connect(audioCtx.destination);
-    if (audioDest) node.connect(audioDest);
-  }
-
-  function playBumperSound(tierId = 0, mult = 2) {
-    if (!soundEnabled) return;
-    initAudio();
-    if (!audioCtx) return;
-    const now = audioCtx.currentTime;
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    const baseFreq = TIERS[Math.min(tierId, TIERS.length - 1)].pitch;
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(baseFreq * (1 + (mult - 1) * 0.08), now);
-    osc.frequency.exponentialRampToValueAtTime(baseFreq * 1.45, now + 0.09);
-
-    gain.gain.setValueAtTime(0.11, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.11);
-
-    osc.connect(gain);
-    connectOut(gain);
-    osc.start(now);
-    osc.stop(now + 0.11);
-  }
-
-  function playMergeSound(newTierId) {
-    if (!soundEnabled) return;
-    initAudio();
-    if (!audioCtx) return;
-    const now = audioCtx.currentTime;
-    const baseFreq = TIERS[Math.min(newTierId, TIERS.length - 1)].pitch;
-    [1, 1.25, 1.5].forEach((ratio, idx) => {
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(baseFreq * ratio, now + idx * 0.035);
-      gain.gain.setValueAtTime(0.15, now + idx * 0.035);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.035 + 0.22);
-      osc.connect(gain);
-      connectOut(gain);
-      osc.start(now + idx * 0.035);
-      osc.stop(now + idx * 0.035 + 0.23);
-    });
-  }
-
-  function playGateSound() {
-    if (!soundEnabled) return;
-    initAudio();
-    if (!audioCtx) return;
-    const now = audioCtx.currentTime;
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(880, now);
-    osc.frequency.setValueAtTime(1318.5, now + 0.05);
-    gain.gain.setValueAtTime(0.12, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.16);
-    osc.connect(gain);
-    connectOut(gain);
-    osc.start(now);
-    osc.stop(now + 0.17);
-  }
-
-  // ============================================================================
-  // 4. NUMBER FORMATTING & ECONOMY CALCULATIONS
-  // ============================================================================
   function fmtYen(n) {
     n = Math.floor(n);
     if (n < 10000) return '¥' + n.toLocaleString('ja-JP');
     if (n < 100000000) {
-      const man = (n / 10000).toFixed(n >= 1000000 ? 1 : 2).replace(/\.0+$/, '');
-      return '¥' + man + '万';
+      return '¥' + (n / 10000).toFixed(n >= 1000000 ? 0 : 1).replace(/\.0$/, '') + '万';
     }
     if (n < 1000000000000) {
-      const oku = (n / 100000000).toFixed(2).replace(/\.0+$/, '');
-      return '¥' + oku + '億';
+      return '¥' + (n / 100000000).toFixed(1).replace(/\.0$/, '') + '億';
     }
-    const cho = (n / 1000000000000).toFixed(2).replace(/\.0+$/, '');
-    return '¥' + cho + '兆';
-  }
-
-  function getGlobalMultiplier() {
-    let mult = 1 + (state.upgrades.bumperMult - 1) * 0.45;
-    REAL_ITEMS.forEach(item => {
-      const lv = state.realItems[item.id] || 0;
-      mult += lv * item.multBoost;
-    });
-    if (Date.now() < state.feverActiveUntil) {
-      mult *= 2.5;
-    }
-    return mult;
-  }
-
-  function getPassivePPS() {
-    let pps = 0;
-    REAL_ITEMS.forEach(item => {
-      const lv = state.realItems[item.id] || 0;
-      pps += lv * item.ppsBoost;
-    });
-    return Math.floor(pps * getGlobalMultiplier());
-  }
-
-  let recentActiveIncome = [];
-  function recordIncome(amount) {
-    state.money += amount;
-    state.totalEarned += amount;
-    recentActiveIncome.push({ t: performance.now(), v: amount });
-  }
-
-  function getTotalDisplayPPS() {
-    const now = performance.now();
-    recentActiveIncome = recentActiveIncome.filter(e => now - e.t < 3000);
-    const activeSum = recentActiveIncome.reduce((acc, cur) => acc + cur.v, 0) / 3;
-    return Math.floor(getPassivePPS() + activeSum);
+    return '¥' + (n / 1000000000000).toFixed(1).replace(/\.0$/, '') + '兆';
   }
 
   // ============================================================================
-  // 5. PHYSICS ENGINE (Coins, Multiplier Bumpers, Spinners, Collector Gates)
+  // 3. WEB AUDIO ASMR SYNTH
+  // ============================================================================
+  let audioCtx = null;
+  let soundOn = true;
+
+  function initAudio() {
+    if (!audioCtx) {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (AC) audioCtx = new AC();
+    }
+    if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+  }
+
+  function playHitSound(tierId, mult) {
+    if (!soundOn) return;
+    initAudio();
+    if (!audioCtx) return;
+    const now = audioCtx.currentTime;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    const f = TIERS[Math.min(tierId, TIERS.length - 1)].pitch;
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(f, now);
+    osc.frequency.exponentialRampToValueAtTime(f * 1.4, now + 0.09);
+    gain.gain.setValueAtTime(0.12, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.11);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start(now);
+    osc.stop(now + 0.11);
+  }
+
+  function playMergeSound(tierId) {
+    if (!soundOn) return;
+    initAudio();
+    if (!audioCtx) return;
+    const now = audioCtx.currentTime;
+    const f = TIERS[Math.min(tierId, TIERS.length - 1)].pitch;
+    [1, 1.25, 1.5].forEach((r, i) => {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(f * r, now + i * 0.035);
+      gain.gain.setValueAtTime(0.18, now + i * 0.035);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.035 + 0.22);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now + i * 0.035);
+      osc.stop(now + i * 0.035 + 0.23);
+    });
+  }
+
+  // ============================================================================
+  // 4. PHYSICS STAGE (Exact Layout & Bouncy Feel of the YouTube Video!)
   // ============================================================================
   const canvas = document.getElementById('gameCanvas');
   const ctx = canvas.getContext('2d');
-  let W = 400, H = 480;
+  // Fixed internal virtual coordinate space (540 x 720) so proportions & sizes are IDENTICAL on all phones!
+  const W = 540;
+  let H = 720;
 
   let balls = [];
   let bumpers = [];
-  let spinners = [];
   let popups = [];
-  let particles = [];
-  let shockwaves = [];
+  let rings = [];
+  let showTapHint = true;
 
-  function setupStageGeometry() {
+  function resizeCanvas() {
     const rect = canvas.parentElement.getBoundingClientRect();
-    W = Math.max(300, Math.floor(rect.width));
-    H = Math.max(250, Math.floor(rect.height));
-    // High-DPI crisp canvas (fixed internal resolution scaled for smooth 60fps & Shorts recording)
-    canvas.width = W * 2;
-    canvas.height = H * 2;
-    ctx.setTransform(2, 0, 0, 2, 0, 0);
+    const aspect = rect.height / Math.max(1, rect.width);
+    H = Math.max(580, Math.min(860, Math.round(W * aspect)));
+    canvas.width = W;
+    canvas.height = H;
     rebuildBumpers();
   }
 
   function rebuildBumpers() {
-    bumpers = [];
-    spinners = [];
-    const lv = state.upgrades.pinCount || 1;
-
-    // Row 1 (Upper multiplier bumpers)
-    bumpers.push({ x: W * 0.28, y: H * 0.28, r: 22, mult: 2, label: '×2', color: '#38bdf8', pulse: 0 });
-    bumpers.push({ x: W * 0.72, y: H * 0.28, r: 22, mult: 2, label: '×2', color: '#38bdf8', pulse: 0 });
-
-    // Center High-Value Mega Bumper
-    const centerMult = 3 + Math.floor(lv / 2);
-    bumpers.push({ x: W * 0.50, y: H * 0.43, r: 27, mult: centerMult, label: '×' + centerMult, color: '#fbbf24', pulse: 0 });
-
-    // Row 2 (Mid-lower bumpers)
-    bumpers.push({ x: W * 0.20, y: H * 0.58, r: 20, mult: 2, label: '×2', color: '#a78bfa', pulse: 0 });
-    bumpers.push({ x: W * 0.80, y: H * 0.58, r: 20, mult: 2, label: '×2', color: '#a78bfa', pulse: 0 });
-
-    if (lv >= 2) {
-      bumpers.push({ x: W * 0.36, y: H * 0.68, r: 21, mult: 3, label: '×3', color: '#34d399', pulse: 0 });
-      bumpers.push({ x: W * 0.64, y: H * 0.68, r: 21, mult: 3, label: '×3', color: '#34d399', pulse: 0 });
-    }
-    if (lv >= 3) {
-      bumpers.push({ x: W * 0.50, y: H * 0.20, r: 17, mult: 4, label: '×4', color: '#f472b6', pulse: 0 });
-    }
-    if (lv >= 4) {
-      bumpers.push({ x: W * 0.14, y: H * 0.39, r: 16, mult: 3, label: '×3', color: '#fb923c', pulse: 0 });
-      bumpers.push({ x: W * 0.86, y: H * 0.39, r: 16, mult: 3, label: '×3', color: '#fb923c', pulse: 0 });
-    }
-
-    // Rotating pinwheel spinners
-    spinners.push({ x: W * 0.35, y: H * 0.49, len: 28, angle: 0, speed: 0.045 });
-    spinners.push({ x: W * 0.65, y: H * 0.49, len: 28, angle: 1.2, speed: -0.045 });
+    const m = state.multLv || 1;
+    bumpers = [
+      { x: 145, y: H * 0.25, r: 34, mult: 1 + m,     color: '#38bdf8', pulse: 0 },
+      { x: 395, y: H * 0.25, r: 34, mult: 1 + m,     color: '#38bdf8', pulse: 0 },
+      { x: 270, y: H * 0.44, r: 44, mult: 3 + m * 2, color: '#fbbf24', pulse: 0 },
+      { x: 120, y: H * 0.62, r: 32, mult: 2 + m,     color: '#a78bfa', pulse: 0 },
+      { x: 420, y: H * 0.62, r: 32, mult: 2 + m,     color: '#a78bfa', pulse: 0 },
+      { x: 205, y: H * 0.79, r: 33, mult: 2 + m,     color: '#34d399', pulse: 0 },
+      { x: 335, y: H * 0.79, r: 33, mult: 2 + m,     color: '#34d399', pulse: 0 }
+    ];
   }
 
-  function spawnBall(customX, customTier) {
-    if (balls.length > 55) return; // Cap for smooth performance
-    const baseTier = customTier !== undefined ? customTier : Math.min(state.upgrades.startTier, TIERS.length - 2);
-    // Small chance to spawn +1 tier higher!
-    const tierId = (customTier === undefined && Math.random() < 0.18) ? Math.min(baseTier + 1, TIERS.length - 1) : baseTier;
-    const t = TIERS[tierId];
-    if (tierId > state.maxTierUnlocked) {
-      state.maxTierUnlocked = tierId;
-      renderEvoBar();
-    }
-    const x = customX !== undefined ? Math.max(t.r + 10, Math.min(W - t.r - 10, customX)) : (W * 0.22 + Math.random() * (W * 0.56));
+  function addMoney(amount) {
+    state.money += amount;
+    const el = document.getElementById('moneyText');
+    el.textContent = fmtYen(state.money);
+    el.classList.add('pop');
+    clearTimeout(el._t);
+    el._t = setTimeout(() => el.classList.remove('pop'), 80);
+    refreshButtons();
+  }
+
+  function addPopup(x, y, text, color = '#fde047', size = 24) {
+    if (popups.length > 26) popups.shift();
+    popups.push({ x, y, text, color, size, a: 1.15 });
+  }
+
+  function spawnBall(customX) {
+    if (balls.length >= 34) return;
+    const baseTier = Math.min(state.rankLv || 0, TIERS.length - 3);
+    const tier = (Math.random() < 0.22) ? baseTier + 1 : baseTier;
+    const tr = TIERS[tier];
+    const x = customX !== undefined
+      ? Math.max(tr.r + 16, Math.min(W - tr.r - 16, customX))
+      : (110 + Math.random() * (W - 220));
     balls.push({
       x,
-      y: 26,
-      vx: (Math.random() - 0.5) * 3.2,
-      vy: 1.2 + Math.random() * 1.5,
-      tier: tierId,
-      r: t.r,
-      rot: Math.random() * Math.PI * 2,
-      vrot: (Math.random() - 0.5) * 0.1,
-      bounces: 0,
-      mergeCooldown: 8
+      y: 36,
+      vx: (Math.random() - 0.5) * 6,
+      vy: 2 + Math.random() * 2.5,
+      tier,
+      r: tr.r,
+      cd: 5,
+      life: 0
     });
   }
 
-  function addPopup(x, y, text, color = '#fbbf24', scale = 1) {
-    if (popups.length > 35) popups.shift();
-    popups.push({ x, y, text, color, alpha: 1, vy: -1.4, scale });
+  function triggerFeverShower() {
+    initAudio();
+    state.fever = 0;
+    state.feverUntil = Date.now() + 7000;
+    addPopup(W / 2, H * 0.35, '🌈 FEVER 大放出！！', '#fde047', 34);
+    for (let i = 0; i < 12; i++) {
+      setTimeout(() => spawnBall(90 + Math.random() * (W - 180)), i * 90);
+    }
+    updateFeverUI();
   }
 
-  function addParticles(x, y, color, count = 10) {
-    for (let i = 0; i < count; i++) {
-      if (particles.length > 90) particles.shift();
-      const ang = Math.random() * Math.PI * 2;
-      const spd = 1.5 + Math.random() * 4.5;
-      particles.push({
-        x, y,
-        vx: Math.cos(ang) * spd,
-        vy: Math.sin(ang) * spd - 1,
-        r: 2 + Math.random() * 3.5,
-        color,
-        alpha: 1
-      });
-    }
-  }
+  function stepPhysics() {
+    const isFever = Date.now() < state.feverUntil;
+    const feverMult = isFever ? 2 : 1;
 
-  function addFever(amount) {
-    if (Date.now() < state.feverActiveUntil) return;
-    state.fever = Math.min(100, state.fever + amount);
-    if (state.fever >= 100) {
-      state.fever = 0;
-      state.feverActiveUntil = Date.now() + 8000;
-      addPopup(W / 2, H * 0.35, '🔥 黄金FEVER突入！全配当2.5倍！', '#fde047', 1.35);
-      // Drop a shower of bonus coins
-      for (let i = 0; i < 8; i++) {
-        setTimeout(() => spawnBall(W * (0.15 + 0.7 * (i / 7))), i * 90);
-      }
-    }
-  }
-
-  // Collector Gates at the bottom
-  const GATES = [
-    { ratio: 0.2, mult: 1, label: '×1 回収', color: '#475569' },
-    { ratio: 0.2, mult: 2, label: '×2 ボーナス', color: '#0284c7' },
-    { ratio: 0.2, mult: 5, label: '👑 ×5 JACKPOT', color: '#d97706' },
-    { ratio: 0.2, mult: 2, label: '×2 ボーナス', color: '#0284c7' },
-    { ratio: 0.2, mult: 1, label: '×1 回収', color: '#475569' }
-  ];
-
-  function updatePhysics() {
-    const grav = 0.21;
-    const globalMult = getGlobalMultiplier();
-
-    // Rotate spinners
-    for (const sp of spinners) {
-      sp.angle += sp.speed;
-    }
-
-    // Update balls
     for (let i = balls.length - 1; i >= 0; i--) {
       const b = balls[i];
-      if (b.mergeCooldown > 0) b.mergeCooldown--;
-
-      b.vy += grav;
-      b.vx *= 0.995;
-      b.vy *= 0.995;
+      b.life++;
+      if (b.cd > 0) b.cd--;
+      b.vy += 0.36;
+      b.vx *= 0.996;
+      b.vy *= 0.996;
       b.x += b.vx;
       b.y += b.vy;
-      b.rot += b.vrot;
 
-      // Wall collisions
-      if (b.x - b.r < 6) {
-        b.x = 6 + b.r;
-        b.vx = Math.abs(b.vx) * 0.78;
-      } else if (b.x + b.r > W - 6) {
-        b.x = W - 6 - b.r;
-        b.vx = -Math.abs(b.vx) * 0.78;
+      // Side walls
+      if (b.x - b.r < 12) {
+        b.x = 12 + b.r;
+        b.vx = Math.abs(b.vx) * 0.82;
+      } else if (b.x + b.r > W - 12) {
+        b.x = W - 12 - b.r;
+        b.vx = -Math.abs(b.vx) * 0.82;
       }
 
-      // Bumper collisions
+      // Bumper hits
       for (const bmp of bumpers) {
         const dx = b.x - bmp.x;
         const dy = b.y - bmp.y;
         const dist = Math.hypot(dx, dy);
         const minDist = b.r + bmp.r;
-        if (dist < minDist && dist > 0.001) {
+        if (dist < minDist && dist > 0.01) {
           const nx = dx / dist;
           const ny = dy / dist;
-          b.x = bmp.x + nx * (minDist + 1);
-          b.y = bmp.y + ny * (minDist + 1);
-          const speed = Math.max(4.8, Math.min(9.5, Math.hypot(b.vx, b.vy) * 1.15));
-          b.vx = nx * speed + (Math.random() - 0.5) * 1.2;
-          b.vy = ny * speed - 0.8;
-          b.vrot = (Math.random() - 0.5) * 0.25;
-          b.bounces++;
-          bmp.pulse = 1.0;
+          b.x = bmp.x + nx * (minDist + 2);
+          b.y = bmp.y + ny * (minDist + 2);
+          b.vx = nx * 8.5 + (Math.random() - 0.5) * 2.5;
+          b.vy = ny * 8.5 - 1.5;
+          bmp.pulse = 1;
 
-          // Payout on bumper hit!
-          const tierObj = TIERS[b.tier];
-          const earn = Math.max(1, Math.floor(tierObj.val * 0.35 * bmp.mult * globalMult));
-          recordIncome(earn);
-          addFever(1.8);
-          playBumperSound(b.tier, bmp.mult);
-          addPopup(b.x, b.y - 10, '+' + fmtYen(earn), bmp.color, 0.95);
-          addParticles(bmp.x + nx * bmp.r, bmp.y + ny * bmp.r, bmp.color, 5);
+          const gain = TIERS[b.tier].val * bmp.mult * feverMult;
+          addMoney(gain);
+          if (!isFever) state.fever = Math.min(100, state.fever + 2.5);
+          playHitSound(b.tier, bmp.mult);
+          addPopup(b.x, b.y - 16, '+' + fmtYen(gain), bmp.color, 22);
         }
       }
 
-      // Spinner bar collisions
-      for (const sp of spinners) {
-        const dx = b.x - sp.x;
-        const dy = b.y - sp.y;
-        const dist = Math.hypot(dx, dy);
-        if (dist < b.r + sp.len * 0.85) {
-          const nx = dx / (dist || 1);
-          const ny = dy / (dist || 1);
-          b.vx = nx * 4.5 + Math.cos(sp.angle + Math.PI / 2) * 2.2;
-          b.vy = ny * 4.5;
+      // Bottom bouncy floor & central Jackpot collector
+      const floorY = H - 38;
+      if (b.y + b.r >= floorY) {
+        // Center gate (x between 160 and 380) collects after a couple bounces or immediately for big payout!
+        const inCenterGate = (b.x > 155 && b.x < W - 155);
+        if (inCenterGate && b.life > 75) {
+          const mult = 5 * (state.multLv || 1) * feverMult;
+          const gain = TIERS[b.tier].val * mult;
+          addMoney(gain);
+          if (!isFever) state.fever = Math.min(100, state.fever + 4);
+          playHitSound(b.tier + 1, 5);
+          addPopup(b.x, floorY - 24, '回収 +' + fmtYen(gain), '#fde047', 26);
+          balls.splice(i, 1);
+          continue;
+        } else {
+          // Bounce toward the center so balls collide & merge at the bottom!
+          b.y = floorY - b.r;
+          b.vy = -Math.max(5.5, Math.abs(b.vy) * 0.72);
+          b.vx += (W / 2 - b.x) * 0.018;
         }
-      }
-
-      // Bottom Gate Collection
-      if (b.y + b.r >= H - 26) {
-        const gateIdx = Math.min(GATES.length - 1, Math.max(0, Math.floor((b.x / W) * GATES.length)));
-        const gate = GATES[gateIdx];
-        const tierObj = TIERS[b.tier];
-        const gateBoost = 1 + (state.upgrades.gateBoost - 1) * 0.5;
-        const earn = Math.max(1, Math.floor(tierObj.val * gate.mult * gateBoost * globalMult));
-        recordIncome(earn);
-        addFever(3.2);
-        playGateSound();
-        addPopup(b.x, H - 36, '回収 +' + fmtYen(earn), gate.mult >= 5 ? '#fde047' : '#34d399', gate.mult >= 5 ? 1.25 : 1.0);
-        addParticles(b.x, H - 24, tierObj.color, 8);
-        balls.splice(i, 1);
-        continue;
       }
     }
 
-    // Ball-to-Ball Collisions & MERGE Evolution!
+    // Ball-to-Ball Merge Evolution
     for (let i = 0; i < balls.length; i++) {
       for (let j = i + 1; j < balls.length; j++) {
         const a = balls[i];
@@ -1058,638 +505,349 @@
         const dy = b.y - a.y;
         const dist = Math.hypot(dx, dy);
         const minDist = a.r + b.r;
-        if (dist < minDist && dist > 0.001) {
-          // Check if same tier and eligible to merge!
-          if (a.tier === b.tier && a.tier < TIERS.length - 1 && a.mergeCooldown === 0 && b.mergeCooldown === 0) {
-            const newTier = a.tier + 1;
-            const nt = TIERS[newTier];
-            const mx = (a.x + b.x) / 2;
-            const my = (a.y + b.y) / 2;
-
-            // Upgrade ball 'a' into the merged higher-tier asset and remove 'b'
-            a.tier = newTier;
+        if (dist < minDist && dist > 0.01) {
+          if (a.tier === b.tier && a.tier < TIERS.length - 1 && a.cd === 0 && b.cd === 0) {
+            a.tier++;
+            const nt = TIERS[a.tier];
             a.r = nt.r;
-            a.x = mx;
-            a.y = my;
-            a.vy = -3.8; // Satisfying upward pop on merge
-            a.vx = (Math.random() - 0.5) * 3;
-            a.mergeCooldown = 12;
+            a.x = (a.x + b.x) * 0.5;
+            a.y = (a.y + b.y) * 0.5;
+            a.vy = -7.5;
+            a.vx = (Math.random() - 0.5) * 4;
+            a.cd = 10;
 
-            if (newTier > state.maxTierUnlocked) {
-              state.maxTierUnlocked = newTier;
-              renderEvoBar();
-            }
-
-            const mergeBonus = Math.floor(nt.val * 0.8 * globalMult);
-            recordIncome(mergeBonus);
-            addFever(5.5);
-            playMergeSound(newTier);
-            addPopup(mx, my - 14, `合体進化！${nt.icon}${nt.name} (+${fmtYen(mergeBonus)})`, '#fde047', 1.2);
-            addParticles(mx, my, nt.color, 16);
-            shockwaves.push({ x: mx, y: my, r: nt.r, maxR: nt.r * 2.8, color: nt.color, alpha: 1 });
+            const bonus = nt.val * 3 * (state.multLv || 1) * feverMult;
+            addMoney(bonus);
+            if (!isFever) state.fever = Math.min(100, state.fever + 8);
+            playMergeSound(a.tier);
+            addPopup(a.x, a.y - 24, `合体！${nt.icon}${nt.name}`, '#fde047', 28);
+            rings.push({ x: a.x, y: a.y, r: nt.r, maxR: nt.r * 2.4, color: nt.color, a: 1 });
 
             balls.splice(j, 1);
             j--;
             continue;
           }
 
-          // Elastic bounce between different tiers
+          // Elastic bounce
           const nx = dx / dist;
           const ny = dy / dist;
-          const overlap = (minDist - dist) * 0.5;
-          a.x -= nx * overlap;
-          a.y -= ny * overlap;
-          b.x += nx * overlap;
-          b.y += ny * overlap;
+          const ov = (minDist - dist) * 0.5;
+          a.x -= nx * ov;
+          a.y -= ny * ov;
+          b.x += nx * ov;
+          b.y += ny * ov;
 
           const kx = a.vx - b.vx;
           const ky = a.vy - b.vy;
-          const p = 2 * (nx * kx + ny * ky) / 2;
-          a.vx -= p * nx * 0.75;
-          a.vy -= p * ny * 0.75;
-          b.vx += p * nx * 0.75;
-          b.vy += p * ny * 0.75;
+          const p = (nx * kx + ny * ky);
+          if (p > 0) {
+            a.vx -= p * nx * 0.8;
+            a.vy -= p * ny * 0.8;
+            b.vx += p * nx * 0.8;
+            b.vy += p * ny * 0.8;
+          }
         }
       }
     }
-
-    // Update visual effects
-    for (const bmp of bumpers) {
-      if (bmp.pulse > 0) bmp.pulse = Math.max(0, bmp.pulse - 0.08);
-    }
-    for (let i = popups.length - 1; i >= 0; i--) {
-      const p = popups[i];
-      p.y += p.vy;
-      p.alpha -= 0.022;
-      if (p.alpha <= 0) popups.splice(i, 1);
-    }
-    for (let i = particles.length - 1; i >= 0; i--) {
-      const pt = particles[i];
-      pt.x += pt.vx;
-      pt.y += pt.vy;
-      pt.vy += 0.15;
-      pt.alpha -= 0.03;
-      if (pt.alpha <= 0) particles.splice(i, 1);
-    }
-    for (let i = shockwaves.length - 1; i >= 0; i--) {
-      const sw = shockwaves[i];
-      sw.r += (sw.maxR - sw.r) * 0.22;
-      sw.alpha -= 0.06;
-      if (sw.alpha <= 0) shockwaves.splice(i, 1);
-    }
   }
 
-  // ============================================================================
-  // 6. RENDERING (60fps Neon Canvas + Embedded Shorts Header when recording)
-  // ============================================================================
-  let isShortsMode = false;
-  let currentCaptionIdx = 0;
-
   function drawStage() {
-    const isFever = Date.now() < state.feverActiveUntil;
-
-    // Background gradient
-    const grad = ctx.createLinearGradient(0, 0, 0, H);
-    if (isFever) {
-      grad.addColorStop(0, '#2e1065');
-      grad.addColorStop(0.5, '#1e1b4b');
-      grad.addColorStop(1, '#090d16');
-    } else {
-      grad.addColorStop(0, '#0f172a');
-      grad.addColorStop(1, '#060911');
-    }
-    ctx.fillStyle = grad;
+    const isFever = Date.now() < state.feverUntil;
+    ctx.fillStyle = isFever ? '#1e1b4b' : '#070b14';
     ctx.fillRect(0, 0, W, H);
 
-    // Subtle cyber grid lines
-    ctx.strokeStyle = isFever ? 'rgba(251, 191, 36, 0.08)' : 'rgba(56, 189, 248, 0.05)';
+    // Subtle grid
+    ctx.strokeStyle = isFever ? 'rgba(253, 224, 71, 0.08)' : 'rgba(56, 189, 248, 0.06)';
     ctx.lineWidth = 1;
-    const step = 36;
-    for (let x = 0; x < W; x += step) {
+    for (let x = 0; x < W; x += 60) {
       ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
     }
-    for (let y = 0; y < H; y += step) {
+    for (let y = 0; y < H; y += 60) {
       ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
     }
 
-    // Drop Zone Indicator at Top
-    ctx.fillStyle = 'rgba(56, 189, 248, 0.12)';
-    ctx.fillRect(10, 4, W - 20, 18);
-    ctx.fillStyle = '#94a3b8';
-    ctx.font = 'bold 10px sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('▼ タップした位置に臨時投下！同じ資産がぶつかると合体進化 ▼', W / 2, 16);
-
-    // Draw Spinners
-    for (const sp of spinners) {
-      ctx.save();
-      ctx.translate(sp.x, sp.y);
-      ctx.rotate(sp.angle);
-      ctx.strokeStyle = '#38bdf8';
-      ctx.lineWidth = 5;
-      ctx.lineCap = 'round';
-      ctx.beginPath();
-      ctx.moveTo(-sp.len, 0);
-      ctx.lineTo(sp.len, 0);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(0, -sp.len);
-      ctx.lineTo(0, sp.len);
-      ctx.stroke();
-      ctx.fillStyle = '#fff';
-      ctx.beginPath();
-      ctx.arc(0, 0, 5, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
+    // Tap hint at top (big & clear)
+    if (showTapHint) {
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
+      ctx.font = '900 20px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('👆 画面タップでお金を連射ドロップ！', W / 2, 34);
     }
 
-    // Draw Multiplier Bumpers
+    // Draw Bumpers (Exact bold style from YouTube Shorts)
     for (const bmp of bumpers) {
-      const pr = bmp.r + bmp.pulse * 6;
-      ctx.save();
-      // Outer glow
+      if (bmp.pulse > 0) bmp.pulse = Math.max(0, bmp.pulse - 0.1);
+      const pr = bmp.r + bmp.pulse * 10;
+
       ctx.beginPath();
-      ctx.arc(bmp.x, bmp.y, pr + 4, 0, Math.PI * 2);
-      ctx.fillStyle = bmp.color + '33';
+      ctx.arc(bmp.x, bmp.y, pr + 6, 0, Math.PI * 2);
+      ctx.fillStyle = bmp.color + '28';
       ctx.fill();
 
-      // Main bumper circle
       ctx.beginPath();
       ctx.arc(bmp.x, bmp.y, pr, 0, Math.PI * 2);
       ctx.fillStyle = '#0f172a';
       ctx.fill();
-      ctx.lineWidth = 3.5;
+      ctx.lineWidth = 5;
       ctx.strokeStyle = isFever ? '#fde047' : bmp.color;
       ctx.stroke();
 
-      // Label
-      ctx.fillStyle = '#fff';
-      ctx.font = `900 ${Math.floor(bmp.r * 0.68)}px sans-serif`;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(isFever ? `×${bmp.mult * 2}` : bmp.label, bmp.x, bmp.y + 1);
-      ctx.restore();
-    }
-
-    // Draw Shockwaves
-    for (const sw of shockwaves) {
-      ctx.save();
-      ctx.beginPath();
-      ctx.arc(sw.x, sw.y, sw.r, 0, Math.PI * 2);
-      ctx.strokeStyle = sw.color;
-      ctx.globalAlpha = Math.max(0, sw.alpha);
-      ctx.lineWidth = 3;
-      ctx.stroke();
-      ctx.restore();
-    }
-
-    // Draw Balls (Coins / Assets)
-    for (const b of balls) {
-      const t = TIERS[b.tier];
-      ctx.save();
-      ctx.translate(b.x, b.y);
-      ctx.rotate(b.rot);
-
-      // Coin body
-      ctx.beginPath();
-      ctx.arc(0, 0, b.r, 0, Math.PI * 2);
-      ctx.fillStyle = t.color;
-      ctx.fill();
-      ctx.lineWidth = 3;
-      ctx.strokeStyle = t.ring;
-      ctx.stroke();
-
-      // Inner shine
-      ctx.beginPath();
-      ctx.arc(0, 0, b.r * 0.82, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(255,255,255,0.45)';
-      ctx.lineWidth = 1.2;
-      ctx.stroke();
-
-      // Emoji & Value label
-      ctx.fillStyle = '#0f172a';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.font = `${Math.floor(b.r * 0.85)}px sans-serif`;
-      ctx.fillText(t.icon, 0, -b.r * 0.12);
-
-      ctx.font = `900 ${Math.max(8, Math.floor(b.r * 0.44))}px sans-serif`;
-      ctx.fillStyle = '#090d16';
-      ctx.fillText(t.label, 0, b.r * 0.52);
-      ctx.restore();
-    }
-
-    // Draw Particles
-    for (const pt of particles) {
-      ctx.save();
-      ctx.globalAlpha = Math.max(0, pt.alpha);
-      ctx.fillStyle = pt.color;
-      ctx.beginPath();
-      ctx.arc(pt.x, pt.y, pt.r, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-    }
-
-    // Draw Bottom Collector Gates
-    const gateY = H - 26;
-    let gx = 0;
-    for (const g of GATES) {
-      const gw = W * g.ratio;
-      ctx.fillStyle = g.color;
-      ctx.fillRect(gx + 1, gateY, gw - 2, 26);
-      ctx.strokeStyle = 'rgba(255,255,255,0.25)';
-      ctx.strokeRect(gx + 1, gateY, gw - 2, 26);
-
-      ctx.fillStyle = '#fff';
-      ctx.font = '900 10px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(g.label, gx + gw / 2, gateY + 13);
-      gx += gw;
-    }
-
-    // Draw Floating Popups
-    for (const p of popups) {
-      ctx.save();
-      ctx.globalAlpha = Math.max(0, p.alpha);
-      ctx.font = `900 ${Math.floor(13 * p.scale)}px sans-serif`;
-      ctx.textAlign = 'center';
-      ctx.lineWidth = 3.5;
-      ctx.strokeStyle = '#000';
-      ctx.strokeText(p.text, p.x, p.y);
-      ctx.fillStyle = p.color;
-      ctx.fillText(p.text, p.x, p.y);
-      ctx.restore();
-    }
-
-    // When recording a video or in Shorts Mode, also render a sleek HUD directly onto the canvas so recorded videos have captions & live counter baked in!
-    if (isRecordingVideo) {
-      const cap = SHORTS_CAPTIONS[currentCaptionIdx];
-      ctx.save();
-      ctx.fillStyle = 'rgba(7, 11, 20, 0.9)';
-      ctx.strokeStyle = '#fbbf24';
-      ctx.lineWidth = 2;
-      ctx.fillRect(10, 8, W - 20, 66);
-      ctx.strokeRect(10, 8, W - 20, 66);
-
-      ctx.fillStyle = '#fde047';
-      ctx.font = '900 11px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText(cap.badge + ' ｜ 総資産: ' + fmtYen(state.money), W / 2, 26);
-
       ctx.fillStyle = '#ffffff';
-      ctx.font = '900 13px sans-serif';
-      ctx.fillText(cap.text, W / 2, 50);
+      ctx.font = '900 24px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('×' + (bmp.mult * (isFever ? 2 : 1)), bmp.x, bmp.y + 1);
+    }
+
+    // Merge shockwave rings
+    for (let i = rings.length - 1; i >= 0; i--) {
+      const rg = rings[i];
+      rg.r += (rg.maxR - rg.r) * 0.25;
+      rg.a -= 0.06;
+      if (rg.a <= 0) { rings.splice(i, 1); continue; }
+      ctx.save();
+      ctx.globalAlpha = rg.a;
+      ctx.beginPath();
+      ctx.arc(rg.x, rg.y, rg.r, 0, Math.PI * 2);
+      ctx.lineWidth = 5;
+      ctx.strokeStyle = rg.color;
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    // Draw Balls (Huge, Clear Icons & Text)
+    for (const b of balls) {
+      const tr = TIERS[b.tier];
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+      ctx.fillStyle = tr.color;
+      ctx.fill();
+      ctx.lineWidth = 4.5;
+      ctx.strokeStyle = tr.ring;
+      ctx.stroke();
+
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.font = Math.floor(b.r * 0.78) + 'px sans-serif';
+      ctx.fillText(tr.icon, b.x, b.y - b.r * 0.14);
+
+      ctx.fillStyle = '#090d16';
+      ctx.font = '900 ' + Math.floor(b.r * 0.42) + 'px sans-serif';
+      ctx.fillText(tr.name, b.x, b.y + b.r * 0.48);
+    }
+
+    // Bottom Bouncy Floor & Center Jackpot Gate
+    const floorY = H - 38;
+    // Left & Right bounce pads
+    ctx.fillStyle = '#1e293b';
+    ctx.fillRect(0, floorY, 155, 38);
+    ctx.fillRect(W - 155, floorY, 155, 38);
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = '900 15px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('⤴ バウンド', 77, floorY + 20);
+    ctx.fillText('⤴ バウンド', W - 77, floorY + 20);
+
+    // Center Jackpot Gate
+    ctx.fillStyle = '#d97706';
+    ctx.fillRect(155, floorY, W - 310, 38);
+    ctx.strokeStyle = '#fde047';
+    ctx.lineWidth = 3;
+    ctx.strokeRect(155, floorY, W - 310, 38);
+    ctx.fillStyle = '#ffffff';
+    ctx.font = '900 18px sans-serif';
+    ctx.fillText(`👑 ×${5 * (state.multLv || 1)} 回収ポケット`, W / 2, floorY + 20);
+
+    // Draw Big Popups
+    for (let i = popups.length - 1; i >= 0; i--) {
+      const pp = popups[i];
+      pp.y -= 2.2;
+      pp.a -= 0.03;
+      if (pp.a <= 0) { popups.splice(i, 1); continue; }
+      ctx.save();
+      ctx.globalAlpha = Math.min(1, pp.a);
+      ctx.font = `900 ${pp.size}px sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.lineWidth = 5;
+      ctx.strokeStyle = '#000000';
+      ctx.strokeText(pp.text, pp.x, pp.y);
+      ctx.fillStyle = pp.color;
+      ctx.fillText(pp.text, pp.x, pp.y);
       ctx.restore();
     }
   }
 
   // ============================================================================
-  // 7. UPGRADE SYSTEM & UI RENDERING
+  // 5. UPGRADES & CONTROLS
   // ============================================================================
-  const FACTORY_UPGRADES = [
-    {
-      key: 'spawnRate',
-      name: '自動投下コンベア高速化',
-      icon: '⚙️',
-      desc: (lv) => `自動ドロップ間隔を短縮（現在 ${(Math.max(0.22, 1.35 - (lv - 1) * 0.11)).toFixed(2)}秒）`,
-      cost: (lv) => Math.floor(30 * Math.pow(1.75, lv - 1)),
-      maxLv: 12
-    },
-    {
-      key: 'startTier',
-      name: '初期投下コインのランク進化',
-      icon: '🪙',
-      desc: (lv) => `最初から「${TIERS[Math.min(lv, TIERS.length - 2)].name}」が落ちてくる！`,
-      cost: (lv) => Math.floor(250 * Math.pow(4.2, lv)),
-      maxLv: 7
-    },
-    {
-      key: 'bumperMult',
-      name: 'ネオンバンパー配当ブースト',
-      icon: '⚡',
-      desc: (lv) => `バンパー衝突＆合体時の獲得金額 +${lv * 45}% UP`,
-      cost: (lv) => Math.floor(80 * Math.pow(1.9, lv - 1)),
-      maxLv: 25
-    },
-    {
-      key: 'pinCount',
-      name: '高倍率バンパー増設工事',
-      icon: '🎯',
-      desc: (lv) => `ステージ内の高倍率バンパーを増設（Lv.${lv}/4）`,
-      cost: (lv) => Math.floor(600 * Math.pow(5.5, lv - 1)),
-      maxLv: 4,
-      onBuy: () => rebuildBumpers()
-    },
-    {
-      key: 'gateBoost',
-      name: '下部ポケット回収倍率強化',
-      icon: '👑',
-      desc: (lv) => `下部回収ポケットの配当を +${lv * 50}% 強化`,
-      cost: (lv) => Math.floor(150 * Math.pow(2.1, lv - 1)),
-      maxLv: 20
-    }
-  ];
+  function getSpeedCost() { return Math.floor(50 * Math.pow(1.85, state.speedLv - 1)); }
+  function getRankCost()  { return Math.floor(300 * Math.pow(4.2, state.rankLv)); }
+  function getMultCost()  { return Math.floor(120 * Math.pow(2.1, state.multLv - 1)); }
 
-  function renderEvoBar() {
-    const bar = document.getElementById('evo-bar');
-    bar.innerHTML = TIERS.map(t => {
-      const unlocked = t.id <= state.maxTierUnlocked;
-      return `<div class="evo-item ${unlocked ? 'unlocked' : ''}">
-        <span class="evo-icon">${unlocked ? t.icon : '❓'}</span>
-        <span class="evo-val">${t.label}</span>
-      </div>`;
-    }).join('');
+  function refreshButtons() {
+    const sc = getSpeedCost();
+    const rc = getRankCost();
+    const mc = getMultCost();
+
+    const btnSpeed = document.getElementById('btnSpeed');
+    document.getElementById('nameSpeed').textContent = `連射 Lv.${state.speedLv}`;
+    document.getElementById('costSpeed').textContent = state.speedLv >= 12 ? 'MAX' : fmtYen(sc);
+    btnSpeed.disabled = state.speedLv >= 12 || state.money < sc;
+
+    const btnRank = document.getElementById('btnRank');
+    const nextTier = TIERS[Math.min(state.rankLv + 1, TIERS.length - 2)];
+    document.getElementById('iconRank').textContent = nextTier.icon;
+    document.getElementById('nameRank').textContent = `${nextTier.name}解放`;
+    document.getElementById('costRank').textContent = state.rankLv >= 5 ? 'MAX' : fmtYen(rc);
+    btnRank.disabled = state.rankLv >= 5 || state.money < rc;
+
+    const btnMult = document.getElementById('btnMult');
+    document.getElementById('nameMult').textContent = `倍率 Lv.${state.multLv}`;
+    document.getElementById('costMult').textContent = fmtYen(mc);
+    btnMult.disabled = state.money < mc;
   }
 
-  function renderUpgrades() {
-    // Tab 1: Factory Upgrades
-    const fContainer = document.getElementById('tab-factory');
-    fContainer.innerHTML = FACTORY_UPGRADES.map(u => {
-      const lv = state.upgrades[u.key] || 0;
-      const isMax = lv >= u.maxLv;
-      const cost = isMax ? 0 : u.cost(lv);
-      const canBuy = !isMax && state.money >= cost;
-      return `<div class="upg-row">
-        <div class="upg-info">
-          <div class="upg-icon">${u.icon}</div>
-          <div class="upg-text">
-            <div class="upg-title">${u.name} <span class="upg-lvl">Lv.${lv}${isMax ? ' MAX' : ''}</span></div>
-            <div class="upg-desc">${u.desc(lv)}</div>
-          </div>
-        </div>
-        <button class="buy-btn" data-upg="${u.key}" ${canBuy ? '' : 'disabled'}>
-          ${isMax ? '最大Lv' : fmtYen(cost)}
-        </button>
-      </div>`;
-    }).join('');
+  function updateFeverUI() {
+    const isFever = Date.now() < state.feverUntil;
+    const fBtn = document.getElementById('fever-btn');
+    const fFill = document.getElementById('fever-fill');
+    const fText = document.getElementById('fever-text');
 
-    fContainer.querySelectorAll('.buy-btn[data-upg]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const key = btn.getAttribute('data-upg');
-        const u = FACTORY_UPGRADES.find(x => x.key === key);
-        const lv = state.upgrades[key] || 0;
-        if (lv >= u.maxLv) return;
-        const cost = u.cost(lv);
-        if (state.money >= cost) {
-          state.money -= cost;
-          state.upgrades[key] = lv + 1;
-          if (u.onBuy) u.onBuy();
-          playMergeSound(Math.min(lv + 2, TIERS.length - 1));
-          saveState();
-          renderUpgrades();
-          updateTopHUD();
-        }
-      });
-    });
-
-    // Tab 2: Real-life God Items
-    const iContainer = document.getElementById('tab-invest');
-    iContainer.innerHTML = REAL_ITEMS.map(item => {
-      const lv = state.realItems[item.id] || 0;
-      const cost = Math.floor(item.baseCost * Math.pow(2.15, lv));
-      const canBuy = state.money >= cost;
-      return `<div class="upg-row">
-        <div class="upg-info">
-          <div class="upg-icon">${item.icon}</div>
-          <div class="upg-text">
-            <div class="upg-title">${item.name} <span class="upg-lvl">保有 ${lv}</span></div>
-            <div class="upg-desc">秒間 +${fmtYen(item.ppsBoost)} ＆ 全配当 +${Math.round(item.multBoost * 100)}%（${item.paybackText}）</div>
-          </div>
-        </div>
-        <button class="buy-btn" data-real="${item.id}" ${canBuy ? '' : 'disabled'}>
-          投資 ${fmtYen(cost)}
-        </button>
-      </div>`;
-    }).join('');
-
-    iContainer.querySelectorAll('.buy-btn[data-real]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const id = btn.getAttribute('data-real');
-        const item = REAL_ITEMS.find(x => x.id === id);
-        const lv = state.realItems[id] || 0;
-        const cost = Math.floor(item.baseCost * Math.pow(2.15, lv));
-        if (state.money >= cost) {
-          state.money -= cost;
-          state.realItems[id] = lv + 1;
-          playMergeSound(6);
-          saveState();
-          renderUpgrades();
-          renderROIEncyclopedia();
-          updateTopHUD();
-        }
-      });
-    });
-  }
-
-  function renderROIEncyclopedia() {
-    const rContainer = document.getElementById('tab-roi');
-    rContainer.innerHTML = REAL_ITEMS.map(item => {
-      const lv = state.realItems[item.id] || 0;
-      return `<div class="roi-card">
-        <div class="roi-top">
-          <span class="roi-name">${item.icon} ${item.name} ${lv > 0 ? `（工場に${lv}台導入済）` : ''}</span>
-          <span class="roi-badge">${item.paybackText.replace('現実での元取り期間：', '')}</span>
-        </div>
-        <div class="roi-desc">${item.desc}</div>
-        <div class="roi-links">
-          <a href="${item.calcUrl}" class="roi-link calc">📊 自分の元取り期間を1秒計算</a>
-          <a href="${rakutenUrl(item.rakutenKw)}" target="_blank" rel="nofollow sponsored" class="roi-link rakuten">🛍️ 楽天市場で人気モデルを見る</a>
-        </div>
-      </div>`;
-    }).join('');
-  }
-
-  function updateTopHUD() {
-    document.getElementById('moneyText').textContent = fmtYen(state.money);
-    document.getElementById('ppsText').textContent = `+${fmtYen(getTotalDisplayPPS())} / 秒（全体倍率 ×${getGlobalMultiplier().toFixed(2)}）`;
-
-    const isFever = Date.now() < state.feverActiveUntil;
-    const fLabel = document.getElementById('feverLabel');
-    const fBar = document.getElementById('feverBar');
     if (isFever) {
-      const rem = Math.max(0, ((state.feverActiveUntil - Date.now()) / 1000)).toFixed(1);
-      fLabel.textContent = `🌈 FEVER ${rem}s`;
-      fBar.style.width = '100%';
+      const rem = Math.max(0, (state.feverUntil - Date.now()) / 1000).toFixed(1);
+      fFill.style.width = '100%';
+      fText.textContent = `🌈 FEVER ラッシュ中！！ (${rem}秒)`;
+      fBtn.classList.add('ready');
+    } else if (state.fever >= 100) {
+      fFill.style.width = '100%';
+      fText.textContent = '🔥 タップでFEVER大放出を発動！！';
+      fBtn.classList.add('ready');
     } else {
-      fLabel.textContent = `🔥 FEVER ${Math.floor(state.fever)}%`;
-      fBar.style.width = `${Math.floor(state.fever)}%`;
+      fFill.style.width = `${Math.floor(state.fever)}%`;
+      fText.textContent = `🔥 フィーバーゲージ ${Math.floor(state.fever)}%`;
+      fBtn.classList.remove('ready');
     }
-
-    // Refresh button disabled states cheaply
-    document.querySelectorAll('.buy-btn[data-upg]').forEach(btn => {
-      const key = btn.getAttribute('data-upg');
-      const u = FACTORY_UPGRADES.find(x => x.key === key);
-      const lv = state.upgrades[key] || 0;
-      btn.disabled = (lv >= u.maxLv) || (state.money < u.cost(lv));
-    });
-    document.querySelectorAll('.buy-btn[data-real]').forEach(btn => {
-      const id = btn.getAttribute('data-real');
-      const item = REAL_ITEMS.find(x => x.id === id);
-      const lv = state.realItems[id] || 0;
-      const cost = Math.floor(item.baseCost * Math.pow(2.15, lv));
-      btn.disabled = state.money < cost;
-    });
   }
 
-  // ============================================================================
-  // 8. INTERACTION, SHORTS VIDEO RECORDER & GAME LOOP
-  // ============================================================================
+  document.getElementById('btnSpeed').addEventListener('click', () => {
+    const c = getSpeedCost();
+    if (state.speedLv < 12 && state.money >= c) {
+      state.money -= c;
+      state.speedLv++;
+      playMergeSound(2);
+      save();
+      addMoney(0);
+    }
+  });
+
+  document.getElementById('btnRank').addEventListener('click', () => {
+    const c = getRankCost();
+    if (state.rankLv < 5 && state.money >= c) {
+      state.money -= c;
+      state.rankLv++;
+      playMergeSound(state.rankLv + 2);
+      save();
+      addMoney(0);
+      spawnBall(W / 2);
+    }
+  });
+
+  document.getElementById('btnMult').addEventListener('click', () => {
+    const c = getMultCost();
+    if (state.money >= c) {
+      state.money -= c;
+      state.multLv++;
+      rebuildBumpers();
+      playMergeSound(4);
+      save();
+      addMoney(0);
+    }
+  });
+
+  document.getElementById('fever-btn').addEventListener('click', () => {
+    if (state.fever >= 100 && Date.now() >= state.feverUntil) {
+      triggerFeverShower();
+    } else {
+      // Even if not full yet, tapping drops a bonus coin!
+      spawnBall();
+    }
+  });
+
+  document.getElementById('soundBtn').addEventListener('click', () => {
+    soundOn = !soundOn;
+    document.getElementById('soundBtn').textContent = soundOn ? '🔊' : '🔇';
+    if (soundOn) initAudio();
+  });
+
+  // Tap or Drag on Canvas to rapid-drop coins!
+  let isPointerDown = false;
+  let pointerX = W / 2;
+  let lastTapDrop = 0;
+
   canvas.addEventListener('pointerdown', (e) => {
     initAudio();
+    showTapHint = false;
+    isPointerDown = true;
     const rect = canvas.getBoundingClientRect();
-    const x = (e.clientX - rect.left) * (W / rect.width);
-    spawnBall(x);
-    addFever(2.5);
+    pointerX = (e.clientX - rect.left) * (W / rect.width);
+    spawnBall(pointerX);
+    state.fever = Math.min(100, state.fever + 3);
+    lastTapDrop = performance.now();
   });
 
-  // Burst button
-  document.getElementById('btnBurst').addEventListener('click', () => {
-    initAudio();
-    for (let i = 0; i < 10; i++) {
-      setTimeout(() => spawnBall(W * (0.12 + 0.76 * Math.random())), i * 70);
-    }
-    addFever(15);
+  canvas.addEventListener('pointermove', (e) => {
+    if (!isPointerDown) return;
+    const rect = canvas.getBoundingClientRect();
+    pointerX = (e.clientX - rect.left) * (W / rect.width);
   });
 
-  // Sound toggle
-  const btnSound = document.getElementById('btnSound');
-  btnSound.addEventListener('click', () => {
-    soundEnabled = !soundEnabled;
-    btnSound.textContent = soundEnabled ? '🔊 音ON' : '🔇 音OFF';
-    if (soundEnabled) initAudio();
-  });
+  window.addEventListener('pointerup', () => { isPointerDown = false; });
 
-  // Shorts Mode toggle
-  const btnShorts = document.getElementById('btnShorts');
-  const shortsOverlay = document.getElementById('shorts-overlay');
-  btnShorts.addEventListener('click', () => {
-    isShortsMode = !isShortsMode;
-    btnShorts.classList.toggle('active', isShortsMode);
-    shortsOverlay.classList.toggle('show', isShortsMode);
-    document.getElementById('app').classList.toggle('shorts-clean', isShortsMode);
-    setTimeout(setupStageGeometry, 50);
-  });
-
-  // Change Shorts Caption
-  document.getElementById('btnChangeCaption').addEventListener('click', () => {
-    currentCaptionIdx = (currentCaptionIdx + 1) % SHORTS_CAPTIONS.length;
-    const cap = SHORTS_CAPTIONS[currentCaptionIdx];
-    document.getElementById('shortsBadge').textContent = cap.badge;
-    document.getElementById('shortsHeadline').textContent = cap.text;
-  });
-
-  // 12-Second Direct Shorts Video Recorder (Canvas + WebAudio -> .webm download)
-  let isRecordingVideo = false;
-  const btnRecordVideo = document.getElementById('btnRecordVideo');
-  btnRecordVideo.addEventListener('click', () => {
-    if (isRecordingVideo) return;
-    initAudio();
-    if (!canvas.captureStream) {
-      alert('お使いのブラウザはCanvas録画に対応していません。PC版Chrome等でお試しください。');
-      return;
-    }
-    isRecordingVideo = true;
-    btnRecordVideo.textContent = '⏺️ 録画中... (残り12秒)';
-
-    // Trigger an exciting gold shower right as recording starts!
-    state.feverActiveUntil = Date.now() + 12000;
-    for (let i = 0; i < 12; i++) {
-      setTimeout(() => spawnBall(W * (0.15 + 0.7 * (i / 11))), i * 110);
-    }
-
-    const canvasStream = canvas.captureStream(30);
-    if (audioDest) {
-      const audioTracks = audioDest.stream.getAudioTracks();
-      if (audioTracks.length > 0) canvasStream.addTrack(audioTracks[0]);
-    }
-
-    let mimeType = 'video/webm;codecs=vp9,opus';
-    if (!MediaRecorder.isTypeSupported(mimeType)) mimeType = 'video/webm';
-    const recorder = new MediaRecorder(canvasStream, { mimeType, videoBitsPerSecond: 5000000 });
-    const chunks = [];
-    recorder.ondataavailable = (ev) => { if (ev.data && ev.data.size > 0) chunks.push(ev.data); };
-    recorder.onstop = () => {
-      isRecordingVideo = false;
-      btnRecordVideo.textContent = '🔴 12秒ショート動画を録画保存';
-      const blob = new Blob(chunks, { type: 'video/webm' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `money_drop_shorts_${Date.now()}.webm`;
-      a.click();
-      setTimeout(() => URL.revokeObjectURL(url), 5000);
-    };
-
-    recorder.start(200);
-    let secLeft = 12;
-    const timer = setInterval(() => {
-      secLeft--;
-      if (secLeft > 0) {
-        btnRecordVideo.textContent = `⏺️ 録画中... (残り${secLeft}秒)`;
-      } else {
-        clearInterval(timer);
-        if (recorder.state === 'recording') recorder.stop();
-      }
-    }, 1000);
-  });
-
-  // Tabs switching
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById(btn.getAttribute('data-tab')).classList.add('active');
-    });
-  });
-
-  // Main Loop & Timers
-  let lastAutoSpawn = performance.now();
-  let lastPassiveTick = performance.now();
-  let lastHUDUpdate = performance.now();
+  // Main Loop
+  let lastAutoDrop = performance.now();
+  let lastUI = performance.now();
 
   function loop(now) {
-    const spawnIntervalMs = Math.max(220, 1350 - ((state.upgrades.spawnRate || 1) - 1) * 110);
-    const effectiveInterval = (Date.now() < state.feverActiveUntil) ? spawnIntervalMs * 0.45 : spawnIntervalMs;
+    const isFever = Date.now() < state.feverUntil;
+    const baseInterval = Math.max(160, 750 - (state.speedLv - 1) * 52);
+    const interval = isFever ? baseInterval * 0.45 : baseInterval;
 
-    if (now - lastAutoSpawn >= effectiveInterval) {
+    if (now - lastAutoDrop >= interval) {
       spawnBall();
-      lastAutoSpawn = now;
+      lastAutoDrop = now;
     }
 
-    if (now - lastPassiveTick >= 1000) {
-      const pps = getPassivePPS();
-      if (pps > 0) {
-        state.money += pps;
-        state.totalEarned += pps;
-      }
-      lastPassiveTick = now;
+    // Hold finger down to rapid-fire drop!
+    if (isPointerDown && now - lastTapDrop >= 140) {
+      spawnBall(pointerX + (Math.random() - 0.5) * 30);
+      lastTapDrop = now;
     }
 
-    updatePhysics();
+    // Auto-trigger fever when reaches 100%!
+    if (state.fever >= 100 && !isFever) {
+      triggerFeverShower();
+    }
+
+    stepPhysics();
     drawStage();
 
-    if (now - lastHUDUpdate >= 180) {
-      updateTopHUD();
-      lastHUDUpdate = now;
+    if (now - lastUI >= 150) {
+      updateFeverUI();
+      lastUI = now;
     }
 
     requestAnimationFrame(loop);
   }
 
-  window.addEventListener('resize', setupStageGeometry);
-  setInterval(saveState, 5000);
+  window.addEventListener('resize', resizeCanvas);
+  setInterval(save, 4000);
 
-  // Initialize
-  setupStageGeometry();
-  renderEvoBar();
-  renderUpgrades();
-  renderROIEncyclopedia();
-  updateTopHUD();
-  // Drop initial celebratory coins
-  for (let i = 0; i < 4; i++) {
-    setTimeout(() => spawnBall(), i * 180);
+  resizeCanvas();
+  document.getElementById('moneyText').textContent = fmtYen(state.money);
+  refreshButtons();
+  // Start with a burst of 6 coins right away so the screen is immediately lively!
+  for (let i = 0; i < 6; i++) {
+    setTimeout(() => spawnBall(), i * 110);
   }
   requestAnimationFrame(loop);
 })();
