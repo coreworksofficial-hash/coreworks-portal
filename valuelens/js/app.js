@@ -487,11 +487,20 @@
   }
 
   function updateSmartActionLinks(res) {
-    const cleanQuery = encodeURIComponent(
-      (state.currentItem.name || '').replace(/\(.*?\)|（.*?）/g, '').trim() || 'おすすめ'
-    );
+    const rawClean = (state.currentItem.name || '').replace(/\(.*?\)|（.*?）/g, '').trim() || 'おすすめ';
+    const cleanQuery = encodeURIComponent(rawClean);
+    const rakutenAffUrl = `https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=${encodeURIComponent('https://search.rakuten.co.jp/search/mall/' + cleanQuery + '/')}`;
     document.getElementById('linkAmazonSearch').href = `https://www.amazon.co.jp/s?k=${cleanQuery}`;
-    document.getElementById('linkRakutenSearch').href = `https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=${encodeURIComponent('https://search.rakuten.co.jp/search/mall/' + cleanQuery + '/')}`;
+    document.getElementById('linkRakutenSearch').href = rakutenAffUrl;
+    const topCta = document.getElementById('topRakutenCta');
+    const topCtaText = document.getElementById('topRakutenCtaText');
+    if (topCta && topCtaText) {
+      topCta.href = rakutenAffUrl;
+      const estPoints = Math.round((Number(state.currentItem.price) || 0) * 0.1);
+      topCtaText.textContent = estPoints > 0
+        ? `「${rawClean}」を楽天市場で最安値＆還元チェック（10%還元なら実質 -${estPoints.toLocaleString()}円お得！）`
+        : `「${rawClean}」を楽天市場で最安値＆ポイント還元チェック`;
+    }
     // メルカリの「売り切れ（SOLD）」実売相場に直結！
     document.getElementById('linkMercariSoldSearch').href =
       `https://jp.mercari.com/search?keyword=${cleanQuery}&status=sold_out%7Ctrading`;

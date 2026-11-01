@@ -5,6 +5,14 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://coreworks-portal.pages.dev/payback-calc/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://coreworks-portal.pages.dev/rakuten-maximizer/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://coreworks-portal.pages.dev/valuelens/</loc>
     <priority>0.8</priority>
   </url>

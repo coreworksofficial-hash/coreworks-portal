@@ -3,71 +3,102 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coreworks Studio ｜ 暮らしと意思決定をハックする実用Webツールラボ</title>
-  <meta name="description" content="Coreworks Studioは、価値換算シミュレーター・固定費診断・実効時給計算・ミニゲームなど、完全ローカルで動く高機能Webツールを提供するデジタルクリエイティブラボです。">
+  <title>Coreworks Studio ｜ 暮らしと買い物の「損得・元取り」科学シミュレーターラボ</title>
+  <meta name="description" content="Coreworks Studioは、「省エネ・時短家電は何ヶ月で元が取れるか」「楽天お買い物マラソンで1,000円買い足すと黒字になるか」「サブスクの買い切り置換」など、買い物と家計の損得を1秒で可視化する無料Webシミュレーターラボです。">
   <style>
-    :root { --bg:#0b0f19; --card-bg:#151d30; --border:#23314e; --text:#f1f5f9; --text-muted:#94a3b8; --accent:#38bdf8; --accent-pink:#f472b6; --accent-green:#34d399; --radius:16px; }
+    :root { --bg:#0b0f19; --card-bg:#151d30; --border:#23314e; --text:#f1f5f9; --text-muted:#94a3b8; --accent:#38bdf8; --accent-pink:#f472b6; --accent-green:#34d399; --amber:#fbbf24; --radius:16px; }
     * { box-sizing:border-box; margin:0; padding:0; }
     body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Hiragino Sans",sans-serif; line-height:1.6; padding:0 16px 60px; }
-    .hero { max-width:960px; margin:60px auto 40px; text-align:center; }
-    .badge { display:inline-block; background:rgba(56,189,248,.12); border:1px solid rgba(56,189,248,.35); color:var(--accent); padding:6px 16px; border-radius:99px; font-size:.82rem; font-weight:700; margin-bottom:20px; letter-spacing:.05em; }
-    h1 { font-size:2.5rem; font-weight:900; letter-spacing:-.02em; margin-bottom:16px; background:linear-gradient(135deg,#fff 40%,var(--accent) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-    .hero-sub { color:var(--text-muted); font-size:1.05rem; max-width:680px; margin:0 auto; }
-    .grid { max-width:960px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:20px; }
+    .hero { max-width:960px; margin:50px auto 32px; text-align:center; }
+    .badge { display:inline-block; background:rgba(56,189,248,.12); border:1px solid rgba(56,189,248,.35); color:var(--accent); padding:6px 16px; border-radius:99px; font-size:.82rem; font-weight:700; margin-bottom:16px; letter-spacing:.05em; }
+    h1 { font-size:2.35rem; font-weight:900; letter-spacing:-.02em; margin-bottom:14px; background:linear-gradient(135deg,#fff 35%,var(--accent) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .hero-sub { color:var(--text-muted); font-size:1rem; max-width:720px; margin:0 auto 24px; }
+    .quick-bar { max-width:960px; margin:0 auto 30px; background:linear-gradient(135deg,rgba(52,211,153,.12),rgba(56,189,248,.1)); border:1px solid rgba(52,211,153,.35); border-radius:14px; padding:16px 20px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; }
+    .quick-bar-title { font-size:.9rem; font-weight:800; color:var(--accent-green); }
+    .quick-pills { display:flex; flex-wrap:wrap; gap:8px; }
+    .q-pill { background:#0b0f19; border:1px solid var(--border); color:#e2e8f0; text-decoration:none; font-size:.8rem; font-weight:700; padding:7px 12px; border-radius:99px; transition:all .2s; }
+    .q-pill:hover { border-color:var(--accent); color:var(--accent); transform:translateY(-1px); }
+    .grid { max-width:960px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(295px,1fr)); gap:20px; }
     .card { background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius); padding:24px; display:flex; flex-direction:column; justify-content:space-between; transition:all .25s ease; text-decoration:none; color:inherit; }
+    .card-featured { border-color:rgba(52,211,153,.5); background:linear-gradient(180deg,#162238 0%,#151d30 100%); }
     .card:hover { transform:translateY(-4px); border-color:var(--accent); box-shadow:0 16px 40px rgba(0,0,0,.4); }
-    .card-tag { font-size:.75rem; font-weight:700; letter-spacing:.06em; padding:4px 10px; border-radius:6px; width:fit-content; margin-bottom:12px; }
-    .tag-tool { background:rgba(56,189,248,.15); color:var(--accent); }
+    .card-tag { font-size:.75rem; font-weight:700; letter-spacing:.04em; padding:4px 10px; border-radius:6px; width:fit-content; margin-bottom:12px; }
+    .tag-tool { background:rgba(251,191,36,.16); color:var(--amber); }
     .tag-game { background:rgba(244,114,182,.15); color:var(--accent-pink); }
-    .tag-calc { background:rgba(52,211,153,.15); color:var(--accent-green); }
+    .tag-calc { background:rgba(52,211,153,.16); color:var(--accent-green); }
     .tag-info { background:rgba(148,163,184,.15); color:#cbd5e1; }
-    .card h2 { font-size:1.25rem; font-weight:800; margin-bottom:8px; }
-    .card p { color:var(--text-muted); font-size:.88rem; margin-bottom:18px; flex-grow:1; }
-    .card-footer { display:flex; align-items:center; justify-content:space-between; border-top:1px solid var(--border); padding-top:14px; font-size:.85rem; font-weight:700; color:var(--accent); }
+    .card h2 { font-size:1.2rem; font-weight:800; margin-bottom:8px; line-height:1.35; }
+    .card p { color:var(--text-muted); font-size:.87rem; margin-bottom:18px; flex-grow:1; }
+    .card-footer { display:flex; align-items:center; justify-content:space-between; border-top:1px solid var(--border); padding-top:14px; font-size:.85rem; font-weight:800; color:var(--accent); }
     footer { max-width:960px; margin:60px auto 0; text-align:center; color:var(--text-muted); font-size:.85rem; border-top:1px solid var(--border); padding-top:24px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; }
     footer a { color:var(--accent); text-decoration:none; }
   </style>
 </head>
 <body>
   <div class="hero">
-    <div class="badge">🚀 COREWORKS DIGITAL LAB</div>
+    <div class="badge">🚀 COREWORKS DIGITAL LAB ｜ 買い物と家計の損得科学</div>
     <h1>Coreworks Studio</h1>
-    <p class="hero-sub">「あったら便利」「買い物の迷いが消える」「指一本で遊べる」完全無料・登録不要の実用Webツール＆アプリを自律開発・提供しています。</p>
+    <p class="hero-sub">「その買い物、何ヶ月で元が取れる？」「お買い物マラソンであと1店舗買うと何円黒字になる？」—— 暮らしの迷いを数学でゼロにする、完全無料・登録不要の損得シミュレーター群を提供しています。</p>
+  </div>
+  <div class="quick-bar">
+    <div class="quick-bar-title">🔥 今すぐ試せる人気の損得・元取り診断：</div>
+    <div class="quick-pills">
+      <a href="./payback-calc/" class="q-pill">🚿 節水シャワー・食洗機の元取り月数</a>
+      <a href="./rakuten-maximizer/" class="q-pill">🛍️ 楽天1,000円買い足し＆上限7,000P計算</a>
+      <a href="./valuelens/" class="q-pill">💎 ガジェットのリセール＆日割り実質価値</a>
+      <a href="./subscription-calc/" class="q-pill">✂️ サブスク解約→買い切り置換プラン</a>
+    </div>
   </div>
   <div class="grid">
-    <a href="./valuelens/" class="card">
+    <a href="./payback-calc/" class="card card-featured">
       <div>
-        <div class="card-tag tag-tool">💎 ライフハック / 資産シミュレーター</div>
-        <h2>ValueLens（バリューレンズ）</h2>
-        <p>欲しいモノの「真の実質価値」「人生の必要労働時間」「10年後の運用機会費用」を瞬時に可視化。衝動買いを防ぐ48時間冷却ボックス＆見送り貯金箱付き。</p>
+        <div class="card-tag tag-calc">⚡ 一番人気 / 省エネ・時短投資回収</div>
+        <h2>家電・暮らしの「何ヶ月で元が取れる？」損益分岐シミュレーター</h2>
+        <p>節水シャワーヘッド・工事不要食洗機・ロボット掃除機・ドラム式洗濯機・おうちカフェ機器など、購入費用が「毎月の光熱費削減＋浮く家事時間」で何ヶ月目に黒字化するか1秒で算出。厳選コスパ最強モデル比較付き。</p>
       </div>
-      <div class="card-footer"><span>Webシミュレーター</span><span>開く →</span></div>
+      <div class="card-footer"><span>元取り月数＆ベストバイ比較</span><span>今すぐ計算する →</span></div>
     </a>
-    <a href="./subscription-calc/" class="card">
+    <a href="./rakuten-maximizer/" class="card card-featured">
       <div>
-        <div class="card-tag tag-calc">✂️ 家計ハック / 支出最適化</div>
-        <h2>サブスク固定費・年間損益シミュレーター</h2>
-        <p>毎月なんとなく払い続けている動画・音楽・ジム等の月額サブスクを棚卸し。1年間の総支払額と、投資に回した場合の10年後の複利リターンを即時計算。</p>
+        <div class="card-tag tag-tool">🔥 買い物前に必須 / ポイント最大化</div>
+        <h2>楽天お買い物マラソン＆ふるさと納税「上限ポイント・1000円損得」計算機</h2>
+        <p>「上限7,000P/5,000Pまであといくら買える？」「いま1,000円ポッキリ商品を1店舗買い足すと逆ザヤで黒字になるか？」を即時判定。店舗稼ぎの鉄板1,000円商品＆高還元ふるさと納税カタログ直結。</p>
       </div>
-      <div class="card-footer"><span>固定費診断ツール</span><span>計算する →</span></div>
+      <div class="card-footer"><span>買い回り上限＆ふるさと納税</span><span>損得を判定する →</span></div>
     </a>
-    <a href="./wage-calc/" class="card">
+    <a href="./valuelens/" class="card ">
       <div>
-        <div class="card-tag tag-calc">⏱️ キャリア / 労働時間換算</div>
-        <h2>真の実効時給＆通勤拘束ロス診断</h2>
-        <p>名目の給与額ではなく、通勤時間・サービス残業・仕事のための身銭出費を差し引いた「あなたの人生の本当の手取り時給」を客観的に可視化します。</p>
+        <div class="card-tag tag-tool">💎 高単価ガジェット / リセール＆複利換算</div>
+        <h2>ValueLens（バリューレンズ）総合買い物価値シミュレーター</h2>
+        <p>欲しいモノの「メルカリ売却後の実質日割りコスト」「人生の必要労働時間」「10年後のインデックス運用機会費用」を瞬時に可視化。衝動買いを防ぐ48時間冷却ボックス＆A/B比較バトル搭載。</p>
       </div>
-      <div class="card-footer"><span>時給診断ツール</span><span>診断する →</span></div>
+      <div class="card-footer"><span>多角的意思決定ツール</span><span>診断する →</span></div>
     </a>
-    <a href="./donburi-tower/" class="card">
+    <a href="./subscription-calc/" class="card ">
       <div>
-        <div class="card-tag tag-game">🎮 ハイパーカジュアル / Android対応</div>
+        <div class="card-tag tag-calc">✂️ 家計ハック / 固定費永久削減</div>
+        <h2>サブスク固定費・年間損益＆「買い切り置換」シミュレーター</h2>
+        <p>毎月なんとなく払い続けている動画・ジム・カフェ等の月額出費を棚卸し。10年後の複利損失を計算し、1回の「買い切りアイテム」へ置き換えて毎年数万円を浮かせる具体策を提案します。</p>
+      </div>
+      <div class="card-footer"><span>固定費診断＆買い切り提案</span><span>棚卸しする →</span></div>
+    </a>
+    <a href="./wage-calc/" class="card ">
+      <div>
+        <div class="card-tag tag-calc">⏱️ キャリア・時間資産 / 時短回収</div>
+        <h2>真の実効時給＆通勤拘束ロス診断＋時短ROI逆算</h2>
+        <p>通勤時間・残業・仕事のための身銭出費を差し引いた「本当の人生の手取り時給」を算出し、あなたの時給で計算した「時間を買う投資（時短家電・デスク装備）」の回収月数を自動逆算します。</p>
+      </div>
+      <div class="card-footer"><span>実効時給＆時短投資診断</span><span>時給を測る →</span></div>
+    </a>
+    <a href="./donburi-tower/" class="card ">
+      <div>
+        <div class="card-tag tag-game">🎮 息抜きミニゲーム / Android対応</div>
         <h2>爆盛！どんぶりタワー</h2>
-        <p>落ちてくるカオスな具材を積み上げろ！ちゃぶ台返し＆虚無プチプチモードを収録した暇つぶしクソゲー。Androidスマホへの直接インストール（APK）も可能。</p>
+        <p>落ちてくるカオスな具材を積み上げろ！ちゃぶ台返し＆虚無プチプチモードを収録した物理演算バランスゲーム。ブラウザプレイ＆Android用APK直接配信に対応。</p>
       </div>
       <div class="card-footer"><span>ブラウザ版 / APK配信</span><span>遊ぶ →</span></div>
     </a>
-    <a href="./about/" class="card">
+    <a href="./about/" class="card ">
       <div>
         <div class="card-tag tag-info">📜 運営情報 / プライバシー</div>
         <h2>Coreworks Studio について</h2>
