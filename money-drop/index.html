@@ -40,7 +40,7 @@
     position: relative;
   }
 
-  /* 1. Top Seek/Timer Progress Bar (Identical to YouTube Video) */
+  /* 1. Top Seek/Timer Progress Bar */
   #top-progress-wrap {
     width: calc(100% + 32px);
     margin-left: -16px;
@@ -55,7 +55,7 @@
     transition: width 0.05s linear, background-color 0.2s;
   }
 
-  /* 2. Top Badge Row */
+  /* 2. Top Badge & Settings Row */
   .header-row {
     display: flex;
     align-items: center;
@@ -80,17 +80,18 @@
     color: #ffffff;
     box-shadow: 0 4px 16px rgba(225, 29, 72, 0.5);
   }
-  .sound-btn {
-    width: 42px;
+  .settings-btn {
     height: 42px;
+    padding: 0 12px;
     border-radius: 12px;
-    background: rgba(30, 41, 59, 0.85);
-    border: 2px solid rgba(255, 255, 255, 0.18);
-    color: #fff;
-    font-size: 20px;
+    background: rgba(30, 41, 59, 0.9);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    color: #f8fafc;
+    font-size: 15px;
+    font-weight: 900;
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 5px;
     cursor: pointer;
   }
 
@@ -107,14 +108,14 @@
     flex-direction: column;
   }
   .headline-1 {
-    font-size: 25px;
+    font-size: 24px;
     font-weight: 900;
     color: #ffffff;
     line-height: 1.22;
     letter-spacing: -0.5px;
   }
   .headline-2 {
-    font-size: 25px;
+    font-size: 24px;
     font-weight: 900;
     color: #fbbf24;
     line-height: 1.22;
@@ -136,7 +137,7 @@
     color: #fda4af;
   }
 
-  /* 4. Status / Countdown Banner (Identical to YouTube Video) */
+  /* 4. Status / Countdown Banner */
   #status-banner {
     width: 100%;
     height: 54px;
@@ -164,7 +165,7 @@
     color: #fde047;
   }
 
-  /* 5. Main Kanji/Character Grid */
+  /* 5. Main Kanji Grid */
   #grid-wrap {
     flex: 1;
     width: 100%;
@@ -248,18 +249,18 @@
     cursor: not-allowed;
   }
 
-  /* Stage Clear / Retry Modal */
-  #modal {
+  /* Stage Clear / Fail / Boss Intro Modal */
+  .overlay-modal {
     display: none;
     position: absolute;
     inset: 0;
-    background: rgba(9, 13, 22, 0.88);
+    background: rgba(9, 13, 22, 0.9);
     z-index: 30;
     align-items: center;
     justify-content: center;
     padding: 20px;
   }
-  #modal.show {
+  .overlay-modal.show {
     display: flex;
   }
   .modal-card {
@@ -268,9 +269,14 @@
     background: #1e293b;
     border: 3px solid #fbbf24;
     border-radius: 22px;
-    padding: 24px 20px;
+    padding: 22px 18px;
     text-align: center;
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.85);
+  }
+  .modal-card.boss-alert {
+    background: linear-gradient(180deg, #3b0a1e 0%, #1e1b4b 100%);
+    border-color: #fb7185;
+    box-shadow: 0 0 35px rgba(225, 29, 72, 0.6);
   }
   .modal-badge {
     display: inline-block;
@@ -282,22 +288,29 @@
     border-radius: 99px;
     margin-bottom: 10px;
   }
+  .modal-card.boss-alert .modal-badge {
+    background: #e11d48;
+    color: #fff;
+  }
   .modal-title {
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 900;
     color: #fff;
     margin-bottom: 4px;
   }
   .modal-iq {
-    font-size: 38px;
+    font-size: 34px;
     font-weight: 900;
     color: #34d399;
     margin: 8px 0;
   }
+  .modal-card.boss-alert .modal-iq {
+    color: #fda4af;
+  }
   .modal-sub {
-    font-size: 16px;
+    font-size: 15px;
     color: #cbd5e1;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
     line-height: 1.45;
   }
   .primary-btn {
@@ -307,23 +320,82 @@
     border: none;
     border-radius: 14px;
     padding: 15px;
-    font-size: 20px;
+    font-size: 19px;
     font-weight: 900;
     cursor: pointer;
     box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
   }
+  .modal-card.boss-alert .primary-btn {
+    background: linear-gradient(180deg, #f43f5e 0%, #be123c 100%);
+    color: #fff;
+    box-shadow: 0 4px 18px rgba(244, 63, 94, 0.5);
+  }
   .primary-btn:active {
     transform: scale(0.97);
   }
-  .reset-link {
-    display: inline-block;
-    margin-top: 14px;
-    font-size: 13px;
-    color: #94a3b8;
-    background: none;
+
+  /* Settings & Mission Select Modal */
+  .setting-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(15, 23, 42, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+  }
+  .setting-label {
+    font-size: 16px;
+    font-weight: 900;
+    color: #f8fafc;
+  }
+  .toggle-btn {
+    min-width: 90px;
+    padding: 8px 14px;
+    border-radius: 10px;
     border: none;
-    text-decoration: underline;
+    font-size: 15px;
+    font-weight: 900;
     cursor: pointer;
+  }
+  .toggle-btn.on {
+    background: #10b981;
+    color: #052e16;
+  }
+  .toggle-btn.off {
+    background: #475569;
+    color: #cbd5e1;
+  }
+  .mission-list {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin: 12px 0 16px;
+  }
+  .mission-btn {
+    width: 100%;
+    padding: 11px 14px;
+    border-radius: 12px;
+    border: 2px solid rgba(56, 189, 248, 0.4);
+    background: rgba(15, 23, 42, 0.85);
+    color: #f8fafc;
+    font-size: 15px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+  .mission-btn.active {
+    border-color: #fbbf24;
+    background: rgba(251, 191, 36, 0.18);
+    color: #fde047;
+  }
+  .mission-btn:disabled {
+    opacity: 0.4;
+    border-color: #334155;
+    cursor: not-allowed;
   }
 </style>
 </head>
@@ -334,10 +406,10 @@
     <div id="top-progress-bar"></div>
   </div>
 
-  <!-- 2. Top Badge & Sound -->
+  <!-- 2. Top Badge & Settings Button -->
   <div class="header-row">
-    <div class="top-badge" id="stageBadge">🧠 STAGE 1 ｜ 脳トレIQ 100</div>
-    <button class="sound-btn" id="soundBtn" aria-label="音量">🔊</button>
+    <div class="top-badge" id="stageBadge">🧠 MISSION 1 - STAGE 1</div>
+    <button class="settings-btn" id="settingsBtn">⚙️ 設定</button>
   </div>
 
   <!-- 3. Headlines & Step Indicator -->
@@ -359,19 +431,40 @@
 
   <!-- 6. Bottom Footer -->
   <div id="footer-bar">
-    <div class="rank-info" id="rankText">🏅 称号：観察ルーキー</div>
+    <div class="rank-info" id="rankText">🏅 IQ 100 ｜ 観察ルーキー</div>
     <button class="hint-btn" id="hintBtn">💡 ヒント (3)</button>
   </div>
 
-  <!-- Stage Clear / Fail Modal -->
-  <div id="modal">
-    <div class="modal-card">
+  <!-- Stage Clear / Fail / Boss Alert Modal -->
+  <div class="overlay-modal" id="modal">
+    <div class="modal-card" id="modalCard">
       <div class="modal-badge" id="modalBadge">🎉 STAGE CLEAR!</div>
       <div class="modal-title" id="modalTitle">STAGE 1 クリア！</div>
       <div class="modal-iq" id="modalIQ">認定IQ 105</div>
-      <div class="modal-sub" id="modalComment">称号：観察ルーキー</div>
-      <button class="primary-btn" id="modalActionBtn">▶️ STAGE 2 へ進む</button>
-      <button class="reset-link" id="resetStageBtn">STAGE 1 からやり直す</button>
+      <div class="modal-sub" id="modalComment">次は STAGE 2 です！</div>
+      <button class="primary-btn" id="modalActionBtn">▶️ 次へ進む</button>
+    </div>
+  </div>
+
+  <!-- Settings & Mission Select Modal -->
+  <div class="overlay-modal" id="settingsModal">
+    <div class="modal-card">
+      <div class="modal-badge">⚙️ 設定 ＆ ミッション選択</div>
+      <div class="modal-title" style="font-size:22px; margin-bottom:12px;">サウンド設定</div>
+
+      <div class="setting-row">
+        <span class="setting-label">🎵 BGM（音楽）</span>
+        <button class="toggle-btn on" id="toggleBgmBtn">ON</button>
+      </div>
+      <div class="setting-row">
+        <span class="setting-label">🔊 効果音（SE）</span>
+        <button class="toggle-btn on" id="toggleSeBtn">ON</button>
+      </div>
+
+      <div class="modal-title" style="font-size:20px; margin-top:14px;">ミッション選択（全10ステージ）</div>
+      <div class="mission-list" id="missionList"></div>
+
+      <button class="primary-btn" id="closeSettingsBtn">✅ 閉じてゲームに戻る</button>
     </div>
   </div>
 </div>
@@ -379,65 +472,118 @@
 <script>
 (() => {
   // ============================================================================
-  // 1. CURATED PUZZLE POOL (60 Pairs across 4 Difficulty Tiers)
+  // 1. 180+ STRICTLY DEDUPLICATED KANJI PAIRS (Grouped by Mission 1..5)
+  //    Every single character is unique so the player NEVER sees repeats!
   // ============================================================================
-  const PUZZLES = [
-    // Tier 1 (Easy / Warmup)
-    { normal: '大', odd: '太' }, { normal: '日', odd: '目' },
-    { normal: '人', odd: '入' }, { normal: '土', odd: '士' },
-    { normal: '白', odd: '百' }, { normal: '王', odd: '玉' },
-    { normal: '刀', odd: '力' }, { normal: '千', odd: '干' },
-    { normal: '牛', odd: '午' }, { normal: '木', odd: '本' },
-    { normal: '犬', odd: '太' }, { normal: '上', odd: '土' },
-    { normal: '口', odd: '日' }, { normal: '子', odd: '字' },
-    { normal: '水', odd: '氷' },
-
-    // Tier 2 (Medium)
-    { normal: '氷', odd: '永' }, { normal: '未', odd: '末' },
-    { normal: '休', odd: '体' }, { normal: '名', odd: '各' },
-    { normal: '右', odd: '石' }, { normal: '貝', odd: '見' },
-    { normal: '田', odd: '由' }, { normal: '甲', odd: '申' },
-    { normal: '古', odd: '吉' }, { normal: '宇', odd: '字' },
-    { normal: '皿', odd: '血' }, { normal: '自', odd: '白' },
-    { normal: '住', odd: '主' }, { normal: '池', odd: '地' },
-    { normal: '枚', odd: '牧' },
-
-    // Tier 3 (Hard)
-    { normal: '待', odd: '持' }, { normal: '鳥', odd: '烏' },
-    { normal: '季', odd: '李' }, { normal: '問', odd: '間' },
-    { normal: '晴', odd: '睛' }, { normal: '往', odd: '住' },
-    { normal: '柱', odd: '注' }, { normal: '複', odd: '復' },
-    { normal: '綱', odd: '網' }, { normal: '壁', odd: '璧' },
-    { normal: '快', odd: '決' }, { normal: '涼', odd: '京' },
-    { normal: '功', odd: '巧' }, { normal: '矢', odd: '失' },
-    { normal: '辛', odd: '幸' },
-
-    // Tier 4 (Genius / Master - includes 微 vs 徴 from the YouTube Shorts video!)
-    { normal: '微', odd: '徴' }, { normal: '鏡', odd: '境' },
-    { normal: '簿', odd: '薄' }, { normal: '緑', odd: '縁' },
-    { normal: '輪', odd: '輸' }, { normal: '燥', odd: '噪' },
-    { normal: '崇', odd: '祟' }, { normal: '塊', odd: '魂' },
-    { normal: '暦', odd: '歴' }, { normal: '穫', odd: '獲' },
-    { normal: '偏', odd: '編' }, { normal: '愉', odd: '諭' },
-    { normal: '障', odd: '彰' }, { normal: '賠', odd: '培' },
-    { normal: '騰', odd: '謄' }
+  const RAW_MISSION_POOLS = [
+    // Mission 1 (初級：直感で見分けやすい基本漢字ペア 36組)
+    [
+      ['大','太'], ['日','目'], ['人','入'], ['土','士'], ['白','百'], ['王','玉'],
+      ['刀','力'], ['千','干'], ['牛','午'], ['木','本'], ['犬','尤'], ['上','止'],
+      ['口','回'], ['子','孑'], ['水','氷'], ['月','円'], ['火','灯'], ['手','毛'],
+      ['田','由'], ['甲','申'], ['右','石'], ['左','在'], ['出','山'], ['夕','外'],
+      ['名','各'], ['休','体'], ['未','末'], ['貝','見'], ['古','吉'], ['早','草'],
+      ['兄','児'], ['元','先'], ['天','夫'], ['文','支'], ['引','弓'], ['少','小']
+    ],
+    // Mission 2 (中級：日常でよく見かける似た漢字ペア 36組)
+    [
+      ['宇','字'], ['皿','血'], ['住','主'], ['池','地'], ['枚','牧'], ['待','持'],
+      ['鳥','烏'], ['季','李'], ['問','間'], ['晴','睛'], ['柱','注'], ['快','決'],
+      ['涼','京'], ['功','巧'], ['矢','失'], ['辛','幸'], ['里','黒'], ['友','反'],
+      ['庁','広'], ['圧','庄'], ['句','旬'], ['司','同'], ['向','尚'], ['后','垢'],
+      ['困','固'], ['坂','板'], ['坑','抗'], ['均','釣'], ['報','服'], ['場','湯'],
+      ['塚','嫁'], ['塁','涙'], ['壊','懐'], ['声','戸'], ['花','化'], ['芸','雲']
+    ],
+    // Mission 3 (上級：部首やパーツがそっくりな漢字ペア 36組)
+    [
+      ['往','征'], ['複','復'], ['綱','網'], ['壁','璧'], ['輪','輸'], ['緑','縁'],
+      ['鏡','境'], ['簿','薄'], ['塊','魂'], ['暦','歴'], ['偏','編'], ['愉','諭'],
+      ['障','彰'], ['賠','培'], ['妹','味'], ['姓','性'], ['姿','恣'], ['威','滅'],
+      ['娘','狼'], ['娯','誤'], ['官','管'], ['宙','油'], ['定','走'], ['客','容'],
+      ['宮','営'], ['害','割'], ['宵','肖'], ['家','象'], ['宿','縮'], ['寄','奇'],
+      ['密','蜜'], ['富','福'], ['寒','塞'], ['寛','慣'], ['寝','浸'], ['察','祭']
+    ],
+    // Mission 4 (達人：一瞬では見分けがつかない難問ペア 36組)
+    [
+      ['微','徴'], ['燥','噪'], ['崇','祟'], ['穫','獲'], ['騰','謄'], ['専','博'],
+      ['尊','遵'], ['尋','導'], ['届','屈'], ['屋','握'], ['展','喪'], ['属','嘱'],
+      ['岐','技'], ['岡','剛'], ['岩','炭'], ['峰','蜂'], ['崎','埼'], ['崩','棚'],
+      ['嵐','風'], ['巡','迅'], ['巣','菓'], ['差','着'], ['己','已'], ['巻','圏'],
+      ['布','希'], ['帆','汎'], ['帳','張'], ['帯','滞'], ['帰','掃'], ['幅','副'],
+      ['幕','墓'], ['幡','播'], ['平','半'], ['幹','枠'], ['幻','幼'], ['幾','機']
+    ],
+    // Mission 5 (最高難度・神領域：ゲシュタルト崩壊必至の極限ペア 36組)
+    [
+      ['床','麻'], ['底','低'], ['店','占'], ['府','付'], ['度','席'], ['庫','車'],
+      ['庭','艇'], ['庶','遮'], ['康','庸'], ['廉','鎌'], ['廊','朗'], ['延','廷'],
+      ['建','健'], ['弊','幣'], ['式','試'], ['弦','舷'], ['弧','孤'], ['弾','単'],
+      ['強','勉'], ['径','怪'], ['律','津'], ['後','俊'], ['徒','従'], ['徳','聴'],
+      ['徹','撤'], ['心','必'], ['忌','忍'], ['志','芯'], ['忘','忙'], ['忠','患'],
+      ['怒','努'], ['倹','検'], ['恋','変'], ['恐','築'], ['恒','垣'], ['悔','海']
+    ]
   ];
 
+  // Mission Configurations (Time limits get tighter from Mission 1 to Mission 5!)
+  const MISSION_CONFIG = {
+    1: { name: 'MISSION 1（初級）',     normalSec: 10.0, bossSec: 6.0 },
+    2: { name: 'MISSION 2（中級）',     normalSec: 9.0,  bossSec: 5.5 },
+    3: { name: 'MISSION 3（上級）',     normalSec: 8.0,  bossSec: 5.0 },
+    4: { name: 'MISSION 4（達人）',     normalSec: 7.0,  bossSec: 4.5 },
+    5: { name: 'MISSION 5（最高難度）', normalSec: 6.0,  bossSec: 4.0 }
+  };
+
   function getTitleForIQ(iqVal) {
-    if (iqVal >= 170) return '🪐 神の領域（上位0.01%）';
-    if (iqVal >= 150) return '👑 瞬間認識の天才（上位0.1%）';
-    if (iqVal >= 135) return '🦅 鷹の目マスター（上位1%）';
-    if (iqVal >= 125) return '💎 脳トレ名人（上位5%）';
+    if (iqVal >= 170) return '🪐 神の領域';
+    if (iqVal >= 150) return '👑 瞬間認識の天才';
+    if (iqVal >= 135) return '🦅 鷹の目マスター';
+    if (iqVal >= 125) return '💎 脳トレ名人';
     if (iqVal >= 115) return '🔥 違和感ハンター';
     if (iqVal >= 106) return '✨ 観察プロ';
     return '🌱 観察ルーキー';
   }
 
   // ============================================================================
-  // 2. WEB AUDIO SYNTH (Clean Chimes, Boss Alert & Stage Clear Fanfare)
+  // 2. PERSISTENT STATE (Mission, Stage, Unlocked Missions, BGM/SE, Used Pairs)
+  // ============================================================================
+  const SAVE_KEY = 'cw_kanji_mission_save_v3';
+  let state = {
+    mission: 1,
+    stage: 1,
+    maxUnlockedMission: 1,
+    clearedMissions: [],
+    iq: 100,
+    hints: 3,
+    bgmOn: true,
+    seOn: true,
+    usedPairKeys: [] // Guarantees NO duplicate kanji pair appears!
+  };
+
+  function loadProgress() {
+    try {
+      const raw = localStorage.getItem(SAVE_KEY);
+      if (raw) {
+        const p = JSON.parse(raw);
+        state = Object.assign({}, state, p);
+        if (!Array.isArray(state.usedPairKeys)) state.usedPairKeys = [];
+        if (!Array.isArray(state.clearedMissions)) state.clearedMissions = [];
+      }
+    } catch (e) {}
+  }
+
+  function saveProgress() {
+    try {
+      localStorage.setItem(SAVE_KEY, JSON.stringify(state));
+    } catch (e) {}
+  }
+
+  loadProgress();
+
+  // ============================================================================
+  // 3. WEB AUDIO SYNTH (BGM Loop + SE + Distinct Boss Approaching Alert!)
   // ============================================================================
   let audioCtx = null;
-  let soundOn = true;
+  let bgmTimer = null;
+  let bgmStep = 0;
 
   function initAudio() {
     if (!audioCtx) {
@@ -445,10 +591,43 @@
       if (AC) audioCtx = new AC();
     }
     if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    syncBgmLoop();
+  }
+
+  function syncBgmLoop() {
+    if (bgmTimer) {
+      clearInterval(bgmTimer);
+      bgmTimer = null;
+    }
+    if (!state.bgmOn || !audioCtx) return;
+
+    const boss = isBossStage(state.stage);
+    const intervalMs = boss ? 240 : 420;
+    const normalNotes = [261.63, 329.63, 392.00, 329.63, 293.66, 349.23, 440.00, 349.23];
+    const bossNotes   = [196.00, 207.65, 196.00, 164.81, 196.00, 233.08, 207.65, 164.81];
+
+    bgmTimer = setInterval(() => {
+      if (!state.bgmOn || !audioCtx || !isQuestionActive) return;
+      const now = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      const notes = isBossStage(state.stage) ? bossNotes : normalNotes;
+      const freq = notes[bgmStep % notes.length];
+      bgmStep++;
+
+      osc.type = isBossStage(state.stage) ? 'sawtooth' : 'triangle';
+      osc.frequency.setValueAtTime(freq, now);
+      gain.gain.setValueAtTime(isBossStage(state.stage) ? 0.035 : 0.045, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + (intervalMs / 1000) * 0.85);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + (intervalMs / 1000) * 0.9);
+    }, intervalMs);
   }
 
   function playTickSound() {
-    if (!soundOn || !audioCtx) return;
+    if (!state.seOn || !audioCtx) return;
     const now = audioCtx.currentTime;
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
@@ -463,7 +642,7 @@
   }
 
   function playCorrectSound() {
-    if (!soundOn) return;
+    if (!state.seOn) return;
     initAudio();
     if (!audioCtx) return;
     const now = audioCtx.currentTime;
@@ -482,7 +661,7 @@
   }
 
   function playStageClearFanfare() {
-    if (!soundOn) return;
+    if (!state.seOn) return;
     initAudio();
     if (!audioCtx) return;
     const now = audioCtx.currentTime;
@@ -500,8 +679,44 @@
     });
   }
 
+  // DISTINCT BOSS WARNING SOUND (Played when the pre-boss screen appears!)
+  function playBossApproachingSound() {
+    if (!state.seOn) return;
+    initAudio();
+    if (!audioCtx) return;
+    const now = audioCtx.currentTime;
+    // Dramatic 2-pulse siren + deep brass chord (completely different from normal fanfare!)
+    [0, 0.28].forEach((offset) => {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(220, now + offset);
+      osc.frequency.linearRampToValueAtTime(440, now + offset + 0.18);
+      osc.frequency.linearRampToValueAtTime(311.13, now + offset + 0.25);
+      gain.gain.setValueAtTime(0.20, now + offset);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + offset + 0.26);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now + offset);
+      osc.stop(now + offset + 0.27);
+    });
+    // Final tense chord
+    [155.56, 233.08, 311.13].forEach((freq) => {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, now + 0.58);
+      gain.gain.setValueAtTime(0.16, now + 0.58);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 1.15);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now + 0.58);
+      osc.stop(now + 1.18);
+    });
+  }
+
   function playWrongSound() {
-    if (!soundOn) return;
+    if (!state.seOn) return;
     initAudio();
     if (!audioCtx) return;
     const now = audioCtx.currentTime;
@@ -520,46 +735,19 @@
   }
 
   // ============================================================================
-  // 3. PERSISTENT STAGE PROGRESSION & BOSS STAGE LOGIC
+  // 4. MISSION (1..5) & STAGE (1..10) PROGRESSION ENGINE
   // ============================================================================
-  const SAVE_KEY = 'cw_kanji_stage_save_v2';
+  const STAGES_PER_MISSION = 10;
   const NORMAL_QUESTIONS_PER_STAGE = 3;
-
-  let state = {
-    stage: 1,
-    iq: 100,
-    hints: 3
-  };
-
-  function loadProgress() {
-    try {
-      const raw = localStorage.getItem(SAVE_KEY);
-      if (raw) {
-        const parsed = JSON.parse(raw);
-        if (parsed.stage >= 1) state.stage = parsed.stage;
-        if (parsed.iq >= 100) state.iq = parsed.iq;
-        if (typeof parsed.hints === 'number') state.hints = Math.max(1, parsed.hints);
-      }
-    } catch (e) {}
-  }
-
-  function saveProgress() {
-    try {
-      localStorage.setItem(SAVE_KEY, JSON.stringify(state));
-    } catch (e) {}
-  }
-
-  loadProgress();
 
   let stepInStage = 1;
   let timeLimit = 10.0;
   let timeRemaining = 10.0;
   let oddIndex = 0;
-  let currentPair = PUZZLES[0];
+  let currentPair = { normal: '大', odd: '太' };
   let isQuestionActive = false;
   let timerId = null;
   let lastTickSec = 10;
-  let lastPuzzleNormal = '';
 
   const gridEl = document.getElementById('grid');
   const bannerEl = document.getElementById('status-banner');
@@ -571,46 +759,47 @@
   const rankTextEl = document.getElementById('rankText');
   const hintBtnEl = document.getElementById('hintBtn');
   const modalEl = document.getElementById('modal');
+  const modalCardEl = document.getElementById('modalCard');
 
   function isBossStage(st) {
-    return st > 0 && st % 5 === 0;
+    return st === 5 || st === 10;
   }
 
+  // Grid expands every 2 stages within each Mission (1-2: 3x3, 3-4: 4x4, 5-6: 4x5, 7-8: 5x5, 9-10: 5x6)
   function getGridConfig(st) {
-    if (st === 1) return { cols: 3, rows: 3, fontPx: 46 }; // 9マス
-    if (st === 2) return { cols: 3, rows: 4, fontPx: 42 }; // 12マス
-    if (st <= 4)  return { cols: 4, rows: 4, fontPx: 38 }; // 16マス
-    if (st <= 6)  return { cols: 4, rows: 5, fontPx: 34 }; // 20マス
-    if (st <= 9)  return { cols: 5, rows: 5, fontPx: 30 }; // 25マス
-    return { cols: 5, rows: 6, fontPx: 28 };               // 30マス (YouTube動画と同一)
+    if (st <= 2) return { cols: 3, rows: 3, fontPx: 46 }; // 9マス
+    if (st <= 4) return { cols: 4, rows: 4, fontPx: 38 }; // 16マス
+    if (st <= 6) return { cols: 4, rows: 5, fontPx: 34 }; // 20マス
+    if (st <= 8) return { cols: 5, rows: 5, fontPx: 30 }; // 25マス
+    return { cols: 5, rows: 6, fontPx: 28 };              // 30マス
   }
 
-  function pickPuzzle(st) {
-    const boss = isBossStage(st);
-    let pool;
-    if (boss) {
-      // Boss stage picks from a slightly trickier tier!
-      pool = st <= 5 ? PUZZLES.slice(15, 45) : PUZZLES.slice(30);
-    } else if (st <= 2) {
-      pool = PUZZLES.slice(0, 15);
-    } else if (st <= 5) {
-      pool = PUZZLES.slice(10, 30);
-    } else if (st <= 9) {
-      pool = PUZZLES.slice(25, 45);
-    } else {
-      pool = PUZZLES.slice(35);
+  // Pick a Kanji pair without EVER repeating previously shown pairs!
+  function pickNonRepeatingPuzzle(missionNum) {
+    const primaryPool = RAW_MISSION_POOLS[Math.min(5, Math.max(1, missionNum)) - 1];
+    const allPools = RAW_MISSION_POOLS.flat();
+
+    // Filter primary pool for unused pairs first
+    let candidates = primaryPool.filter(p => !state.usedPairKeys.includes(p[0] + p[1]));
+
+    // If all pairs in this mission pool were used, pull from adjacent/all unused pairs
+    if (candidates.length === 0) {
+      candidates = allPools.filter(p => !state.usedPairKeys.includes(p[0] + p[1]));
     }
 
-    let chosen = pool[Math.floor(Math.random() * pool.length)];
-    for (let tries = 0; tries < 5; tries++) {
-      if (chosen.normal !== lastPuzzleNormal) break;
-      chosen = pool[Math.floor(Math.random() * pool.length)];
+    // Only if all 180 pairs in the entire game have been seen, reset the used deck
+    if (candidates.length === 0) {
+      state.usedPairKeys = [];
+      candidates = primaryPool.slice();
     }
-    lastPuzzleNormal = chosen.normal;
+
+    const pair = candidates[Math.floor(Math.random() * candidates.length)];
+    state.usedPairKeys.push(pair[0] + pair[1]);
+    saveProgress();
 
     return Math.random() < 0.5
-      ? { normal: chosen.normal, odd: chosen.odd }
-      : { normal: chosen.odd, odd: chosen.normal };
+      ? { normal: pair[0], odd: pair[1] }
+      : { normal: pair[1], odd: pair[0] };
   }
 
   function updateHUD() {
@@ -620,18 +809,18 @@
     stepPillEl.classList.toggle('boss', boss);
 
     if (boss) {
-      stageBadgeEl.textContent = `🔥 BOSS STAGE ${state.stage} ｜ IQ ${state.iq}`;
-      stepPillEl.textContent = `⚡ 5秒・1問勝負！`;
-      headline1El.textContent = '🔥 5秒以内に見つけろ！';
-      headline2El.textContent = 'ボスステージ 1発勝負！';
+      stageBadgeEl.textContent = `🔥 MISSION ${state.mission} - BOSS ${state.stage}`;
+      stepPillEl.textContent = `⚡ 1問一発勝負！`;
+      headline1El.textContent = `🔥 ${MISSION_CONFIG[state.mission].bossSec.toFixed(1)}秒で見つけろ！`;
+      headline2El.textContent = state.stage === 10 ? 'ミッション最終ボス戦！' : '中ボス 1発勝負！';
     } else {
-      stageBadgeEl.textContent = `🧠 STAGE ${state.stage} ｜ 脳トレIQ ${state.iq}`;
+      stageBadgeEl.textContent = `🧠 MISSION ${state.mission} - STAGE ${state.stage}`;
       stepPillEl.textContent = `第 ${stepInStage} / ${NORMAL_QUESTIONS_PER_STAGE} 問`;
       headline1El.textContent = '1つだけ違う文字を';
       headline2El.textContent = '制限時間内にタップ！';
     }
 
-    rankTextEl.textContent = `🏅 ${getTitleForIQ(state.iq)}`;
+    rankTextEl.textContent = `🏅 IQ ${state.iq} ｜ ${getTitleForIQ(state.iq)}`;
     hintBtnEl.textContent = `💡 ヒント (${state.hints})`;
     hintBtnEl.disabled = !isQuestionActive || state.hints <= 0;
   }
@@ -640,19 +829,17 @@
     clearInterval(timerId);
     modalEl.classList.remove('show');
     isQuestionActive = true;
+    syncBgmLoop();
 
     const boss = isBossStage(state.stage);
+    const mCfg = MISSION_CONFIG[state.mission] || MISSION_CONFIG[1];
     const { cols, rows, fontPx } = getGridConfig(state.stage);
     const total = cols * rows;
-    currentPair = pickPuzzle(state.stage);
+
+    currentPair = pickNonRepeatingPuzzle(state.mission);
     oddIndex = Math.floor(Math.random() * total);
 
-    // Boss Stage is strictly 5.0 seconds 1-shot showdown!
-    if (boss) {
-      timeLimit = 5.0;
-    } else {
-      timeLimit = Math.max(7.5, 10.5 - Math.floor(state.stage / 5) * 0.5);
-    }
+    timeLimit = boss ? mCfg.bossSec : mCfg.normalSec;
     timeRemaining = timeLimit;
     lastTickSec = Math.ceil(timeRemaining);
 
@@ -728,29 +915,79 @@
           startQuestion();
         }, 900);
       } else {
-        // STAGE CLEAR!
-        playStageClearFanfare();
+        // STAGE COMPLETED!
         const clearedStage = state.stage;
-        state.stage++;
-        state.iq += boss ? 4 : 2;
-        state.hints = Math.min(5, state.hints + (boss ? 2 : 1));
-        saveProgress();
-        updateHUD();
+        const clearedMission = state.mission;
 
-        setTimeout(() => {
-          showModal({
-            badge: boss ? '👑 BOSS STAGE 撃破！！' : '🎉 STAGE CLEAR!',
-            title: boss ? `BOSS STAGE ${clearedStage} 突破！` : `STAGE ${clearedStage} クリア！`,
-            iqText: `認定IQ ${state.iq}`,
-            comment: `${getTitleForIQ(state.iq)}<br>（💡ヒントが${boss ? 2 : 1}個回復しました！）`,
-            btnText: isBossStage(state.stage)
-              ? `🔥 次は BOSS STAGE ${state.stage} へ！`
-              : `▶️ STAGE ${state.stage} へ進む`
-          });
-        }, 950);
+        if (clearedStage >= STAGES_PER_MISSION) {
+          // MISSION CLEAR! (Stage 10 of 10 completed!)
+          playStageClearFanfare();
+          state.iq += 5;
+          state.hints = Math.min(5, state.hints + 2);
+          if (!state.clearedMissions.includes(clearedMission)) {
+            state.clearedMissions.push(clearedMission);
+          }
+          if (clearedMission < 5) {
+            state.maxUnlockedMission = Math.max(state.maxUnlockedMission, clearedMission + 1);
+            state.mission = clearedMission + 1;
+            state.stage = 1;
+          } else {
+            state.stage = 1;
+          }
+          saveProgress();
+          updateHUD();
+
+          setTimeout(() => {
+            showModal({
+              isBossAlert: false,
+              badge: `🏆 MISSION ${clearedMission} 完全制覇！！`,
+              title: clearedMission < 5 ? `MISSION ${clearedMission + 1} 解放！` : `全5ミッション完全制覇！`,
+              iqText: `認定IQ ${state.iq}`,
+              comment: `${getTitleForIQ(state.iq)}<br>（⚙️設定からクリア済みMissionにいつでも再挑戦できます！）`,
+              btnText: clearedMission < 5
+                ? `🚀 MISSION ${state.mission}（STAGE 1）へ挑戦！`
+                : `👑 MISSION 5 をもう一度遊ぶ`
+            });
+          }, 950);
+        } else {
+          // Advance to Next Stage (1..9 -> 2..10)
+          state.stage++;
+          state.iq += boss ? 4 : 2;
+          state.hints = Math.min(5, state.hints + (boss ? 2 : 1));
+          saveProgress();
+          updateHUD();
+
+          const nextIsBoss = isBossStage(state.stage);
+          // Play distinct Boss Approaching sound when the pre-boss screen appears!
+          if (nextIsBoss) {
+            setTimeout(() => {
+              playBossApproachingSound();
+              showModal({
+                isBossAlert: true,
+                badge: '⚠️ WARNING：BOSS STAGE 出現！',
+                title: state.stage === 10 ? `次は最終ボス（STAGE 10）！` : `次は中ボス（STAGE 5）！`,
+                iqText: `制限時間 ${MISSION_CONFIG[state.mission].bossSec.toFixed(1)} 秒・1発勝負`,
+                comment: `STAGE ${clearedStage} クリア！（💡ヒント+1回復）<br>次のステージは1問だけの超スピード勝負です！`,
+                btnText: `🔥 BOSS STAGE ${state.stage} に挑む！`
+              });
+            }, 950);
+          } else {
+            playStageClearFanfare();
+            setTimeout(() => {
+              showModal({
+                isBossAlert: false,
+                badge: boss ? '👑 BOSS 撃破！！' : '🎉 STAGE CLEAR!',
+                title: `STAGE ${clearedStage} クリア！`,
+                iqText: `認定IQ ${state.iq}`,
+                comment: `${getTitleForIQ(state.iq)}<br>（💡ヒントが${boss ? 2 : 1}個回復しました！）`,
+                btnText: `▶️ STAGE ${state.stage} へ進む`
+              });
+            }, 950);
+          }
+        }
       }
     } else {
-      // WRONG CELL TAPPED -> Immediate Out & Restart Current Stage from Question 1!
+      // Wrong cell tapped -> Immediate Out & Restart Current Stage from Question 1
       cellEl.classList.add('wrong-cell');
       onFail('wrong');
     }
@@ -761,7 +998,6 @@
     clearInterval(timerId);
     playWrongSound();
 
-    // Highlight the true answer in emerald green so the player can see where it was!
     const cells = gridEl.querySelectorAll('.cell');
     if (cells[oddIndex]) {
       cells[oddIndex].classList.add('correct-cell');
@@ -783,18 +1019,20 @@
     const boss = isBossStage(state.stage);
     setTimeout(() => {
       showModal({
+        isBossAlert: boss,
         badge: reason === 'wrong' ? '❌ お手つき（ミス）！' : '⏱️ TIME UP!',
-        title: boss ? `BOSS STAGE ${state.stage} 失敗` : `STAGE ${state.stage}（第${stepInStage}問で失敗）`,
+        title: boss ? `BOSS STAGE ${state.stage} 失敗` : `STAGE ${state.stage}（第${stepInStage}問でミス）`,
         iqText: `現在のIQ ${state.iq}`,
-        comment: `今回の違いは「${currentPair.normal}」の中の「${currentPair.odd}」でした！<br>このステージの最初（第1問）から再挑戦します。`,
+        comment: `今回の違いは「${currentPair.normal}」の中の「${currentPair.odd}」でした！<br>このステージの第1問からやり直します。`,
         btnText: boss
-          ? `🔄 BOSS STAGE ${state.stage} に再挑戦`
+          ? `🔥 BOSS STAGE ${state.stage} に再挑戦`
           : `🔄 STAGE ${state.stage} を第1問からやり直す`
       });
     }, 1450);
   }
 
-  function showModal({ badge, title, iqText, comment, btnText }) {
+  function showModal({ isBossAlert, badge, title, iqText, comment, btnText }) {
+    modalCardEl.classList.toggle('boss-alert', !!isBossAlert);
     document.getElementById('modalBadge').textContent = badge;
     document.getElementById('modalTitle').textContent = title;
     document.getElementById('modalIQ').textContent = iqText;
@@ -803,25 +1041,13 @@
     modalEl.classList.add('show');
   }
 
-  // Primary modal button (Next Stage OR Restart Current Stage from Question 1)
   document.getElementById('modalActionBtn').addEventListener('click', () => {
     initAudio();
     stepInStage = 1;
     startQuestion();
   });
 
-  // Optional reset to Stage 1
-  document.getElementById('resetStageBtn').addEventListener('click', () => {
-    initAudio();
-    state.stage = 1;
-    state.iq = 100;
-    state.hints = 3;
-    stepInStage = 1;
-    saveProgress();
-    startQuestion();
-  });
-
-  // Hint button: dims half of remaining normal tiles
+  // Hint button
   hintBtnEl.addEventListener('click', () => {
     if (!isQuestionActive || state.hints <= 0) return;
     initAudio();
@@ -840,14 +1066,76 @@
     updateHUD();
   });
 
-  // Sound toggle
-  document.getElementById('soundBtn').addEventListener('click', () => {
-    soundOn = !soundOn;
-    document.getElementById('soundBtn').textContent = soundOn ? '🔊' : '🔇';
-    if (soundOn) initAudio();
+  // ============================================================================
+  // 5. SETTINGS MODAL (BGM / SE Toggle & Mission 1..5 Selection)
+  // ============================================================================
+  const settingsModalEl = document.getElementById('settingsModal');
+  const toggleBgmBtn = document.getElementById('toggleBgmBtn');
+  const toggleSeBtn = document.getElementById('toggleSeBtn');
+  const missionListEl = document.getElementById('missionList');
+
+  function renderSettingsModal() {
+    toggleBgmBtn.textContent = state.bgmOn ? 'ON' : 'OFF';
+    toggleBgmBtn.className = 'toggle-btn ' + (state.bgmOn ? 'on' : 'off');
+
+    toggleSeBtn.textContent = state.seOn ? 'ON' : 'OFF';
+    toggleSeBtn.className = 'toggle-btn ' + (state.seOn ? 'on' : 'off');
+
+    missionListEl.innerHTML = [1, 2, 3, 4, 5].map(m => {
+      const unlocked = m <= state.maxUnlockedMission;
+      const cleared = state.clearedMissions.includes(m);
+      const isCurrent = (m === state.mission);
+      const cfg = MISSION_CONFIG[m];
+      const statusText = cleared ? '🏆 制覇済（再挑戦OK）' : (unlocked ? (isCurrent ? `▶️ 挑戦中 (STAGE ${state.stage})` : '挑戦可能') : '🔒 未解放');
+      return `<button class="mission-btn ${isCurrent ? 'active' : ''}" data-mission="${m}" ${unlocked ? '' : 'disabled'}>
+        <span>${cfg.name}（${cfg.normalSec}秒）</span>
+        <span style="font-size:13px;">${statusText}</span>
+      </button>`;
+    }).join('');
+
+    missionListEl.querySelectorAll('.mission-btn[data-mission]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const m = Number(btn.getAttribute('data-mission'));
+        if (m <= state.maxUnlockedMission) {
+          state.mission = m;
+          state.stage = 1;
+          stepInStage = 1;
+          saveProgress();
+          settingsModalEl.classList.remove('show');
+          startQuestion();
+        }
+      });
+    });
+  }
+
+  document.getElementById('settingsBtn').addEventListener('click', () => {
+    initAudio();
+    isQuestionActive = false;
+    clearInterval(timerId);
+    renderSettingsModal();
+    settingsModalEl.classList.add('show');
   });
 
-  // Launch immediately into the player's current saved stage!
+  toggleBgmBtn.addEventListener('click', () => {
+    state.bgmOn = !state.bgmOn;
+    saveProgress();
+    initAudio();
+    renderSettingsModal();
+  });
+
+  toggleSeBtn.addEventListener('click', () => {
+    state.seOn = !state.seOn;
+    saveProgress();
+    if (state.seOn) playCorrectSound();
+    renderSettingsModal();
+  });
+
+  document.getElementById('closeSettingsBtn').addEventListener('click', () => {
+    settingsModalEl.classList.remove('show');
+    startQuestion();
+  });
+
+  // Launch!
   startQuestion();
 })();
 </script>
