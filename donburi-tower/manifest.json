@@ -1,0 +1,18 @@
+{
+  "name": "爆盛！どんぶりタワー 〜店長、天井突き抜けてます〜",
+  "short_name": "どんぶりタワー",
+  "description": "指1本でカオスな具材を積み上げろ！ちゃぶ台返し＆虚無プチプチ収録の究極暇つぶしクソゲー",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1a0d00",
+  "theme_color": "#ff4500",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
