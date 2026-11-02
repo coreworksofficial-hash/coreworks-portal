@@ -666,7 +666,7 @@
   <div class="overlay-modal" id="adOverlayModal">
     <div class="modal-card ad-modal-card">
       <div class="modal-badge" id="adModalBadge">📺 スポンサーPR（あと 5 秒...）</div>
-      <div class="modal-title" id="adModalTitle" style="font-size:20px; margin-bottom:6px;">🎁 5秒視聴でボーナス獲得！</div>
+      <div class="modal-title" id="adModalTitle" style="font-size:16px; line-height:1.45; margin-bottom:6px;">ステージクリアボーナス！少し待つと次のステージへ進めます</div>
 
       <div class="ad-pr-list" id="adPrList">
         <a class="ad-pr-card active-pr" data-pr-idx="0" href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F1000%25E5%2586%2586%25E3%2583%259D%25E3%2583%2583%25E3%2582%25AD%25E3%2583%25AA%2520%25E9%2580%2581%25E6%2596%2599%25E7%2584%25A1%25E6%2596%2599%2F" target="_blank" rel="nofollow sponsored">
@@ -1083,6 +1083,7 @@
   const adCompleteBtnEl = document.getElementById('adCompleteBtn');
   let adTimerId = null;
   let adRewardCallback = null;
+  let currentAdType = 'interstitial';
   let currentPrIdx = -1;
 
   function selectPrCard(idx) {
@@ -1091,49 +1092,90 @@
     adPrCards.forEach((card, i) => card.classList.toggle('active-pr', i === currentPrIdx));
   }
 
+  function normalizePlacementType(placementType) {
+    if (placementType === 'rewarded_revive' || placementType === 'reward_revive') return 'rewarded_revive';
+    if (placementType === 'rewarded_hint' || placementType === 'reward_hint') return 'rewarded_hint';
+    return 'interstitial';
+  }
+
+  function getAdCopyForType(placementType, remaining) {
+    const pType = normalizePlacementType(placementType);
+    if (pType === 'rewarded_revive') {
+      return {
+        badgeWait: `📺 スポンサーPR（あと ${remaining} 秒...）`,
+        badgeDone: '✅ 復活準備完了！',
+        subText: 'スポンサーご紹介（5秒後に同じ問題から復活できます）',
+        btnWait: `あと ${remaining} 秒で同じ問題から復活できます`,
+        btnDone: '🔥 復活して問題を続ける！'
+      };
+    }
+    if (pType === 'rewarded_hint') {
+      return {
+        badgeWait: `📺 スポンサーPR（あと ${remaining} 秒...）`,
+        badgeDone: '✅ ヒント補充完了！',
+        subText: 'スポンサーご紹介（5秒後にヒントが3回分増えます）',
+        btnWait: `あと ${remaining} 秒でヒントが3回分増えます`,
+        btnDone: '💡 ヒント＋3回を受け取る！'
+      };
+    }
+    return {
+      badgeWait: `🎁 ステージクリアボーナス（あと ${remaining} 秒...）`,
+      badgeDone: '🎁 ボーナス獲得完了！',
+      subText: 'ステージクリアボーナス！少し待つと次のステージへ進めます',
+      btnWait: `あと ${remaining} 秒で次のステージへ進めます`,
+      btnDone: '▶ 次のステージへ進む（🎁ヒント+1）'
+    };
+  }
+
+  function finishAdAndRunCallback() {
+    if (currentAdType === 'interstitial') {
+      state.hints = (state.hints || 0) + 1;
+      saveProgress();
+      updateHUD();
+    }
+    const cb = adRewardCallback;
+    adRewardCallback = null;
+    if (cb) cb();
+  }
+
   function showAdModal(adType, onComplete) {
     clearInterval(adTimerId);
+    currentAdType = normalizePlacementType(adType);
     adRewardCallback = typeof onComplete === 'function' ? onComplete : null;
 
     // 1. Native Android AdMob WebView Bridge (if connected)
     try {
       if (window.AndroidAdMob) {
         window.onAndroidAdComplete = function() {
-          const cb = adRewardCallback;
-          adRewardCallback = null;
-          if (cb) cb();
+          finishAdAndRunCallback();
         };
-        if (adType === 'interstitial' && typeof window.AndroidAdMob.showInterstitialAd === 'function') {
+        if (currentAdType === 'interstitial' && typeof window.AndroidAdMob.showInterstitialAd === 'function') {
           window.AndroidAdMob.showInterstitialAd();
           return;
         }
-        if (adType !== 'interstitial' && typeof window.AndroidAdMob.showRewardedAd === 'function') {
-          window.AndroidAdMob.showRewardedAd(adType);
+        if (currentAdType !== 'interstitial' && typeof window.AndroidAdMob.showRewardedAd === 'function') {
+          window.AndroidAdMob.showRewardedAd(currentAdType);
           return;
         }
       }
       // 2. Google H5 Games Ads Placement API (if connected)
       if (typeof window.adBreak === 'function') {
-        if (adType === 'interstitial') {
+        if (currentAdType === 'interstitial') {
           window.adBreak({
             type: 'next',
             name: 'stage_interstitial',
             adBreakDone: () => {
-              const cb = adRewardCallback;
-              adRewardCallback = null;
-              if (cb) cb();
+              finishAdAndRunCallback();
             }
           });
           return;
         } else {
           window.adBreak({
             type: 'reward',
-            name: adType,
+            name: currentAdType,
             beforeReward: (showAdFn) => showAdFn(),
             adViewed: () => {
-              const cb = adRewardCallback;
-              adRewardCallback = null;
-              if (cb) cb();
+              finishAdAndRunCallback();
             },
             adDismissed: () => {}
           });
@@ -1145,20 +1187,14 @@
     // 3. Built-in 5-Second Sponsor PR Overlay (1 Fixed Rakuten Card per open for max CTR!)
     selectPrCard(currentPrIdx + 1);
 
-    if (adType === 'reward_hint') {
-      adModalTitleEl.textContent = '🎁 5秒PR視聴でヒント+3個＆+2秒！';
-    } else if (adType === 'reward_revive') {
-      adModalTitleEl.textContent = '🔥 5秒PR視聴でこの問題から復活！';
-    } else {
-      adModalTitleEl.textContent = '📺 STAGEクリア！スポンサーPR';
-    }
-
     const AD_DURATION = 5.0;
-    adModalBadgeEl.textContent = '📺 スポンサーPR（あと 5 秒...）';
+    const initCopy = getAdCopyForType(currentAdType, 5);
+    adModalBadgeEl.textContent = initCopy.badgeWait;
+    adModalTitleEl.textContent = initCopy.subText;
     adProgressBarEl.style.width = '0%';
     adCompleteBtnEl.disabled = true;
     adCompleteBtnEl.classList.remove('ready');
-    adCompleteBtnEl.textContent = '⏳ あと 5 秒で報酬獲得...';
+    adCompleteBtnEl.textContent = initCopy.btnWait;
     adOverlayModalEl.classList.add('show');
 
     const startMs = performance.now();
@@ -1169,38 +1205,38 @@
       adProgressBarEl.style.width = `${pct}%`;
 
       if (rem > 0) {
-        const sec = Math.ceil(rem);
-        adModalBadgeEl.textContent = `📺 スポンサーPR（あと ${sec} 秒...）`;
-        adCompleteBtnEl.textContent = `⏳ あと ${sec} 秒で報酬獲得...`;
+        const remaining = Math.ceil(rem);
+        const copy = getAdCopyForType(currentAdType, remaining);
+        adModalBadgeEl.textContent = copy.badgeWait;
+        adModalTitleEl.textContent = copy.subText;
+        adCompleteBtnEl.textContent = copy.btnWait;
       } else {
         clearInterval(adTimerId);
+        const copy = getAdCopyForType(currentAdType, 0);
         adProgressBarEl.style.width = '100%';
-        adModalBadgeEl.textContent = (adType === 'interstitial') ? '⏭️ スキップ可能' : '✅ 報酬獲得完了！';
+        adModalBadgeEl.textContent = copy.badgeDone;
+        adModalTitleEl.textContent = copy.subText;
         adCompleteBtnEl.disabled = false;
         adCompleteBtnEl.classList.add('ready');
-        if (adType === 'reward_hint') {
-          adCompleteBtnEl.textContent = '🎁 ヒント+3個を受け取って再開！';
-        } else if (adType === 'reward_revive') {
-          adCompleteBtnEl.textContent = '🔥 +5秒延長してこの問題から復活！';
-        } else {
-          adCompleteBtnEl.textContent = '⏭️ 閉じて次のステージへ進む';
-        }
+        adCompleteBtnEl.textContent = copy.btnDone;
       }
     }, 80);
   }
+
+  const showInHouseAdOverlay = showAdModal;
 
   adCompleteBtnEl.addEventListener('click', () => {
     if (adCompleteBtnEl.disabled) return;
     initAudio();
     clearInterval(adTimerId);
     adOverlayModalEl.classList.remove('show');
-    const cb = adRewardCallback;
-    adRewardCallback = null;
-    if (cb) cb();
+    finishAdAndRunCallback();
   });
 
   window.CoreworksAdBridge = {
     showAd: showAdModal,
+    requestAd: showAdModal,
+    showInHouseAdOverlay: showAdModal,
     selectPrCard
   };
 
@@ -1269,6 +1305,50 @@
       : { normal: pair[1], odd: pair[0] };
   }
 
+  let hintsUsedInQuestion = 0;
+
+  function getRemainingWrongCells() {
+    const cells = Array.from(gridEl.querySelectorAll('.cell'));
+    return cells
+      .map((el, idx) => ({ el, idx }))
+      .filter(x => x.idx !== oddIndex && !x.el.classList.contains('dimmed') && !x.el.classList.contains('hint-dimmed'));
+  }
+
+  function isOnlyOnePanelLeft() {
+    const cells = gridEl.querySelectorAll('.cell');
+    if (cells.length === 0) return false;
+    return getRemainingWrongCells().length === 0;
+  }
+
+  function updateHintButton() {
+    if (isOnlyOnePanelLeft()) {
+      hintBtnEl.textContent = '💡 残り1枚(確定)';
+      hintBtnEl.classList.remove('ad-reward');
+      hintBtnEl.disabled = true;
+      hintBtnEl.style.background = '#334155';
+      hintBtnEl.style.color = '#cbd5e1';
+      hintBtnEl.style.opacity = '0.45';
+      hintBtnEl.style.pointerEvents = 'none';
+      return;
+    }
+
+    hintBtnEl.style.opacity = '';
+    hintBtnEl.style.pointerEvents = '';
+    if (state.hints > 0) {
+      hintBtnEl.textContent = `💡 ヒント (${state.hints})`;
+      hintBtnEl.classList.remove('ad-reward');
+      hintBtnEl.style.background = '';
+      hintBtnEl.style.color = '';
+      hintBtnEl.disabled = !isQuestionActive;
+    } else {
+      hintBtnEl.textContent = '🎬 ヒント+3(無料)';
+      hintBtnEl.classList.add('ad-reward');
+      hintBtnEl.style.background = '#f59e0b';
+      hintBtnEl.style.color = '#052e16';
+      hintBtnEl.disabled = !isQuestionActive;
+    }
+  }
+
   function updateHUD() {
     const boss = isBossStage(state.stage);
     document.body.classList.toggle('boss-mode', boss);
@@ -1288,19 +1368,7 @@
     }
 
     rankTextEl.textContent = `🏅 IQ ${state.iq} ｜ ${getTitleForIQ(state.iq)}`;
-    if (state.hints > 0) {
-      hintBtnEl.textContent = `💡 ヒント (${state.hints})`;
-      hintBtnEl.classList.remove('ad-reward');
-      hintBtnEl.style.background = '';
-      hintBtnEl.style.color = '';
-      hintBtnEl.disabled = !isQuestionActive;
-    } else {
-      hintBtnEl.textContent = '🎬 ヒント+3(無料)';
-      hintBtnEl.classList.add('ad-reward');
-      hintBtnEl.style.background = '#f59e0b';
-      hintBtnEl.style.color = '#052e16';
-      hintBtnEl.disabled = !isQuestionActive;
-    }
+    updateHintButton();
   }
 
   function runQuestionTimer(initialRemainingSec) {
@@ -1344,6 +1412,7 @@
     clearInterval(timerId);
     modalEl.classList.remove('show');
     lastWrongIndex = null;
+    hintsUsedInQuestion = 0;
     isQuestionActive = true;
     syncBgmLoop();
 
@@ -1552,7 +1621,7 @@
   modalReviveBtnEl.addEventListener('click', () => {
     initAudio();
     modalEl.classList.remove('show');
-    showAdModal('reward_revive', () => {
+    showAdModal('rewarded_revive', () => {
       const boss = isBossStage(state.stage);
       const mCfg = MISSION_CONFIG[state.mission] || MISSION_CONFIG[1];
       const cells = Array.from(gridEl.querySelectorAll('.cell'));
@@ -1606,16 +1675,20 @@
   });
 
   // Hint button (Uses 1 hint if available, or opens 5s Rewarded Ad for +3 hints & +2.0s bonus!)
-  hintBtnEl.addEventListener('click', () => {
+  function useHint() {
     if (!isQuestionActive) return;
+    if (isOnlyOnePanelLeft()) {
+      updateHintButton();
+      return;
+    }
     initAudio();
 
     if (state.hints <= 0) {
       const pausedRemaining = timeRemaining;
       isQuestionActive = false;
       clearInterval(timerId);
-      showAdModal('reward_hint', () => {
-        state.hints += 3;
+      showAdModal('rewarded_hint', () => {
+        state.hints = (state.hints || 0) + 3;
         saveProgress();
         playHintSound();
         const resumedSec = pausedRemaining + 2.0;
@@ -1629,21 +1702,28 @@
       return;
     }
 
+    const normalCandidates = getRemainingWrongCells();
+    if (normalCandidates.length === 0) {
+      updateHintButton();
+      return;
+    }
+
     playHintSound();
     state.hints--;
+    hintsUsedInQuestion++;
     saveProgress();
-    const cells = Array.from(gridEl.querySelectorAll('.cell'));
-    const normalCandidates = cells
-      .map((el, idx) => ({ el, idx }))
-      .filter(x => x.idx !== oddIndex && !x.el.classList.contains('dimmed'));
 
     normalCandidates.sort(() => Math.random() - 0.5);
-    const countToDim = Math.max(2, Math.floor(normalCandidates.length * 0.5));
+    const countToDim = hintsUsedInQuestion >= 2
+      ? normalCandidates.length
+      : Math.max(2, Math.ceil(normalCandidates.length * 0.5));
     for (let i = 0; i < countToDim && i < normalCandidates.length; i++) {
       normalCandidates[i].el.classList.add('dimmed');
     }
     updateHUD();
-  });
+  }
+
+  hintBtnEl.addEventListener('click', useHint);
 
   // ============================================================================
   // 5. SETTINGS MODAL (BGM / SE Toggle + Volume Sliders & Mission 1..5 Selection)

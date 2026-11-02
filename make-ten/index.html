@@ -273,7 +273,7 @@
     flex-shrink: 0;
   }
 
-  .hint-btn:disabled { opacity: 0.4; cursor: default; }
+  .hint-btn:disabled { opacity: 0.45; pointer-events: none; cursor: default; }
 
   .hint-btn.ad-reward {
     background: linear-gradient(180deg, #fbbf24 0%, #f59e0b 100%);
@@ -607,7 +607,7 @@
   </div>
 
   <!-- Stage Clear / Fail / Boss Alert Modal -->
-  <div class="modal-overlay" id="modal">
+  <div class="modal-overlay overlay-modal" id="modal">
     <div class="modal-card" id="modalCard">
       <div class="modal-badge" id="modalBadge">STAGE CLEAR!</div>
       <div class="modal-title" id="modalTitle">ステージクリア！</div>
@@ -633,7 +633,7 @@
   </div>
 
   <!-- Settings & Mission Select Modal -->
-  <div class="modal-overlay" id="settingsModal">
+  <div class="modal-overlay overlay-modal" id="settingsModal">
     <div class="modal-card" style="max-height:92vh; overflow-y:auto;">
       <div class="modal-badge" id="settingsBadge" style="cursor:pointer; user-select:none;" title="5回連続タップで開発テスト表示を切替">⚙️ 設定 ＆ ステージ選択</div>
 
@@ -679,10 +679,10 @@
   </div>
 
   <!-- Hybrid Ad Overlay Modal (Direct sibling inside #app) -->
-  <div class="modal-overlay" id="adOverlayModal">
+  <div class="modal-overlay overlay-modal" id="adOverlayModal">
     <div class="modal-card ad-modal-card">
-      <div class="modal-badge" id="adModalBadge">📺 スポンサーPR（あと 5 秒...）</div>
-      <div class="modal-title" id="adModalTitle" style="font-size:20px; margin-bottom:2px;">🎁 5秒視聴でボーナス獲得！</div>
+      <div class="modal-badge" id="adModalBadge">📺 スポンサーご紹介</div>
+      <div class="modal-title" id="adModalTitle" style="font-size:15px; line-height:1.45; margin-bottom:2px;">ステージクリアボーナス！少し待つと次のステージへ進めます</div>
 
       <div class="ad-pr-list" id="adPrList">
         <a class="ad-pr-card active-pr" data-pr-idx="0" href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F1000%25E5%2586%2586%25E3%2583%259D%25E3%2583%2583%25E3%2582%25AD%25E3%2583%25AA%2520%25E9%2580%2581%25E6%2596%2599%25E7%2584%25A1%25E6%2596%2599%2F" target="_blank" rel="nofollow sponsored">
@@ -948,6 +948,7 @@
   let lastTickSec = 12;
   let lastWrongIndex = null;
   let pendingInterstitialAfterModal = false;
+  let hintUsedInQuestion = false;
 
   const gridEl = document.getElementById('grid');
   const bannerEl = document.getElementById('status-banner');
@@ -971,6 +972,46 @@
   let adTimerId = null;
   let adRewardCallback = null;
   let currentPrIdx = -1;
+  let currentAdPlacement = 'interstitial';
+
+  function normalizePlacement(adType) {
+    if (adType === 'reward_revive' || adType === 'rewarded_revive') return 'rewarded_revive';
+    if (adType === 'reward_hint' || adType === 'rewarded_hint') return 'rewarded_hint';
+    return 'interstitial';
+  }
+
+  function getAdCopy(placement, remaining) {
+    if (placement === 'rewarded_revive') {
+      return {
+        subtext: 'スポンサーご紹介（5秒後に同じ問題から復活できます）',
+        countdownBtn: `あと ${remaining} 秒で同じ問題から復活できます`,
+        completeBtn: '🔥 復活して問題を続ける！'
+      };
+    }
+    if (placement === 'rewarded_hint') {
+      return {
+        subtext: 'スポンサーご紹介（5秒後にヒントが3回分増えます）',
+        countdownBtn: `あと ${remaining} 秒でヒントが3回分増えます`,
+        completeBtn: '💡 ヒント＋3回を受け取る！'
+      };
+    }
+    return {
+      subtext: 'ステージクリアボーナス！少し待つと次のステージへ進めます',
+      countdownBtn: `あと ${remaining} 秒で次のステージへ進めます`,
+      completeBtn: '▶ 次のステージへ進む（🎁ヒント+1）'
+    };
+  }
+
+  function finishAdPlacement() {
+    if (currentAdPlacement === 'interstitial') {
+      state.hints = (state.hints || 0) + 1;
+      saveProgress();
+      updateHUD();
+    }
+    const cb = adRewardCallback;
+    adRewardCallback = null;
+    if (cb) cb();
+  }
 
   function selectPrCard(idx) {
     if (adPrCards.length === 0) return;
@@ -980,47 +1021,42 @@
 
   function showAdModal(adType, onComplete) {
     clearInterval(adTimerId);
+    currentAdPlacement = normalizePlacement(adType);
     adRewardCallback = typeof onComplete === 'function' ? onComplete : null;
 
     // 1. Native Android AdMob WebView Bridge (if connected)
     try {
       if (window.AndroidAdMob) {
         window.onAndroidAdComplete = function() {
-          const cb = adRewardCallback;
-          adRewardCallback = null;
-          if (cb) cb();
+          finishAdPlacement();
         };
-        if (adType === 'interstitial' && typeof window.AndroidAdMob.showInterstitialAd === 'function') {
+        if (currentAdPlacement === 'interstitial' && typeof window.AndroidAdMob.showInterstitialAd === 'function') {
           window.AndroidAdMob.showInterstitialAd();
           return;
         }
-        if (adType !== 'interstitial' && typeof window.AndroidAdMob.showRewardedAd === 'function') {
-          window.AndroidAdMob.showRewardedAd(adType);
+        if (currentAdPlacement !== 'interstitial' && typeof window.AndroidAdMob.showRewardedAd === 'function') {
+          window.AndroidAdMob.showRewardedAd(currentAdPlacement);
           return;
         }
       }
       // 2. Google H5 Games Ads Placement API (if connected)
       if (typeof window.adBreak === 'function') {
-        if (adType === 'interstitial') {
+        if (currentAdPlacement === 'interstitial') {
           window.adBreak({
             type: 'next',
             name: 'stage_interstitial',
             adBreakDone: () => {
-              const cb = adRewardCallback;
-              adRewardCallback = null;
-              if (cb) cb();
+              finishAdPlacement();
             }
           });
           return;
         } else {
           window.adBreak({
             type: 'reward',
-            name: adType,
+            name: currentAdPlacement,
             beforeReward: (showAdFn) => showAdFn(),
             adViewed: () => {
-              const cb = adRewardCallback;
-              adRewardCallback = null;
-              if (cb) cb();
+              finishAdPlacement();
             },
             adDismissed: () => {}
           });
@@ -1032,20 +1068,16 @@
     // 3. Built-in 5-Second Fixed Single Rakuten PR Card Overlay (No auto-switching during 5s)
     selectPrCard(currentPrIdx + 1);
 
-    if (adType === 'reward_hint') {
-      adModalTitleEl.textContent = '🎁 5秒PR視聴でヒント+3個＆+2秒！';
-    } else if (adType === 'reward_revive') {
-      adModalTitleEl.textContent = '🔥 5秒PR視聴でダミー除外＆+5秒復活！';
-    } else {
-      adModalTitleEl.textContent = '📺 STAGEクリア！スポンサーPR';
-    }
-
     const AD_DURATION = 5.0;
-    adModalBadgeEl.textContent = '📺 スポンサーPR（あと 5 秒...）';
+    const initCopy = getAdCopy(currentAdPlacement, 5);
+    adModalTitleEl.textContent = initCopy.subtext;
+    adModalBadgeEl.textContent = (currentAdPlacement === 'interstitial')
+      ? '🎁 ステージクリアボーナス（あと 5 秒...）'
+      : '📺 スポンサーご紹介（あと 5 秒...）';
     adProgressBarEl.style.width = '0%';
     adCompleteBtnEl.disabled = true;
     adCompleteBtnEl.classList.remove('ready');
-    adCompleteBtnEl.textContent = '⏳ あと 5 秒で報酬獲得...';
+    adCompleteBtnEl.textContent = initCopy.countdownBtn;
     adOverlayModalEl.classList.add('show');
 
     const startMs = performance.now();
@@ -1056,22 +1088,20 @@
       adProgressBarEl.style.width = `${pct}%`;
 
       if (rem > 0) {
-        const sec = Math.ceil(rem);
-        adModalBadgeEl.textContent = `📺 スポンサーPR（あと ${sec} 秒...）`;
-        adCompleteBtnEl.textContent = `⏳ あと ${sec} 秒で報酬獲得...`;
+        const remaining = Math.ceil(rem);
+        const copy = getAdCopy(currentAdPlacement, remaining);
+        adModalBadgeEl.textContent = (currentAdPlacement === 'interstitial')
+          ? `🎁 ステージクリアボーナス（あと ${remaining} 秒...）`
+          : `📺 スポンサーご紹介（あと ${remaining} 秒...）`;
+        adCompleteBtnEl.textContent = copy.countdownBtn;
       } else {
         clearInterval(adTimerId);
+        const copy = getAdCopy(currentAdPlacement, 0);
         adProgressBarEl.style.width = '100%';
-        adModalBadgeEl.textContent = (adType === 'interstitial') ? '⏭️ スキップ可能' : '✅ 報酬獲得完了！';
+        adModalBadgeEl.textContent = (currentAdPlacement === 'interstitial') ? '🎁 ボーナス獲得完了！' : '✅ 準備完了！';
         adCompleteBtnEl.disabled = false;
         adCompleteBtnEl.classList.add('ready');
-        if (adType === 'reward_hint') {
-          adCompleteBtnEl.textContent = '🎁 ヒント+3個を受け取って再開！';
-        } else if (adType === 'reward_revive') {
-          adCompleteBtnEl.textContent = '🔥 ダミー除外＆+5秒延長で復活！';
-        } else {
-          adCompleteBtnEl.textContent = '⏭️ 閉じて次のステージへ進む';
-        }
+        adCompleteBtnEl.textContent = copy.completeBtn;
       }
     }, 80);
   }
@@ -1081,13 +1111,13 @@
     initAudio();
     clearInterval(adTimerId);
     adOverlayModalEl.classList.remove('show');
-    const cb = adRewardCallback;
-    adRewardCallback = null;
-    if (cb) cb();
+    finishAdPlacement();
   });
 
   window.CoreworksAdBridge = {
     showAd: showAdModal,
+    requestAd: showAdModal,
+    showInHouseAdOverlay: showAdModal,
     selectPrCard
   };
 
@@ -1166,16 +1196,31 @@
     return { values: items.map(x => x.val), ansPos };
   }
 
-  function updateHUD() {
-    const boss = isBossStage(state.stage);
-    document.body.classList.toggle('boss-mode', boss);
-    stageBadgeEl.classList.toggle('boss', boss);
-    stageBadgeEl.textContent = boss
-      ? `🔥 MISSION ${state.mission} - BOSS ${state.stage}`
-      : `➕ MISSION ${state.mission} - STAGE ${state.stage}`;
-    stepPillEl.textContent = boss ? '⚡ 1問一発勝負！' : `第 ${stepInStage} / ${NORMAL_QUESTIONS_PER_STAGE} 問`;
-    rankTextEl.textContent = `🧮 計算IQ ${state.iq} ｜ ${getTitleForIQ(state.iq)}`;
+  function isHintLocked() {
+    if (hintUsedInQuestion) return true;
+    const cards = Array.from(gridEl.querySelectorAll('.num-card'));
+    if (cards.length === 0) return false;
+    const activeCards = cards.filter(el => !el.classList.contains('dimmed') && !el.classList.contains('correct-card'));
+    if (activeCards.length <= 2) return true;
+    const remainingDummies = cards.filter((el, idx) => !answerIndices.includes(idx) && !el.classList.contains('dimmed'));
+    if (remainingDummies.length === 0) return true;
+    return false;
+  }
 
+  function updateHintButton() {
+    if (isHintLocked()) {
+      hintBtnEl.textContent = '💡 ヒント表示済';
+      hintBtnEl.classList.remove('ad-reward');
+      hintBtnEl.style.background = '';
+      hintBtnEl.style.color = '';
+      hintBtnEl.style.opacity = '0.45';
+      hintBtnEl.style.pointerEvents = 'none';
+      hintBtnEl.disabled = true;
+      return;
+    }
+
+    hintBtnEl.style.opacity = isQuestionActive ? '' : '0.45';
+    hintBtnEl.style.pointerEvents = isQuestionActive ? '' : 'none';
     if (state.hints > 0) {
       hintBtnEl.textContent = `💡 ヒント (${state.hints})`;
       hintBtnEl.classList.remove('ad-reward');
@@ -1189,6 +1234,18 @@
       hintBtnEl.style.color = '#052e16';
       hintBtnEl.disabled = !isQuestionActive;
     }
+  }
+
+  function updateHUD() {
+    const boss = isBossStage(state.stage);
+    document.body.classList.toggle('boss-mode', boss);
+    stageBadgeEl.classList.toggle('boss', boss);
+    stageBadgeEl.textContent = boss
+      ? `🔥 MISSION ${state.mission} - BOSS ${state.stage}`
+      : `➕ MISSION ${state.mission} - STAGE ${state.stage}`;
+    stepPillEl.textContent = boss ? '⚡ 1問一発勝負！' : `第 ${stepInStage} / ${NORMAL_QUESTIONS_PER_STAGE} 問`;
+    rankTextEl.textContent = `🧮 計算IQ ${state.iq} ｜ ${getTitleForIQ(state.iq)}`;
+    updateHintButton();
   }
 
   function runQuestionTimer(initialRemainingSec) {
@@ -1219,9 +1276,15 @@
         playTickSound();
       }
 
-      bannerEl.textContent = selectedIdx === null
-        ? `⏱️ 残り ${timeRemaining.toFixed(1)} 秒！（1枚目を選択）`
-        : `👆 「${boardNumbers[selectedIdx]}」と足して ${targetSum} になるカードは？`;
+      if (selectedIdx === null) {
+        if (hintUsedInQuestion && answerIndices.length >= 1 && boardNumbers[answerIndices[0]] !== undefined) {
+          bannerEl.textContent = `💡 ヒント：「${boardNumbers[answerIndices[0]]}」を含むペア！（残り ${timeRemaining.toFixed(1)} 秒）`;
+        } else {
+          bannerEl.textContent = `⏱️ 残り ${timeRemaining.toFixed(1)} 秒！（1枚目を選択）`;
+        }
+      } else {
+        bannerEl.textContent = `👆 「${boardNumbers[selectedIdx]}」と足して ${targetSum} になるカードは？`;
+      }
 
       if (timeRemaining <= 0) {
         lastWrongIndex = null;
@@ -1234,6 +1297,7 @@
     clearInterval(timerId);
     modalEl.classList.remove('show');
     lastWrongIndex = null;
+    hintUsedInQuestion = false;
     isQuestionActive = true;
     selectedIdx = null;
     syncBgmLoop();
@@ -1455,7 +1519,7 @@
   modalReviveBtnEl.addEventListener('click', () => {
     initAudio();
     modalEl.classList.remove('show');
-    showAdModal('reward_revive', () => {
+    showAdModal('rewarded_revive', () => {
       const boss = isBossStage(state.stage);
       const mCfg = MISSION_CONFIG[state.mission] || MISSION_CONFIG[1];
       const cards = Array.from(gridEl.querySelectorAll('.num-card'));
@@ -1503,23 +1567,23 @@
   });
 
   // Hint button (Uses 1 hint if available, or opens 5s Rewarded Ad for +3 hints & +2.0s bonus!)
-  hintBtnEl.addEventListener('click', () => {
-    if (!isQuestionActive) return;
+  function useHint() {
+    if (!isQuestionActive || isHintLocked()) return;
     initAudio();
 
     if (state.hints <= 0) {
       const pausedRemaining = timeRemaining;
       isQuestionActive = false;
       clearInterval(timerId);
-      showAdModal('reward_hint', () => {
-        state.hints += 3;
+      showAdModal('rewarded_hint', () => {
+        state.hints = (state.hints || 0) + 3;
         saveProgress();
         playHintSound();
         const resumedSec = pausedRemaining + 2.0;
         timeLimit = Math.max(timeLimit, resumedSec);
         timeRemaining = resumedSec;
         bannerEl.className = '';
-        bannerEl.textContent = `🎁 ヒント+3個！残り ${timeRemaining.toFixed(1)} 秒！`;
+        bannerEl.textContent = `💡 ヒント+3回！残り ${timeRemaining.toFixed(1)} 秒！`;
         syncBgmLoop();
         runQuestionTimer(timeRemaining);
       });
@@ -1528,17 +1592,20 @@
 
     playHintSound();
     state.hints--;
+    hintUsedInQuestion = true;
     saveProgress();
     const cards = Array.from(gridEl.querySelectorAll('.num-card'));
     const cands = cards.map((el, idx) => ({ el, idx }))
       .filter(x => !answerIndices.includes(x.idx) && x.idx !== selectedIdx && !x.el.classList.contains('dimmed'));
     cands.sort(() => Math.random() - 0.5);
-    const count = Math.max(1, Math.floor(cands.length * 0.5));
+    const count = Math.max(1, Math.ceil(cands.length * 0.5));
     for (let i = 0; i < count && i < cands.length; i++) {
       cands[i].el.classList.add('dimmed');
     }
     updateHUD();
-  });
+  }
+
+  hintBtnEl.addEventListener('click', useHint);
 
   // ============================================================================
   // SETTINGS MODAL (BGM / SE Toggle + Volume Sliders & Mission 1..5 Selection)
