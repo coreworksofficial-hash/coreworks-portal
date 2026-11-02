@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>📱 スマホ1タップ・ストア申請キット｜瞬間脳トレ！漢字間違い探しIQ</title>
+  <style>
+    :root {
+      --bg: #0b1120;
+      --card: #151f32;
+      --card-inner: #0f172a;
+      --border: #2a3a54;
+      --emerald: #10b981;
+      --emerald-dark: #059669;
+      --emerald-glow: rgba(16, 185, 129, 0.25);
+      --amber: #f59e0b;
+      --amber-dark: #d97706;
+      --blue: #3b82f6;
+      --blue-dark: #2563eb;
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --subtle: #94a3b8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI", sans-serif;
+      line-height: 1.6;
+      padding: 16px 12px 80px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .header {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 20px 16px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    }
+    .header img {
+      width: 68px;
+      height: 68px;
+      border-radius: 16px;
+      border: 2px solid var(--emerald);
+      flex-shrink: 0;
+    }
+    .header-info h1 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.35;
+      margin-bottom: 4px;
+    }
+    .header-badge {
+      display: inline-block;
+      background: rgba(16, 185, 129, 0.18);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 999px;
+      margin-bottom: 6px;
+    }
+    .header-info p {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .section-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 20px 16px;
+      margin-bottom: 22px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+    .step-badge {
+      display: inline-block;
+      background: var(--emerald);
+      color: #042f2e;
+      font-weight: 900;
+      font-size: 0.78rem;
+      padding: 3px 12px;
+      border-radius: 999px;
+      margin-bottom: 8px;
+      letter-spacing: 0.04em;
+    }
+    .section-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      color: #fff;
+    }
+    .section-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    /* Step 1 Store Links */
+    .store-links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .store-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-decoration: none;
+      padding: 16px 18px;
+      border-radius: 16px;
+      font-weight: 800;
+      font-size: 1rem;
+      color: #fff;
+      transition: transform 0.12s ease, opacity 0.12s ease;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+    }
+    .store-btn:active {
+      transform: scale(0.98);
+    }
+    .store-btn.amazon {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: #1c1917;
+    }
+    .store-btn.google {
+      background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      color: #fff;
+    }
+    .store-btn-sub {
+      display: block;
+      font-size: 0.76rem;
+      font-weight: 600;
+      opacity: 0.9;
+      margin-top: 2px;
+    }
+    .store-arrow {
+      font-size: 1.25rem;
+      font-weight: 900;
+      margin-left: 8px;
+    }
+
+    /* Step 2 Copy Cards */
+    .copy-item {
+      background: var(--card-inner);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+    .copy-item:last-child {
+      margin-bottom: 0;
+    }
+    .copy-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      gap: 8px;
+    }
+    .copy-label {
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: #38bdf8;
+    }
+    .copy-meta {
+      font-size: 0.74rem;
+      color: var(--subtle);
+      background: rgba(148, 163, 184, 0.12);
+      padding: 2px 8px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .copy-box {
+      background: #090e1a;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 0.9rem;
+      color: var(--text);
+      white-space: pre-wrap;
+      word-break: break-all;
+      max-height: 220px;
+      overflow-y: auto;
+      margin-bottom: 12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Noto Sans JP", monospace;
+    }
+    .copy-btn {
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--emerald) 0%, var(--emerald-dark) 100%);
+      color: #022c22;
+      font-size: 0.98rem;
+      font-weight: 900;
+      padding: 14px 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px var(--emerald-glow);
+      transition: transform 0.1s ease, background 0.15s ease;
+    }
+    .copy-btn:active {
+      transform: scale(0.98);
+    }
+    .copy-btn.copied {
+      background: linear-gradient(135deg, #22c55e 0%, #15803d 100%);
+      color: #ffffff;
+    }
+
+    /* Step 3 Downloads */
+    .dl-block {
+      background: var(--card-inner);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .dl-block:last-child {
+      margin-bottom: 0;
+    }
+    .dl-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .dl-sub {
+      font-size: 0.78rem;
+      color: var(--subtle);
+      margin-bottom: 12px;
+    }
+    .dl-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      text-decoration: none;
+      background: linear-gradient(135deg, var(--emerald) 0%, var(--emerald-dark) 100%);
+      color: #022c22;
+      font-weight: 900;
+      font-size: 0.98rem;
+      padding: 15px 16px;
+      border-radius: 14px;
+      text-align: center;
+      box-shadow: 0 4px 14px var(--emerald-glow);
+      transition: transform 0.1s ease;
+    }
+    .dl-btn.apk-main {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: #1c1917;
+      font-size: 1.02rem;
+      padding: 17px 16px;
+      box-shadow: 0 6px 18px rgba(245, 158, 11, 0.3);
+    }
+    .dl-btn:active {
+      transform: scale(0.98);
+    }
+    .preview-icon-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+    .preview-icon {
+      width: 120px;
+      height: 120px;
+      border-radius: 20px;
+      border: 2px solid var(--border);
+      object-fit: cover;
+    }
+    .preview-feature {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      margin-bottom: 12px;
+      display: block;
+    }
+    .ss-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .ss-card {
+      background: #090e1a;
+      border: 1px solid #1e293b;
+      border-radius: 14px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .ss-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      border: 1px solid var(--border);
+    }
+    .ss-dl-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      text-decoration: none;
+      background: linear-gradient(135deg, var(--emerald) 0%, var(--emerald-dark) 100%);
+      color: #022c22;
+      font-weight: 800;
+      font-size: 0.84rem;
+      padding: 11px 8px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    .tip-box {
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 0.82rem;
+      color: #e0f2fe;
+      margin-top: 12px;
+    }
+    .checklist-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+      margin-top: 8px;
+    }
+    .checklist-table th,
+    .checklist-table td {
+      border-bottom: 1px solid var(--border);
+      padding: 10px 6px;
+      text-align: left;
+    }
+    .checklist-table th {
+      color: var(--subtle);
+      font-weight: 700;
+      width: 48%;
+    }
+    .checklist-table td {
+      color: #34d399;
+      font-weight: 800;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <img src="/store-kit/assets/icon_512.png" alt="瞬間脳トレ！漢字間違い探しIQ アイコン">
+      <div class="header-info">
+        <span class="header-badge">📱 スマホだけで完結！</span>
+        <h1>瞬間脳トレ！漢字間違い探しIQ<br>1タップ・ストア申請キット</h1>
+        <p>上から順番にコピー＆保存するだけで、PC不要でストア公開申請が完了します。</p>
+      </div>
+    </header>
+
+    <!-- STEP 1 -->
+    <section class="section-card">
+      <span class="step-badge">STEP 1</span>
+      <h2 class="section-title">🚀 ストア申請画面を開く</h2>
+      <p class="section-desc">まずは登録したいストアのコンソール画面を別タブで開きます（無料＆すぐ出せるAmazon Appstoreが最速でおすすめです）。</p>
+      <div class="store-links">
+        <a class="store-btn amazon" href="https://developer.amazon.com/apps-and-games" target="_blank" rel="noopener noreferrer">
+          <div>
+            🟢 Amazon Appstore 開発者登録・申請画面
+            <span class="store-btn-sub">登録無料（0円）・APKをそのまま提出可能・テスター不要</span>
+          </div>
+          <span class="store-arrow">↗</span>
+        </a>
+        <a class="store-btn google" href="https://play.google.com/console/" target="_blank" rel="noopener noreferrer">
+          <div>
+            🔵 Google Play Console を開く
+            <span class="store-btn-sub">公式Google Playストア開発者コンソール</span>
+          </div>
+          <span class="store-arrow">↗</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- STEP 2 -->
+    <section class="section-card">
+      <span class="step-badge">STEP 2</span>
+      <h2 class="section-title">📋 1タップ・コピペ用カード</h2>
+      <p class="section-desc">緑色の「📋 ワンタップでコピー」ボタンを押すとスマホにコピーされます。そのままストア画面に貼り付けてください。</p>
+
+      <!-- 1. アプリ名 -->
+      <div class="copy-item">
+        <div class="copy-header">
+          <span class="copy-label">① アプリ名（日本語）</span>
+          <span class="copy-meta">13文字（短縮版）</span>
+        </div>
+        <div class="copy-box" id="text-title-short">瞬間脳トレ！漢字間違い探しIQ</div>
+        <button type="button" class="copy-btn" data-target="text-title-short">📋 ワンタップでコピー</button>
+      </div>
+
+      <!-- 1-B. アプリ名（ASOサブタイトル付き） -->
+      <div class="copy-item">
+        <div class="copy-header">
+          <span class="copy-label">①-B アプリ名（検索対策フルタイトル）</span>
+          <span class="copy-meta">29文字 / 30文字以内</span>
+        </div>
+        <div class="copy-box" id="text-title-full">瞬間脳トレ！漢字間違い探しIQ - 15秒で脳年齢＆観察力テスト</div>
+        <button type="button" class="copy-btn" data-target="text-title-full">📋 ワンタップでコピー</button>
+      </div>
+
+      <!-- 2. パッケージ名 -->
+      <div class="copy-item">
+        <div class="copy-header">
+          <span class="copy-label">② パッケージ名（Application ID）</span>
+          <span class="copy-meta">v1/v2署名済</span>
+        </div>
+        <div class="copy-box" id="text-pkg">com.valuelens.v2.kanjiiq</div>
+        <button type="button" class="copy-btn" data-target="text-pkg">📋 ワンタップでコピー</button>
+      </div>
+
+      <!-- 3. カテゴリ -->
+      <div class="copy-item">
+        <div class="copy-header">
+          <span class="copy-label">③ カテゴリ</span>
+          <span class="copy-meta">ストア選択用</span>
+        </div>
+        <div class="copy-box" id="text-category">ゲーム > パズル（または 脳トレ・トリビア）</div>
+        <button type="button" class="copy-btn" data-target="text-category">📋 ワンタップでコピー</button>
+      </div>
+
+      <!-- 4. 簡単な説明 -->
+      <div class="copy-item">
+        <div class="copy-header">
+          <span class="copy-label">④ 簡単な説明（80文字以内）</span>
+          <span class="copy-meta">74文字</span>
+        </div>
+        <div class="copy-box" id="text-short-desc">15秒で1つだけ違う漢字を見破れ！白と百、大と太など全180問の直感間違い探しであなたの認定脳IQと観察力ランクをスピード診断。毎日楽しく脳活パズル！</div>
+        <button type="button" class="copy-btn" data-target="text-short-desc">📋 ワンタップでコピー</button>
+      </div>
+
+      <!-- 5. 詳しい説明 -->
+      <div class="copy-item">
+        <div class="copy-header">
+          <span class="copy-label">⑤ 詳しい説明（4000文字以内）</span>
+          <span class="copy-meta">ASO最適化済</span>
+        </div>
+        <div class="copy-box" id="text-full-desc">「白」の中に1つだけ隠れた「百」、「待」の中に紛れ込んだ「持」……あなたは制限時間15秒以内に見破ることができますか？
+
+『瞬間脳トレ！漢字間違い探しIQ』は、画面に並ぶ漢字や熟語・記号の中から「1つだけ違う仲間外れ」を直感タップで見つけ出す、爽快スピード脳トレ＆観察力IQテストアプリです！
+
+面倒な会員登録やログインは一切不要。アプリを開いて1秒でスタートでき、通勤・通学のスキマ時間や毎日の脳活・認知症予防・集中力アップに最適です。
+
+━━━━━━━━━━━━━━━━━━━━
+🔥 ここが面白い！5つの特徴
+━━━━━━━━━━━━━━━━━━━━
+
+【1】全5ミッション・合計180ステージの大ボリューム！
+・MISSION 1：漢字の違和感探し（白/百、大/太、待/持、未/末 など）
+・MISSION 2：二字熟語・四字熟語バグ（熟語に潜む1文字のダミーを発見）
+・MISSION 3：カタカナ・類似記号トラップ（シ/ツ、ソ/ンなどゲシュタルト崩壊に挑む）
+・MISSION 4：超密グリッド・周辺視野テスト（高密度パネルで右脳の瞬間認識を鍛える）
+・MISSION 5：神眼マスター・極限タイムアタック（IQ140超えを目指す上級者ステージ）
+
+【2】5ステージごとに突入する「BOSS STAGE」の緊張感！
+ステージ5やステージ10では、制限時間が短縮されグリッドが拡大する「ボスステージ」が出現！ノーミス連続コンボを決めてスピード突破すると、認定脳IQが一気に跳ね上がります。
+
+【3】クリアするほど進化する「認定脳IQ」＆「ランク称号」！
+回答スピードと正確さに応じて、あなたの「認定脳IQスコア」がリアルタイムに上昇！
+「覚醒めし観察チャレンジャー」から「鷹の目を持つ瞬間アナリスト」、そして上位1%の「神眼の空間認識マスター」まで、最高ランクを目指して挑戦しましょう。
+
+【4】電車内でも安心！BGM・効果音の個別音量スライダー搭載
+ゲームを盛り上げる軽快なサウンド（WebAudio音源）を搭載しつつ、画面右上の「音量設定」からBGMと効果音（SE）のバランスを0%〜100%まで個別に微調整＆ワンタップ消音が可能。設定は端末に自動保存されます。
+
+【5】個人情報収集ゼロ・完全無料で安心プレイ
+氏名や連絡先、位置情報などの個人情報は一切取得しません。ゲームの進行記録やハイスコアは端末内に安全に保存されるため、お子様からシニアの方まで家族みんなで安心して遊べます。
+
+━━━━━━━━━━━━━━━━━━━━
+💡 こんな方におすすめ！
+━━━━━━━━━━━━━━━━━━━━
+・漢字クイズ、間違い探し、アハ体験、目の体操が好きな方
+・短時間でスカッと頭を切り替えたい方、集中力や周辺視野を鍛えたい方
+・毎日の脳トレ・脳年齢チェック・ボケ防止習慣を楽しく続けたい方
+・家族や友達と「どこまでクリアできた？」「IQいくつになった？」と競い合いたい方
+
+さあ、あなたの目と脳は全180問の違和感を見破れるか？今すぐ無料でチャレンジ！</div>
+        <button type="button" class="copy-btn" data-target="text-full-desc">📋 ワンタップでコピー</button>
+      </div>
+
+      <!-- 6. リリースノート -->
+      <div class="copy-item">
+        <div class="copy-header">
+          <span class="copy-label">⑥ リリースノート（新着情報）</span>
+          <span class="copy-meta">v1.5.0 (Build 6)</span>
+        </div>
+        <div class="copy-box" id="text-release-notes">・『瞬間脳トレ！漢字間違い探しIQ』正式リリース（v1.5.0）
+・全5ミッション・合計180ステージの漢字・熟語・記号間違い探し問題を収録
+・5ステージごとの「BOSS STAGE」および「認定脳IQ＆ランク称号診断」機能を搭載
+・BGM／効果音（SE）の個別音量調整スライダー＆ワンタップミュート機能を追加</div>
+        <button type="button" class="copy-btn" data-target="text-release-notes">📋 ワンタップでコピー</button>
+      </div>
+
+      <!-- 7. プライバシーポリシーURL -->
+      <div class="copy-item">
+        <div class="copy-header">
+          <span class="copy-label">⑦ プライバシーポリシーURL</span>
+          <span class="copy-meta">公式公開済 URL</span>
+        </div>
+        <div class="copy-box" id="text-privacy-url">https://coreworks-portal.pages.dev/privacy.html</div>
+        <button type="button" class="copy-btn" data-target="text-privacy-url">📋 ワンタップでコピー</button>
+      </div>
+
+      <!-- 8. サポートメール・WebサイトURL -->
+      <div class="copy-item">
+        <div class="copy-header">
+          <span class="copy-label">⑧ 開発者WebサイトURL</span>
+          <span class="copy-meta">任意・審査用</span>
+        </div>
+        <div class="copy-box" id="text-site-url">https://coreworks-portal.pages.dev/</div>
+        <button type="button" class="copy-btn" data-target="text-site-url">📋 ワンタップでコピー</button>
+      </div>
+    </section>
+
+    <!-- STEP 3 -->
+    <section class="section-card">
+      <span class="step-badge">STEP 3</span>
+      <h2 class="section-title">📥 アプリ本体＆画像素材の保存</h2>
+      <p class="section-desc">ボタンを押してスマホにファイルを保存し、ストアのアップロード画面で選択してください。</p>
+
+      <!-- 1. APK -->
+      <div class="dl-block">
+        <div class="dl-title">📦 1. アプリ本体ファイル（APK）</div>
+        <div class="dl-sub">Amazon Appstoreの「アプリファイル」にそのまま提出できます（v1/v2署名済・153KB）</div>
+        <a class="dl-btn apk-main" href="/apk/KanjiBrainIQ_v6.apk" download="KanjiBrainIQ_v6.apk">
+          📥 1. アプリ本体（KanjiBrainIQ_v6.apk）をスマホに保存
+        </a>
+      </div>
+
+      <!-- 2. Icon -->
+      <div class="dl-block">
+        <div class="dl-title">🎨 2. アプリアイコン画像（512 × 512 px）</div>
+        <div class="dl-sub">32bit PNG・角丸なし（Google Play / Amazon 両対応）</div>
+        <div class="preview-icon-wrap">
+          <img class="preview-icon" src="/store-kit/assets/icon_512.png" alt="アイコン 512x512">
+        </div>
+        <a class="dl-btn" href="/store-kit/assets/icon_512.png" download="icon_512.png">
+          📥 アイコン画像（512×512）を保存
+        </a>
+      </div>
+
+      <!-- 3. Feature Graphic -->
+      <div class="dl-block">
+        <div class="dl-title">🖼️ 3. フィーチャーグラフィック（1024 × 500 px）</div>
+        <div class="dl-sub">ストア上部バナー画像（Google Play 必須 / Amazon 任意）</div>
+        <img class="preview-feature" src="/store-kit/assets/feature_graphic_1024x500.png" alt="フィーチャーグラフィック 1024x500">
+        <a class="dl-btn" href="/store-kit/assets/feature_graphic_1024x500.png" download="feature_graphic_1024x500.png">
+          📥 フィーチャーグラフィック（1024×500）を保存
+        </a>
+      </div>
+
+      <!-- 4. Screenshots 1-4 -->
+      <div class="dl-block">
+        <div class="dl-title">📱 4. スマホ用スクリーンショット（全4枚・1080 × 1920 px）</div>
+        <div class="dl-sub">1枚目〜4枚目を順番に保存してストアへアップロードしてください</div>
+        <div class="ss-grid">
+          <div class="ss-card">
+            <img src="/store-kit/assets/screenshot_1.png" alt="スクリーンショット1 プレイ画面">
+            <a class="ss-dl-btn" href="/store-kit/assets/screenshot_1.png" download="screenshot_1.png">📥 スクショ1を保存</a>
+          </div>
+          <div class="ss-card">
+            <img src="/store-kit/assets/screenshot_2.png" alt="スクリーンショット2 ボスステージ">
+            <a class="ss-dl-btn" href="/store-kit/assets/screenshot_2.png" download="screenshot_2.png">📥 スクショ2を保存</a>
+          </div>
+          <div class="ss-card">
+            <img src="/store-kit/assets/screenshot_3.png" alt="スクリーンショット3 認定脳IQランク">
+            <a class="ss-dl-btn" href="/store-kit/assets/screenshot_3.png" download="screenshot_3.png">📥 スクショ3を保存</a>
+          </div>
+          <div class="ss-card">
+            <img src="/store-kit/assets/screenshot_4.png" alt="スクリーンショット4 ミッション＆音量設定">
+            <a class="ss-dl-btn" href="/store-kit/assets/screenshot_4.png" download="screenshot_4.png">📥 スクショ4を保存</a>
+          </div>
+        </div>
+        <div class="tip-box">
+          💡 <strong>スマホ保存の裏ワザ：</strong>お使いのブラウザでダウンロードボタンが反応しにくい場合は、<strong>画像そのものを長押し ➔「画像を保存（写真に追加）」</strong>でも100%元の高画質サイズのまま保存できます！
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 4 Quick Checklist -->
+    <section class="section-card">
+      <span class="step-badge">STEP 4</span>
+      <h2 class="section-title">🛡️ 審査アンケート（IARC・暗号化）早見表</h2>
+      <p class="section-desc">ストア申請画面の「はい／いいえ」質問は、以下の通りに選ぶと全年齢対象（3+）として即承認されます。</p>
+      <table class="checklist-table">
+        <tbody>
+          <tr>
+            <th>価格設定</th>
+            <td>無料（アプリ内課金：なし）</td>
+          </tr>
+          <tr>
+            <th>広告の有無</th>
+            <td>「はい（広告を含む）」を選択</td>
+          </tr>
+          <tr>
+            <th>暴力・性的・ギャンブル・暴言・酒タバコ</th>
+            <td>すべて「いいえ（No）」</td>
+          </tr>
+          <tr>
+            <th>ユーザー間の自由チャット・位置情報共有</th>
+            <td>「いいえ（No）」</td>
+          </tr>
+          <tr>
+            <th>米国輸出規制（暗号化の使用）</th>
+            <td>「いいえ（標準のHTTPS通信のみ）」</td>
+          </tr>
+          <tr>
+            <th>個人データの外部収集</th>
+            <td>「いいえ（端末内保存のみ）」</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+
+  <script>
+    (function () {
+      var buttons = document.querySelectorAll('.copy-btn');
+      buttons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var targetId = btn.getAttribute('data-target');
+          var el = document.getElementById(targetId);
+          if (!el) return;
+          var text = el.textContent;
+
+          function showCopied() {
+            var origText = '📋 ワンタップでコピー';
+            btn.classList.add('copied');
+            btn.textContent = '✅ コピーしました！';
+            setTimeout(function () {
+              btn.classList.remove('copied');
+              btn.textContent = origText;
+            }, 2200);
+          }
+
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(showCopied).catch(function () {
+              fallbackCopy(text, showCopied);
+            });
+          } else {
+            fallbackCopy(text, showCopied);
+          }
+        });
+      });
+
+      function fallbackCopy(text, callback) {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand('copy');
+          if (callback) callback();
+        } catch (e) {}
+        document.body.removeChild(ta);
+      }
+    })();
+  </script>
+</body>
+</html>
