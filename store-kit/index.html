@@ -263,6 +263,14 @@
       box-shadow: 0 4px 14px var(--emerald-glow);
       transition: transform 0.1s ease;
     }
+    .dl-btn.aab-main {
+      background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      color: #ffffff;
+      font-size: 1.02rem;
+      padding: 17px 16px;
+      box-shadow: 0 6px 18px rgba(59, 130, 246, 0.35);
+      margin-bottom: 12px;
+    }
     .dl-btn.apk-main {
       background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
       color: #1c1917;
@@ -504,9 +512,9 @@
       <div class="copy-item">
         <div class="copy-header">
           <span class="copy-label">⑥ リリースノート（新着情報）</span>
-          <span class="copy-meta">v1.5.0 (Build 6)</span>
+          <span class="copy-meta">v6.0.0 (versionCode 60)</span>
         </div>
-        <div class="copy-box" id="text-release-notes">・『瞬間脳トレ！漢字間違い探しIQ』正式リリース（v1.5.0）
+        <div class="copy-box" id="text-release-notes">・『瞬間脳トレ！漢字間違い探しIQ』正式リリース（v6.0.0 / Build 60）
 ・全5ミッション・合計180ステージの漢字・熟語・記号間違い探し問題を収録
 ・5ステージごとの「BOSS STAGE」および「認定脳IQ＆ランク称号診断」機能を搭載
 ・BGM／効果音（SE）の個別音量調整スライダー＆ワンタップミュート機能を追加</div>
@@ -540,12 +548,16 @@
       <h2 class="section-title">📥 アプリ本体＆画像素材の保存</h2>
       <p class="section-desc">ボタンを押してスマホにファイルを保存し、ストアのアップロード画面で選択してください。</p>
 
-      <!-- 1. APK -->
+      <!-- 1. AAB & APK -->
       <div class="dl-block">
-        <div class="dl-title">📦 1. アプリ本体ファイル（APK）</div>
-        <div class="dl-sub">Amazon Appstoreの「アプリファイル」にそのまま提出できます（v1/v2署名済・153KB）</div>
+        <div class="dl-title">📦 1. アプリ本体ファイル（Google Play用 AAB ／ Amazon用 APK）</div>
+        <div class="dl-sub">🔵 <strong>Google Play Console</strong> には青ボタンの <strong>AABファイル（.aab）</strong> をアップロードしてください（v6.0.0 / versionCode=60 / targetSdk=34 / 署名検証済・148KB）</div>
+        <a class="dl-btn aab-main" href="/apk/KanjiBrainIQ_v6.aab" download="KanjiBrainIQ_v6.aab">
+          📥 1-A. Google Play専用 AAB（KanjiBrainIQ_v6.aab）をスマホに保存
+        </a>
+        <div class="dl-sub" style="margin-top: 6px;">🟠 <strong>Amazon Appstore</strong> またはスマホ直接インストールにはオレンジボタンの <strong>APKファイル（.apk）</strong> を使用します（v1/v2署名済・153KB）</div>
         <a class="dl-btn apk-main" href="/apk/KanjiBrainIQ_v6.apk" download="KanjiBrainIQ_v6.apk">
-          📥 1. アプリ本体（KanjiBrainIQ_v6.apk）をスマホに保存
+          📥 1-B. アプリ本体 APK（KanjiBrainIQ_v6.apk）をスマホに保存
         </a>
       </div>
 
