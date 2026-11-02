@@ -342,20 +342,80 @@
     background: rgba(15, 23, 42, 0.75);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 12px;
-    padding: 12px 14px;
-    margin-bottom: 10px;
+    padding: 8px 12px;
+    margin-bottom: 7px;
+  }
+  .setting-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: rgba(15, 23, 42, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 9px 12px;
+    margin-bottom: 7px;
+  }
+  .setting-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
   }
   .setting-label {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 900;
     color: #f8fafc;
   }
+  .vol-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding-top: 1px;
+  }
+  .vol-slider {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 10px;
+    border-radius: 999px;
+    background: #334155;
+    outline: none;
+    touch-action: pan-y;
+    cursor: pointer;
+  }
+  .vol-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #10b981;
+    border: 3px solid #f8fafc;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+    cursor: pointer;
+  }
+  .vol-slider.muted::-webkit-slider-thumb {
+    background: #64748b;
+    border-color: #cbd5e1;
+  }
+  .vol-pct {
+    min-width: 44px;
+    text-align: right;
+    font-size: 14px;
+    font-weight: 900;
+    color: #34d399;
+    font-variant-numeric: tabular-nums;
+  }
+  .vol-pct.muted {
+    color: #64748b;
+  }
   .toggle-btn {
-    min-width: 90px;
-    padding: 8px 14px;
-    border-radius: 10px;
+    min-width: 82px;
+    padding: 6px 12px;
+    border-radius: 9px;
     border: none;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 900;
     cursor: pointer;
   }
@@ -370,21 +430,22 @@
   .mission-list {
     display: flex;
     flex-direction: column;
-    gap: 7px;
-    margin: 12px 0 16px;
+    gap: 5px;
+    margin: 7px 0 10px;
   }
   .mission-btn {
     width: 100%;
-    padding: 11px 14px;
-    border-radius: 12px;
+    padding: 8px 12px;
+    border-radius: 10px;
     border: 2px solid rgba(56, 189, 248, 0.4);
     background: rgba(15, 23, 42, 0.85);
     color: #f8fafc;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 900;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    white-space: nowrap;
     cursor: pointer;
   }
   .mission-btn.active {
@@ -465,14 +526,28 @@
     <div class="modal-card" style="max-height:92vh; overflow-y:auto;">
       <div class="modal-badge">⚙️ 設定 ＆ ステージ選択</div>
 
-      <div class="setting-row">
-        <span class="setting-label">🎵 BGM（音楽）</span>
-        <button class="toggle-btn on" id="toggleBgmBtn">ON</button>
+      <div class="setting-card">
+        <div class="setting-top">
+          <span class="setting-label">🎵 BGM（背景メロディ）</span>
+          <button class="toggle-btn on" id="toggleBgmBtn">ON</button>
+        </div>
+        <div class="vol-row">
+          <input type="range" min="0" max="100" value="70" class="vol-slider" id="bgmVolumeSlider" aria-label="BGM音量">
+          <span class="vol-pct" id="bgmVolumePct">70%</span>
+        </div>
       </div>
-      <div class="setting-row">
-        <span class="setting-label">🔊 効果音（SE）</span>
-        <button class="toggle-btn on" id="toggleSeBtn">ON</button>
+
+      <div class="setting-card">
+        <div class="setting-top">
+          <span class="setting-label">🔊 効果音（タップ・正解音）</span>
+          <button class="toggle-btn on" id="toggleSeBtn">ON</button>
+        </div>
+        <div class="vol-row">
+          <input type="range" min="0" max="100" value="80" class="vol-slider" id="seVolumeSlider" aria-label="効果音音量">
+          <span class="vol-pct" id="seVolumePct">80%</span>
+        </div>
       </div>
+
       <div class="setting-row">
         <span class="setting-label">🛠️ 開発テスト（全解放）</span>
         <button class="toggle-btn on" id="toggleDevBtn">ON</button>
@@ -577,7 +652,11 @@
     iq: 100,
     hints: 3,
     bgmOn: true,
+    bgmEnabled: true,
+    bgmVolume: 0.7,
     seOn: true,
+    seEnabled: true,
+    seVolume: 0.8,
     devMode: true,
     usedPairKeys: [] // Guarantees NO duplicate kanji pair appears!
   };
@@ -591,31 +670,64 @@
         if (!Array.isArray(state.usedPairKeys)) state.usedPairKeys = [];
         if (!Array.isArray(state.clearedMissions)) state.clearedMissions = [];
       }
+      // Also support dedicated keys in localStorage for instant cross-reading
+      const lsBgmEn = localStorage.getItem('bgmEnabled');
+      const lsBgmVol = localStorage.getItem('bgmVolume');
+      const lsSeEn = localStorage.getItem('seEnabled');
+      const lsSeVol = localStorage.getItem('seVolume');
+      if (lsBgmEn !== null) state.bgmOn = state.bgmEnabled = (lsBgmEn === 'true');
+      else if (typeof state.bgmEnabled === 'boolean') state.bgmOn = state.bgmEnabled;
+      if (lsBgmVol !== null && !isNaN(parseFloat(lsBgmVol))) state.bgmVolume = Math.max(0, Math.min(1, parseFloat(lsBgmVol)));
+      if (typeof state.bgmVolume !== 'number' || isNaN(state.bgmVolume)) state.bgmVolume = 0.7;
+
+      if (lsSeEn !== null) state.seOn = state.seEnabled = (lsSeEn === 'true');
+      else if (typeof state.seEnabled === 'boolean') state.seOn = state.seEnabled;
+      if (lsSeVol !== null && !isNaN(parseFloat(lsSeVol))) state.seVolume = Math.max(0, Math.min(1, parseFloat(lsSeVol)));
+      if (typeof state.seVolume !== 'number' || isNaN(state.seVolume)) state.seVolume = 0.8;
     } catch (e) {}
   }
 
   function saveProgress() {
     try {
+      state.bgmEnabled = !!state.bgmOn;
+      state.seEnabled = !!state.seOn;
       localStorage.setItem(SAVE_KEY, JSON.stringify(state));
+      localStorage.setItem('bgmEnabled', String(state.bgmEnabled));
+      localStorage.setItem('bgmVolume', String(state.bgmVolume));
+      localStorage.setItem('seEnabled', String(state.seEnabled));
+      localStorage.setItem('seVolume', String(state.seVolume));
     } catch (e) {}
   }
 
   loadProgress();
 
   // ============================================================================
-  // 3. WEB AUDIO SYNTH (BGM Loop + SE + Distinct Boss Approaching Alert!)
+  // 3. WEB AUDIO SYNTH (BGM Loop + SE + Real-Time Volume Gain Control!)
   // ============================================================================
   let audioCtx = null;
+  let bgmMasterGain = null;
   let bgmTimer = null;
   let bgmStep = 0;
 
   function initAudio() {
     if (!audioCtx) {
       const AC = window.AudioContext || window.webkitAudioContext;
-      if (AC) audioCtx = new AC();
+      if (AC) {
+        audioCtx = new AC();
+        bgmMasterGain = audioCtx.createGain();
+        bgmMasterGain.gain.value = (state.bgmOn && state.bgmVolume > 0) ? state.bgmVolume : 0;
+        bgmMasterGain.connect(audioCtx.destination);
+      }
     }
     if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    updateBgmMasterGain();
     syncBgmLoop();
+  }
+
+  function updateBgmMasterGain() {
+    if (!audioCtx || !bgmMasterGain) return;
+    const targetGain = (state.bgmOn && state.bgmVolume > 0) ? state.bgmVolume : 0;
+    bgmMasterGain.gain.setTargetAtTime(targetGain, audioCtx.currentTime, 0.02);
   }
 
   function syncBgmLoop() {
@@ -623,42 +735,88 @@
       clearInterval(bgmTimer);
       bgmTimer = null;
     }
-    if (!state.bgmOn || !audioCtx) return;
+    if (!state.bgmOn || state.bgmVolume <= 0 || !audioCtx) return;
 
     const boss = isBossStage(state.stage);
-    const intervalMs = boss ? 240 : 420;
-    const normalNotes = [261.63, 329.63, 392.00, 329.63, 293.66, 349.23, 440.00, 349.23];
+    const intervalMs = boss ? 240 : 400;
+    const normalNotes = [261.63, 329.63, 392.00, 523.25, 392.00, 329.63, 293.66, 349.23, 440.00, 587.33, 440.00, 349.23];
     const bossNotes   = [196.00, 207.65, 196.00, 164.81, 196.00, 233.08, 207.65, 164.81];
 
     bgmTimer = setInterval(() => {
-      if (!state.bgmOn || !audioCtx || !isQuestionActive) return;
+      if (!state.bgmOn || state.bgmVolume <= 0 || !audioCtx) return;
+      const settingsOpen = document.getElementById('settingsModal')?.classList.contains('show');
+      if (!isQuestionActive && !settingsOpen) return;
+
       const now = audioCtx.currentTime;
       const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
+      const noteGain = audioCtx.createGain();
       const notes = isBossStage(state.stage) ? bossNotes : normalNotes;
       const freq = notes[bgmStep % notes.length];
       bgmStep++;
 
       osc.type = isBossStage(state.stage) ? 'sawtooth' : 'triangle';
       osc.frequency.setValueAtTime(freq, now);
-      gain.gain.setValueAtTime(isBossStage(state.stage) ? 0.035 : 0.045, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + (intervalMs / 1000) * 0.85);
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
+      const baseNoteVol = isBossStage(state.stage) ? 0.08 : 0.11;
+      noteGain.gain.setValueAtTime(baseNoteVol, now);
+      noteGain.gain.exponentialRampToValueAtTime(0.0008, now + (intervalMs / 1000) * 0.85);
+      osc.connect(noteGain);
+      noteGain.connect(bgmMasterGain || audioCtx.destination);
       osc.start(now);
       osc.stop(now + (intervalMs / 1000) * 0.9);
     }, intervalMs);
   }
 
+  function getSeGain(baseGain) {
+    if (!state.seOn || state.seVolume <= 0) return 0;
+    return Math.max(0.001, baseGain * state.seVolume);
+  }
+
+  function playSePreviewTone() {
+    if (!state.seOn || state.seVolume <= 0) return;
+    initAudio();
+    if (!audioCtx) return;
+    const now = audioCtx.currentTime;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(659.25, now);
+    osc.frequency.setValueAtTime(880.00, now + 0.06);
+    gain.gain.setValueAtTime(getSeGain(0.24), now);
+    gain.gain.exponentialRampToValueAtTime(0.0008, now + 0.16);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start(now);
+    osc.stop(now + 0.17);
+  }
+
+  function playHintSound() {
+    if (!state.seOn || state.seVolume <= 0) return;
+    initAudio();
+    if (!audioCtx) return;
+    const now = audioCtx.currentTime;
+    [523.25, 783.99].forEach((freq, idx) => {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now + idx * 0.07);
+      gain.gain.setValueAtTime(getSeGain(0.18), now + idx * 0.07);
+      gain.gain.exponentialRampToValueAtTime(0.0008, now + idx * 0.07 + 0.18);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now + idx * 0.07);
+      osc.stop(now + idx * 0.07 + 0.2);
+    });
+  }
+
   function playTickSound() {
-    if (!state.seOn || !audioCtx) return;
+    if (!state.seOn || state.seVolume <= 0 || !audioCtx) return;
     const now = audioCtx.currentTime;
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
     osc.type = 'triangle';
     osc.frequency.setValueAtTime(440, now);
-    gain.gain.setValueAtTime(0.04, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+    gain.gain.setValueAtTime(getSeGain(0.06), now);
+    gain.gain.exponentialRampToValueAtTime(0.0008, now + 0.06);
     osc.connect(gain);
     gain.connect(audioCtx.destination);
     osc.start(now);
@@ -666,7 +824,7 @@
   }
 
   function playCorrectSound() {
-    if (!state.seOn) return;
+    if (!state.seOn || state.seVolume <= 0) return;
     initAudio();
     if (!audioCtx) return;
     const now = audioCtx.currentTime;
@@ -675,8 +833,8 @@
       const gain = audioCtx.createGain();
       osc.type = 'sine';
       osc.frequency.setValueAtTime(freq, now + idx * 0.1);
-      gain.gain.setValueAtTime(0.22, now + idx * 0.1);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.1 + 0.25);
+      gain.gain.setValueAtTime(getSeGain(0.28), now + idx * 0.1);
+      gain.gain.exponentialRampToValueAtTime(0.0008, now + idx * 0.1 + 0.25);
       osc.connect(gain);
       gain.connect(audioCtx.destination);
       osc.start(now + idx * 0.1);
@@ -685,7 +843,7 @@
   }
 
   function playStageClearFanfare() {
-    if (!state.seOn) return;
+    if (!state.seOn || state.seVolume <= 0) return;
     initAudio();
     if (!audioCtx) return;
     const now = audioCtx.currentTime;
@@ -694,8 +852,8 @@
       const gain = audioCtx.createGain();
       osc.type = 'triangle';
       osc.frequency.setValueAtTime(freq, now + idx * 0.09);
-      gain.gain.setValueAtTime(0.24, now + idx * 0.09);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.09 + 0.35);
+      gain.gain.setValueAtTime(getSeGain(0.30), now + idx * 0.09);
+      gain.gain.exponentialRampToValueAtTime(0.0008, now + idx * 0.09 + 0.35);
       osc.connect(gain);
       gain.connect(audioCtx.destination);
       osc.start(now + idx * 0.09);
@@ -705,7 +863,7 @@
 
   // DISTINCT BOSS WARNING SOUND (Played when the pre-boss screen appears!)
   function playBossApproachingSound() {
-    if (!state.seOn) return;
+    if (!state.seOn || state.seVolume <= 0) return;
     initAudio();
     if (!audioCtx) return;
     const now = audioCtx.currentTime;
@@ -717,8 +875,8 @@
       osc.frequency.setValueAtTime(220, now + offset);
       osc.frequency.linearRampToValueAtTime(440, now + offset + 0.18);
       osc.frequency.linearRampToValueAtTime(311.13, now + offset + 0.25);
-      gain.gain.setValueAtTime(0.20, now + offset);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + offset + 0.26);
+      gain.gain.setValueAtTime(getSeGain(0.25), now + offset);
+      gain.gain.exponentialRampToValueAtTime(0.0008, now + offset + 0.26);
       osc.connect(gain);
       gain.connect(audioCtx.destination);
       osc.start(now + offset);
@@ -730,8 +888,8 @@
       const gain = audioCtx.createGain();
       osc.type = 'triangle';
       osc.frequency.setValueAtTime(freq, now + 0.58);
-      gain.gain.setValueAtTime(0.16, now + 0.58);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 1.15);
+      gain.gain.setValueAtTime(getSeGain(0.20), now + 0.58);
+      gain.gain.exponentialRampToValueAtTime(0.0008, now + 1.15);
       osc.connect(gain);
       gain.connect(audioCtx.destination);
       osc.start(now + 0.58);
@@ -740,7 +898,7 @@
   }
 
   function playWrongSound() {
-    if (!state.seOn) return;
+    if (!state.seOn || state.seVolume <= 0) return;
     initAudio();
     if (!audioCtx) return;
     const now = audioCtx.currentTime;
@@ -749,8 +907,8 @@
       const gain = audioCtx.createGain();
       osc.type = 'sawtooth';
       osc.frequency.setValueAtTime(freq, now + idx * 0.12);
-      gain.gain.setValueAtTime(0.15, now + idx * 0.12);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.12 + 0.22);
+      gain.gain.setValueAtTime(getSeGain(0.20), now + idx * 0.12);
+      gain.gain.exponentialRampToValueAtTime(0.0008, now + idx * 0.12 + 0.22);
       osc.connect(gain);
       gain.connect(audioCtx.destination);
       osc.start(now + idx * 0.12);
@@ -1102,6 +1260,7 @@
   hintBtnEl.addEventListener('click', () => {
     if (!isQuestionActive || state.hints <= 0) return;
     initAudio();
+    playHintSound();
     state.hints--;
     saveProgress();
     const cells = Array.from(gridEl.querySelectorAll('.cell'));
@@ -1118,22 +1277,43 @@
   });
 
   // ============================================================================
-  // 5. SETTINGS MODAL (BGM / SE Toggle & Mission 1..5 Selection)
+  // 5. SETTINGS MODAL (BGM / SE Toggle + Volume Sliders & Mission 1..5 Selection)
   // ============================================================================
   const settingsModalEl = document.getElementById('settingsModal');
   const toggleBgmBtn = document.getElementById('toggleBgmBtn');
   const toggleSeBtn = document.getElementById('toggleSeBtn');
   const toggleDevBtn = document.getElementById('toggleDevBtn');
+  const bgmVolumeSlider = document.getElementById('bgmVolumeSlider');
+  const bgmVolumePct = document.getElementById('bgmVolumePct');
+  const seVolumeSlider = document.getElementById('seVolumeSlider');
+  const seVolumePct = document.getElementById('seVolumePct');
   const missionListEl = document.getElementById('missionList');
   const stageJumpGridEl = document.getElementById('stageJumpGrid');
   const stageSelectTitleEl = document.getElementById('stageSelectTitle');
+  let lastSePreviewTime = 0;
 
-  function renderSettingsModal() {
+  function updateSliderVisual(sliderEl, pctEl, isEnabled, volFloat) {
+    const pct = isEnabled ? Math.round(volFloat * 100) : 0;
+    sliderEl.value = String(pct);
+    pctEl.textContent = `${pct}%`;
+    sliderEl.classList.toggle('muted', !isEnabled || pct === 0);
+    pctEl.classList.toggle('muted', !isEnabled || pct === 0);
+    const activeColor = (!isEnabled || pct === 0) ? '#64748b' : '#10b981';
+    sliderEl.style.background = `linear-gradient(90deg, ${activeColor} ${pct}%, #334155 ${pct}%)`;
+  }
+
+  function renderAudioControls() {
     toggleBgmBtn.textContent = state.bgmOn ? 'ON' : 'OFF';
     toggleBgmBtn.className = 'toggle-btn ' + (state.bgmOn ? 'on' : 'off');
+    updateSliderVisual(bgmVolumeSlider, bgmVolumePct, state.bgmOn, state.bgmVolume);
 
     toggleSeBtn.textContent = state.seOn ? 'ON' : 'OFF';
     toggleSeBtn.className = 'toggle-btn ' + (state.seOn ? 'on' : 'off');
+    updateSliderVisual(seVolumeSlider, seVolumePct, state.seOn, state.seVolume);
+  }
+
+  function renderSettingsModal() {
+    renderAudioControls();
 
     toggleDevBtn.textContent = state.devMode ? 'ON' : 'OFF';
     toggleDevBtn.className = 'toggle-btn ' + (state.devMode ? 'on' : 'off');
@@ -1201,25 +1381,69 @@
   }
 
   document.getElementById('settingsBtn').addEventListener('click', () => {
-    initAudio();
     isQuestionActive = false;
     clearInterval(timerId);
     renderSettingsModal();
     settingsModalEl.classList.add('show');
+    initAudio();
   });
 
   toggleBgmBtn.addEventListener('click', () => {
     state.bgmOn = !state.bgmOn;
+    if (state.bgmOn && state.bgmVolume <= 0) {
+      state.bgmVolume = 0.7;
+    }
     saveProgress();
     initAudio();
-    renderSettingsModal();
+    renderAudioControls();
+  });
+
+  bgmVolumeSlider.addEventListener('input', () => {
+    const val = Number(bgmVolumeSlider.value);
+    state.bgmVolume = Math.max(0, Math.min(1, val / 100));
+    if (val > 0 && !state.bgmOn) {
+      state.bgmOn = true;
+    } else if (val === 0 && state.bgmOn) {
+      state.bgmOn = false;
+    }
+    saveProgress();
+    initAudio();
+    updateBgmMasterGain();
+    renderAudioControls();
   });
 
   toggleSeBtn.addEventListener('click', () => {
     state.seOn = !state.seOn;
+    if (state.seOn && state.seVolume <= 0) {
+      state.seVolume = 0.8;
+    }
     saveProgress();
     if (state.seOn) playCorrectSound();
-    renderSettingsModal();
+    renderAudioControls();
+  });
+
+  seVolumeSlider.addEventListener('input', () => {
+    const val = Number(seVolumeSlider.value);
+    state.seVolume = Math.max(0, Math.min(1, val / 100));
+    if (val > 0 && !state.seOn) {
+      state.seOn = true;
+    } else if (val === 0 && state.seOn) {
+      state.seOn = false;
+    }
+    saveProgress();
+    renderAudioControls();
+    const nowMs = performance.now();
+    if (state.seOn && val > 0 && nowMs - lastSePreviewTime > 120) {
+      lastSePreviewTime = nowMs;
+      playSePreviewTone();
+    }
+  });
+
+  seVolumeSlider.addEventListener('change', () => {
+    if (state.seOn && state.seVolume > 0) {
+      lastSePreviewTime = performance.now();
+      playSePreviewTone();
+    }
   });
 
   toggleDevBtn.addEventListener('click', () => {
