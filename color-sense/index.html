@@ -597,16 +597,15 @@
   .ad-pr-card {
     display: none;
     flex-direction: column;
-    gap: 6px;
-    padding: 14px 12px;
-    border-radius: 14px;
+    gap: 8px;
+    padding: 18px 14px;
+    border-radius: 16px;
     background: rgba(30, 41, 59, 0.95);
     border: 2px solid #f59e0b;
     color: #f8fafc;
     text-decoration: none;
-    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.22);
+    box-shadow: 0 8px 24px rgba(245, 158, 11, 0.25);
     transition: transform 0.15s ease, border-color 0.2s ease;
-    animation: adCardIn 0.3s ease-out;
   }
   .ad-pr-card.active-pr {
     display: flex;
@@ -614,55 +613,33 @@
   .ad-pr-card:active {
     transform: scale(0.98);
   }
-  @keyframes adCardIn {
-    from { opacity: 0; transform: translateY(6px) scale(0.98); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-  }
   .ad-pr-tag {
     display: inline-block;
     align-self: flex-start;
     background: rgba(245, 158, 11, 0.2);
     border: 1px solid #fbbf24;
     color: #fde047;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 900;
-    padding: 2px 8px;
+    padding: 3px 10px;
     border-radius: 99px;
   }
   .ad-pr-title {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 900;
-    line-height: 1.4;
+    line-height: 1.45;
     color: #ffffff;
   }
   .ad-pr-cta {
-    margin-top: 4px;
-    background: rgba(56, 189, 248, 0.18);
+    margin-top: 6px;
+    background: rgba(56, 189, 248, 0.2);
     border: 1px solid #38bdf8;
     color: #38bdf8;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 900;
     text-align: center;
-    padding: 6px 10px;
-    border-radius: 8px;
-  }
-  .ad-dots {
-    display: flex;
-    justify-content: center;
-    gap: 6px;
-    margin-bottom: 6px;
-  }
-  .ad-dot {
-    width: 22px;
-    height: 6px;
-    border-radius: 99px;
-    background: #334155;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-  }
-  .ad-dot.active {
-    background: #fbbf24;
+    padding: 9px 12px;
+    border-radius: 10px;
   }
   .ad-progress-track {
     width: 100%;
@@ -796,26 +773,15 @@
 
       <div class="ad-pr-list" id="adPrList">
         <a class="ad-pr-card active-pr" data-pr-idx="0" href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F1000%25E5%2586%2586%25E3%2583%259D%25E3%2583%2583%25E3%2582%25AD%25E3%2583%25AA%2520%25E9%2580%2581%25E6%2596%2599%25E7%2584%25A1%25E6%2596%2599%2F" target="_blank" rel="nofollow sponsored">
-          <span class="ad-pr-tag">PR・楽天ランキング特選 #1</span>
-          <span class="ad-pr-title">🎁 【楽天1,000円ポッキリ特選】ポイント消化＆買い回りで一番人気のグルメ・日用品ランキング</span>
+          <span class="ad-pr-tag">PR・楽天ランキング特選</span>
+          <span class="ad-pr-title">🎁 楽天1,000円ポッキリ＆送料無料ランキング（ポイント消化・買い回り特選）</span>
           <span class="ad-pr-cta">👉 楽天で人気ランキングを見る ↗</span>
         </a>
         <a class="ad-pr-card" data-pr-idx="1" href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E3%2583%259B%25E3%2583%2583%25E3%2583%2588%25E3%2582%25A2%25E3%2582%25A4%25E3%2583%259E%25E3%2582%25B9%25E3%2582%25AF%2520%25E9%259B%25BB%25E6%25B0%2597%25E6%25AF%259B%25E5%25B8%2583%2520%25E7%25AF%2580%25E6%25B0%25B4%25E3%2582%25B7%25E3%2583%25A3%25E3%2583%25AF%25E3%2583%25BC%25E3%2583%2598%25E3%2583%2583%25E3%2583%2589%2520%25E8%25B1%25A1%25E5%258D%25B0%2520%25E6%25B0%25B4%25E7%25AD%2592%2F" target="_blank" rel="nofollow sponsored">
-          <span class="ad-pr-tag">PR・目の疲れ＆集中ケア #2</span>
-          <span class="ad-pr-title">🔥 【色彩テスト＆目の休息ケア】話題のホットアイマスク・アイケアグッズ人気ランキング</span>
+          <span class="ad-pr-tag">PR・目の疲れ＆色彩集中ケア</span>
+          <span class="ad-pr-title">🔥 目の疲れ＆色彩集中ケア！人気ホットアイマスクランキング</span>
           <span class="ad-pr-cta">👉 アイケア・休息グッズを楽天で見る ↗</span>
         </a>
-        <a class="ad-pr-card" data-pr-idx="2" href="https://coreworks-portal.pages.dev/furusato-tax/" target="_blank">
-          <span class="ad-pr-tag">無料ツール・1秒診断 #3</span>
-          <span class="ad-pr-title">💰 【ふるさと納税 1秒診断】あなたの年収だといくら得する？控除上限シミュレーター</span>
-          <span class="ad-pr-cta">👉 1秒シミュレーターを試す ↗</span>
-        </a>
-      </div>
-
-      <div class="ad-dots" id="adDots">
-        <button type="button" class="ad-dot active" data-dot="0" aria-label="PR 1"></button>
-        <button type="button" class="ad-dot" data-dot="1" aria-label="PR 2"></button>
-        <button type="button" class="ad-dot" data-dot="2" aria-label="PR 3"></button>
       </div>
 
       <div class="ad-progress-track">
@@ -1087,27 +1053,19 @@
   const adModalBadgeEl = document.getElementById('adModalBadge');
   const adModalTitleEl = document.getElementById('adModalTitle');
   const adPrCards = Array.from(document.querySelectorAll('#adPrList .ad-pr-card'));
-  const adDots = Array.from(document.querySelectorAll('#adDots .ad-dot'));
   const adProgressBarEl = document.getElementById('adProgressBar');
   const adCompleteBtnEl = document.getElementById('adCompleteBtn');
   let adTimerId = null;
-  let adCarouselTimerId = null;
   let adRewardCallback = null;
-  let currentPrIdx = 0;
+  let currentPrIdx = -1;
 
   function selectPrCard(idx) {
     currentPrIdx = ((idx % adPrCards.length) + adPrCards.length) % adPrCards.length;
     adPrCards.forEach((card, i) => card.classList.toggle('active-pr', i === currentPrIdx));
-    adDots.forEach((dot, i) => dot.classList.toggle('active', i === currentPrIdx));
   }
-
-  adDots.forEach((dot, i) => {
-    dot.addEventListener('click', () => selectPrCard(i));
-  });
 
   function showAdModal(adType, onComplete) {
     clearInterval(adTimerId);
-    clearInterval(adCarouselTimerId);
     adRewardCallback = typeof onComplete === 'function' ? onComplete : null;
 
     // 1. Native Android AdMob WebView Bridge (if connected)
@@ -1157,11 +1115,8 @@
       }
     } catch (e) {}
 
-    // 3. Built-in 5-Second Interactive Sponsor PR Overlay
+    // 3. Built-in 5-Second Interactive Sponsor PR Overlay (Single fixed high-CTR Rakuten card per view)
     selectPrCard(currentPrIdx + 1);
-    adCarouselTimerId = setInterval(() => {
-      selectPrCard(currentPrIdx + 1);
-    }, 1800);
 
     if (adType === 'reward_hint') {
       adModalTitleEl.textContent = '🎁 5秒PR視聴でヒント+3個＆+2秒！';
@@ -1192,7 +1147,6 @@
         adCompleteBtnEl.textContent = `⏳ あと ${sec} 秒で報酬獲得...`;
       } else {
         clearInterval(adTimerId);
-        clearInterval(adCarouselTimerId);
         adProgressBarEl.style.width = '100%';
         adModalBadgeEl.textContent = (adType === 'interstitial') ? '⏭️ スキップ可能' : '✅ 報酬獲得完了！';
         adCompleteBtnEl.disabled = false;
@@ -1212,7 +1166,6 @@
     if (adCompleteBtnEl.disabled) return;
     initAudio();
     clearInterval(adTimerId);
-    clearInterval(adCarouselTimerId);
     adOverlayModalEl.classList.remove('show');
     const cb = adRewardCallback;
     adRewardCallback = null;
@@ -1463,33 +1416,39 @@
     pendingInterstitialAfterModal = false;
     playWrongSound();
 
-    const tiles = gridEl.querySelectorAll('.color-tile');
-    if (tiles[oddIndex]) {
-      tiles[oddIndex].classList.add('correct-tile');
-      tiles[oddIndex].textContent = '★';
-    }
-
     bannerEl.className = 'reveal';
-    bannerEl.textContent = reason === 'wrong' ? '❌ お手つき！正解は★のタイルでした' : '⏱️ 時間切れ！正解は★のタイルでした';
+    bannerEl.textContent = reason === 'wrong' ? '❌ お手つき！パネルの色が違いました' : '⏱️ 時間切れ！';
     updateHUD();
 
     const boss = isBossStage(state.stage);
+    const canRevive = (stepInStage >= 2) || boss;
+    const reviveText = (stepInStage >= 2)
+      ? `🎬 広告を見て第${stepInStage}問から復活（+5秒＆ハズレ除外）`
+      : `🎬 広告を見てハズレ2枚除外＆+5秒でボス再挑戦`;
+
+    const failComment = (stepInStage >= 2)
+      ? `せっかく第${stepInStage}問まで進みました！<br>広告を見ると第1問に戻らず<b>この問題から（ハズレ除外＋5秒延長で）</b>復活できます！`
+      : (boss
+        ? `惜しい！次は色のわずかな違いに注目してみましょう。<br>広告を見ると<b>ハズレ2枚除外＋5秒延長</b>でボスに再挑戦できます！`
+        : `惜しい！次は色のわずかな違いに注目してみましょう。<br>第1問から再挑戦します！`);
+
     setTimeout(() => {
       showModal({
         isBossAlert: boss,
-        showRevive: true,
+        showRevive: canRevive,
+        reviveBtnText: reviveText,
         badge: reason === 'wrong' ? '❌ お手つき（ミス）！' : '⏱️ TIME UP!',
         title: boss ? `BOSS STAGE ${state.stage} 失敗` : `STAGE ${state.stage}（第${stepInStage}問でミス）`,
         iqText: `色感IQ ${state.iq}`,
-        comment: '正解は★マークのパネルでした！<br>広告を見てこの問題から復活するか、第1問からやり直せます。',
+        comment: failComment,
         btnText: boss
           ? `🔥 BOSS STAGE ${state.stage} に再挑戦`
           : `🔄 STAGE ${state.stage} を第1問からやり直す`
       });
-    }, 1350);
+    }, 900);
   }
 
-  function showModal({ isBossAlert, showRevive, badge, title, iqText, comment, btnText }) {
+  function showModal({ isBossAlert, showRevive, reviveBtnText, badge, title, iqText, comment, btnText }) {
     modalCardEl.classList.toggle('boss-alert', !!isBossAlert);
     document.getElementById('modalBadge').textContent = badge;
     document.getElementById('modalTitle').textContent = title;
@@ -1498,6 +1457,9 @@
     document.getElementById('modalActionBtn').textContent = btnText;
     if (modalReviveBtnEl) {
       modalReviveBtnEl.style.display = showRevive ? 'block' : 'none';
+      if (reviveBtnText) {
+        modalReviveBtnEl.textContent = reviveBtnText;
+      }
     }
     modalEl.classList.add('show');
   }
@@ -1516,18 +1478,28 @@
         t.textContent = '';
       });
 
-      if (lastWrongIndex !== null && tiles[lastWrongIndex] && lastWrongIndex !== oddIndex) {
+      const dimTargetCount = boss ? 2 : 1;
+      let dimmedNow = 0;
+
+      if (lastWrongIndex !== null && tiles[lastWrongIndex] && lastWrongIndex !== oddIndex && !tiles[lastWrongIndex].classList.contains('dimmed')) {
         tiles[lastWrongIndex].classList.add('dimmed');
-      } else {
-        const normalCandidates = tiles
-          .map((el, idx) => ({ el, idx }))
-          .filter(x => x.idx !== oddIndex && !x.el.classList.contains('dimmed'));
-        if (normalCandidates.length > 0) {
-          normalCandidates[Math.floor(Math.random() * normalCandidates.length)].el.classList.add('dimmed');
+        dimmedNow++;
+      }
+
+      const normalCandidates = tiles
+        .map((el, idx) => ({ el, idx }))
+        .filter(x => x.idx !== oddIndex && !x.el.classList.contains('dimmed'));
+      normalCandidates.sort(() => Math.random() - 0.5);
+
+      while (dimmedNow < dimTargetCount && normalCandidates.length > 0) {
+        const picked = normalCandidates.pop();
+        if (picked) {
+          picked.el.classList.add('dimmed');
+          dimmedNow++;
         }
       }
 
-      timeLimit = (boss ? mCfg.bossSec : mCfg.normalSec) + 3.0;
+      timeLimit = (boss ? mCfg.bossSec : mCfg.normalSec) + 5.0;
       timeRemaining = timeLimit;
       bannerEl.className = '';
       bannerEl.textContent = `🔥 復活成功！残り ${timeRemaining.toFixed(1)} 秒！`;

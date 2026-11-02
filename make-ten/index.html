@@ -297,23 +297,21 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin: 6px 0 10px;
+    margin: 8px 0 12px;
     text-align: left;
   }
   .ad-pr-card {
     display: none;
     flex-direction: column;
-    gap: 6px;
-    padding: 14px 12px;
-    border-radius: 14px;
-    background: rgba(6, 40, 30, 0.95);
+    gap: 10px;
+    padding: 18px 16px;
+    border-radius: 16px;
+    background: rgba(6, 40, 30, 0.96);
     border: 2px solid #f59e0b;
     color: #f8fafc;
     text-decoration: none;
-    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.22);
+    box-shadow: 0 8px 24px rgba(245, 158, 11, 0.28);
     transition: transform 0.15s ease, border-color 0.2s ease;
-    animation: adCardIn 0.3s ease-out;
   }
   .ad-pr-card.active-pr {
     display: flex;
@@ -321,55 +319,40 @@
   .ad-pr-card:active {
     transform: scale(0.98);
   }
-  @keyframes adCardIn {
-    from { opacity: 0; transform: translateY(6px) scale(0.98); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-  }
   .ad-pr-tag {
     display: inline-block;
     align-self: flex-start;
-    background: rgba(245, 158, 11, 0.2);
+    background: rgba(245, 158, 11, 0.22);
     border: 1px solid #fbbf24;
     color: #fde047;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 900;
-    padding: 2px 8px;
+    padding: 3px 10px;
     border-radius: 99px;
   }
   .ad-pr-title {
-    font-size: 15px;
+    font-size: 17px;
     font-weight: 900;
-    line-height: 1.4;
+    line-height: 1.45;
     color: #ffffff;
+  }
+  .ad-pr-desc {
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.45;
+    color: #d1fae5;
   }
   .ad-pr-cta {
     margin-top: 4px;
-    background: rgba(56, 189, 248, 0.18);
-    border: 1px solid #38bdf8;
-    color: #38bdf8;
-    font-size: 12px;
+    background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
+    border: 1px solid #fef08a;
+    color: #052e16;
+    font-size: 14px;
     font-weight: 900;
     text-align: center;
-    padding: 6px 10px;
-    border-radius: 8px;
-  }
-  .ad-dots {
-    display: flex;
-    justify-content: center;
-    gap: 6px;
-    margin-bottom: 6px;
-  }
-  .ad-dot {
-    width: 22px;
-    height: 6px;
-    border-radius: 99px;
-    background: #1e3a31;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-  }
-  .ad-dot.active {
-    background: #fbbf24;
+    padding: 10px 12px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
   }
   .ad-progress-track {
     width: 100%;
@@ -630,7 +613,7 @@
       <div class="modal-title" id="modalTitle">ステージクリア！</div>
       <div class="modal-iq" id="modalIQ">計算IQ 110</div>
       <div class="modal-comment" id="modalComment">超高速の閃きです！</div>
-      <button class="primary-btn" id="modalReviveBtn" style="display:none; margin-bottom:4px; background:linear-gradient(180deg, #f59e0b 0%, #d97706 100%); color:#052e16; box-shadow:0 4px 15px rgba(245,158,11,0.4);">🎬 広告を見てこの問題から復活（+5秒）</button>
+      <button class="primary-btn" id="modalReviveBtn" style="display:none; margin-bottom:4px; font-size:15px; background:linear-gradient(180deg, #f59e0b 0%, #d97706 100%); color:#052e16; box-shadow:0 4px 15px rgba(245,158,11,0.4);">🎬 広告を見て第2問から復活（+5秒＆ダミー除外）</button>
       <button class="primary-btn" id="modalActionBtn">次のステージへ</button>
       <!-- Coreworks In-Game Monetization & Nav -->
       <div style="width:100%; margin-top:8px; padding-top:10px; border-top:1px solid rgba(148,163,184,0.2); display:flex; flex-direction:column; gap:8px;">
@@ -703,26 +686,17 @@
 
       <div class="ad-pr-list" id="adPrList">
         <a class="ad-pr-card active-pr" data-pr-idx="0" href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F1000%25E5%2586%2586%25E3%2583%259D%25E3%2583%2583%25E3%2582%25AD%25E3%2583%25AA%2520%25E9%2580%2581%25E6%2596%2599%25E7%2584%25A1%25E6%2596%2599%2F" target="_blank" rel="nofollow sponsored">
-          <span class="ad-pr-tag">PR・楽天ランキング特選 #1</span>
-          <span class="ad-pr-title">🎁 【楽天1,000円ポッキリ特選】ポイント消化＆買い回りで一番人気のグルメ・日用品ランキング</span>
-          <span class="ad-pr-cta">👉 楽天で人気ランキングを見る ↗</span>
+          <span class="ad-pr-tag">PR・楽天市場 公式特選</span>
+          <span class="ad-pr-title">🎁 楽天1,000円ポッキリ＆送料無料ランキング</span>
+          <span class="ad-pr-desc">ポイント消化や買い回りに大人気！レビュー高評価の絶品グルメ・日用品・お試しセット特選</span>
+          <span class="ad-pr-cta">👉 楽天市場で1,000円ポッキリ特選を見る ↗</span>
         </a>
         <a class="ad-pr-card" data-pr-idx="1" href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E3%2583%259B%25E3%2583%2583%25E3%2583%2588%25E3%2582%25A2%25E3%2582%25A4%25E3%2583%259E%25E3%2582%25B9%25E3%2582%25AF%2520%25E9%259B%25BB%25E6%25B0%2597%25E6%25AF%259B%25E5%25B8%2583%2520%25E7%25AF%2580%25E6%25B0%25B4%25E3%2582%25B7%25E3%2583%25A3%25E3%2583%25AF%25E3%2583%25BC%25E3%2583%2598%25E3%2583%2583%25E3%2583%2589%2520%25E8%25B1%25A1%25E5%258D%25B0%2520%25E6%25B0%25B4%25E7%25AD%2592%2F" target="_blank" rel="nofollow sponsored">
-          <span class="ad-pr-tag">PR・脳トレ集中ケア #2</span>
-          <span class="ad-pr-title">🔥 【目の疲れ＆脳トレ集中ケア】話題のホットアイマスク・休息グッズ人気ランキング</span>
-          <span class="ad-pr-cta">👉 アイケア・休息グッズを楽天で見る ↗</span>
+          <span class="ad-pr-tag">PR・脳トレ集中＆休息ケア特選</span>
+          <span class="ad-pr-title">🔥 脳トレ後の糖分補給＆アイケア特選ランキング</span>
+          <span class="ad-pr-desc">目の疲れや集中後のリフレッシュに！話題のホットアイマスク・休息リラックスグッズ人気一覧</span>
+          <span class="ad-pr-cta">👉 楽天市場でアイケア・休息グッズを見る ↗</span>
         </a>
-        <a class="ad-pr-card" data-pr-idx="2" href="https://coreworks-portal.pages.dev/furusato-tax/" target="_blank">
-          <span class="ad-pr-tag">無料ツール・1秒診断 #3</span>
-          <span class="ad-pr-title">💰 【ふるさと納税 1秒診断】あなたの年収だといくら得する？控除上限シミュレーター</span>
-          <span class="ad-pr-cta">👉 1秒シミュレーターを試す ↗</span>
-        </a>
-      </div>
-
-      <div class="ad-dots" id="adDots">
-        <button type="button" class="ad-dot active" data-dot="0" aria-label="PR 1"></button>
-        <button type="button" class="ad-dot" data-dot="1" aria-label="PR 2"></button>
-        <button type="button" class="ad-dot" data-dot="2" aria-label="PR 3"></button>
       </div>
 
       <div class="ad-progress-track">
@@ -987,32 +961,25 @@
   const modalCardEl = document.getElementById('modalCard');
   const modalReviveBtnEl = document.getElementById('modalReviveBtn');
 
-  // Hybrid Ad Engine DOM & State
+  // Hybrid Ad Engine DOM & State (Single fixed high-CTR Rakuten card per modal open)
   const adOverlayModalEl = document.getElementById('adOverlayModal');
   const adModalBadgeEl = document.getElementById('adModalBadge');
   const adModalTitleEl = document.getElementById('adModalTitle');
   const adPrCards = Array.from(document.querySelectorAll('#adPrList .ad-pr-card'));
-  const adDots = Array.from(document.querySelectorAll('#adDots .ad-dot'));
   const adProgressBarEl = document.getElementById('adProgressBar');
   const adCompleteBtnEl = document.getElementById('adCompleteBtn');
   let adTimerId = null;
-  let adCarouselTimerId = null;
   let adRewardCallback = null;
-  let currentPrIdx = 0;
+  let currentPrIdx = -1;
 
   function selectPrCard(idx) {
+    if (adPrCards.length === 0) return;
     currentPrIdx = ((idx % adPrCards.length) + adPrCards.length) % adPrCards.length;
     adPrCards.forEach((card, i) => card.classList.toggle('active-pr', i === currentPrIdx));
-    adDots.forEach((dot, i) => dot.classList.toggle('active', i === currentPrIdx));
   }
-
-  adDots.forEach((dot, i) => {
-    dot.addEventListener('click', () => selectPrCard(i));
-  });
 
   function showAdModal(adType, onComplete) {
     clearInterval(adTimerId);
-    clearInterval(adCarouselTimerId);
     adRewardCallback = typeof onComplete === 'function' ? onComplete : null;
 
     // 1. Native Android AdMob WebView Bridge (if connected)
@@ -1062,16 +1029,13 @@
       }
     } catch (e) {}
 
-    // 3. Built-in 5-Second Interactive Sponsor PR Overlay
+    // 3. Built-in 5-Second Fixed Single Rakuten PR Card Overlay (No auto-switching during 5s)
     selectPrCard(currentPrIdx + 1);
-    adCarouselTimerId = setInterval(() => {
-      selectPrCard(currentPrIdx + 1);
-    }, 1800);
 
     if (adType === 'reward_hint') {
       adModalTitleEl.textContent = '🎁 5秒PR視聴でヒント+3個＆+2秒！';
     } else if (adType === 'reward_revive') {
-      adModalTitleEl.textContent = '🔥 5秒PR視聴でこの問題から復活！';
+      adModalTitleEl.textContent = '🔥 5秒PR視聴でダミー除外＆+5秒復活！';
     } else {
       adModalTitleEl.textContent = '📺 STAGEクリア！スポンサーPR';
     }
@@ -1097,7 +1061,6 @@
         adCompleteBtnEl.textContent = `⏳ あと ${sec} 秒で報酬獲得...`;
       } else {
         clearInterval(adTimerId);
-        clearInterval(adCarouselTimerId);
         adProgressBarEl.style.width = '100%';
         adModalBadgeEl.textContent = (adType === 'interstitial') ? '⏭️ スキップ可能' : '✅ 報酬獲得完了！';
         adCompleteBtnEl.disabled = false;
@@ -1105,7 +1068,7 @@
         if (adType === 'reward_hint') {
           adCompleteBtnEl.textContent = '🎁 ヒント+3個を受け取って再開！';
         } else if (adType === 'reward_revive') {
-          adCompleteBtnEl.textContent = '🔥 +5秒延長してこの問題から復活！';
+          adCompleteBtnEl.textContent = '🔥 ダミー除外＆+5秒延長で復活！';
         } else {
           adCompleteBtnEl.textContent = '⏭️ 閉じて次のステージへ進む';
         }
@@ -1117,7 +1080,6 @@
     if (adCompleteBtnEl.disabled) return;
     initAudio();
     clearInterval(adTimerId);
-    clearInterval(adCarouselTimerId);
     adOverlayModalEl.classList.remove('show');
     const cb = adRewardCallback;
     adRewardCallback = null;
@@ -1437,37 +1399,41 @@
     pendingInterstitialAfterModal = false;
     playWrongSound();
 
-    const cards = gridEl.querySelectorAll('.num-card');
-    answerIndices.forEach(idx => {
-      if (cards[idx]) cards[idx].classList.add('correct-card');
-    });
-
-    const a = boardNumbers[answerIndices[0]];
-    const b = boardNumbers[answerIndices[1]];
     bannerEl.className = 'reveal';
     bannerEl.textContent = reason === 'wrong'
-      ? `❌ ミス！（${wrongExpr}）正解は ${a} + ${b}`
-      : `⏱️ 時間切れ！正解は ${a} + ${b} = ${targetSum}`;
+      ? `❌ ミス！（${wrongExpr} ≠ ${targetSum}）`
+      : `⏱️ 時間切れ！足して ${targetSum} のペアを探そう！`;
 
     updateHUD();
 
     const boss = isBossStage(state.stage);
+    const canRevive = boss || stepInStage >= 2;
+    const reviveText = stepInStage >= 2
+      ? `🎬 広告を見て第${stepInStage}問から復活（+5秒＆ダミー除外）`
+      : `🎬 広告を見てダミー除外＆+5秒でボス再挑戦`;
+    const failComment = stepInStage >= 2
+      ? `せっかく第${stepInStage}問まで進みました！<br>広告を見ると第1問に戻らず<b>この問題から（ダミー除外＋5秒延長で）</b>復活できます！`
+      : (boss
+        ? `惜しい！次は端数やペアの組み合わせに注目してみましょう。<br>広告を見ると<b>この問題から（ダミー除外＋5秒延長で）</b>有利に再挑戦できます！`
+        : `惜しい！次は端数やペアの組み合わせに注目してみましょう。<br>第1問から再挑戦します！`);
+
     setTimeout(() => {
       showModal({
         isBossAlert: boss,
-        showRevive: true,
+        showRevive: canRevive,
+        reviveText,
         badge: reason === 'wrong' ? '❌ お手つき！' : '⏱️ TIME UP!',
         title: boss ? `BOSS STAGE ${state.stage} 失敗` : `STAGE ${state.stage}（第${stepInStage}問でミス）`,
         iqText: `計算IQ ${state.iq}`,
-        comment: `正解のペアは「${a}」と「${b}」でした！<br>広告を見てこの問題から復活するか、第1問からやり直せます。`,
+        comment: failComment,
         btnText: boss
-          ? `🔥 BOSS STAGE ${state.stage} に再挑戦`
-          : `🔄 STAGE ${state.stage} を第1問からやり直す`
+          ? `🔥 BOSS STAGE ${state.stage} に最初から再挑戦`
+          : (stepInStage >= 2 ? `🔄 STAGE ${state.stage} を第1問からやり直す` : `🔄 もう一度 第1問から挑戦する`)
       });
-    }, 1350);
+    }, 900);
   }
 
-  function showModal({ isBossAlert, showRevive, badge, title, iqText, comment, btnText }) {
+  function showModal({ isBossAlert, showRevive, reviveText, badge, title, iqText, comment, btnText }) {
     if (modalCardEl) modalCardEl.classList.toggle('boss-alert', !!isBossAlert);
     document.getElementById('modalBadge').textContent = badge;
     document.getElementById('modalTitle').textContent = title;
@@ -1475,7 +1441,12 @@
     document.getElementById('modalComment').innerHTML = comment;
     document.getElementById('modalActionBtn').textContent = btnText;
     if (modalReviveBtnEl) {
-      modalReviveBtnEl.style.display = showRevive ? 'block' : 'none';
+      if (showRevive) {
+        modalReviveBtnEl.style.display = 'block';
+        if (reviveText) modalReviveBtnEl.textContent = reviveText;
+      } else {
+        modalReviveBtnEl.style.display = 'none';
+      }
     }
     modalEl.classList.add('show');
   }
@@ -1505,7 +1476,7 @@
         }
       }
 
-      timeLimit = (boss ? mCfg.bossSec : mCfg.normalSec) + 3.0;
+      timeLimit = (boss ? mCfg.bossSec : mCfg.normalSec) + 5.0;
       timeRemaining = timeLimit;
       bannerEl.className = '';
       bannerEl.textContent = `🔥 復活成功！残り ${timeRemaining.toFixed(1)} 秒！（1枚目を選択）`;
