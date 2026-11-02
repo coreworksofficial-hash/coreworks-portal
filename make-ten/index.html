@@ -613,7 +613,7 @@
       <div class="modal-title" id="modalTitle">ステージクリア！</div>
       <div class="modal-iq" id="modalIQ">計算IQ 110</div>
       <div class="modal-comment" id="modalComment">超高速の閃きです！</div>
-      <button class="primary-btn" id="modalReviveBtn" style="display:none; margin-bottom:4px; font-size:15px; background:linear-gradient(180deg, #f59e0b 0%, #d97706 100%); color:#052e16; box-shadow:0 4px 15px rgba(245,158,11,0.4);">🎬 広告を見て第2問から復活（+5秒＆ダミー除外）</button>
+      <button class="primary-btn" id="modalReviveBtn" style="display:none; margin-bottom:4px; font-size:16px; background:linear-gradient(180deg, #f59e0b 0%, #d97706 100%); color:#052e16; box-shadow:0 4px 15px rgba(245,158,11,0.4);">🎬 広告を見てこの問題から復活</button>
       <button class="primary-btn" id="modalActionBtn">次のステージへ</button>
       <!-- Coreworks In-Game Monetization & Nav -->
       <div style="width:100%; margin-top:8px; padding-top:10px; border-top:1px solid rgba(148,163,184,0.2); display:flex; flex-direction:column; gap:8px;">
@@ -682,7 +682,7 @@
   <div class="modal-overlay overlay-modal" id="adOverlayModal">
     <div class="modal-card ad-modal-card">
       <div class="modal-badge" id="adModalBadge">📺 スポンサーご紹介</div>
-      <div class="modal-title" id="adModalTitle" style="font-size:15px; line-height:1.45; margin-bottom:2px;">ステージクリアボーナス！少し待つと次のステージへ進めます</div>
+      <div class="modal-title" id="adModalTitle" style="font-size:15px; line-height:1.45; margin-bottom:2px;">少し待つと次のステージへ進めます</div>
 
       <div class="ad-pr-list" id="adPrList">
         <a class="ad-pr-card active-pr" data-pr-idx="0" href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F1000%25E5%2586%2586%25E3%2583%259D%25E3%2583%2583%25E3%2582%25AD%25E3%2583%25AA%2520%25E9%2580%2581%25E6%2596%2599%25E7%2584%25A1%25E6%2596%2599%2F" target="_blank" rel="nofollow sponsored">
@@ -983,22 +983,22 @@
   function getAdCopy(placement, remaining) {
     if (placement === 'rewarded_revive') {
       return {
-        subtext: 'スポンサーご紹介（5秒後に同じ問題から復活できます）',
-        countdownBtn: `あと ${remaining} 秒で同じ問題から復活できます`,
-        completeBtn: '🔥 復活して問題を続ける！'
+        subtext: '5秒後にこの問題から復活できます',
+        countdownBtn: `あと ${remaining} 秒で復活できます`,
+        completeBtn: '🔥 この問題から復活する'
       };
     }
     if (placement === 'rewarded_hint') {
       return {
-        subtext: 'スポンサーご紹介（5秒後にヒントが3回分増えます）',
-        countdownBtn: `あと ${remaining} 秒でヒントが3回分増えます`,
-        completeBtn: '💡 ヒント＋3回を受け取る！'
+        subtext: '5秒後にヒントが3回分増えます',
+        countdownBtn: `あと ${remaining} 秒でヒントが増えます`,
+        completeBtn: '💡 ヒント＋3回を受け取る'
       };
     }
     return {
-      subtext: 'ステージクリアボーナス！少し待つと次のステージへ進めます',
-      countdownBtn: `あと ${remaining} 秒で次のステージへ進めます`,
-      completeBtn: '▶ 次のステージへ進む（🎁ヒント+1）'
+      subtext: '少し待つと次のステージへ進めます',
+      countdownBtn: `あと ${remaining} 秒で次へ進めます`,
+      completeBtn: '▶ 次のステージへ進む'
     };
   }
 
@@ -1072,8 +1072,8 @@
     const initCopy = getAdCopy(currentAdPlacement, 5);
     adModalTitleEl.textContent = initCopy.subtext;
     adModalBadgeEl.textContent = (currentAdPlacement === 'interstitial')
-      ? '🎁 ステージクリアボーナス（あと 5 秒...）'
-      : '📺 スポンサーご紹介（あと 5 秒...）';
+      ? '🎁 ステージクリアボーナス'
+      : '📺 スポンサーご紹介';
     adProgressBarEl.style.width = '0%';
     adCompleteBtnEl.disabled = true;
     adCompleteBtnEl.classList.remove('ready');
@@ -1091,14 +1091,14 @@
         const remaining = Math.ceil(rem);
         const copy = getAdCopy(currentAdPlacement, remaining);
         adModalBadgeEl.textContent = (currentAdPlacement === 'interstitial')
-          ? `🎁 ステージクリアボーナス（あと ${remaining} 秒...）`
-          : `📺 スポンサーご紹介（あと ${remaining} 秒...）`;
+          ? '🎁 ステージクリアボーナス'
+          : '📺 スポンサーご紹介';
         adCompleteBtnEl.textContent = copy.countdownBtn;
       } else {
         clearInterval(adTimerId);
         const copy = getAdCopy(currentAdPlacement, 0);
         adProgressBarEl.style.width = '100%';
-        adModalBadgeEl.textContent = (currentAdPlacement === 'interstitial') ? '🎁 ボーナス獲得完了！' : '✅ 準備完了！';
+        adModalBadgeEl.textContent = '✅ 準備完了！';
         adCompleteBtnEl.disabled = false;
         adCompleteBtnEl.classList.add('ready');
         adCompleteBtnEl.textContent = copy.completeBtn;
@@ -1209,7 +1209,7 @@
 
   function updateHintButton() {
     if (isHintLocked()) {
-      hintBtnEl.textContent = '💡 ヒント表示済';
+      hintBtnEl.textContent = '💡 ヒント済';
       hintBtnEl.classList.remove('ad-reward');
       hintBtnEl.style.background = '';
       hintBtnEl.style.color = '';
@@ -1228,7 +1228,7 @@
       hintBtnEl.style.color = '';
       hintBtnEl.disabled = !isQuestionActive;
     } else {
-      hintBtnEl.textContent = '🎬 ヒント+3(無料)';
+      hintBtnEl.textContent = '🎬 ヒント+3';
       hintBtnEl.classList.add('ad-reward');
       hintBtnEl.style.background = '#f59e0b';
       hintBtnEl.style.color = '#052e16';
@@ -1407,7 +1407,7 @@
               badge: `🏆 MISSION ${clearedMission} 完全制覇！`,
               title: clearedMission < 5 ? `MISSION ${clearedMission + 1} 解放！` : `全5ミッション制覇！`,
               iqText: `計算IQ ${state.iq}`,
-              comment: `${getTitleForIQ(state.iq)}<br>（⚙️設定からいつでも再挑戦できます）`,
+              comment: `${getTitleForIQ(state.iq)}`,
               btnText: clearedMission < 5 ? `🚀 MISSION ${state.mission} へ進む` : `👑 もう一度挑戦する`
             });
           }, 900);
@@ -1428,7 +1428,7 @@
                 badge: '⚠️ WARNING：BOSS STAGE 出現！',
                 title: `次はBOSS STAGE ${state.stage}！`,
                 iqText: '1問一発勝負！',
-                comment: `STAGE ${clearedStage} クリア！（💡ヒント+1回復）<br>次は制限時間が短い1発勝負です！`,
+                comment: `STAGE ${clearedStage} クリア！<br>次は制限時間が短い1発勝負です！`,
                 btnText: `🔥 BOSS STAGE ${state.stage} に挑む！`
               });
             }, 900);
@@ -1441,7 +1441,7 @@
                 badge: boss ? '👑 BOSS 撃破！！' : '🎉 STAGE CLEAR!',
                 title: `STAGE ${clearedStage} クリア！`,
                 iqText: `計算IQ ${state.iq}`,
-                comment: `${getTitleForIQ(state.iq)}（💡ヒント+1回復）`,
+                comment: `${getTitleForIQ(state.iq)}`,
                 btnText: `▶️ STAGE ${state.stage} へ進む`
               });
             }, 900);
@@ -1472,14 +1472,12 @@
 
     const boss = isBossStage(state.stage);
     const canRevive = boss || stepInStage >= 2;
-    const reviveText = stepInStage >= 2
-      ? `🎬 広告を見て第${stepInStage}問から復活（+5秒＆ダミー除外）`
-      : `🎬 広告を見てダミー除外＆+5秒でボス再挑戦`;
+    const reviveText = '🎬 広告を見てこの問題から復活';
     const failComment = stepInStage >= 2
-      ? `せっかく第${stepInStage}問まで進みました！<br>広告を見ると第1問に戻らず<b>この問題から（ダミー除外＋5秒延長で）</b>復活できます！`
+      ? '広告を見ると、第1問に戻らず<b>この問題から</b>復活できます！'
       : (boss
-        ? `惜しい！次は端数やペアの組み合わせに注目してみましょう。<br>広告を見ると<b>この問題から（ダミー除外＋5秒延長で）</b>有利に再挑戦できます！`
-        : `惜しい！次は端数やペアの組み合わせに注目してみましょう。<br>第1問から再挑戦します！`);
+        ? '広告を見ると、<b>この問題から</b>そのまま復活できます！'
+        : '惜しい！第1問から再挑戦します！');
 
     setTimeout(() => {
       showModal({
@@ -1487,12 +1485,10 @@
         showRevive: canRevive,
         reviveText,
         badge: reason === 'wrong' ? '❌ お手つき！' : '⏱️ TIME UP!',
-        title: boss ? `BOSS STAGE ${state.stage} 失敗` : `STAGE ${state.stage}（第${stepInStage}問でミス）`,
+        title: boss ? `BOSS STAGE ${state.stage} 失敗` : `STAGE ${state.stage} 失敗`,
         iqText: `計算IQ ${state.iq}`,
         comment: failComment,
-        btnText: boss
-          ? `🔥 BOSS STAGE ${state.stage} に最初から再挑戦`
-          : (stepInStage >= 2 ? `🔄 STAGE ${state.stage} を第1問からやり直す` : `🔄 もう一度 第1問から挑戦する`)
+        btnText: boss ? '🔄 もう一度挑戦する' : '🔄 第1問からやり直す'
       });
     }, 900);
   }
