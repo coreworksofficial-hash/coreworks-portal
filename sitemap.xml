@@ -5,15 +5,7 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://coreworks-portal.pages.dev/sns-studio/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://coreworks-portal.pages.dev/payback-calc/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://coreworks-portal.pages.dev/rakuten-maximizer/</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -21,11 +13,11 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://coreworks-portal.pages.dev/subscription-calc/</loc>
+    <loc>https://coreworks-portal.pages.dev/rakuten-maximizer/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://coreworks-portal.pages.dev/wage-calc/</loc>
+    <loc>https://coreworks-portal.pages.dev/subscription-calc/</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -33,7 +25,35 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://coreworks-portal.pages.dev/wage-calc/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://coreworks-portal.pages.dev/sns-studio/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://coreworks-portal.pages.dev/money-drop/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://coreworks-portal.pages.dev/color-sense/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://coreworks-portal.pages.dev/make-ten/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://coreworks-portal.pages.dev/flash-memory/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://coreworks-portal.pages.dev/shape-mirror/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://coreworks-portal.pages.dev/speed-number/</loc>
     <priority>0.8</priority>
   </url>
   <url>

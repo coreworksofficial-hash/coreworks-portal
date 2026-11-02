@@ -3,20 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>暮らしとお金の簡単計算ツール集 ｜ Coreworks Studio</title>
-  <meta name="description" content="家電の元取り計算、楽天ポイント上限計算、冬の電気代比較、毎月のサブスク合計など、暮らしのお金を1秒で計算できる無料ツール集です。">
+  <title>暮らしの損得1秒計算 ＆ 瞬間脳トレIQラボ ｜ Coreworks Studio</title>
+  <meta name="description" content="YouTubeショートで話題！家電や暖房費の元取り1秒計算ツールと、スマホで今すぐ遊べる瞬間脳トレ・IQ診断ゲーム集（漢字違和感探し・絶対色感・瞬間計算など）。">
   <style>
     :root { --bg:#0b0f19; --card-bg:#151d30; --border:#263554; --text:#f8fafc; --text-muted:#94a3b8; --accent:#38bdf8; --accent-pink:#f472b6; --accent-green:#34d399; --amber:#fbbf24; --radius:14px; }
     * { box-sizing:border-box; margin:0; padding:0; }
     html, body { overflow-x:hidden; width:100%; background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans",sans-serif; line-height:1.45; }
-    .wrap { max-width:640px; margin:0 auto; padding:22px 14px 60px; }
-    .hero { text-align:center; margin-bottom:18px; }
+    .wrap { max-width:660px; margin:0 auto; padding:20px 14px 60px; }
+    .hero { text-align:center; margin-bottom:16px; }
     .badge { display:inline-block; background:rgba(56,189,248,.12); border:1px solid rgba(56,189,248,.35); color:var(--accent); padding:4px 12px; border-radius:99px; font-size:.72rem; font-weight:800; margin-bottom:8px; }
-    h1 { font-size:1.5rem; font-weight:900; margin-bottom:4px; color:#fff; }
-    .hero-sub { color:var(--text-muted); font-size:.84rem; }
+    h1 { font-size:1.42rem; font-weight:900; margin-bottom:6px; color:#fff; }
+    .hero-sub { color:var(--text-muted); font-size:.83rem; margin-bottom:14px; }
+    .yt-highlight { background:linear-gradient(135deg, rgba(16,185,129,0.18), rgba(56,189,248,0.15)); border:2px solid #34d399; border-radius:16px; padding:14px; margin-bottom:20px; }
+    .yt-highlight-title { font-size:.85rem; font-weight:900; color:#34d399; margin-bottom:10px; display:flex; align-items:center; justify-content:center; gap:6px; }
+    .yt-btn-row { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px; }
+    .yt-btn { display:block; padding:10px 8px; border-radius:10px; font-size:.8rem; font-weight:900; text-align:center; text-decoration:none; }
+    .yt-btn-calc { background:#38bdf8; color:#090d16; }
+    .yt-btn-game { background:#f59e0b; color:#090d16; }
+    .yt-btn-rakuten { display:block; width:100%; padding:11px; border-radius:10px; background:linear-gradient(90deg,#e11d48,#f43f5e); color:#fff; font-size:.82rem; font-weight:900; text-align:center; text-decoration:none; }
+    .sec-head { font-size:1.1rem; font-weight:900; color:#fff; margin:22px 0 10px; padding-left:10px; border-left:4px solid var(--accent); display:flex; align-items:center; justify-content:space-between; }
+    .sec-head.game-sec { border-left-color:var(--accent-pink); }
+    .sec-sub { font-size:.75rem; color:var(--text-muted); font-weight:700; }
     .grid { display:flex; flex-direction:column; gap:10px; }
     .card { background:var(--card-bg); border:1.5px solid var(--border); border-radius:var(--radius); padding:14px 16px; display:flex; flex-direction:column; text-decoration:none; color:inherit; }
-    .card-featured { border-color:rgba(56,189,248,.45); }
+    .card-featured { border-color:rgba(56,189,248,.5); }
     .card:active { transform:scale(.99); }
     .card-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
     .card-tag { font-size:.7rem; font-weight:800; padding:2px 8px; border-radius:6px; }
@@ -25,7 +35,7 @@
     .tag-calc { background:rgba(52,211,153,.16); color:var(--accent-green); }
     .tag-info { background:rgba(148,163,184,.15); color:#cbd5e1; }
     .card-go { font-size:.8rem; font-weight:800; color:var(--accent); }
-    .card h2 { font-size:1.05rem; font-weight:900; margin-bottom:4px; color:#fff; }
+    .card h2 { font-size:1.02rem; font-weight:900; margin-bottom:4px; color:#fff; }
     .card p { color:var(--text-muted); font-size:.8rem; line-height:1.4; }
     footer { margin-top:36px; text-align:center; color:var(--text-muted); font-size:.78rem; border-top:1px solid var(--border); padding-top:18px; }
     footer a { color:var(--accent); text-decoration:none; }
@@ -34,84 +44,156 @@
 <body>
   <div class="wrap">
     <div class="hero">
-      <div class="badge">COREWORKS DIGITAL LAB</div>
-      <h1>暮らしとお金の簡単計算ツール</h1>
-      <p class="hero-sub">知りたい項目をタップすると1秒で計算できます</p>
+      <div class="badge">COREWORKS OFFICIAL PORTAL</div>
+      <h1>暮らしの損得1秒計算 ＆ 瞬間脳トレIQラボ</h1>
+      <p class="hero-sub">YouTubeショートで紹介中の無料計算ツール・脳トレゲーム・神アイテムまとめ</p>
     </div>
 
-    <div class="grid">
-    <a href="./sns-studio/" class="card card-featured">
-      <div class="card-top">
-        <span class="card-tag tag-tool">図解で1秒理解</span>
-        <span class="card-go">図解を見る →</span>
+    <div class="yt-highlight">
+      <div class="yt-highlight-title">🔥 YouTube動画から来られた方へ（人気ショートカット）</div>
+      <div class="yt-btn-row">
+        <a href="./payback-calc/" class="yt-btn yt-btn-calc">🚿 神アイテム元取り計算</a>
+        <a href="./money-drop/" class="yt-btn yt-btn-game">🧠 漢字の間違い探し</a>
       </div>
-      <h2>📊 1枚でわかる「お金と買い物の損得図解」</h2>
-      <p>暖房の電気代比較・すぐ元が取れる神アイテム・楽天1,000円買い足し損得など、文字を読まずに1枚の画像でパッとわかる図解集です。</p>
-    </a>
+      <div class="yt-btn-row">
+        <a href="./winter-electricity/" class="yt-btn yt-btn-calc">🧣 冬の暖房電気代比較</a>
+        <a href="./color-sense/" class="yt-btn yt-btn-game">🎨 絶対色感テスト</a>
+      </div>
+      <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E8%25B1%25A1%25E5%258D%25B0%2520%25E3%2582%25B7%25E3%2583%25BC%25E3%2583%25A0%25E3%2583%25AC%25E3%2582%25B9%25E3%2581%259B%25E3%2582%2593%2520%25E6%25B0%25B4%25E7%25AD%2592%2520%25E7%25AF%2580%25E6%25B0%25B4%25E3%2582%25B7%25E3%2583%25A3%25E3%2583%25AF%25E3%2583%25BC%25E3%2583%2598%25E3%2583%2583%25E3%2583%2589%2520%25E9%259B%25BB%25E6%25B0%2597%25E6%25AF%259B%25E5%25B8%2583%2520%25E4%25B8%25B8%25E6%25B4%2597%25E3%2581%2584%2520%25E9%25A3%259F%25E6%25B4%2597%25E6%25A9%259F%2F" target="_blank" rel="nofollow sponsored" class="yt-btn-rakuten">
+        🛍️ 動画で紹介した「すぐ元が取れる神アイテム」楽天市場一覧を見る ↗
+      </a>
+    </div>
+
+    <div class="sec-head">
+      <span>💰 暮らしとお金の1秒損得計算ツール</span>
+      <span class="sec-sub">全 7 ツール</span>
+    </div>
+    <div class="grid">
     <a href="./payback-calc/" class="card card-featured">
       <div class="card-top">
-        <span class="card-tag tag-calc">買い物比較</span>
-        <span class="card-go">開く →</span>
+        <span class="card-tag tag-calc">一番人気・買い物比較</span>
+        <span class="card-go">計算する →</span>
       </div>
-      <h2>🚿 家電・日用品の「元取り」計算</h2>
-      <p>節水シャワー・食洗機・水筒などを買うと、何ヶ月で元が取れるかを計算します。</p>
+      <h2>🚿 家電・日用品の「元取り」1秒計算</h2>
+      <p>節水シャワー・食洗機・断熱水筒などを買うと、何ヶ月で元が取れて黒字になるかを1秒で計算します。</p>
+    </a>
+    <a href="./winter-electricity/" class="card card-featured">
+      <div class="card-top">
+        <span class="card-tag tag-calc">光熱費・節電</span>
+        <span class="card-go">計算する →</span>
+      </div>
+      <h2>🧣 冬の電気代・暖房費ランキング比較</h2>
+      <p>エアコン・ヒーターと、丸洗い電気毛布（1時間0.9円）を使った場合のひと冬の電気代の差を計算します。</p>
     </a>
     <a href="./rakuten-maximizer/" class="card card-featured">
       <div class="card-top">
-        <span class="card-tag tag-tool">楽天市場</span>
-        <span class="card-go">開く →</span>
+        <span class="card-tag tag-tool">楽天市場・ポイ活</span>
+        <span class="card-go">計算する →</span>
       </div>
-      <h2>🛍️ 楽天のポイント上限・買い回り計算</h2>
-      <p>お買い物マラソンで「あといくら買えるか」「1,000円買い足すと得か」を計算します。</p>
-    </a>
-    <a href="./winter-electricity/" class="card ">
-      <div class="card-top">
-        <span class="card-tag tag-calc">光熱費・節電</span>
-        <span class="card-go">開く →</span>
-      </div>
-      <h2>🧣 冬の電気代・暖房費の比較</h2>
-      <p>エアコン・ヒーターと、電気毛布（1時間0.9円）を使った場合の電気代の差を計算します。</p>
+      <h2>🛍️ 楽天お買い物マラソン 上限＆1,000円損得計算</h2>
+      <p>お買い物マラソンで「あといくら買えるか」「1,000円買い足すと何円得するか」を瞬時に計算します。</p>
     </a>
     <a href="./subscription-calc/" class="card ">
       <div class="card-top">
         <span class="card-tag tag-calc">固定費の見直し</span>
-        <span class="card-go">開く →</span>
+        <span class="card-go">計算する →</span>
       </div>
-      <h2>📱 毎月のサブスク代 合計チェック</h2>
-      <p>入っている月額サービスを選ぶだけで、1年間・10年間の支払い総額を計算します。</p>
-    </a>
-    <a href="./wage-calc/" class="card ">
-      <div class="card-top">
-        <span class="card-tag tag-calc">給料・働き方</span>
-        <span class="card-go">開く →</span>
-      </div>
-      <h2>⏱️ 通勤・残業込みの「本当の時給」計算</h2>
-      <p>手取り月収から通勤時間や残業を引いた、実質の手取り時給を計算します。</p>
+      <h2>📱 毎月のサブスク・隠れ固定費 10年総額チェック</h2>
+      <p>入っている月額サービスや習慣を選ぶだけで、1年間・10年間の支払い総額と買い切り置換額を計算します。</p>
     </a>
     <a href="./valuelens/" class="card ">
       <div class="card-top">
-        <span class="card-tag tag-tool">スマホ・家電</span>
-        <span class="card-go">開く →</span>
+        <span class="card-tag tag-tool">スマホ・ガジェット</span>
+        <span class="card-go">計算する →</span>
       </div>
-      <h2>💻 高い買い物の「1日あたり金額」計算</h2>
-      <p>高いスマホや家電を買ってメルカリで売った場合、1日あたり実質いくらかを計算します。</p>
+      <h2>💻 高い買い物の「1日あたり実質金額」計算 (ValueLens)</h2>
+      <p>高い家電やガジェットを買って将来売却（リセール）した場合、1日あたり実質いくらかを計算します。</p>
     </a>
-    <a href="./money-drop/" class="card ">
+    <a href="./wage-calc/" class="card ">
       <div class="card-top">
-        <span class="card-tag tag-game">脳トレ・IQ診断</span>
-        <span class="card-go">遊ぶ →</span>
+        <span class="card-tag tag-calc">給料・時短投資</span>
+        <span class="card-go">計算する →</span>
       </div>
-      <h2>🧠 脳トレゲーム：1つだけ違う文字を探せ！</h2>
-      <p>制限時間内に1つだけ違う漢字・文字を見つけてタップする瞬間脳トレ＆IQ診断ゲームです（ステージ自動セーブ対応）。</p>
+      <h2>⏱️ 通勤・残業込みの「本当の時給」＆時短ROI計算</h2>
+      <p>手取り月収から通勤時間や残業を引いた実質時給と、時短家電で毎月いくら時間が浮くかを計算します。</p>
+    </a>
+    <a href="./sns-studio/" class="card ">
+      <div class="card-top">
+        <span class="card-tag tag-tool">図解で1秒理解</span>
+        <span class="card-go">図解を見る →</span>
+      </div>
+      <h2>📊 1枚でわかる「お金と買い物の損得図解集」</h2>
+      <p>暖房の電気代比較・すぐ元が取れる神アイテム・楽天1,000円買い足し損得など、1枚の画像でパッとわかる図解集です。</p>
+    </a>
+    </div>
+
+    <div class="sec-head game-sec">
+      <span>🧠 インストール不要！瞬間脳トレ＆IQ診断ゲーム</span>
+      <span class="sec-sub">全 7 ゲーム</span>
+    </div>
+    <div class="grid">
+    <a href="./money-drop/" class="card card-featured">
+      <div class="card-top">
+        <span class="card-tag tag-game">YouTubeで話題・漢字IQ診断</span>
+        <span class="card-go">今すぐ遊ぶ →</span>
+      </div>
+      <h2>漢字脳トレ：1つだけ違う文字を探せ！</h2>
+      <p>制限時間内に1つだけ違う漢字を見つけてタップする瞬間脳トレ＆IQ診断ゲームです（全5ミッション・自動セーブ対応）。</p>
+    </a>
+    <a href="./color-sense/" class="card card-featured">
+      <div class="card-top">
+        <span class="card-tag tag-game">色彩IQ・観察力診断</span>
+        <span class="card-go">今すぐ遊ぶ →</span>
+      </div>
+      <h2>色彩センス：絶対色感テスト（1つだけ違う色を探せ）</h2>
+      <p>微妙に色が違う1枚のパネルを直感で見抜く色彩感覚＆目の解像度テストです（全5ミッション・ボス戦搭載）。</p>
+    </a>
+    <a href="./make-ten/" class="card ">
+      <div class="card-top">
+        <span class="card-tag tag-game">暗算スピード・脳トレ</span>
+        <span class="card-go">今すぐ遊ぶ →</span>
+      </div>
+      <h2>瞬間計算：ピタッと合計パズル</h2>
+      <p>制限時間内にお題の合計数字になるパネルの組み合わせを瞬時に選ぶ高速暗算パズルです。</p>
+    </a>
+    <a href="./flash-memory/" class="card ">
+      <div class="card-top">
+        <span class="card-tag tag-game">瞬間記憶・ワーキングメモリ</span>
+        <span class="card-go">今すぐ遊ぶ →</span>
+      </div>
+      <h2>1秒記憶：フラッシュパネル記憶テスト</h2>
+      <p>一瞬だけ光るパネルの配置を記憶して正確に再現する瞬間記憶力トレーニングゲームです。</p>
+    </a>
+    <a href="./shape-mirror/" class="card ">
+      <div class="card-top">
+        <span class="card-tag tag-game">空間認識・図形IQ</span>
+        <span class="card-go">今すぐ遊ぶ →</span>
+      </div>
+      <h2>直感回転：ぴったり図形パズル</h2>
+      <p>回転・反転した図形の中から同じ形を瞬時に見抜く空間認識能力テストです。</p>
+    </a>
+    <a href="./speed-number/" class="card ">
+      <div class="card-top">
+        <span class="card-tag tag-game">反射神経・周辺視野</span>
+        <span class="card-go">今すぐ遊ぶ →</span>
+      </div>
+      <h2>爆速連打：ナンバー順タップ（周辺視野テスト）</h2>
+      <p>1から順番に数字を最速でタップし、周辺視野と反射神経の限界スピードを測定します。</p>
     </a>
     <a href="./donburi-tower/" class="card ">
       <div class="card-top">
-        <span class="card-tag tag-game">ゲーム</span>
-        <span class="card-go">遊ぶ →</span>
+        <span class="card-tag tag-game">物理演算ミニゲーム</span>
+        <span class="card-go">今すぐ遊ぶ →</span>
       </div>
-      <h2>🎮 ミニゲーム：どんぶりタワー</h2>
-      <p>落ちてくる具材を丼の上に積み上げるシンプルなバランスゲームです。</p>
+      <h2>物理バランス：爆盛！どんぶりタワー</h2>
+      <p>落ちてくる具材を丼の上にどこまで高く積み上げられるか競う物理バランスゲームです。</p>
     </a>
+    </div>
+
+    <div class="sec-head">
+      <span>📜 サイト情報</span>
+    </div>
+    <div class="grid">
     <a href="./about/" class="card ">
       <div class="card-top">
         <span class="card-tag tag-info">サイト情報</span>
@@ -121,6 +203,7 @@
       <p>当サイトの運営情報とプライバシーポリシーです。</p>
     </a>
     </div>
+
 <!-- Moshimo Official Rakuten Sponsor -->
 <div style="margin: 32px auto 20px; text-align: center; padding: 16px; background: rgba(21, 29, 48, 0.7); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; max-width: 600px;">
   <div style="font-size: 0.75rem; color: #94a3b8; margin-bottom: 8px;">PR ｜ 楽天市場 公式スポンサーリンク</div>

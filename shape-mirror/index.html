@@ -1,0 +1,1008 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>直感回転！ぴったり図形パズル</title>
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #131129;
+    color: #f5f3ff;
+    font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Meiryo', sans-serif;
+    transition: background-color 0.35s ease;
+  }
+
+  body.boss-mode {
+    background-color: #2c0b22;
+  }
+
+  #app {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 18px 22px;
+  }
+
+  #top-progress-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background-color: #26214e;
+    overflow: hidden;
+  }
+
+  #top-progress-bar {
+    height: 100%;
+    width: 100%;
+    background-color: #a78bfa;
+    transition: width 0.08s linear, background-color 0.25s ease;
+  }
+
+  .header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  .top-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+  }
+
+  .stage-badge {
+    background: #231e49;
+    border: 2px solid #a78bfa;
+    color: #ddd6fe;
+    font-size: 14px;
+    font-weight: 900;
+    padding: 6px 13px;
+    border-radius: 999px;
+  }
+
+  .stage-badge.boss {
+    background: #500724;
+    border-color: #f472b6;
+    color: #fbcfe8;
+    box-shadow: 0 0 14px rgba(244, 114, 182, 0.45);
+  }
+
+  .step-pill {
+    background: #231e49;
+    border: 2px solid #38bdf8;
+    color: #bae6fd;
+    font-size: 13px;
+    font-weight: 900;
+    padding: 6px 12px;
+    border-radius: 999px;
+  }
+
+  .icon-btn {
+    background: #231e49;
+    border: 2px solid #6366f1;
+    color: #f5f3ff;
+    font-size: 14px;
+    font-weight: 900;
+    padding: 6px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+
+  .headline-1 {
+    font-size: 26px;
+    font-weight: 900;
+    color: #ffffff;
+    text-align: center;
+    line-height: 1.25;
+  }
+
+  .headline-2 {
+    font-size: 27px;
+    font-weight: 900;
+    color: #38bdf8;
+    text-align: center;
+    line-height: 1.25;
+  }
+
+  #status-banner {
+    width: 100%;
+    height: 50px;
+    border-radius: 16px;
+    background-color: #231e49;
+    border: 2px solid #4338ca;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 900;
+    color: #e0e7ff;
+  }
+
+  #status-banner.correct {
+    background-color: #064e3b;
+    border-color: #34d399;
+    color: #a7f3d0;
+  }
+
+  #status-banner.reveal {
+    background-color: #7f1d1d;
+    border-color: #f87171;
+    color: #fecaca;
+  }
+
+  #grid {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-height: 49vh;
+    display: grid;
+    gap: 12px;
+  }
+
+  .shape-card {
+    background-color: #221d46;
+    border: 3px solid #3b3374;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12%;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+    transition: transform 0.08s ease, background-color 0.12s ease, border-color 0.12s ease;
+  }
+
+  .shape-card:active { transform: scale(0.93); }
+
+  .shape-card.correct-card {
+    background-color: #065f46 !important;
+    border-color: #34d399 !important;
+    box-shadow: 0 0 22px rgba(52, 211, 153, 0.7);
+    transform: scale(1.04);
+  }
+
+  .shape-card.wrong-card {
+    background-color: #7f1d1d !important;
+    border-color: #f87171 !important;
+  }
+
+  .shape-card.dimmed {
+    opacity: 0.16;
+    pointer-events: none;
+  }
+
+  .mini-grid {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 4px;
+  }
+
+  .mini-cell {
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.06);
+  }
+
+  .mini-cell.on {
+    background-color: #38bdf8;
+    box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.25);
+  }
+
+  .mini-cell.anchor {
+    background-color: #fbbf24;
+    box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.25);
+  }
+
+  .footer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .rank-box {
+    flex: 1;
+    height: 52px;
+    background: #231e49;
+    border: 2px solid #3b3374;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 900;
+    color: #f5f3ff;
+  }
+
+  .hint-btn {
+    height: 52px;
+    padding: 0 18px;
+    border-radius: 14px;
+    background: #231e49;
+    border: 2px solid #fbbf24;
+    color: #fde68a;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .hint-btn:disabled { opacity: 0.4; cursor: default; }
+
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 8, 24, 0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 100;
+  }
+
+  .modal-overlay.show { display: flex; }
+
+  .modal-card {
+    width: 100%;
+    max-width: 390px;
+    background: #231e49;
+    border: 3px solid #a78bfa;
+    border-radius: 26px;
+    padding: 26px 22px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 13px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
+  }
+
+  .modal-badge {
+    background: #3b0764;
+    border: 1px solid #a78bfa;
+    color: #e9d5ff;
+    font-size: 15px;
+    font-weight: 900;
+    padding: 6px 16px;
+    border-radius: 999px;
+  }
+
+  .modal-title { font-size: 27px; font-weight: 900; color: #ffffff; }
+  .modal-iq { font-size: 38px; font-weight: 900; color: #38bdf8; }
+  .modal-comment { font-size: 16px; font-weight: 700; color: #ddd6fe; line-height: 1.5; }
+
+  .primary-btn {
+    width: 100%;
+    height: 58px;
+    border: none;
+    border-radius: 16px;
+    background: #8b5cf6;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(139, 92, 246, 0.4);
+    margin-top: 4px;
+  }
+
+  .setting-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #131129;
+    padding: 12px 16px;
+    border-radius: 14px;
+    border: 1px solid #3b3374;
+  }
+
+  .setting-label { font-size: 17px; font-weight: 900; color: #f5f3ff; }
+
+  .toggle-btn {
+    min-width: 88px;
+    height: 40px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 900;
+    border: none;
+    cursor: pointer;
+  }
+
+  .toggle-btn.on { background: #10b981; color: #052e16; }
+  .toggle-btn.off { background: #334155; color: #94a3b8; }
+
+  .mission-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 4px;
+    max-height: 220px;
+    overflow-y: auto;
+  }
+
+  .mission-btn {
+    width: 100%;
+    padding: 11px 14px;
+    border-radius: 12px;
+    border: 2px solid #3b3374;
+    background: #131129;
+    color: #ddd6fe;
+    font-size: 15px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+
+  .mission-btn.active { border-color: #38bdf8; background: #1e293b; color: #bae6fd; }
+  .mission-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="top-progress-wrap">
+    <div id="top-progress-bar"></div>
+  </div>
+
+  <div class="header">
+    <div class="top-row">
+      <div class="stage-badge" id="stageBadge">🔷 MISSION 1 - STAGE 1</div>
+      <div class="step-pill" id="stepPill">第 1 / 3 問</div>
+      <button class="icon-btn" id="settingsBtn">⚙️ 設定</button>
+    </div>
+    <div class="headline-1" id="headline1">1つだけ形が違う（裏返し）</div>
+    <div class="headline-2" id="headline2">ブロック図形をタップ！</div>
+  </div>
+
+  <div id="status-banner">⏱️ 残り 12.0 秒！</div>
+
+  <div id="grid"></div>
+
+  <div class="footer">
+    <div class="rank-box" id="rankText">🔷 空間IQ 100 ｜ 図形ルーキー</div>
+    <button class="hint-btn" id="hintBtn">💡 ヒント (3)</button>
+  </div>
+
+  <div class="modal-overlay" id="modal">
+    <div class="modal-card">
+      <div class="modal-badge" id="modalBadge">STAGE CLEAR!</div>
+      <div class="modal-title" id="modalTitle">ステージクリア！</div>
+      <div class="modal-iq" id="modalIQ">空間IQ 110</div>
+      <div class="modal-comment" id="modalComment">抜群の空間認識力です！</div>
+      <button class="primary-btn" id="modalActionBtn">次のステージへ</button>
+<!-- Coreworks In-Game Monetization & Nav -->
+      <div style="width:100%; margin-top:10px; padding-top:10px; border-top:1px dashed rgba(148,163,184,0.35); display:flex; flex-direction:column; gap:7px;">
+        <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E3%2583%259B%25E3%2583%2583%25E3%2583%2588%25E3%2582%25A2%25E3%2582%25A4%25E3%2583%259E%25E3%2582%25B9%25E3%2582%25AF%2520%25E9%259B%25BB%25E6%25B0%2597%25E6%25AF%259B%25E5%25B8%2583%2520%25E7%25AF%2580%25E6%25B0%25B4%25E3%2582%25B7%25E3%2583%25A3%25E3%2583%25AF%25E3%2583%25BC%25E3%2583%2598%25E3%2583%2583%25E3%2583%2589%2520%25E8%25B1%25A1%25E5%258D%25B0%2520%25E6%25B0%25B4%25E7%25AD%2592%2F" target="_blank" rel="nofollow sponsored" style="display:block; width:100%; padding:10px 12px; border-radius:12px; background:linear-gradient(90deg,#059669,#10b981); color:#ffffff; font-size:13px; font-weight:900; text-decoration:none; text-align:center; box-shadow:0 3px 10px rgba(16,185,129,0.25);">
+          🎁 目の疲れケア＆すぐ元が取れる神アイテム（楽天市場）↗
+        </a>
+        <div style="display:flex; gap:6px; width:100%;">
+          <a href="../payback-calc/" style="flex:1; padding:8px 6px; border-radius:10px; background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.4); color:#38bdf8; font-size:12px; font-weight:800; text-decoration:none; text-align:center;">
+            💰 元取り1秒計算機
+          </a>
+          <a href="../" style="flex:1; padding:8px 6px; border-radius:10px; background:rgba(148,163,184,0.15); border:1px solid rgba(148,163,184,0.35); color:#94a3b8; font-size:12px; font-weight:800; text-decoration:none; text-align:center;">
+            🏠 他の脳トレ・ツール一覧
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="settingsModal">
+    <div class="modal-card" style="max-height:92vh; overflow-y:auto;">
+      <div class="modal-badge">⚙️ ゲーム設定＆ステージ選択</div>
+
+      <div class="setting-row">
+        <span class="setting-label">🎵 BGM（背景音楽）</span>
+        <button class="toggle-btn on" id="toggleBgmBtn">ON</button>
+      </div>
+      <div class="setting-row">
+        <span class="setting-label">🔔 効果音（SE）</span>
+        <button class="toggle-btn on" id="toggleSeBtn">ON</button>
+      </div>
+      <div class="setting-row">
+        <span class="setting-label">🛠️ 開発テスト（全解放）</span>
+        <button class="toggle-btn on" id="toggleDevBtn">ON</button>
+      </div>
+
+      <div style="width:100%; text-align:left; font-size:14px; font-weight:900; color:#ddd6fe; margin-top:4px;">
+        ① ミッション選択（1〜5）
+      </div>
+      <div class="mission-list" id="missionList"></div>
+
+      <div id="stageSelectTitle" style="width:100%; text-align:left; font-size:14px; font-weight:900; color:#ddd6fe; margin-top:4px;">
+        ② ステージ直接ジャンプ（STAGE 1〜10）
+      </div>
+      <div id="stageJumpGrid" style="width:100%; display:grid; grid-template-columns:repeat(5, 1fr); gap:6px;"></div>
+
+      <button class="primary-btn" id="closeSettingsBtn">✅ 閉じてゲームに戻る</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  const MISSION_CONFIG = {
+    1: { name: 'MISSION 1（初級：回転なし/90度）', normalSec: 12.0, bossSec: 8.0, maxRot: 1 },
+    2: { name: 'MISSION 2（中級：回転図形）',      normalSec: 11.0, bossSec: 7.5, maxRot: 2 },
+    3: { name: 'MISSION 3（上級：4方向回転）',     normalSec: 10.0, bossSec: 7.0, maxRot: 4 },
+    4: { name: 'MISSION 4（達人：高密度回転）',    normalSec: 9.0,  bossSec: 6.0, maxRot: 4 },
+    5: { name: 'MISSION 5（最高難度：極限空間IQ）', normalSec: 8.0, bossSec: 5.5, maxRot: 4 }
+  };
+
+  // Asymmetric 3x3 shapes (2 = yellow anchor block, 1 = blue block, 0 = empty)
+  // Every shape is strictly chiral (its horizontal mirror cannot be produced by any rotation!)
+  const CHIRAL_SHAPES = [
+    [[2,0,0],[1,0,0],[1,1,0]],
+    [[0,2,0],[0,1,0],[1,1,0]],
+    [[2,1,0],[0,1,1],[0,0,0]],
+    [[0,2,1],[1,1,0],[0,0,0]],
+    [[2,0,0],[1,1,1],[0,0,1]],
+    [[0,0,2],[1,1,1],[0,1,0]],
+    [[2,1,0],[0,1,0],[0,1,1]],
+    [[0,2,1],[0,1,0],[1,1,0]],
+    [[2,1,1],[1,0,0],[0,1,0]],
+    [[1,2,0],[0,1,1],[0,1,0]]
+  ];
+
+  function rotate90(mat) {
+    const N = 3;
+    const out = Array.from({ length: N }, () => [0, 0, 0]);
+    for (let r = 0; r < N; r++) {
+      for (let c = 0; c < N; c++) {
+        out[c][N - 1 - r] = mat[r][c];
+      }
+    }
+    return out;
+  }
+
+  function rotateTimes(mat, times) {
+    let cur = mat;
+    for (let i = 0; i < (times % 4); i++) cur = rotate90(cur);
+    return cur;
+  }
+
+  function mirrorH(mat) {
+    return mat.map(row => [row[2], row[1], row[0]]);
+  }
+
+  function getTitleForIQ(iqVal) {
+    if (iqVal >= 170) return '🪐 次元超越マスター';
+    if (iqVal >= 150) return '👑 空間認識の天才';
+    if (iqVal >= 135) return '🔷 3D頭脳マイスター';
+    if (iqVal >= 120) return '💎 パズル建築家';
+    if (iqVal >= 108) return '✨ 図形ハンター';
+    return '🌱 図形ルーキー';
+  }
+
+  const SAVE_KEY = 'cw_shapemirror_save_v1';
+  let state = {
+    mission: 1,
+    stage: 1,
+    maxUnlockedMission: 1,
+    clearedMissions: [],
+    iq: 100,
+    hints: 3,
+    bgmOn: true,
+    seOn: true,
+    devMode: false
+  };
+
+  try {
+    const raw = JSON.parse(localStorage.getItem(SAVE_KEY) || '{}');
+    if (raw.mission >= 1 && raw.mission <= 5) state.mission = raw.mission;
+    if (raw.stage >= 1 && raw.stage <= 10) state.stage = raw.stage;
+    if (raw.maxUnlockedMission >= 1 && raw.maxUnlockedMission <= 5) state.maxUnlockedMission = raw.maxUnlockedMission;
+    if (Array.isArray(raw.clearedMissions)) state.clearedMissions = raw.clearedMissions;
+    if (typeof raw.iq === 'number') state.iq = raw.iq;
+    if (typeof raw.hints === 'number') state.hints = raw.hints;
+    if (typeof raw.bgmOn === 'boolean') state.bgmOn = raw.bgmOn;
+    if (typeof raw.seOn === 'boolean') state.seOn = raw.seOn;
+    if (typeof raw.devMode === 'boolean') state.devMode = raw.devMode;
+  } catch (e) {}
+
+  function saveProgress() {
+    try { localStorage.setItem(SAVE_KEY, JSON.stringify(state)); } catch (e) {}
+  }
+
+  let audioCtx = null;
+  let bgmTimer = null;
+  let bgmStep = 0;
+
+  function initAudio() {
+    if (!audioCtx) {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (AC) audioCtx = new AC();
+    }
+    if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    syncBgmLoop();
+  }
+
+  function syncBgmLoop() {
+    if (bgmTimer) { clearInterval(bgmTimer); bgmTimer = null; }
+    if (!state.bgmOn || !audioCtx) return;
+    const notes = [440, 554.37, 659.25, 554.37, 493.88, 587.33, 739.99, 587.33];
+    bgmTimer = setInterval(() => {
+      if (!state.bgmOn || !audioCtx || !isQuestionActive) return;
+      try {
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const g = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(notes[bgmStep % notes.length], now);
+        g.gain.setValueAtTime(0.025, now);
+        g.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+        osc.connect(g);
+        g.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.26);
+        bgmStep++;
+      } catch (e) {}
+    }, 350);
+  }
+
+  function playTone(freq, type, dur, vol = 0.15, delay = 0) {
+    if (!state.seOn || !audioCtx) return;
+    try {
+      const now = audioCtx.currentTime + delay;
+      const osc = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, now);
+      g.gain.setValueAtTime(vol, now);
+      g.gain.exponentialRampToValueAtTime(0.001, now + dur);
+      osc.connect(g);
+      g.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + dur);
+    } catch (e) {}
+  }
+
+  function playCorrectSound() {
+    playTone(587.33, 'triangle', 0.1, 0.18, 0);
+    playTone(880, 'triangle', 0.22, 0.2, 0.07);
+  }
+  function playStageClearFanfare() {
+    [523.25, 659.25, 783.99, 1046.5].forEach((f, idx) => playTone(f, 'triangle', 0.2, 0.18, idx * 0.08));
+  }
+  function playBossApproachingSound() {
+    playTone(440, 'sawtooth', 0.18, 0.2, 0);
+    playTone(311.13, 'sawtooth', 0.18, 0.2, 0.18);
+    playTone(440, 'sawtooth', 0.28, 0.24, 0.36);
+  }
+  function playWrongSound() {
+    playTone(200, 'sawtooth', 0.18, 0.2, 0);
+    playTone(145, 'sawtooth', 0.28, 0.22, 0.12);
+  }
+
+  const NORMAL_QUESTIONS_PER_STAGE = 3;
+  const STAGES_PER_MISSION = 10;
+
+  let stepInStage = 1;
+  let oddIndex = 0;
+  let isQuestionActive = false;
+  let timerId = null;
+  let timeLimit = 12.0;
+  let timeRemaining = 12.0;
+
+  const gridEl = document.getElementById('grid');
+  const bannerEl = document.getElementById('status-banner');
+  const progBarEl = document.getElementById('top-progress-bar');
+  const stageBadgeEl = document.getElementById('stageBadge');
+  const stepPillEl = document.getElementById('stepPill');
+  const rankTextEl = document.getElementById('rankText');
+  const hintBtnEl = document.getElementById('hintBtn');
+  const modalEl = document.getElementById('modal');
+
+  function isBossStage(st) { return st === 5 || st === 10; }
+
+  // Starts super breezy at 2x2 (4 cards) in Mission 1 Stage 1-4, scaling up to 4x4 (16 cards) in Mission 5!
+  function getGridSpec(st, missionNum) {
+    const bracket = Math.floor((st - 1) / 2); // 0..4
+    const MAP = {
+      1: [
+        { cols: 2, rows: 2 },
+        { cols: 2, rows: 2 },
+        { cols: 2, rows: 3 },
+        { cols: 2, rows: 3 },
+        { cols: 3, rows: 3 }
+      ],
+      2: [
+        { cols: 2, rows: 2 },
+        { cols: 2, rows: 3 },
+        { cols: 3, rows: 3 },
+        { cols: 3, rows: 3 },
+        { cols: 3, rows: 3 }
+      ],
+      3: [
+        { cols: 2, rows: 3 },
+        { cols: 3, rows: 3 },
+        { cols: 3, rows: 3 },
+        { cols: 3, rows: 4 },
+        { cols: 3, rows: 4 }
+      ],
+      4: [
+        { cols: 3, rows: 3 },
+        { cols: 3, rows: 3 },
+        { cols: 3, rows: 4 },
+        { cols: 3, rows: 4 },
+        { cols: 4, rows: 4 }
+      ],
+      5: [
+        { cols: 3, rows: 3 },
+        { cols: 3, rows: 4 },
+        { cols: 4, rows: 4 },
+        { cols: 4, rows: 4 },
+        { cols: 4, rows: 4 }
+      ]
+    };
+    return (MAP[missionNum] || MAP[1])[Math.min(4, Math.max(0, bracket))];
+  }
+
+  function updateHUD() {
+    const boss = isBossStage(state.stage);
+    document.body.classList.toggle('boss-mode', boss);
+    stageBadgeEl.classList.toggle('boss', boss);
+    stageBadgeEl.textContent = boss
+      ? `🔥 MISSION ${state.mission} - BOSS ${state.stage}`
+      : `🔷 MISSION ${state.mission} - STAGE ${state.stage}`;
+    stepPillEl.textContent = boss ? '⚡ 1問一発勝負！' : `第 ${stepInStage} / ${NORMAL_QUESTIONS_PER_STAGE} 問`;
+    rankTextEl.textContent = `🔷 空間IQ ${state.iq} ｜ ${getTitleForIQ(state.iq)}`;
+    hintBtnEl.textContent = `💡 ヒント (${state.hints})`;
+    hintBtnEl.disabled = !isQuestionActive || state.hints <= 0;
+  }
+
+  function renderShapeCard(mat) {
+    const card = document.createElement('div');
+    card.className = 'shape-card';
+    const mg = document.createElement('div');
+    mg.className = 'mini-grid';
+    for (let r = 0; r < 3; r++) {
+      for (let c = 0; c < 3; c++) {
+        const cell = document.createElement('div');
+        const v = mat[r][c];
+        cell.className = 'mini-cell' + (v === 2 ? ' anchor' : v === 1 ? ' on' : '');
+        mg.appendChild(cell);
+      }
+    }
+    card.appendChild(mg);
+    return card;
+  }
+
+  function startQuestion() {
+    clearInterval(timerId);
+    modalEl.classList.remove('show');
+    isQuestionActive = true;
+    syncBgmLoop();
+
+    const boss = isBossStage(state.stage);
+    const mCfg = MISSION_CONFIG[state.mission] || MISSION_CONFIG[1];
+    const { cols, rows } = getGridSpec(state.stage, state.mission);
+    const total = cols * rows;
+
+    const baseShape = CHIRAL_SHAPES[Math.floor(Math.random() * CHIRAL_SHAPES.length)];
+    const mirroredShape = mirrorH(baseShape);
+    oddIndex = Math.floor(Math.random() * total);
+
+    // In Mission 1 Stage 1-2, keep all normal shapes at rotation 0 so it's super intuitive!
+    const rotRange = (state.mission === 1 && state.stage <= 2) ? 1 : mCfg.maxRot;
+
+    timeLimit = boss ? mCfg.bossSec : mCfg.normalSec;
+    timeRemaining = timeLimit;
+
+    bannerEl.className = '';
+    bannerEl.textContent = `⏱️ 残り ${timeRemaining.toFixed(1)} 秒！`;
+    progBarEl.style.width = '100%';
+
+    gridEl.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+    gridEl.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+    gridEl.innerHTML = '';
+
+    for (let i = 0; i < total; i++) {
+      const rot = Math.floor(Math.random() * rotRange);
+      const mat = (i === oddIndex) ? rotateTimes(mirroredShape, rot) : rotateTimes(baseShape, rot);
+      const card = renderShapeCard(mat);
+      card.addEventListener('pointerdown', () => onCardTap(i, card));
+      gridEl.appendChild(card);
+    }
+
+    updateHUD();
+
+    const startTime = performance.now();
+    timerId = setInterval(() => {
+      if (!isQuestionActive) return;
+      const elapsed = (performance.now() - startTime) / 1000;
+      timeRemaining = Math.max(0, timeLimit - elapsed);
+      progBarEl.style.width = `${(timeRemaining / timeLimit) * 100}%`;
+      bannerEl.textContent = `⏱️ 残り ${timeRemaining.toFixed(1)} 秒！`;
+      if (timeRemaining <= 0) onFail('timeup');
+    }, 50);
+  }
+
+  function onCardTap(index, cardEl) {
+    if (!isQuestionActive) return;
+    initAudio();
+
+    if (index === oddIndex) {
+      isQuestionActive = false;
+      clearInterval(timerId);
+      cardEl.classList.add('correct-card');
+
+      const clearSec = Math.max(0.2, timeLimit - timeRemaining).toFixed(1);
+      state.iq += 2;
+      bannerEl.className = 'correct';
+      bannerEl.textContent = `🎉 正解！ ${clearSec}秒で看破！`;
+      updateHUD();
+
+      const boss = isBossStage(state.stage);
+      const totalQuestions = boss ? 1 : NORMAL_QUESTIONS_PER_STAGE;
+
+      if (stepInStage < totalQuestions) {
+        playCorrectSound();
+        setTimeout(() => { stepInStage++; startQuestion(); }, 800);
+      } else {
+        const clearedStage = state.stage;
+        const clearedMission = state.mission;
+
+        if (clearedStage >= STAGES_PER_MISSION) {
+          playStageClearFanfare();
+          state.iq += 5;
+          state.hints = Math.min(5, state.hints + 2);
+          if (!state.clearedMissions.includes(clearedMission)) state.clearedMissions.push(clearedMission);
+          if (clearedMission < 5) {
+            state.maxUnlockedMission = Math.max(state.maxUnlockedMission, clearedMission + 1);
+            state.mission = clearedMission + 1;
+            state.stage = 1;
+          } else {
+            state.stage = 1;
+          }
+          saveProgress();
+          updateHUD();
+          setTimeout(() => {
+            showModal({
+              badge: `🏆 MISSION ${clearedMission} 完全制覇！`,
+              title: clearedMission < 5 ? `MISSION ${clearedMission + 1} 解放！` : `全5ミッション制覇！`,
+              iqText: `空間IQ ${state.iq}`,
+              comment: `${getTitleForIQ(state.iq)}<br>（⚙️設定からいつでも再挑戦できます）`,
+              btnText: clearedMission < 5 ? `🚀 MISSION ${state.mission} へ進む` : `👑 もう一度挑戦する`
+            });
+          }, 900);
+        } else {
+          state.stage++;
+          state.iq += boss ? 4 : 2;
+          state.hints = Math.min(5, state.hints + 1);
+          saveProgress();
+          updateHUD();
+          const nextIsBoss = isBossStage(state.stage);
+          if (nextIsBoss) {
+            playCorrectSound();
+            setTimeout(() => {
+              playBossApproachingSound();
+              showModal({
+                badge: '⚠️ WARNING：BOSS STAGE 出現！',
+                title: `次はBOSS STAGE ${state.stage}！`,
+                iqText: '1問一発勝負！',
+                comment: `STAGE ${clearedStage} クリア！（💡ヒント+1回復）<br>次は高速で裏返し図形を見抜くボス戦です！`,
+                btnText: `🔥 BOSS STAGE ${state.stage} に挑む！`
+              });
+            }, 900);
+          } else {
+            playStageClearFanfare();
+            setTimeout(() => {
+              showModal({
+                badge: '🎉 STAGE CLEAR!',
+                title: `STAGE ${clearedStage} クリア！`,
+                iqText: `空間IQ ${state.iq}`,
+                comment: `${getTitleForIQ(state.iq)}（💡ヒント+1回復）`,
+                btnText: `▶️ STAGE ${state.stage} へ進む`
+              });
+            }, 900);
+          }
+        }
+      }
+    } else {
+      cardEl.classList.add('wrong-card');
+      onFail('wrong');
+    }
+  }
+
+  function onFail(reason) {
+    isQuestionActive = false;
+    clearInterval(timerId);
+    playWrongSound();
+
+    const cards = gridEl.querySelectorAll('.shape-card');
+    if (cards[oddIndex]) cards[oddIndex].classList.add('correct-card');
+
+    bannerEl.className = 'reveal';
+    bannerEl.textContent = reason === 'wrong' ? '❌ お手つき！緑枠が裏返し図形でした' : '⏱️ 時間切れ！緑枠が裏返し図形でした';
+    if (state.hints < 2) { state.hints = 2; saveProgress(); }
+    updateHUD();
+
+    setTimeout(() => {
+      showModal({
+        badge: reason === 'wrong' ? '❌ お手つき！' : '⏱️ TIME UP!',
+        title: `STAGE ${state.stage} 失敗`,
+        iqText: `空間IQ ${state.iq}`,
+        comment: '黄色ブロックの位置を基準にすると見抜きやすくなります！<br>このステージの第1問からやり直します。',
+        btnText: `🔄 STAGE ${state.stage} を第1問からやり直す`
+      });
+    }, 1350);
+  }
+
+  function showModal({ badge, title, iqText, comment, btnText }) {
+    document.getElementById('modalBadge').textContent = badge;
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalIQ').textContent = iqText;
+    document.getElementById('modalComment').innerHTML = comment;
+    document.getElementById('modalActionBtn').textContent = btnText;
+    modalEl.classList.add('show');
+  }
+
+  document.getElementById('modalActionBtn').addEventListener('click', () => {
+    initAudio();
+    stepInStage = 1;
+    startQuestion();
+  });
+
+  hintBtnEl.addEventListener('click', () => {
+    if (!isQuestionActive || state.hints <= 0) return;
+    initAudio();
+    state.hints--;
+    saveProgress();
+    const cards = Array.from(gridEl.querySelectorAll('.shape-card'));
+    const cands = cards.map((el, idx) => ({ el, idx }))
+      .filter(x => x.idx !== oddIndex && !x.el.classList.contains('dimmed'));
+    cands.sort(() => Math.random() - 0.5);
+    const count = Math.max(1, Math.floor(cands.length * 0.5));
+    for (let i = 0; i < count; i++) cands[i].el.classList.add('dimmed');
+    updateHUD();
+  });
+
+  const settingsModalEl = document.getElementById('settingsModal');
+  const toggleBgmBtn = document.getElementById('toggleBgmBtn');
+  const toggleSeBtn = document.getElementById('toggleSeBtn');
+  const toggleDevBtn = document.getElementById('toggleDevBtn');
+  const missionListEl = document.getElementById('missionList');
+  const stageJumpGridEl = document.getElementById('stageJumpGrid');
+  const stageSelectTitleEl = document.getElementById('stageSelectTitle');
+
+  function renderSettingsModal() {
+    toggleBgmBtn.textContent = state.bgmOn ? 'ON' : 'OFF';
+    toggleBgmBtn.className = 'toggle-btn ' + (state.bgmOn ? 'on' : 'off');
+    toggleSeBtn.textContent = state.seOn ? 'ON' : 'OFF';
+    toggleSeBtn.className = 'toggle-btn ' + (state.seOn ? 'on' : 'off');
+    toggleDevBtn.textContent = state.devMode ? 'ON' : 'OFF';
+    toggleDevBtn.className = 'toggle-btn ' + (state.devMode ? 'on' : 'off');
+
+    missionListEl.innerHTML = [1, 2, 3, 4, 5].map(m => {
+      const unlocked = state.devMode || m <= state.maxUnlockedMission;
+      const cleared = state.clearedMissions.includes(m);
+      const isCurrent = (m === state.mission);
+      const statusText = state.devMode
+        ? (isCurrent ? `▶️ 選択中 (STAGE ${state.stage})` : '🛠️ テスト解放中')
+        : (cleared ? '🏆 制覇済（再挑戦OK）' : (unlocked ? (isCurrent ? `▶️ 挑戦中 (STAGE ${state.stage})` : '挑戦可能') : '🔒 未解放'));
+      return `<button class="mission-btn ${isCurrent ? 'active' : ''}" data-mission="${m}" ${unlocked ? '' : 'disabled'}>
+        <span>${MISSION_CONFIG[m].name}</span>
+        <span style="font-size:13px;">${statusText}</span>
+      </button>`;
+    }).join('');
+
+    missionListEl.querySelectorAll('.mission-btn[data-mission]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const m = Number(btn.getAttribute('data-mission'));
+        if (state.devMode || m <= state.maxUnlockedMission) {
+          state.mission = m;
+          state.stage = 1;
+          stepInStage = 1;
+          saveProgress();
+          if (state.devMode) {
+            renderSettingsModal();
+          } else {
+            settingsModalEl.classList.remove('show');
+            startQuestion();
+          }
+        }
+      });
+    });
+
+    if (state.devMode) {
+      stageSelectTitleEl.style.display = 'block';
+      stageJumpGridEl.style.display = 'grid';
+      stageJumpGridEl.innerHTML = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(st => {
+        const isBoss = (st === 5 || st === 10);
+        const active = (st === state.stage);
+        const bg = active ? '#8b5cf6' : (isBoss ? '#500724' : '#131129');
+        const col = active ? '#ffffff' : (isBoss ? '#fbcfe8' : '#ddd6fe');
+        const bdr = active ? '#38bdf8' : (isBoss ? '#f472b6' : '#3b3374');
+        return `<button data-stage="${st}" style="padding:10px 4px; border-radius:10px; border:2px solid ${bdr}; background:${bg}; color:${col}; font-size:14px; font-weight:900; cursor:pointer;">
+          ${isBoss ? '🔥B' + st : 'S' + st}
+        </button>`;
+      }).join('');
+
+      stageJumpGridEl.querySelectorAll('button[data-stage]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.stage = Number(btn.getAttribute('data-stage'));
+          stepInStage = 1;
+          if (state.hints < 5) state.hints = 5;
+          saveProgress();
+          settingsModalEl.classList.remove('show');
+          startQuestion();
+        });
+      });
+    } else {
+      stageSelectTitleEl.style.display = 'none';
+      stageJumpGridEl.style.display = 'none';
+    }
+  }
+
+  document.getElementById('settingsBtn').addEventListener('click', () => {
+    initAudio();
+    isQuestionActive = false;
+    clearInterval(timerId);
+    renderSettingsModal();
+    settingsModalEl.classList.add('show');
+  });
+
+  toggleBgmBtn.addEventListener('click', () => {
+    state.bgmOn = !state.bgmOn;
+    saveProgress();
+    initAudio();
+    renderSettingsModal();
+  });
+
+  toggleSeBtn.addEventListener('click', () => {
+    state.seOn = !state.seOn;
+    saveProgress();
+    if (state.seOn) playCorrectSound();
+    renderSettingsModal();
+  });
+
+  toggleDevBtn.addEventListener('click', () => {
+    state.devMode = !state.devMode;
+    saveProgress();
+    renderSettingsModal();
+  });
+
+  document.getElementById('closeSettingsBtn').addEventListener('click', () => {
+    settingsModalEl.classList.remove('show');
+    startQuestion();
+  });
+
+  startQuestion();
+})();
+</script>
+</body>
+</html>
+
