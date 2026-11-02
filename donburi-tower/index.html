@@ -1681,12 +1681,15 @@
 
   document.getElementById('btn-gacha').addEventListener('click', () => {
     const locked = INGREDIENTS.filter(i => !state.unlockedIds.includes(i.id));
+    const gachaBtn = document.getElementById('btn-gacha');
     if (locked.length === 0) {
-      alert('全24種類のカオス具材をコンプリート済みです！神！！');
+      gachaBtn.textContent = '✨ 全24種類コンプリート済み！神！！';
       return;
     }
     if (state.kcal < 300) {
-      alert('カロリーが足りません！(300 kcal必要)');
+      const origText = gachaBtn.textContent;
+      gachaBtn.textContent = '⚠️ カロリー不足！(300 kcal必要)';
+      setTimeout(() => { gachaBtn.textContent = origText; }, 1800);
       return;
     }
     state.kcal -= 300;
@@ -1695,7 +1698,7 @@
     sound.sfxFever();
     saveState();
     renderDexModal();
-    alert(`🎉 新具材『${won.emoji} ${won.name} (${won.kcal} kcal)』をアンロックしました！\n「${won.desc}」`);
+    gachaBtn.textContent = `🎉 獲得: ${won.emoji} ${won.name} (+${won.kcal}kcal)！もう1回回す (300 kcal)`;
   });
 
   resetTower(false);
