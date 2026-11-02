@@ -15,6 +15,8 @@
       --muted: #cbd5e1;
       --subtle: #94a3b8;
       --accent: #3b82f6;
+      --calc-color: #10b981;
+      --game-color: #6366f1;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     html, body {
@@ -30,7 +32,7 @@
     .hero h1 { font-size: 1.375rem; font-weight: 800; color: var(--text); letter-spacing: -0.01em; margin-bottom: 4px; }
     .hero p { font-size: 0.9375rem; color: var(--muted); }
 
-    /* 2. カテゴリ切り替えタブ（15px・ブルー1色統一） */
+    /* 2. カテゴリ切り替えタブ（15px） */
     .tab-bar {
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;
       background: #131c31; padding: 6px; border-radius: 12px;
@@ -45,8 +47,14 @@
     .tab-btn.active {
       background: var(--accent); color: #ffffff; font-weight: 800;
     }
+    .tab-btn[data-tab="calc"].active {
+      background: #059669; color: #ffffff;
+    }
+    .tab-btn[data-tab="game"].active {
+      background: #4f46e5; color: #ffffff;
+    }
 
-    /* 3. 主役カードリスト（スマホ1列・PC最大2列、大きな文字） */
+    /* 3. 主役カードリスト（スマホ1列・PC最大2列、上品な2色カテゴリ分け） */
     .tab-pane { display: none; }
     .tab-pane.active { display: block; }
     .app-grid {
@@ -57,18 +65,35 @@
     }
     .app-card {
       background: var(--card); border: 1px solid var(--border); border-radius: 14px;
-      padding: 16px 16px; display: flex; align-items: center; gap: 14px;
+      padding: 15px 14px 15px 15px; display: flex; align-items: center; gap: 13px;
       text-decoration: none; color: inherit; min-width: 0;
       transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
     }
-    .app-card:hover { background: var(--card-hover); border-color: var(--accent); }
+    .app-card.card-calc {
+      border-left: 4px solid var(--calc-color);
+    }
+    .app-card.card-game {
+      border-left: 4px solid var(--game-color);
+    }
+    .app-card.card-calc:hover { background: var(--card-hover); border-color: var(--calc-color); }
+    .app-card.card-game:hover { background: var(--card-hover); border-color: var(--game-color); }
     .app-card:active { transform: scale(0.99); }
+
     .app-icon {
-      font-size: 2rem; /* 32px */
+      font-size: 1.875rem; /* 30px */
       flex-shrink: 0; width: 48px; height: 48px;
       display: flex; align-items: center; justify-content: center;
-      background: rgba(59, 130, 246, 0.12); border-radius: 12px;
+      border-radius: 12px;
     }
+    .card-calc .app-icon {
+      background: rgba(16, 185, 129, 0.14);
+      border: 1px solid rgba(16, 185, 129, 0.28);
+    }
+    .card-game .app-icon {
+      background: rgba(99, 102, 241, 0.16);
+      border: 1px solid rgba(99, 102, 241, 0.32);
+    }
+
     .app-info { min-width: 0; flex: 1; }
     .app-title {
       font-size: 1.125rem; /* 18px */
@@ -80,37 +105,52 @@
       color: var(--muted); font-weight: 400;
       line-height: 1.4;
     }
-    .app-arrow {
-      font-size: 1.375rem; /* 22px */
-      color: var(--subtle); font-weight: 600; flex-shrink: 0;
-      padding-left: 4px;
+
+    /* 右端の小さなピル型アクションバッジ */
+    .app-badge {
+      flex-shrink: 0; font-size: 0.8125rem; /* 13px */
+      font-weight: 700; padding: 6px 10px; border-radius: 999px;
+      white-space: nowrap; letter-spacing: 0.01em;
+    }
+    .badge-calc {
+      background: rgba(16, 185, 129, 0.14);
+      border: 1px solid rgba(16, 185, 129, 0.38);
+      color: #34d399;
+    }
+    .badge-game {
+      background: rgba(99, 102, 241, 0.16);
+      border: 1px solid rgba(99, 102, 241, 0.42);
+      color: #818cf8;
     }
 
-    /* 4. 控えめな1行スリムPRセクション（脇役として自然に配置） */
+    /* 4. 控えめな1行スリムPRセクション（温かみのあるアンバー小ボタン＋エメラルドメリット文） */
     .pr-sec {
       margin-top: 32px; padding-top: 20px;
       border-top: 1px solid var(--border);
     }
     .pr-sec-title {
-      font-size: 0.875rem; font-weight: 600; color: var(--subtle);
+      font-size: 0.875rem; font-weight: 700; color: var(--muted);
       margin-bottom: 10px;
     }
     .pr-list { display: flex; flex-direction: column; gap: 8px; }
     .pr-row {
       display: flex; align-items: center; justify-content: space-between; gap: 12px;
-      background: rgba(30, 41, 59, 0.55); border: 1px solid var(--border);
-      border-radius: 10px; padding: 10px 12px;
+      background: rgba(30, 41, 59, 0.7); border: 1px solid var(--border);
+      border-radius: 10px; padding: 11px 13px;
     }
     .pr-info { min-width: 0; flex: 1; }
     .pr-name { font-size: 0.9375rem; font-weight: 700; color: var(--text); line-height: 1.3; }
-    .pr-benefit { font-size: 0.8125rem; color: var(--muted); margin-top: 2px; }
+    .pr-benefit { font-size: 0.8125rem; color: #34d399; font-weight: 600; margin-top: 3px; }
     .pr-btn {
-      flex-shrink: 0; background: #1e293b; border: 1px solid #475569;
-      color: var(--muted); text-decoration: none; font-size: 0.8125rem; font-weight: 600;
-      padding: 7px 11px; border-radius: 8px; white-space: nowrap;
+      flex-shrink: 0;
+      background: rgba(245, 158, 11, 0.16);
+      border: 1px solid #f59e0b;
+      color: #fde047;
+      text-decoration: none; font-size: 0.8125rem; font-weight: 700;
+      padding: 7px 12px; border-radius: 8px; white-space: nowrap;
       transition: background 0.15s ease, color 0.15s ease;
     }
-    .pr-btn:hover { background: #334155; color: #ffffff; }
+    .pr-btn:hover { background: rgba(245, 158, 11, 0.28); color: #ffffff; }
 
     footer {
       margin-top: 20px; text-align: center; color: var(--subtle);
@@ -127,7 +167,7 @@
       <p>タップして今すぐ使える無料ツール＆瞬間脳トレゲーム</p>
     </div>
 
-    <!-- 3つの切り替えタブ（15px・ブルー統一） -->
+    <!-- 3つの切り替えタブ -->
     <div class="tab-bar" role="tablist">
       <button type="button" class="tab-btn active" data-tab="pop" onclick="switchTab('pop')">🔥 人気おすすめ</button>
       <button type="button" class="tab-btn" data-tab="calc" onclick="switchTab('calc')">💰 損得計算 (7)</button>
@@ -137,45 +177,45 @@
     <!-- タブ1: 人気おすすめ (厳選5個) -->
     <div id="pane-pop" class="tab-pane active">
       <div class="app-grid">
-      <a href="./payback-calc/" class="app-card">
+      <a href="./payback-calc/" class="app-card card-calc">
         <div class="app-icon">🚿</div>
         <div class="app-info">
           <div class="app-title">元取り1秒計算</div>
           <div class="app-sub">何ヶ月で黒字になるか判定</div>
         </div>
-        <div class="app-arrow" aria-hidden="true">›</div>
+        <div class="app-badge badge-calc" aria-hidden="true">計算 ›</div>
       </a>
-      <a href="./money-drop/" class="app-card">
+      <a href="./money-drop/" class="app-card card-game">
         <div class="app-icon">🧠</div>
         <div class="app-info">
           <div class="app-title">漢字間違い探し</div>
           <div class="app-sub">5秒で見抜く漢字IQテスト</div>
         </div>
-        <div class="app-arrow" aria-hidden="true">›</div>
+        <div class="app-badge badge-game" aria-hidden="true">遊ぶ ›</div>
       </a>
-      <a href="./winter-electricity/" class="app-card">
+      <a href="./winter-electricity/" class="app-card card-calc">
         <div class="app-icon">🧣</div>
         <div class="app-info">
           <div class="app-title">冬の暖房費比較</div>
           <div class="app-sub">1時間0.9円の電気毛布で節電</div>
         </div>
-        <div class="app-arrow" aria-hidden="true">›</div>
+        <div class="app-badge badge-calc" aria-hidden="true">計算 ›</div>
       </a>
-      <a href="./color-sense/" class="app-card">
+      <a href="./color-sense/" class="app-card card-game">
         <div class="app-icon">🎨</div>
         <div class="app-info">
           <div class="app-title">絶対色感テスト</div>
           <div class="app-sub">1枚だけ違う色のパネル探し</div>
         </div>
-        <div class="app-arrow" aria-hidden="true">›</div>
+        <div class="app-badge badge-game" aria-hidden="true">遊ぶ ›</div>
       </a>
-      <a href="./subscription-calc/" class="app-card">
+      <a href="./subscription-calc/" class="app-card card-calc">
         <div class="app-icon">✂️</div>
         <div class="app-info">
           <div class="app-title">固定費10年総額</div>
           <div class="app-sub">サブスクの隠れ出費を断捨離</div>
         </div>
-        <div class="app-arrow" aria-hidden="true">›</div>
+        <div class="app-badge badge-calc" aria-hidden="true">計算 ›</div>
       </a>
       </div>
     </div>
@@ -183,61 +223,61 @@
     <!-- タブ2: 損得計算 (7個) -->
     <div id="pane-calc" class="tab-pane">
       <div class="app-grid">
-      <a href="./payback-calc/" class="app-card">
+      <a href="./payback-calc/" class="app-card card-calc">
         <div class="app-icon">🚿</div>
         <div class="app-info">
           <div class="app-title">元取り1秒計算</div>
           <div class="app-sub">何ヶ月で黒字になるか判定</div>
         </div>
-        <div class="app-arrow" aria-hidden="true">›</div>
+        <div class="app-badge badge-calc" aria-hidden="true">計算 ›</div>
       </a>
-      <a href="./winter-electricity/" class="app-card">
+      <a href="./winter-electricity/" class="app-card card-calc">
         <div class="app-icon">🧣</div>
         <div class="app-info">
           <div class="app-title">冬の暖房費比較</div>
           <div class="app-sub">1時間0.9円の電気毛布で節電</div>
         </div>
-        <div class="app-arrow" aria-hidden="true">›</div>
+        <div class="app-badge badge-calc" aria-hidden="true">計算 ›</div>
       </a>
-      <a href="./subscription-calc/" class="app-card">
+      <a href="./subscription-calc/" class="app-card card-calc">
         <div class="app-icon">✂️</div>
         <div class="app-info">
           <div class="app-title">固定費10年総額</div>
           <div class="app-sub">サブスクの隠れ出費を断捨離</div>
         </div>
-        <div class="app-arrow" aria-hidden="true">›</div>
+        <div class="app-badge badge-calc" aria-hidden="true">計算 ›</div>
       </a>
-      <a href="./rakuten-maximizer/" class="app-card">
+      <a href="./rakuten-maximizer/" class="app-card card-calc">
         <div class="app-icon">🛍️</div>
         <div class="app-info">
           <div class="app-title">楽天マラソン損得</div>
           <div class="app-sub">上限＆1,000円買い足し判定</div>
         </div>
-        <div class="app-arrow" aria-hidden="true">›</div>
+        <div class="app-badge badge-calc" aria-hidden="true">計算 ›</div>
       </a>
-      <a href="./valuelens/" class="app-card">
+      <a href="./valuelens/" class="app-card card-calc">
         <div class="app-icon">💎</div>
         <div class="app-info">
           <div class="app-title">日割り実質計算</div>
           <div class="app-sub">売却込みの1日あたり金額</div>
         </div>
-        <div class="app-arrow" aria-hidden="true">›</div>
+        <div class="app-badge badge-calc" aria-hidden="true">計算 ›</div>
       </a>
-      <a href="./wage-calc/" class="app-card">
+      <a href="./wage-calc/" class="app-card card-calc">
         <div class="app-icon">⏱️</div>
         <div class="app-info">
           <div class="app-title">本当の時給診断</div>
           <div class="app-sub">通勤・残業込みのリアル時給</div>
         </div>
-        <div class="app-arrow" aria-hidden="true">›</div>
+        <div class="app-badge badge-calc" aria-hidden="true">計算 ›</div>
       </a>
-      <a href="./sns-studio/" class="app-card">
+      <a href="./sns-studio/" class="app-card card-calc">
         <div class="app-icon">📊</div>
         <div class="app-info">
           <div class="app-title">損得1枚図解集</div>
           <div class="app-sub">画像1枚でパッと損得理解</div>
         </div>
-        <div class="app-arrow" aria-hidden="true">›</div>
+        <div class="app-badge badge-calc" aria-hidden="true">計算 ›</div>
       </a>
       </div>
     </div>
@@ -245,61 +285,61 @@
     <!-- タブ3: 脳トレゲーム (7個) -->
     <div id="pane-game" class="tab-pane">
       <div class="app-grid">
-      <a href="./money-drop/" class="app-card">
+      <a href="./money-drop/" class="app-card card-game">
         <div class="app-icon">🧠</div>
         <div class="app-info">
           <div class="app-title">漢字間違い探し</div>
           <div class="app-sub">5秒で見抜く漢字IQテスト</div>
         </div>
-        <div class="app-arrow" aria-hidden="true">›</div>
+        <div class="app-badge badge-game" aria-hidden="true">遊ぶ ›</div>
       </a>
-      <a href="./color-sense/" class="app-card">
+      <a href="./color-sense/" class="app-card card-game">
         <div class="app-icon">🎨</div>
         <div class="app-info">
           <div class="app-title">絶対色感テスト</div>
           <div class="app-sub">1枚だけ違う色のパネル探し</div>
         </div>
-        <div class="app-arrow" aria-hidden="true">›</div>
+        <div class="app-badge badge-game" aria-hidden="true">遊ぶ ›</div>
       </a>
-      <a href="./make-ten/" class="app-card">
+      <a href="./make-ten/" class="app-card card-game">
         <div class="app-icon">🔢</div>
         <div class="app-info">
           <div class="app-title">瞬間暗算パズル</div>
           <div class="app-sub">ピタッと合計数字を作る脳トレ</div>
         </div>
-        <div class="app-arrow" aria-hidden="true">›</div>
+        <div class="app-badge badge-game" aria-hidden="true">遊ぶ ›</div>
       </a>
-      <a href="./flash-memory/" class="app-card">
+      <a href="./flash-memory/" class="app-card card-game">
         <div class="app-icon">⚡</div>
         <div class="app-info">
           <div class="app-title">1秒瞬間記憶</div>
           <div class="app-sub">光るパネル配置を記憶再現</div>
         </div>
-        <div class="app-arrow" aria-hidden="true">›</div>
+        <div class="app-badge badge-game" aria-hidden="true">遊ぶ ›</div>
       </a>
-      <a href="./shape-mirror/" class="app-card">
+      <a href="./shape-mirror/" class="app-card card-game">
         <div class="app-icon">📐</div>
         <div class="app-info">
           <div class="app-title">空間図形パズル</div>
           <div class="app-sub">回転・反転図形を瞬時に見抜く</div>
         </div>
-        <div class="app-arrow" aria-hidden="true">›</div>
+        <div class="app-badge badge-game" aria-hidden="true">遊ぶ ›</div>
       </a>
-      <a href="./speed-number/" class="app-card">
+      <a href="./speed-number/" class="app-card card-game">
         <div class="app-icon">👆</div>
         <div class="app-info">
           <div class="app-title">爆速数字タップ</div>
           <div class="app-sub">1から順に押す周辺視野テスト</div>
         </div>
-        <div class="app-arrow" aria-hidden="true">›</div>
+        <div class="app-badge badge-game" aria-hidden="true">遊ぶ ›</div>
       </a>
-      <a href="./donburi-tower/" class="app-card">
+      <a href="./donburi-tower/" class="app-card card-game">
         <div class="app-icon">🍚</div>
         <div class="app-info">
           <div class="app-title">爆盛どんぶり積</div>
           <div class="app-sub">具材を高く積む物理バランス</div>
         </div>
-        <div class="app-arrow" aria-hidden="true">›</div>
+        <div class="app-badge badge-game" aria-hidden="true">遊ぶ ›</div>
       </a>
       </div>
     </div>
@@ -312,7 +352,7 @@
         <div class="pr-row">
           <div class="pr-info">
             <div class="pr-name">象印 シームレスせん水筒</div>
-            <div class="pr-benefit">パッキン一体型・約2週間で自販機代の元取り</div>
+            <div class="pr-benefit">✓ パッキン一体型・約2週間で自販機代の元取り</div>
           </div>
           <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E8%25B1%25A1%25E5%258D%25B0%2520%25E3%2582%25B7%25E3%2583%25BC%25E3%2583%25A0%25E3%2583%25AC%25E3%2582%25B9%25E3%2581%259B%25E3%2582%2593%2520%25E6%25B0%25B4%25E7%25AD%2592%2520%25E9%25A3%259F%25E6%25B4%2597%25E6%25A9%259F%25E5%25AF%25BE%25E5%25BF%259C%2F" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">楽天で見る ↗</a>
         </div>
@@ -320,7 +360,7 @@
         <div class="pr-row">
           <div class="pr-info">
             <div class="pr-name">丸洗いOK 電気毛布</div>
-            <div class="pr-benefit">1時間約0.9円・冬の暖房費を大幅カット</div>
+            <div class="pr-benefit">✓ 1時間約0.9円・冬の暖房費を大幅カット</div>
           </div>
           <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E9%259B%25BB%25E6%25B0%2597%25E6%25AF%259B%25E5%25B8%2583%2520%25E6%258E%259B%25E3%2581%2591%25E6%2595%25B7%25E3%2581%258D%2520%25E4%25B8%25B8%25E6%25B4%2597%25E3%2581%2584%2520%25E3%2583%2595%25E3%2583%25A9%25E3%2583%25B3%25E3%2583%258D%25E3%2583%25AB%2F" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">楽天で見る ↗</a>
         </div>
@@ -328,7 +368,7 @@
         <div class="pr-row">
           <div class="pr-info">
             <div class="pr-name">節水ナノバブルシャワー</div>
-            <div class="pr-benefit">水道・ガス代を最大50%節約</div>
+            <div class="pr-benefit">✓ 水道・ガス代を最大50%節約</div>
           </div>
           <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E3%2583%2595%25E3%2582%25A1%25E3%2582%25A4%25E3%2583%25B3%25E3%2583%2590%25E3%2583%2596%25E3%2583%25AB%2520%25E3%2582%25B7%25E3%2583%25A3%25E3%2583%25AF%25E3%2583%25BC%25E3%2583%2598%25E3%2583%2583%25E3%2583%2589%2520%25E7%25AF%2580%25E6%25B0%25B4%2F" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">楽天で見る ↗</a>
         </div>
@@ -348,6 +388,7 @@
 
   <script>
     function switchTab(tab) {
+      if (!['pop', 'calc', 'game'].includes(tab)) return;
       document.querySelectorAll('.tab-btn').forEach(b => {
         b.classList.toggle('active', b.getAttribute('data-tab') === tab);
       });
@@ -355,6 +396,15 @@
         p.classList.toggle('active', p.id === 'pane-' + tab);
       });
     }
+    (function initTabFromUrl() {
+      try {
+        var params = new URLSearchParams(window.location.search);
+        var tab = params.get('tab') || (window.location.hash ? window.location.hash.replace('#', '') : '');
+        if (tab === 'game' || tab === 'calc' || tab === 'pop') {
+          switchTab(tab);
+        }
+      } catch (e) {}
+    })();
   </script>
 </body>
 </html>
