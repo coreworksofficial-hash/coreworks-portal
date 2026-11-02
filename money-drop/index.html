@@ -65,15 +65,16 @@
     flex-shrink: 0;
   }
   .top-badge {
-    background: #f59e0b;
-    color: #052e16;
+    background: linear-gradient(180deg, #fef08a 0%, #facc15 50%, #d97706 100%);
+    border: 1.5px solid #ffffff;
+    color: #0f172a;
     font-size: 15px;
     font-weight: 900;
     padding: 7px 16px;
     border-radius: 99px;
     letter-spacing: -0.2px;
-    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
-    transition: background-color 0.2s, color 0.2s;
+    box-shadow: 0 4px 14px rgba(250, 204, 21, 0.45);
+    transition: background 0.2s, color 0.2s;
   }
   .top-badge.boss {
     background: #e11d48;
@@ -155,9 +156,10 @@
     font-variant-numeric: tabular-nums;
   }
   #status-banner.correct {
-    background: rgba(16, 185, 129, 0.25);
-    border-color: #34d399;
-    color: #34d399;
+    background: linear-gradient(90deg, rgba(16, 185, 129, 0.32) 0%, rgba(250, 204, 21, 0.28) 100%);
+    border-color: #facc15;
+    color: #fef08a;
+    box-shadow: 0 0 18px rgba(250, 204, 21, 0.35);
   }
   #status-banner.reveal {
     background: rgba(245, 158, 11, 0.25);
@@ -197,11 +199,12 @@
     transform: scale(0.93);
   }
   .cell.correct-cell {
-    background: #10b981 !important;
-    border-color: #6ee7b7 !important;
-    color: #052e16 !important;
-    transform: scale(1.04);
-    box-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+    background: linear-gradient(135deg, #34d399 0%, #10b981 55%, #047857 100%) !important;
+    border: 3px solid #facc15 !important;
+    color: #fef08a !important;
+    text-shadow: 0 2px 6px rgba(5, 46, 22, 0.75);
+    transform: scale(1.05);
+    box-shadow: 0 0 24px rgba(250, 204, 21, 0.75), 0 0 12px rgba(16, 185, 129, 0.8), inset 0 1px 6px rgba(254, 240, 138, 0.65);
   }
   .cell.wrong-cell {
     background: #ef4444 !important;
@@ -217,8 +220,9 @@
   /* 6. Bottom Footer Bar */
   #footer-bar {
     margin-top: 12px;
-    background: rgba(56, 189, 248, 0.15);
-    border: 2px solid #38bdf8;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.92) 0%, rgba(30, 41, 59, 0.92) 100%);
+    border: 2px solid #facc15;
+    box-shadow: 0 4px 18px rgba(250, 204, 21, 0.28), inset 0 0 12px rgba(250, 204, 21, 0.12);
     border-radius: 16px;
     padding: 10px 14px;
     display: flex;
@@ -230,7 +234,8 @@
   .rank-info {
     font-size: 15px;
     font-weight: 900;
-    color: #f8fafc;
+    color: #fef08a;
+    text-shadow: 0 0 10px rgba(250, 204, 21, 0.45);
   }
   .hint-btn {
     background: #38bdf8;
@@ -378,13 +383,15 @@
   }
   .modal-badge {
     display: inline-block;
-    background: #f59e0b;
-    color: #052e16;
+    background: linear-gradient(180deg, #fef08a 0%, #facc15 50%, #d97706 100%);
+    border: 2px solid #ffffff;
+    color: #0f172a;
     font-size: 14px;
     font-weight: 900;
     padding: 5px 14px;
     border-radius: 99px;
     margin-bottom: 10px;
+    box-shadow: 0 4px 14px rgba(250, 204, 21, 0.5);
   }
   .modal-card.boss-alert .modal-badge {
     background: #e11d48;
@@ -397,10 +404,17 @@
     margin-bottom: 4px;
   }
   .modal-iq {
+    display: inline-block;
     font-size: 34px;
     font-weight: 900;
-    color: #34d399;
+    color: #fef08a;
+    background: linear-gradient(135deg, rgba(250, 204, 21, 0.2) 0%, rgba(16, 185, 129, 0.22) 100%);
+    border: 2px solid #facc15;
+    border-radius: 16px;
+    padding: 6px 20px;
     margin: 8px 0;
+    text-shadow: 0 0 16px rgba(250, 204, 21, 0.65);
+    box-shadow: 0 0 22px rgba(250, 204, 21, 0.35), inset 0 0 10px rgba(254, 240, 138, 0.25);
   }
   .modal-card.boss-alert .modal-iq {
     color: #fda4af;
