@@ -248,6 +248,127 @@
     color: #64748b;
     cursor: not-allowed;
   }
+  .hint-btn.ad-reward {
+    background: linear-gradient(180deg, #fbbf24 0%, #f59e0b 100%);
+    color: #052e16;
+    box-shadow: 0 3px 12px rgba(245, 158, 11, 0.45);
+    animation: adPulse 1.6s infinite ease-in-out;
+  }
+
+  @keyframes adPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+  }
+
+  /* Hybrid Ad Overlay Modal */
+  .ad-modal-card {
+    border-color: #38bdf8;
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+  }
+  .ad-pr-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 10px 0 14px;
+    text-align: left;
+  }
+  .ad-pr-card {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    padding: 14px 12px;
+    border-radius: 14px;
+    background: rgba(30, 41, 59, 0.95);
+    border: 2px solid #f59e0b;
+    color: #f8fafc;
+    text-decoration: none;
+    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.22);
+    transition: transform 0.15s ease, border-color 0.2s ease;
+    animation: adCardIn 0.3s ease-out;
+  }
+  .ad-pr-card.active-pr {
+    display: flex;
+  }
+  .ad-pr-card:active {
+    transform: scale(0.98);
+  }
+  @keyframes adCardIn {
+    from { opacity: 0; transform: translateY(6px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .ad-pr-tag {
+    display: inline-block;
+    align-self: flex-start;
+    background: rgba(245, 158, 11, 0.2);
+    border: 1px solid #fbbf24;
+    color: #fde047;
+    font-size: 11px;
+    font-weight: 900;
+    padding: 2px 8px;
+    border-radius: 99px;
+  }
+  .ad-pr-title {
+    font-size: 15px;
+    font-weight: 900;
+    line-height: 1.4;
+    color: #ffffff;
+  }
+  .ad-pr-cta {
+    margin-top: 4px;
+    background: rgba(56, 189, 248, 0.18);
+    border: 1px solid #38bdf8;
+    color: #38bdf8;
+    font-size: 12px;
+    font-weight: 900;
+    text-align: center;
+    padding: 6px 10px;
+    border-radius: 8px;
+  }
+  .ad-dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .ad-dot {
+    width: 22px;
+    height: 6px;
+    border-radius: 99px;
+    background: #334155;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  .ad-dot.active {
+    background: #fbbf24;
+  }
+  .ad-progress-track {
+    width: 100%;
+    height: 10px;
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 99px;
+    overflow: hidden;
+    margin-bottom: 14px;
+  }
+  .ad-progress-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #38bdf8 0%, #10b981 50%, #fbbf24 100%);
+    transition: width 0.1s linear;
+  }
+  #adCompleteBtn:disabled {
+    background: #334155;
+    color: #94a3b8;
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: none;
+  }
+  #adCompleteBtn.ready {
+    background: linear-gradient(180deg, #fbbf24 0%, #10b981 100%);
+    color: #052e16;
+    box-shadow: 0 4px 18px rgba(16, 185, 129, 0.5);
+  }
 
   /* Stage Clear / Fail / Boss Intro Modal */
   .overlay-modal {
@@ -503,6 +624,7 @@
       <div class="modal-title" id="modalTitle">STAGE 1 クリア！</div>
       <div class="modal-iq" id="modalIQ">認定IQ 105</div>
       <div class="modal-sub" id="modalComment">次は STAGE 2 です！</div>
+      <button class="primary-btn" id="modalReviveBtn" style="display:none; margin-bottom:10px; background:linear-gradient(180deg, #f59e0b 0%, #d97706 100%); color:#052e16; box-shadow:0 4px 15px rgba(245,158,11,0.4);">🎬 広告を見てこの問題から復活（+5秒）</button>
       <button class="primary-btn" id="modalActionBtn">▶️ 次へ進む</button>
 <!-- Coreworks In-Game Monetization & Nav -->
       <div style="width:100%; margin-top:12px; padding-top:12px; border-top:1px solid rgba(148,163,184,0.2); display:flex; flex-direction:column; gap:8px;">
@@ -524,7 +646,7 @@
   <!-- Settings & Mission Select Modal -->
   <div class="overlay-modal" id="settingsModal">
     <div class="modal-card" style="max-height:92vh; overflow-y:auto;">
-      <div class="modal-badge">⚙️ 設定 ＆ ステージ選択</div>
+      <div class="modal-badge" id="settingsBadge" style="cursor:pointer; user-select:none;" title="5回連続タップで開発テスト表示を切替">⚙️ 設定 ＆ ステージ選択</div>
 
       <div class="setting-card">
         <div class="setting-top">
@@ -548,9 +670,9 @@
         </div>
       </div>
 
-      <div class="setting-row">
+      <div class="setting-row" id="devModeRow" style="display:none;">
         <span class="setting-label">🛠️ 開発テスト（全解放）</span>
-        <button class="toggle-btn on" id="toggleDevBtn">ON</button>
+        <button class="toggle-btn off" id="toggleDevBtn">OFF</button>
       </div>
 
       <div class="modal-title" style="font-size:16px; margin-top:8px;">① ミッション選択（1〜5）</div>
@@ -560,6 +682,44 @@
       <div id="stageJumpGrid" style="width:100%; display:grid; grid-template-columns:repeat(5, 1fr); gap:6px; margin-bottom:6px;"></div>
 
       <button class="primary-btn" id="closeSettingsBtn">✅ 閉じてゲームに戻る</button>
+    </div>
+  </div>
+
+  <!-- Hybrid Ad Overlay Modal (Direct sibling inside #app) -->
+  <div class="overlay-modal" id="adOverlayModal">
+    <div class="modal-card ad-modal-card">
+      <div class="modal-badge" id="adModalBadge">📺 スポンサーPR（あと 5 秒...）</div>
+      <div class="modal-title" id="adModalTitle" style="font-size:20px; margin-bottom:6px;">🎁 5秒視聴でボーナス獲得！</div>
+
+      <div class="ad-pr-list" id="adPrList">
+        <a class="ad-pr-card active-pr" data-pr-idx="0" href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F1000%25E5%2586%2586%25E3%2583%259D%25E3%2583%2583%25E3%2582%25AD%25E3%2583%25AA%2520%25E9%2580%2581%25E6%2596%2599%25E7%2584%25A1%25E6%2596%2599%2F" target="_blank" rel="nofollow sponsored">
+          <span class="ad-pr-tag">PR・楽天ランキング特選 #1</span>
+          <span class="ad-pr-title">🎁 【楽天1,000円ポッキリ特選】ポイント消化＆買い回りで一番人気のグルメ・日用品ランキング</span>
+          <span class="ad-pr-cta">👉 楽天で人気ランキングを見る ↗</span>
+        </a>
+        <a class="ad-pr-card" data-pr-idx="1" href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E3%2583%259B%25E3%2583%2583%25E3%2583%2588%25E3%2582%25A2%25E3%2582%25A4%25E3%2583%259E%25E3%2582%25B9%25E3%2582%25AF%2520%25E9%259B%25BB%25E6%25B0%2597%25E6%25AF%259B%25E5%25B8%2583%2520%25E7%25AF%2580%25E6%25B0%25B4%25E3%2582%25B7%25E3%2583%25A3%25E3%2583%25AF%25E3%2583%25BC%25E3%2583%2598%25E3%2583%2583%25E3%2583%2589%2520%25E8%25B1%25A1%25E5%258D%25B0%2520%25E6%25B0%25B4%25E7%25AD%2592%2F" target="_blank" rel="nofollow sponsored">
+          <span class="ad-pr-tag">PR・脳トレ集中ケア #2</span>
+          <span class="ad-pr-title">🔥 【目の疲れ＆脳トレ集中ケア】話題のホットアイマスク・休息グッズ人気ランキング</span>
+          <span class="ad-pr-cta">👉 アイケア・休息グッズを楽天で見る ↗</span>
+        </a>
+        <a class="ad-pr-card" data-pr-idx="2" href="https://coreworks-portal.pages.dev/furusato-tax/" target="_blank">
+          <span class="ad-pr-tag">無料ツール・1秒診断 #3</span>
+          <span class="ad-pr-title">💰 【ふるさと納税 1秒診断】あなたの年収だといくら得する？控除上限シミュレーター</span>
+          <span class="ad-pr-cta">👉 1秒シミュレーターを試す ↗</span>
+        </a>
+      </div>
+
+      <div class="ad-dots" id="adDots">
+        <button type="button" class="ad-dot active" data-dot="0" aria-label="PR 1"></button>
+        <button type="button" class="ad-dot" data-dot="1" aria-label="PR 2"></button>
+        <button type="button" class="ad-dot" data-dot="2" aria-label="PR 3"></button>
+      </div>
+
+      <div class="ad-progress-track">
+        <div class="ad-progress-fill" id="adProgressBar"></div>
+      </div>
+
+      <button class="primary-btn" id="adCompleteBtn" disabled>⏳ あと 5 秒で報酬獲得...</button>
     </div>
   </div>
 </div>
@@ -657,7 +817,7 @@
     seOn: true,
     seEnabled: true,
     seVolume: 0.8,
-    devMode: true,
+    devMode: false,
     usedPairKeys: [] // Guarantees NO duplicate kanji pair appears!
   };
 
@@ -670,6 +830,8 @@
         if (!Array.isArray(state.usedPairKeys)) state.usedPairKeys = [];
         if (!Array.isArray(state.clearedMissions)) state.clearedMissions = [];
       }
+      // Production default: always start with devMode hidden & off until 5-tap unlocked
+      state.devMode = false;
       // Also support dedicated keys in localStorage for instant cross-reading
       const lsBgmEn = localStorage.getItem('bgmEnabled');
       const lsBgmVol = localStorage.getItem('bgmVolume');
@@ -917,7 +1079,7 @@
   }
 
   // ============================================================================
-  // 4. MISSION (1..5) & STAGE (1..10) PROGRESSION ENGINE
+  // 4. MISSION (1..5) & STAGE (1..10) PROGRESSION ENGINE + HYBRID AD MONETIZATION
   // ============================================================================
   const STAGES_PER_MISSION = 10;
   const NORMAL_QUESTIONS_PER_STAGE = 3;
@@ -930,6 +1092,8 @@
   let isQuestionActive = false;
   let timerId = null;
   let lastTickSec = 10;
+  let lastWrongIndex = null;
+  let pendingInterstitialAfterModal = false;
 
   const gridEl = document.getElementById('grid');
   const bannerEl = document.getElementById('status-banner');
@@ -942,6 +1106,149 @@
   const hintBtnEl = document.getElementById('hintBtn');
   const modalEl = document.getElementById('modal');
   const modalCardEl = document.getElementById('modalCard');
+  const modalReviveBtnEl = document.getElementById('modalReviveBtn');
+
+  // Hybrid Ad Engine DOM & State
+  const adOverlayModalEl = document.getElementById('adOverlayModal');
+  const adModalBadgeEl = document.getElementById('adModalBadge');
+  const adModalTitleEl = document.getElementById('adModalTitle');
+  const adPrCards = Array.from(document.querySelectorAll('#adPrList .ad-pr-card'));
+  const adDots = Array.from(document.querySelectorAll('#adDots .ad-dot'));
+  const adProgressBarEl = document.getElementById('adProgressBar');
+  const adCompleteBtnEl = document.getElementById('adCompleteBtn');
+  let adTimerId = null;
+  let adCarouselTimerId = null;
+  let adRewardCallback = null;
+  let currentPrIdx = 0;
+
+  function selectPrCard(idx) {
+    currentPrIdx = ((idx % adPrCards.length) + adPrCards.length) % adPrCards.length;
+    adPrCards.forEach((card, i) => card.classList.toggle('active-pr', i === currentPrIdx));
+    adDots.forEach((dot, i) => dot.classList.toggle('active', i === currentPrIdx));
+  }
+
+  adDots.forEach((dot, i) => {
+    dot.addEventListener('click', () => selectPrCard(i));
+  });
+
+  function showAdModal(adType, onComplete) {
+    clearInterval(adTimerId);
+    clearInterval(adCarouselTimerId);
+    adRewardCallback = typeof onComplete === 'function' ? onComplete : null;
+
+    // 1. Native Android AdMob WebView Bridge (if connected)
+    try {
+      if (window.AndroidAdMob) {
+        window.onAndroidAdComplete = function() {
+          const cb = adRewardCallback;
+          adRewardCallback = null;
+          if (cb) cb();
+        };
+        if (adType === 'interstitial' && typeof window.AndroidAdMob.showInterstitialAd === 'function') {
+          window.AndroidAdMob.showInterstitialAd();
+          return;
+        }
+        if (adType !== 'interstitial' && typeof window.AndroidAdMob.showRewardedAd === 'function') {
+          window.AndroidAdMob.showRewardedAd(adType);
+          return;
+        }
+      }
+      // 2. Google H5 Games Ads Placement API (if connected)
+      if (typeof window.adBreak === 'function') {
+        if (adType === 'interstitial') {
+          window.adBreak({
+            type: 'next',
+            name: 'stage_interstitial',
+            adBreakDone: () => {
+              const cb = adRewardCallback;
+              adRewardCallback = null;
+              if (cb) cb();
+            }
+          });
+          return;
+        } else {
+          window.adBreak({
+            type: 'reward',
+            name: adType,
+            beforeReward: (showAdFn) => showAdFn(),
+            adViewed: () => {
+              const cb = adRewardCallback;
+              adRewardCallback = null;
+              if (cb) cb();
+            },
+            adDismissed: () => {}
+          });
+          return;
+        }
+      }
+    } catch (e) {}
+
+    // 3. Built-in 5-Second Interactive Sponsor PR Overlay
+    selectPrCard(currentPrIdx + 1);
+    adCarouselTimerId = setInterval(() => {
+      selectPrCard(currentPrIdx + 1);
+    }, 1800);
+
+    if (adType === 'reward_hint') {
+      adModalTitleEl.textContent = '🎁 5秒PR視聴でヒント+3個＆+2秒！';
+    } else if (adType === 'reward_revive') {
+      adModalTitleEl.textContent = '🔥 5秒PR視聴でこの問題から復活！';
+    } else {
+      adModalTitleEl.textContent = '📺 STAGEクリア！スポンサーPR';
+    }
+
+    const AD_DURATION = 5.0;
+    adModalBadgeEl.textContent = '📺 スポンサーPR（あと 5 秒...）';
+    adProgressBarEl.style.width = '0%';
+    adCompleteBtnEl.disabled = true;
+    adCompleteBtnEl.classList.remove('ready');
+    adCompleteBtnEl.textContent = '⏳ あと 5 秒で報酬獲得...';
+    adOverlayModalEl.classList.add('show');
+
+    const startMs = performance.now();
+    adTimerId = setInterval(() => {
+      const elapsed = (performance.now() - startMs) / 1000;
+      const rem = Math.max(0, AD_DURATION - elapsed);
+      const pct = Math.min(100, (elapsed / AD_DURATION) * 100);
+      adProgressBarEl.style.width = `${pct}%`;
+
+      if (rem > 0) {
+        const sec = Math.ceil(rem);
+        adModalBadgeEl.textContent = `📺 スポンサーPR（あと ${sec} 秒...）`;
+        adCompleteBtnEl.textContent = `⏳ あと ${sec} 秒で報酬獲得...`;
+      } else {
+        clearInterval(adTimerId);
+        clearInterval(adCarouselTimerId);
+        adProgressBarEl.style.width = '100%';
+        adModalBadgeEl.textContent = (adType === 'interstitial') ? '⏭️ スキップ可能' : '✅ 報酬獲得完了！';
+        adCompleteBtnEl.disabled = false;
+        adCompleteBtnEl.classList.add('ready');
+        if (adType === 'reward_hint') {
+          adCompleteBtnEl.textContent = '🎁 ヒント+3個を受け取って再開！';
+        } else if (adType === 'reward_revive') {
+          adCompleteBtnEl.textContent = '🔥 +5秒延長してこの問題から復活！';
+        } else {
+          adCompleteBtnEl.textContent = '⏭️ 閉じて次のステージへ進む';
+        }
+      }
+    }, 80);
+  }
+
+  adCompleteBtnEl.addEventListener('click', () => {
+    if (adCompleteBtnEl.disabled) return;
+    initAudio();
+    clearInterval(adTimerId);
+    clearInterval(adCarouselTimerId);
+    adOverlayModalEl.classList.remove('show');
+    const cb = adRewardCallback;
+    adRewardCallback = null;
+    if (cb) cb();
+  });
+
+  window.CoreworksAdBridge = {
+    showAd: showAdModal,
+    selectPrCard
+  };
 
   function isBossStage(st) {
     return st === 5 || st === 10;
@@ -1027,13 +1334,62 @@
     }
 
     rankTextEl.textContent = `🏅 IQ ${state.iq} ｜ ${getTitleForIQ(state.iq)}`;
-    hintBtnEl.textContent = `💡 ヒント (${state.hints})`;
-    hintBtnEl.disabled = !isQuestionActive || state.hints <= 0;
+    if (state.hints > 0) {
+      hintBtnEl.textContent = `💡 ヒント (${state.hints})`;
+      hintBtnEl.classList.remove('ad-reward');
+      hintBtnEl.style.background = '';
+      hintBtnEl.style.color = '';
+      hintBtnEl.disabled = !isQuestionActive;
+    } else {
+      hintBtnEl.textContent = '🎬 ヒント+3(無料)';
+      hintBtnEl.classList.add('ad-reward');
+      hintBtnEl.style.background = '#f59e0b';
+      hintBtnEl.style.color = '#052e16';
+      hintBtnEl.disabled = !isQuestionActive;
+    }
+  }
+
+  function runQuestionTimer(initialRemainingSec) {
+    clearInterval(timerId);
+    isQuestionActive = true;
+    const baseRemaining = initialRemainingSec;
+    const denom = Math.max(timeLimit, baseRemaining);
+    lastTickSec = Math.ceil(baseRemaining);
+    updateHUD();
+
+    const startTime = performance.now();
+    timerId = setInterval(() => {
+      if (!isQuestionActive) return;
+      const elapsed = (performance.now() - startTime) / 1000;
+      timeRemaining = Math.max(0, baseRemaining - elapsed);
+
+      const ratio = Math.min(100, (timeRemaining / denom) * 100);
+      progBarEl.style.width = `${ratio}%`;
+      if (timeRemaining <= 2.5) {
+        progBarEl.style.backgroundColor = '#f87171';
+      } else {
+        progBarEl.style.backgroundColor = isBossStage(state.stage) ? '#fb7185' : '#34d399';
+      }
+
+      const secInt = Math.ceil(timeRemaining);
+      if (secInt < lastTickSec && secInt > 0) {
+        lastTickSec = secInt;
+        playTickSound();
+      }
+
+      bannerEl.textContent = `⏱️ 残り ${timeRemaining.toFixed(1)} 秒！`;
+
+      if (timeRemaining <= 0) {
+        lastWrongIndex = null;
+        onFail('timeup');
+      }
+    }, 50);
   }
 
   function startQuestion() {
     clearInterval(timerId);
     modalEl.classList.remove('show');
+    lastWrongIndex = null;
     isQuestionActive = true;
     syncBgmLoop();
 
@@ -1069,32 +1425,7 @@
       gridEl.appendChild(cell);
     }
 
-    updateHUD();
-
-    const startTime = performance.now();
-    timerId = setInterval(() => {
-      if (!isQuestionActive) return;
-      const elapsed = (performance.now() - startTime) / 1000;
-      timeRemaining = Math.max(0, timeLimit - elapsed);
-
-      const ratio = (timeRemaining / timeLimit) * 100;
-      progBarEl.style.width = `${ratio}%`;
-      if (timeRemaining <= 2.5) {
-        progBarEl.style.backgroundColor = '#f87171';
-      }
-
-      const secInt = Math.ceil(timeRemaining);
-      if (secInt < lastTickSec && secInt > 0) {
-        lastTickSec = secInt;
-        playTickSound();
-      }
-
-      bannerEl.textContent = `⏱️ 残り ${timeRemaining.toFixed(1)} 秒！`;
-
-      if (timeRemaining <= 0) {
-        onFail('timeup');
-      }
-    }, 50);
+    runQuestionTimer(timeRemaining);
   }
 
   function onCellTap(index, cellEl) {
@@ -1126,6 +1457,7 @@
         // STAGE COMPLETED!
         const clearedStage = state.stage;
         const clearedMission = state.mission;
+        pendingInterstitialAfterModal = (clearedStage % 3 === 0);
 
         if (clearedStage >= STAGES_PER_MISSION) {
           // MISSION CLEAR! (Stage 10 of 10 completed!)
@@ -1148,6 +1480,7 @@
           setTimeout(() => {
             showModal({
               isBossAlert: false,
+              showRevive: false,
               badge: `🏆 MISSION ${clearedMission} 完全制覇！！`,
               title: clearedMission < 5 ? `MISSION ${clearedMission + 1} 解放！` : `全5ミッション完全制覇！`,
               iqText: `認定IQ ${state.iq}`,
@@ -1173,6 +1506,7 @@
               playBossApproachingSound();
               showModal({
                 isBossAlert: true,
+                showRevive: false,
                 badge: '⚠️ WARNING：BOSS STAGE 出現！',
                 title: state.stage === 10 ? `次は最終ボス（STAGE 10）！` : `次は中ボス（STAGE 5）！`,
                 iqText: `制限時間 ${MISSION_CONFIG[state.mission].bossSec.toFixed(1)} 秒・1発勝負`,
@@ -1185,6 +1519,7 @@
             setTimeout(() => {
               showModal({
                 isBossAlert: false,
+                showRevive: false,
                 badge: boss ? '👑 BOSS 撃破！！' : '🎉 STAGE CLEAR!',
                 title: `STAGE ${clearedStage} クリア！`,
                 iqText: `認定IQ ${state.iq}`,
@@ -1196,7 +1531,8 @@
         }
       }
     } else {
-      // Wrong cell tapped -> Immediate Out & Restart Current Stage from Question 1
+      // Wrong cell tapped -> Immediate Out
+      lastWrongIndex = index;
       cellEl.classList.add('wrong-cell');
       onFail('wrong');
     }
@@ -1205,6 +1541,7 @@
   function onFail(reason) {
     isQuestionActive = false;
     clearInterval(timerId);
+    pendingInterstitialAfterModal = false;
     playWrongSound();
 
     const cells = gridEl.querySelectorAll('.cell');
@@ -1220,19 +1557,15 @@
     }
     updateHUD();
 
-    if (state.hints < 2) {
-      state.hints = 2;
-      saveProgress();
-    }
-
     const boss = isBossStage(state.stage);
     setTimeout(() => {
       showModal({
         isBossAlert: boss,
+        showRevive: true,
         badge: reason === 'wrong' ? '❌ お手つき（ミス）！' : '⏱️ TIME UP!',
         title: boss ? `BOSS STAGE ${state.stage} 失敗` : `STAGE ${state.stage}（第${stepInStage}問でミス）`,
         iqText: `現在のIQ ${state.iq}`,
-        comment: `今回の違いは「${currentPair.normal}」の中の「${currentPair.odd}」でした！<br>このステージの第1問からやり直します。`,
+        comment: `今回の違いは「${currentPair.normal}」の中の「${currentPair.odd}」でした！<br>広告を見てこの問題から復活するか、第1問からやり直せます。`,
         btnText: boss
           ? `🔥 BOSS STAGE ${state.stage} に再挑戦`
           : `🔄 STAGE ${state.stage} を第1問からやり直す`
@@ -1240,26 +1573,94 @@
     }, 1450);
   }
 
-  function showModal({ isBossAlert, badge, title, iqText, comment, btnText }) {
+  function showModal({ isBossAlert, showRevive, badge, title, iqText, comment, btnText }) {
     modalCardEl.classList.toggle('boss-alert', !!isBossAlert);
     document.getElementById('modalBadge').textContent = badge;
     document.getElementById('modalTitle').textContent = title;
     document.getElementById('modalIQ').textContent = iqText;
     document.getElementById('modalComment').innerHTML = comment;
     document.getElementById('modalActionBtn').textContent = btnText;
+    if (modalReviveBtnEl) {
+      modalReviveBtnEl.style.display = showRevive ? 'block' : 'none';
+    }
     modalEl.classList.add('show');
   }
 
-  document.getElementById('modalActionBtn').addEventListener('click', () => {
+  // Revive on the exact same question after watching 5s ad
+  modalReviveBtnEl.addEventListener('click', () => {
     initAudio();
-    stepInStage = 1;
-    startQuestion();
+    modalEl.classList.remove('show');
+    showAdModal('reward_revive', () => {
+      const boss = isBossStage(state.stage);
+      const mCfg = MISSION_CONFIG[state.mission] || MISSION_CONFIG[1];
+      const cells = Array.from(gridEl.querySelectorAll('.cell'));
+
+      // Restore cell states & relocate oddIndex among non-dimmed cells so it's a fresh fair challenge on this question!
+      cells.forEach(c => {
+        c.classList.remove('correct-cell', 'wrong-cell');
+      });
+
+      if (lastWrongIndex !== null && cells[lastWrongIndex] && lastWrongIndex !== oddIndex) {
+        cells[lastWrongIndex].classList.add('dimmed');
+      } else {
+        const normalCandidates = cells
+          .map((el, idx) => ({ el, idx }))
+          .filter(x => x.idx !== oddIndex && !x.el.classList.contains('dimmed'));
+        if (normalCandidates.length > 0) {
+          normalCandidates[Math.floor(Math.random() * normalCandidates.length)].el.classList.add('dimmed');
+        }
+      }
+
+      timeLimit = (boss ? mCfg.bossSec : mCfg.normalSec) + 3.0;
+      timeRemaining = timeLimit;
+      bannerEl.className = '';
+      bannerEl.textContent = `🔥 復活成功！残り ${timeRemaining.toFixed(1)} 秒！`;
+      progBarEl.style.width = '100%';
+      progBarEl.style.backgroundColor = boss ? '#fb7185' : '#34d399';
+      syncBgmLoop();
+      runQuestionTimer(timeRemaining);
+    });
   });
 
-  // Hint button
-  hintBtnEl.addEventListener('click', () => {
-    if (!isQuestionActive || state.hints <= 0) return;
+  document.getElementById('modalActionBtn').addEventListener('click', () => {
     initAudio();
+    if (pendingInterstitialAfterModal) {
+      pendingInterstitialAfterModal = false;
+      modalEl.classList.remove('show');
+      showAdModal('interstitial', () => {
+        stepInStage = 1;
+        startQuestion();
+      });
+    } else {
+      stepInStage = 1;
+      startQuestion();
+    }
+  });
+
+  // Hint button (Uses 1 hint if available, or opens 5s Rewarded Ad for +3 hints & +2.0s bonus!)
+  hintBtnEl.addEventListener('click', () => {
+    if (!isQuestionActive) return;
+    initAudio();
+
+    if (state.hints <= 0) {
+      const pausedRemaining = timeRemaining;
+      isQuestionActive = false;
+      clearInterval(timerId);
+      showAdModal('reward_hint', () => {
+        state.hints += 3;
+        saveProgress();
+        playHintSound();
+        const resumedSec = pausedRemaining + 2.0;
+        timeLimit = Math.max(timeLimit, resumedSec);
+        timeRemaining = resumedSec;
+        bannerEl.className = '';
+        bannerEl.textContent = `🎁 ヒント+3個！残り ${timeRemaining.toFixed(1)} 秒！`;
+        syncBgmLoop();
+        runQuestionTimer(timeRemaining);
+      });
+      return;
+    }
+
     playHintSound();
     state.hints--;
     saveProgress();
@@ -1280,6 +1681,8 @@
   // 5. SETTINGS MODAL (BGM / SE Toggle + Volume Sliders & Mission 1..5 Selection)
   // ============================================================================
   const settingsModalEl = document.getElementById('settingsModal');
+  const settingsBadgeEl = document.getElementById('settingsBadge');
+  const devModeRowEl = document.getElementById('devModeRow');
   const toggleBgmBtn = document.getElementById('toggleBgmBtn');
   const toggleSeBtn = document.getElementById('toggleSeBtn');
   const toggleDevBtn = document.getElementById('toggleDevBtn');
@@ -1291,6 +1694,28 @@
   const stageJumpGridEl = document.getElementById('stageJumpGrid');
   const stageSelectTitleEl = document.getElementById('stageSelectTitle');
   let lastSePreviewTime = 0;
+
+  // 5-Tap Secret Command on Settings Modal Badge to Reveal/Hide Developer Mode
+  window.__cwSecretTapBound = true;
+  let secretTapCount = 0;
+  let secretTapTimer = null;
+  if (settingsBadgeEl && devModeRowEl) {
+    settingsBadgeEl.addEventListener('click', () => {
+      secretTapCount++;
+      clearTimeout(secretTapTimer);
+      secretTapTimer = setTimeout(() => { secretTapCount = 0; }, 1500);
+      if (secretTapCount >= 5) {
+        secretTapCount = 0;
+        const isHidden = devModeRowEl.style.display === 'none';
+        devModeRowEl.style.display = isHidden ? 'flex' : 'none';
+        if (!isHidden && state.devMode) {
+          state.devMode = false;
+          saveProgress();
+        }
+        renderSettingsModal();
+      }
+    });
+  }
 
   function updateSliderVisual(sliderEl, pctEl, isEnabled, volFloat) {
     const pct = isEnabled ? Math.round(volFloat * 100) : 0;
