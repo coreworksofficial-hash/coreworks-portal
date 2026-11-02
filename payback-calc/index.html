@@ -31,94 +31,91 @@
   </script>
   <style>
     :root {
-      --bg: #0b0f19;
-      --card: #151d30;
-      --border: #263554;
+      --bg: #0f172a;
+      --card: #1e293b;
+      --border: #334155;
       --text: #f8fafc;
-      --muted: #94a3b8;
-      --accent: #38bdf8;
-      --green: #34d399;
-      --amber: #fbbf24;
-      --rose: #fb7185;
+      --muted: #cbd5e1;
+      --subtle: #94a3b8;
+      --accent: #3b82f6;
+      --green: #38bdf8;
+      --amber: #f8fafc;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { overflow-x: hidden; width: 100%; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif; line-height: 1.45; }
-    .container { max-width: 560px; margin: 0 auto; padding: 12px 12px 48px; }
-    .back-link { display: inline-block; margin-bottom: 6px; color: var(--accent); text-decoration: none; font-size: 0.8rem; font-weight: 800; }
-    h1 { font-size: 1.25rem; font-weight: 900; margin-bottom: 2px; color: #fff; }
-    .lead { color: var(--muted); font-size: 0.76rem; margin-bottom: 10px; }
+    html, body { overflow-x: hidden; width: 100%; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", sans-serif; font-size: 16px; line-height: 1.5; }
+    .container { max-width: 600px; margin: 0 auto; padding: 16px 16px 48px; }
+    .back-link { display: inline-block; margin-bottom: 10px; color: var(--accent); text-decoration: none; font-size: 0.9375rem; font-weight: 700; }
+    h1 { font-size: 1.375rem; font-weight: 800; margin-bottom: 4px; color: var(--text); }
+    .lead { color: var(--muted); font-size: 0.9375rem; margin-bottom: 16px; }
 
-    /* アイコン選択グリッド（2列×4行・文字最小限） */
-    .preset-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 16px; }
+    /* アイコン選択グリッド（大きめ文字でタップしやすく） */
+    .preset-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 18px; }
     .p-btn {
       background: var(--card);
-      border: 1.5px solid var(--border);
+      border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 10px 10px;
+      padding: 12px 12px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       color: var(--text);
       cursor: pointer;
       text-align: left;
       min-width: 0;
     }
     .p-btn.active {
-      background: rgba(52, 211, 153, 0.16);
-      border-color: var(--green);
-      box-shadow: 0 0 0 1px var(--green);
+      background: rgba(59, 130, 246, 0.16);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent);
     }
-    .p-icon { font-size: 1.35rem; flex-shrink: 0; }
-    .p-name { font-size: 0.82rem; font-weight: 800; color: #fff; line-height: 1.25; }
-    .p-tag { font-size: 0.7rem; color: var(--green); font-weight: 700; margin-top: 2px; }
+    .p-icon { font-size: 1.6rem; flex-shrink: 0; }
+    .p-name { font-size: 0.95rem; font-weight: 700; color: var(--text); line-height: 1.3; }
+    .p-tag { font-size: 0.8125rem; color: var(--muted); font-weight: 500; margin-top: 2px; }
 
-    /* ドカンと目に入る結論ボックス */
+    /* 主役：大きく見やすい結論ボックス */
     .verdict-box {
-      background: linear-gradient(145deg, rgba(16, 185, 129, 0.18), rgba(56, 189, 248, 0.1));
-      border: 2px solid var(--green);
+      background: linear-gradient(145deg, rgba(59, 130, 246, 0.18), rgba(30, 41, 59, 0.9));
+      border: 2px solid var(--accent);
       border-radius: 16px;
-      padding: 16px 14px;
+      padding: 20px 16px;
       text-align: center;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
-    .v-label { font-size: 0.8rem; color: #cbd5e1; font-weight: 700; }
-    .v-main { font-size: 2.05rem; font-weight: 900; color: var(--green); margin: 4px 0 8px; letter-spacing: -0.02em; }
-    .v-kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .v-kpi { background: rgba(11, 15, 25, 0.7); border-radius: 10px; padding: 8px 6px; }
-    .v-kpi-lbl { font-size: 0.7rem; color: var(--muted); }
-    .v-kpi-val { font-size: 1rem; font-weight: 900; margin-top: 2px; }
+    .v-label { font-size: 0.9375rem; color: var(--muted); font-weight: 600; }
+    .v-main { font-size: 2rem; font-weight: 800; color: #ffffff; margin: 6px 0 12px; letter-spacing: -0.02em; }
+    .v-kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .v-kpi { background: rgba(15, 23, 42, 0.75); border: 1px solid var(--border); border-radius: 10px; padding: 10px 8px; }
+    .v-kpi-lbl { font-size: 0.8125rem; color: var(--muted); }
+    .v-kpi-val { font-size: 1.125rem; font-weight: 800; margin-top: 3px; color: var(--text); }
 
-    /* スライダー2本だけの超シンプル調整カード */
-    .sliders-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 14px; margin-bottom: 20px; }
-    .s-row { margin-bottom: 14px; }
+    /* スライダー2本の調整カード（16pxベース） */
+    .sliders-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px 16px; margin-bottom: 24px; }
+    .s-row { margin-bottom: 18px; }
     .s-row:last-child { margin-bottom: 0; }
-    .s-head { display: flex; justify-content: space-between; font-size: 0.83rem; font-weight: 700; margin-bottom: 6px; }
-    .s-val { color: var(--accent); font-weight: 900; }
-    input[type="range"] { width: 100%; accent-color: var(--accent); height: 6px; cursor: pointer; }
+    .s-head { display: flex; justify-content: space-between; align-items: baseline; font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .s-val { color: var(--accent); font-weight: 800; font-size: 1.05rem; }
+    input[type="range"] { width: 100%; accent-color: var(--accent); height: 8px; cursor: pointer; }
 
-    /* 厳選おすすめ3選（スッキリ見やすいカード） */
-    .rec-title { font-size: 1rem; font-weight: 900; margin-bottom: 10px; color: #fff; display: flex; align-items: center; gap: 6px; }
+    /* 控えめ・落ち着いたトーンの参考アイテム一覧 */
+    .rec-title { font-size: 0.9375rem; font-weight: 600; margin-bottom: 10px; color: var(--subtle); display: flex; align-items: center; gap: 6px; border-top: 1px solid var(--border); padding-top: 18px; }
     .rec-list { display: flex; flex-direction: column; gap: 10px; }
     .rec-card {
-      background: var(--card);
-      border: 1.5px solid var(--border);
-      border-radius: 14px;
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid var(--border);
+      border-radius: 12px;
       padding: 14px;
     }
-    .rec-card.best { border-color: var(--amber); background: linear-gradient(180deg, rgba(251,191,36,0.08), var(--card)); }
     .rec-top { display: flex; justify-content: space-between; align-items: center; gap: 6px; margin-bottom: 6px; }
-    .rec-badge { font-size: 0.7rem; font-weight: 900; padding: 2px 8px; border-radius: 4px; background: rgba(56,189,248,0.16); color: var(--accent); }
-    .rec-card.best .rec-badge { background: var(--amber); color: #0b0f19; }
-    .rec-payback { font-size: 0.76rem; font-weight: 800; color: var(--green); }
-    .rec-name { font-size: 0.95rem; font-weight: 800; color: #fff; margin-bottom: 4px; }
-    .rec-desc { font-size: 0.78rem; color: var(--muted); margin-bottom: 10px; }
+    .rec-badge { font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; background: rgba(59, 130, 246, 0.15); color: var(--muted); }
+    .rec-payback { font-size: 0.8125rem; font-weight: 700; color: var(--muted); }
+    .rec-name { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 10px; }
     .btn-rakuten {
       display: block; width: 100%; text-align: center;
-      background: linear-gradient(135deg, #df0000, #b80000);
-      color: #fff; text-decoration: none; font-weight: 800; font-size: 0.86rem;
-      padding: 11px; border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(191, 0, 0, 0.3);
+      background: #1e293b; border: 1px solid #475569;
+      color: var(--muted); text-decoration: none; font-weight: 600; font-size: 0.875rem;
+      padding: 10px; border-radius: 8px;
     }
+    .btn-rakuten:hover { background: #334155; color: #ffffff; }
   </style>
 </head>
 <body>
@@ -296,11 +293,8 @@
   </script>
 
 <!-- Moshimo Official Rakuten Sponsor -->
-<div style="margin: 24px auto 16px; text-align: center; padding: 12px; background: rgba(21, 29, 48, 0.6); border: 1px solid rgba(56, 189, 248, 0.18); border-radius: 12px; max-width: 560px;">
-  <div style="font-size: 0.7rem; color: #94a3b8; margin-bottom: 6px;">PR ｜ 楽天市場 公式スポンサー</div>
-  <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=618&url=https%3A%2F%2Fwww.rakuten.co.jp%2F" rel="nofollow sponsored" target="_blank" style="display: inline-block;">
-    <img src="https://image.moshimo.com/af-img/0032/000000000618.gif" width="108" height="54" style="border:none; border-radius: 6px;" alt="楽天市場">
-  </a>
+<div style="margin: 28px auto 12px; text-align: center; font-size: 0.75rem; color: #64748b;">
+  <span>PR：</span><a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=618&url=https%3A%2F%2Fwww.rakuten.co.jp%2F" rel="nofollow sponsored" target="_blank" style="color: #94a3b8; text-decoration: none; border-bottom: 1px solid #475569;">楽天市場 公式スポンサー</a>
   <img src="https://i.moshimo.com/af/i/impression?a_id=5876771&p_id=54&pc_id=54&pl_id=618" width="1" height="1" style="border:none;" loading="lazy" alt="">
 </div>
 </body>

@@ -7,47 +7,47 @@
   <meta name="description" content="払っている月額サービスをタップするだけで、年間消えているお金と10年後の投資価値、買い切りへの置き換え回収期間を1秒で計算します。">
   <style>
     :root {
-      --bg: #0b0f19;
-      --card: #151d30;
-      --border: #263554;
+      --bg: #0f172a;
+      --card: #1e293b;
+      --border: #334155;
       --text: #f8fafc;
-      --muted: #94a3b8;
-      --accent: #38bdf8;
-      --green: #34d399;
-      --pink: #f472b6;
-      --amber: #fbbf24;
+      --muted: #cbd5e1;
+      --subtle: #94a3b8;
+      --accent: #3b82f6;
+      --green: #38bdf8;
+      --pink: #f8fafc;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { overflow-x: hidden; width: 100%; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif; line-height: 1.45; }
-    .container { max-width: 560px; margin: 0 auto; padding: 12px 12px 48px; }
-    .back-link { display: inline-block; margin-bottom: 6px; color: var(--accent); text-decoration: none; font-size: 0.8rem; font-weight: 800; }
-    h1 { font-size: 1.25rem; font-weight: 900; margin-bottom: 2px; color: #fff; }
-    .lead { color: var(--muted); font-size: 0.76rem; margin-bottom: 10px; }
+    html, body { overflow-x: hidden; width: 100%; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", sans-serif; font-size: 16px; line-height: 1.5; }
+    .container { max-width: 600px; margin: 0 auto; padding: 16px 16px 48px; }
+    .back-link { display: inline-block; margin-bottom: 10px; color: var(--accent); text-decoration: none; font-size: 0.9375rem; font-weight: 700; }
+    h1 { font-size: 1.375rem; font-weight: 800; margin-bottom: 4px; color: var(--text); }
+    .lead { color: var(--muted); font-size: 0.9375rem; margin-bottom: 16px; }
 
-    /* 結果ボード（ファーストビュー最上部に固定感） */
+    /* 結果ボード（主役・大きく見やすく） */
     .result-box {
-      background: linear-gradient(145deg, rgba(56,189,248,0.16), rgba(244,114,182,0.1));
+      background: linear-gradient(145deg, rgba(59, 130, 246, 0.18), rgba(30, 41, 59, 0.9));
       border: 2px solid var(--accent);
       border-radius: 16px;
-      padding: 16px 14px;
+      padding: 20px 16px;
       text-align: center;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
-    .res-label { font-size: 0.8rem; color: #cbd5e1; font-weight: 700; }
-    .res-val { font-size: 2.1rem; font-weight: 900; color: var(--accent); margin: 2px 0 8px; letter-spacing: -0.02em; }
-    .res-sub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .res-mini { background: rgba(11,15,25,0.7); border-radius: 10px; padding: 8px 6px; }
-    .res-mini-lbl { font-size: 0.7rem; color: var(--muted); }
-    .res-mini-num { font-size: 1.02rem; font-weight: 900; margin-top: 2px; }
+    .res-label { font-size: 0.9375rem; color: var(--muted); font-weight: 600; }
+    .res-val { font-size: 2.15rem; font-weight: 800; color: #ffffff; margin: 4px 0 10px; letter-spacing: -0.02em; }
+    .res-sub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .res-mini { background: rgba(15, 23, 42, 0.75); border: 1px solid var(--border); border-radius: 10px; padding: 10px 8px; }
+    .res-mini-lbl { font-size: 0.8125rem; color: var(--muted); }
+    .res-mini-num { font-size: 1.125rem; font-weight: 800; margin-top: 3px; }
 
     /* ワンタップ選択チップ */
-    .sec-label { font-size: 0.88rem; font-weight: 800; margin-bottom: 10px; color: #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
-    .chips-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+    .sec-label { font-size: 1rem; font-weight: 700; margin-bottom: 12px; color: var(--text); display: flex; justify-content: space-between; align-items: center; }
+    .chips-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
     .sub-chip {
       background: var(--card);
-      border: 1.5px solid var(--border);
+      border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 10px 10px;
+      padding: 12px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -57,40 +57,41 @@
       min-width: 0;
     }
     .sub-chip.active {
-      background: rgba(56, 189, 248, 0.16);
+      background: rgba(59, 130, 246, 0.16);
       border-color: var(--accent);
       box-shadow: 0 0 0 1px var(--accent);
     }
-    .chip-left { display: flex; align-items: center; gap: 7px; min-width: 0; }
-    .chip-icon { font-size: 1.2rem; flex-shrink: 0; }
-    .chip-name { font-size: 0.8rem; font-weight: 800; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .chip-price { font-size: 0.75rem; color: var(--accent); font-weight: 700; }
+    .chip-left { display: flex; align-items: center; gap: 9px; min-width: 0; }
+    .chip-icon { font-size: 1.4rem; flex-shrink: 0; }
+    .chip-name { font-size: 0.9375rem; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .chip-price { font-size: 0.85rem; color: var(--muted); font-weight: 600; }
     .chip-check {
-      width: 20px; height: 20px; border-radius: 99px; border: 1.5px solid #475569;
-      display: flex; align-items: center; justify-content: center; font-size: 0.7rem; flex-shrink: 0;
+      width: 22px; height: 22px; border-radius: 99px; border: 1.5px solid #475569;
+      display: flex; align-items: center; justify-content: center; font-size: 0.75rem; flex-shrink: 0;
     }
-    .sub-chip.active .chip-check { background: var(--accent); border-color: var(--accent); color: #0b0f19; font-weight: 900; }
+    .sub-chip.active .chip-check { background: var(--accent); border-color: var(--accent); color: #ffffff; font-weight: 800; }
 
     /* 自由調整スライダー */
-    .custom-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; margin-bottom: 22px; }
-    .custom-head { display: flex; justify-content: space-between; font-size: 0.82rem; font-weight: 700; margin-bottom: 6px; }
-    input[type="range"] { width: 100%; accent-color: var(--accent); height: 6px; cursor: pointer; }
+    .custom-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 24px; }
+    .custom-head { display: flex; justify-content: space-between; font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+    input[type="range"] { width: 100%; accent-color: var(--accent); height: 8px; cursor: pointer; }
 
-    /* 買い切り置換カード */
-    .replace-box { background: var(--card); border: 1px solid rgba(52, 211, 153, 0.4); border-radius: 16px; padding: 16px 14px; }
-    .rep-badge { display: inline-block; background: rgba(52,211,153,0.16); color: var(--green); font-size: 0.72rem; font-weight: 800; padding: 3px 8px; border-radius: 6px; margin-bottom: 6px; }
+    /* 控えめ・落ち着いたトーンの買い切り置換提案 */
+    .replace-box { background: rgba(30, 41, 59, 0.55); border: 1px solid var(--border); border-radius: 14px; padding: 16px; }
+    .rep-badge { display: inline-block; background: rgba(59, 130, 246, 0.15); color: var(--muted); font-size: 0.75rem; font-weight: 700; padding: 3px 8px; border-radius: 6px; margin-bottom: 6px; }
     .rep-list { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
-    .rep-item { background: #0b0f19; border: 1px solid var(--border); border-radius: 12px; padding: 12px; }
+    .rep-item { background: #0f172a; border: 1px solid var(--border); border-radius: 12px; padding: 14px; }
     .rep-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px; }
-    .rep-title { font-size: 0.9rem; font-weight: 800; color: #fff; }
-    .rep-tag { font-size: 0.74rem; font-weight: 900; color: var(--green); background: rgba(52,211,153,0.12); padding: 2px 7px; border-radius: 4px; white-space: nowrap; }
-    .rep-desc { font-size: 0.78rem; color: var(--muted); margin-bottom: 10px; }
+    .rep-title { font-size: 0.95rem; font-weight: 700; color: var(--text); }
+    .rep-tag { font-size: 0.78rem; font-weight: 700; color: var(--muted); background: rgba(59, 130, 246, 0.12); padding: 2px 7px; border-radius: 4px; white-space: nowrap; }
+    .rep-desc { font-size: 0.85rem; color: var(--muted); margin-bottom: 10px; }
     .btn-rakuten {
       display: block; width: 100%; text-align: center;
-      background: linear-gradient(135deg, #df0000, #b80000);
-      color: #fff; text-decoration: none; font-weight: 800; font-size: 0.84rem;
+      background: #1e293b; border: 1px solid #475569;
+      color: var(--muted); text-decoration: none; font-weight: 600; font-size: 0.875rem;
       padding: 10px; border-radius: 8px;
     }
+    .btn-rakuten:hover { background: #334155; color: #ffffff; }
   </style>
 </head>
 <body>
@@ -222,11 +223,8 @@
   </script>
 
 <!-- Moshimo Official Rakuten Sponsor -->
-<div style="margin: 24px auto 16px; text-align: center; padding: 12px; background: rgba(21, 29, 48, 0.6); border: 1px solid rgba(56, 189, 248, 0.18); border-radius: 12px; max-width: 560px;">
-  <div style="font-size: 0.7rem; color: #94a3b8; margin-bottom: 6px;">PR ｜ 楽天市場 公式スポンサー</div>
-  <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=618&url=https%3A%2F%2Fwww.rakuten.co.jp%2F" rel="nofollow sponsored" target="_blank" style="display: inline-block;">
-    <img src="https://image.moshimo.com/af-img/0032/000000000618.gif" width="108" height="54" style="border:none; border-radius: 6px;" alt="楽天市場">
-  </a>
+<div style="margin: 28px auto 12px; text-align: center; font-size: 0.75rem; color: #64748b;">
+  <span>PR：</span><a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=618&url=https%3A%2F%2Fwww.rakuten.co.jp%2F" rel="nofollow sponsored" target="_blank" style="color: #94a3b8; text-decoration: none; border-bottom: 1px solid #475569;">楽天市場 公式スポンサー</a>
   <img src="https://i.moshimo.com/af/i/impression?a_id=5876771&p_id=54&pc_id=54&pl_id=618" width="1" height="1" style="border:none;" loading="lazy" alt="">
 </div>
 </body>
