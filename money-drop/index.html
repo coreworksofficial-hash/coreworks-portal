@@ -448,9 +448,8 @@
 
   <!-- Settings & Mission Select Modal -->
   <div class="overlay-modal" id="settingsModal">
-    <div class="modal-card">
-      <div class="modal-badge">⚙️ 設定 ＆ ミッション選択</div>
-      <div class="modal-title" style="font-size:22px; margin-bottom:12px;">サウンド設定</div>
+    <div class="modal-card" style="max-height:92vh; overflow-y:auto;">
+      <div class="modal-badge">⚙️ 設定 ＆ ステージ選択</div>
 
       <div class="setting-row">
         <span class="setting-label">🎵 BGM（音楽）</span>
@@ -460,9 +459,16 @@
         <span class="setting-label">🔊 効果音（SE）</span>
         <button class="toggle-btn on" id="toggleSeBtn">ON</button>
       </div>
+      <div class="setting-row">
+        <span class="setting-label">🛠️ 開発テスト（全解放）</span>
+        <button class="toggle-btn on" id="toggleDevBtn">ON</button>
+      </div>
 
-      <div class="modal-title" style="font-size:20px; margin-top:14px;">ミッション選択（全10ステージ）</div>
+      <div class="modal-title" style="font-size:16px; margin-top:8px;">① ミッション選択（1〜5）</div>
       <div class="mission-list" id="missionList"></div>
+
+      <div class="modal-title" id="stageSelectTitle" style="font-size:16px; margin-top:8px;">② ステージ直接ジャンプ（STAGE 1〜10）</div>
+      <div id="stageJumpGrid" style="width:100%; display:grid; grid-template-columns:repeat(5, 1fr); gap:6px; margin-bottom:6px;"></div>
 
       <button class="primary-btn" id="closeSettingsBtn">✅ 閉じてゲームに戻る</button>
     </div>
@@ -558,6 +564,7 @@
     hints: 3,
     bgmOn: true,
     seOn: true,
+    devMode: true,
     usedPairKeys: [] // Guarantees NO duplicate kanji pair appears!
   };
 
@@ -987,8 +994,9 @@
           updateHUD();
 
           const nextIsBoss = isBossStage(state.stage);
-          // Play distinct Boss Approaching sound when the pre-boss screen appears!
+          // Play Correct chime immediately on clearing the question, then Boss Approaching sound when the pre-boss modal appears!
           if (nextIsBoss) {
+            playCorrectSound();
             setTimeout(() => {
               playBossApproachingSound();
               showModal({
@@ -1101,7 +1109,10 @@
   const settingsModalEl = document.getElementById('settingsModal');
   const toggleBgmBtn = document.getElementById('toggleBgmBtn');
   const toggleSeBtn = document.getElementById('toggleSeBtn');
+  const toggleDevBtn = document.getElementById('toggleDevBtn');
   const missionListEl = document.getElementById('missionList');
+  const stageJumpGridEl = document.getElementById('stageJumpGrid');
+  const stageSelectTitleEl = document.getElementById('stageSelectTitle');
 
   function renderSettingsModal() {
     toggleBgmBtn.textContent = state.bgmOn ? 'ON' : 'OFF';
@@ -1110,12 +1121,17 @@
     toggleSeBtn.textContent = state.seOn ? 'ON' : 'OFF';
     toggleSeBtn.className = 'toggle-btn ' + (state.seOn ? 'on' : 'off');
 
+    toggleDevBtn.textContent = state.devMode ? 'ON' : 'OFF';
+    toggleDevBtn.className = 'toggle-btn ' + (state.devMode ? 'on' : 'off');
+
     missionListEl.innerHTML = [1, 2, 3, 4, 5].map(m => {
-      const unlocked = m <= state.maxUnlockedMission;
+      const unlocked = state.devMode || m <= state.maxUnlockedMission;
       const cleared = state.clearedMissions.includes(m);
       const isCurrent = (m === state.mission);
       const cfg = MISSION_CONFIG[m];
-      const statusText = cleared ? '🏆 制覇済（再挑戦OK）' : (unlocked ? (isCurrent ? `▶️ 挑戦中 (STAGE ${state.stage})` : '挑戦可能') : '🔒 未解放');
+      const statusText = state.devMode
+        ? (isCurrent ? `▶️ 選択中 (STAGE ${state.stage})` : '🛠️ テスト解放中')
+        : (cleared ? '🏆 制覇済（再挑戦OK）' : (unlocked ? (isCurrent ? `▶️ 挑戦中 (STAGE ${state.stage})` : '挑戦可能') : '🔒 未解放'));
       return `<button class="mission-btn ${isCurrent ? 'active' : ''}" data-mission="${m}" ${unlocked ? '' : 'disabled'}>
         <span>${cfg.name}（${cfg.normalSec}秒）</span>
         <span style="font-size:13px;">${statusText}</span>
@@ -1125,16 +1141,49 @@
     missionListEl.querySelectorAll('.mission-btn[data-mission]').forEach(btn => {
       btn.addEventListener('click', () => {
         const m = Number(btn.getAttribute('data-mission'));
-        if (m <= state.maxUnlockedMission) {
+        if (state.devMode || m <= state.maxUnlockedMission) {
           state.mission = m;
           state.stage = 1;
           stepInStage = 1;
           saveProgress();
-          settingsModalEl.classList.remove('show');
-          startQuestion();
+          if (state.devMode) {
+            renderSettingsModal();
+          } else {
+            settingsModalEl.classList.remove('show');
+            startQuestion();
+          }
         }
       });
     });
+
+    if (state.devMode) {
+      stageSelectTitleEl.style.display = 'block';
+      stageJumpGridEl.style.display = 'grid';
+      stageJumpGridEl.innerHTML = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(st => {
+        const isBoss = (st === 5 || st === 10);
+        const active = (st === state.stage);
+        const bg = active ? '#10b981' : (isBoss ? '#4c0519' : '#0f172a');
+        const col = active ? '#052e16' : (isBoss ? '#fda4af' : '#e2e8f0');
+        const bdr = active ? '#34d399' : (isBoss ? '#fb7185' : '#334155');
+        return `<button data-stage="${st}" style="padding:10px 4px; border-radius:10px; border:2px solid ${bdr}; background:${bg}; color:${col}; font-size:14px; font-weight:900; cursor:pointer;">
+          ${isBoss ? '🔥B' + st : 'S' + st}
+        </button>`;
+      }).join('');
+
+      stageJumpGridEl.querySelectorAll('button[data-stage]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.stage = Number(btn.getAttribute('data-stage'));
+          stepInStage = 1;
+          if (state.hints < 5) state.hints = 5;
+          saveProgress();
+          settingsModalEl.classList.remove('show');
+          startQuestion();
+        });
+      });
+    } else {
+      stageSelectTitleEl.style.display = 'none';
+      stageJumpGridEl.style.display = 'none';
+    }
   }
 
   document.getElementById('settingsBtn').addEventListener('click', () => {
@@ -1156,6 +1205,12 @@
     state.seOn = !state.seOn;
     saveProgress();
     if (state.seOn) playCorrectSound();
+    renderSettingsModal();
+  });
+
+  toggleDevBtn.addEventListener('click', () => {
+    state.devMode = !state.devMode;
+    saveProgress();
     renderSettingsModal();
   });
 
