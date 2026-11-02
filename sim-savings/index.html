@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>大手キャリア vs 格安SIM「10年間の損得差額」1秒シミュレーター ｜ Coreworks Studio</title>
+  <meta name="description" content="毎月のスマホ代と家族の人数を選ぶだけで、大手キャリアのまま放置した場合の1年間・10年間の損失額と、浮いたお金で買える人気家電・ガジェットを1秒で計算します。">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "大手キャリアから格安SIM・楽天モバイルに乗り換えると10年でいくら浮きますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "1人あたり月8,500円から月2,000円前後のプランへ乗り換えた場合、1人で年間約78,000円（10年で約78万円）、夫婦2人なら10年で約156万円もの固定費が浮きます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "スマホの機種変更はどうするのが一番お得ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "キャリアショップの割高な分割プランではなく、楽天市場のお買い物マラソン期間中にSIMフリー端末（iPhoneや人気Android）を購入すると、大量のポイント還元がついて実質最安になります。"
+        }
+      }
+    ]
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --border: #334155;
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --subtle: #94a3b8;
+      --accent: #10b981;
+      --blue: #3b82f6;
+      --green: #34d399;
+      --amber: #fde047;
+      --rose: #fb7185;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    html, body { overflow-x: hidden; width: 100%; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", sans-serif; font-size: 16px; line-height: 1.5; }
+    .container { max-width: 600px; margin: 0 auto; padding: 16px 16px 48px; }
+    .back-link { display: inline-block; margin-bottom: 10px; color: var(--blue); text-decoration: none; font-size: 0.9375rem; font-weight: 700; }
+    h1 { font-size: 1.35rem; font-weight: 800; margin-bottom: 4px; color: var(--text); }
+    .lead { color: var(--muted); font-size: 0.9rem; margin-bottom: 16px; }
+
+    /* 1. 家族人数プリセット */
+    .preset-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 16px; }
+    .p-btn {
+      background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+      padding: 11px 10px; display: flex; align-items: center; gap: 8px;
+      color: var(--text); cursor: pointer; text-align: left; min-width: 0;
+    }
+    .p-btn.active {
+      background: rgba(16, 185, 129, 0.16); border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent);
+    }
+    .p-icon { font-size: 1.45rem; flex-shrink: 0; }
+    .p-name { font-size: 0.875rem; font-weight: 700; color: var(--text); line-height: 1.3; }
+    .p-tag { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+
+    /* 2. 結論ボックス */
+    .verdict-box {
+      background: linear-gradient(145deg, rgba(16, 185, 129, 0.18), rgba(30, 41, 59, 0.95));
+      border: 2px solid var(--accent); border-radius: 16px;
+      padding: 18px 15px; text-align: center; margin-bottom: 18px;
+    }
+    .v-label { font-size: 0.9rem; color: var(--muted); font-weight: 700; }
+    .v-main { font-size: 2.05rem; font-weight: 800; color: #ffffff; margin: 4px 0 6px; letter-spacing: -0.02em; }
+    .v-sub { font-size: 0.85rem; color: var(--amber); font-weight: 700; margin-bottom: 12px; }
+    .v-kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+    .v-kpi { background: rgba(15, 23, 42, 0.75); border: 1px solid var(--border); border-radius: 10px; padding: 10px 8px; }
+    .v-kpi-lbl { font-size: 0.78rem; color: var(--muted); }
+    .v-kpi-val { font-size: 1.125rem; font-weight: 800; margin-top: 3px; color: var(--text); }
+    .hero-cta {
+      display: block; width: 100%; padding: 13px 12px; border-radius: 12px;
+      background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
+      color: #0f172a; font-weight: 800; font-size: 0.92rem; text-decoration: none;
+      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+    }
+
+    /* 3. スライダー操作 */
+    .sliders-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 16px; margin-bottom: 22px; }
+    .s-row { margin-bottom: 16px; }
+    .s-row:last-child { margin-bottom: 0; }
+    .s-head { display: flex; justify-content: space-between; align-items: baseline; font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+    .s-val { color: var(--green); font-weight: 800; font-size: 1rem; }
+    input[type="range"] { width: 100%; accent-color: var(--accent); height: 8px; cursor: pointer; }
+
+    /* 4. 浮いたお金で買えるご褒美家電・ガジェット提案 */
+    .sec-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 10px; color: var(--text); border-top: 1px solid var(--border); padding-top: 18px; }
+    .tile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+    .tile {
+      background: rgba(30, 41, 59, 0.75); border: 1px solid var(--border); border-radius: 12px;
+      padding: 13px 11px; text-decoration: none; color: inherit;
+      display: flex; flex-direction: column; justify-content: space-between; min-width: 0;
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+    .tile:hover { border-color: var(--accent); background: rgba(30, 41, 59, 0.95); }
+    .t-tag { font-size: 0.75rem; font-weight: 700; color: var(--green); margin-bottom: 4px; }
+    .t-name { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 10px; line-height: 1.35; }
+    .t-btn {
+      background: rgba(245, 158, 11, 0.16); border: 1px solid #f59e0b;
+      color: var(--amber); text-align: center; padding: 7px 6px; border-radius: 8px;
+      font-size: 0.8rem; font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="../?tab=calc" class="back-link">← 損得計算一覧へ戻る</a>
+    <h1>📱 大手キャリア vs 格安SIM 10年損得シミュレーター</h1>
+    <p class="lead">毎月のスマホ代を見直すだけで、10年間でいくら現金が浮くかを1秒算出！</p>
+
+    <!-- 1. 人数プリセット -->
+    <div class="preset-grid" id="presetGrid"></div>
+
+    <!-- 2. 結論ボックス -->
+    <div class="verdict-box">
+      <div class="v-label" id="vLabel">💑 夫婦2人で格安SIMへ乗り換えると、10年間で…</div>
+      <div class="v-main" id="vMain">+1,560,000 円 浮く！</div>
+      <div class="v-sub" id="vSub">🚨 大手キャリアのまま放置すると、高級家電や海外旅行が買える大金を失います</div>
+      <div class="v-kpis">
+        <div class="v-kpi">
+          <div class="v-kpi-lbl">毎月浮く固定費</div>
+          <div class="v-kpi-val" id="vMonthly" style="color:var(--green);">+13,000 円/月</div>
+        </div>
+        <div class="v-kpi">
+          <div class="v-kpi-lbl">1年間で浮く現金</div>
+          <div class="v-kpi-val" id="vYearly" style="color:var(--amber);">+156,000 円/年</div>
+        </div>
+      </div>
+      <a id="heroRankLink" href="#" target="_blank" rel="nofollow sponsored noopener" class="hero-cta">
+        📱 楽天市場「SIMフリースマホ＆人気ガジェット」ランキングを見る ↗
+      </a>
+    </div>
+
+    <!-- 3. スライダー操作 -->
+    <div class="sliders-card">
+      <div class="s-row">
+        <div class="s-head">
+          <span>💴 いまのスマホ代（1人あたり月額）</span>
+          <span class="s-val" id="lblCur" style="color:var(--rose);">月 8,500 円</span>
+        </div>
+        <input type="range" id="rngCur" min="3500" max="15000" step="500" value="8500" oninput="calc()">
+      </div>
+      <div class="s-row">
+        <div class="s-head">
+          <span>✨ 乗り換え後の月額（格安SIM・楽天等）</span>
+          <span class="s-val" id="lblNew">月 2,000 円</span>
+        </div>
+        <input type="range" id="rngNew" min="1000" max="4500" step="200" value="2000" oninput="calc()">
+      </div>
+      <div class="s-row">
+        <div class="s-head">
+          <span>👨‍👩‍👧‍👦 家族のスマホ回線数</span>
+          <span class="s-val" id="lblLines" style="color:var(--amber);">2 回線</span>
+        </div>
+        <input type="range" id="rngLines" min="1" max="5" step="1" value="2" oninput="calc()">
+      </div>
+    </div>
+
+    <!-- 4. 浮いたスマホ代で実質タダで買える名品6選 -->
+    <div class="sec-title" id="giftTitle">🎁 1年目に浮く15.6万円で実質タダで買える人気家電・名品</div>
+    <div class="tile-grid" id="giftTiles"></div>
+  </div>
+
+  <script>
+    const AID = '5876771';
+    const PID = '54';
+    function rakutenUrl(q) {
+      return 'https://af.moshimo.com/af/c/click?a_id=' + AID + '&p_id=' + PID + '&pc_id=54&pl_id=616&url=' +
+        encodeURIComponent('https://search.rakuten.co.jp/search/mall/' + encodeURIComponent(q) + '/');
+    }
+
+    const PRESETS = [
+      { id: 'p1', icon: '👤', name: '1人（単身）', tag: '10年で約78万円浮く', cur: 8500, next: 2000, lines: 1 },
+      { id: 'p2', icon: '💑', name: '夫婦・カップル2人', tag: '10年で約156万円浮く', cur: 8500, next: 2000, lines: 2 },
+      { id: 'p3', icon: '👨‍👩‍👧', name: '家族3人シェア', tag: '10年で約234万円浮く', cur: 8500, next: 2000, lines: 3 },
+      { id: 'p4', icon: '👨‍👩‍👧‍👦', name: '家族4人まるごと', tag: '10年で約312万円浮く', cur: 8500, next: 2000, lines: 4 }
+    ];
+
+    const TILES = [
+      { tag: '📱 乗り換え前に最安入手', name: 'SIMフリー iPhone / 人気Android本体（高還元）', q: 'SIMフリー スマートフォン 本体 ランキング' },
+      { tag: '🔋 外出先のギガ・電池対策', name: 'Anker モバイルバッテリー＆急速充電器', q: 'Anker モバイルバッテリー 急速充電器' },
+      { tag: '🤖 浮いた3ヶ月分で自動化', name: 'Anker Eufy / SwitchBot ロボット掃除機', q: 'ロボット掃除機 自動ゴミ収集 水拭き Anker SwitchBot' },
+      { tag: '🍽️ 浮いた3ヶ月分で皿洗い0', name: '工事不要タンク式食洗機（シロカ・ラクア）', q: '食洗機 工事不要 タンク式 ランキング' },
+      { tag: '🎧 通勤時間が極上カフェに', name: 'ワイヤレスイヤホン ノイズキャンセリング', q: 'ワイヤレスイヤホン ノイズキャンセリング ランキング' },
+      { tag: '🎁 浮いたお金をさらに増やす', name: '楽天ふるさと納税 総合人気ランキング', q: 'ふるさと納税 人気ランキング 総合' }
+    ];
+
+    let curPreset = PRESETS[1];
+
+    function renderPresets() {
+      document.getElementById('presetGrid').innerHTML = PRESETS.map(p => `
+        <button type="button" class="p-btn ${p.id === curPreset.id ? 'active' : ''}" onclick="selectPreset('${p.id}')">
+          <span class="p-icon">${p.icon}</span>
+          <div style="min-width:0;">
+            <div class="p-name">${p.name}</div>
+            <div class="p-tag">${p.tag}</div>
+          </div>
+        </button>
+      `).join('');
+    }
+
+    function selectPreset(id) {
+      const p = PRESETS.find(x => x.id === id);
+      if (!p) return;
+      curPreset = p;
+      document.getElementById('rngCur').value = p.cur;
+      document.getElementById('rngNew').value = p.next;
+      document.getElementById('rngLines').value = p.lines;
+      renderPresets();
+      calc();
+    }
+
+    function renderTiles() {
+      document.getElementById('heroRankLink').href = rakutenUrl('SIMフリー スマートフォン Anker ランキング');
+      document.getElementById('giftTiles').innerHTML = TILES.map(t => `
+        <a href="${rakutenUrl(t.q)}" target="_blank" rel="nofollow sponsored noopener" class="tile">
+          <div>
+            <div class="t-tag">${t.tag}</div>
+            <div class="t-name">${t.name}</div>
+          </div>
+          <div class="t-btn">🛍️ 楽天で見る ↗</div>
+        </a>
+      `).join('');
+    }
+
+    function calc() {
+      const curFee = Number(document.getElementById('rngCur').value) || 8500;
+      const newFee = Number(document.getElementById('rngNew').value) || 2000;
+      const lines = Number(document.getElementById('rngLines').value) || 2;
+
+      const diffPerLine = Math.max(0, curFee - newFee);
+      const monthlySave = diffPerLine * lines;
+      const yearlySave = monthlySave * 12;
+      const tenYearSave = yearlySave * 10;
+
+      document.getElementById('lblCur').textContent = `月 ${curFee.toLocaleString()} 円`;
+      document.getElementById('lblNew').textContent = `月 ${newFee.toLocaleString()} 円`;
+      document.getElementById('lblLines').textContent = `${lines} 回線`;
+
+      document.getElementById('vLabel').textContent = `📱 ${lines}回線を格安SIMへ乗り換えると、10年間で…`;
+      document.getElementById('vMain').textContent = `+${tenYearSave.toLocaleString()} 円 浮く！`;
+      document.getElementById('vMonthly').textContent = `+${monthlySave.toLocaleString()} 円/月`;
+      document.getElementById('vYearly').textContent = `+${yearlySave.toLocaleString()} 円/年`;
+      document.getElementById('giftTitle').textContent = `🎁 1年目に浮く ${(yearlySave / 10000).toFixed(1)}万円 で実質タダで買える人気家電・名品`;
+    }
+
+    renderPresets();
+    renderTiles();
+    calc();
+  </script>
+<!-- Moshimo Official Rakuten Sponsor -->
+<div style="max-width: 600px; margin: 24px auto 12px; padding: 0 16px;">
+  <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F1000%25E5%2586%2586%25E3%2583%259D%25E3%2583%2583%25E3%2582%25AD%25E3%2583%25AA%2520%25E9%2580%2581%25E6%2596%2599%25E7%2584%25A1%25E6%2596%2599%2520%25E3%2581%25B5%25E3%2582%258B%25E3%2581%2595%25E3%2581%25A8%25E7%25B4%258D%25E7%25A8%258E%2520%25E4%25BA%25BA%25E6%25B0%2597%25E3%2583%25A9%25E3%2583%25B3%25E3%2582%25AD%25E3%2583%25B3%25E3%2582%25B0%2F" target="_blank" rel="nofollow sponsored noopener" style="display:flex; align-items:center; justify-content:space-between; gap:10px; background:linear-gradient(135deg, rgba(245,158,11,0.16), rgba(30,41,59,0.92)); border:1px solid rgba(245,158,11,0.5); border-radius:12px; padding:12px 14px; text-decoration:none; color:#f8fafc; margin-bottom:10px;">
+    <div style="min-width:0; flex:1; text-align:left;">
+      <div style="font-size:0.875rem; font-weight:800; color:#fde047; line-height:1.35;">🎁 楽天お買い物マラソン・1,000円ポッキリ＆ふるさと納税人気ランキング</div>
+      <div style="font-size:0.75rem; color:#34d399; font-weight:600; margin-top:3px;">✓ 本日のタイムセール＆買い回り名品をワンタップで確認（PR）</div>
+    </div>
+    <span style="flex-shrink:0; background:rgba(245,158,11,0.22); border:1px solid #f59e0b; color:#fde047; font-size:0.75rem; font-weight:800; padding:6px 10px; border-radius:8px; white-space:nowrap;">楽天で見る ↗</span>
+  </a>
+  <div style="text-align: center; font-size: 0.75rem; color: #64748b;">
+    <span>PR：</span><a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=618&url=https%3A%2F%2Fwww.rakuten.co.jp%2F" rel="nofollow sponsored" target="_blank" style="color: #94a3b8; text-decoration: none; border-bottom: 1px solid #475569;">楽天市場 公式スポンサー</a>
+    <img src="https://i.moshimo.com/af/i/impression?a_id=5876771&p_id=54&pc_id=54&pl_id=618" width="1" height="1" style="border:none;" loading="lazy" alt="">
+  </div>
+</div>
+</body>
+</html>

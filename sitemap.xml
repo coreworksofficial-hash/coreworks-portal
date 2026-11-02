@@ -5,6 +5,10 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://coreworks-portal.pages.dev/furusato-tax/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://coreworks-portal.pages.dev/payback-calc/</loc>
     <priority>0.8</priority>
   </url>
@@ -13,11 +17,19 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://coreworks-portal.pages.dev/winter-electricity/</loc>
+    <loc>https://coreworks-portal.pages.dev/dishwasher-roi/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://coreworks-portal.pages.dev/sim-savings/</loc>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://coreworks-portal.pages.dev/color-sense/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://coreworks-portal.pages.dev/winter-electricity/</loc>
     <priority>0.8</priority>
   </url>
   <url>

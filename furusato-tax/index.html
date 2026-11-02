@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ふるさと納税「控除上限額＆ポイント黒字」1秒シミュレーター ｜ Coreworks Studio</title>
+  <meta name="description" content="年収と家族構成を選ぶだけで、自己負担2,000円で寄付できる「ふるさと納税の控除上限額」と楽天ポイント還元を含めた実質黒字額を1秒で計算します。">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "ふるさと納税の控除上限額はどうやって決まりますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "年収（給与収入）と家族構成（配偶者控除や扶養家族の有無）によって決まります。上限額以内の寄付であれば、寄付合計額から2,000円を引いた全額が翌年の住民税・所得税から控除されます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "ふるさと納税で自己負担2,000円すら実質タダ（黒字）にする方法は？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "楽天お買い物マラソンやスーパーSALE期間中に寄付すると、買い回りやSPUで10%〜20%前後のポイント還元が得られるため、20,000円以上の寄付で自己負担2,000円を上回るポイントが戻ってきます。"
+        }
+      }
+    ]
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --border: #334155;
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --subtle: #94a3b8;
+      --accent: #10b981;
+      --blue: #3b82f6;
+      --green: #34d399;
+      --amber: #fde047;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    html, body { overflow-x: hidden; width: 100%; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", sans-serif; font-size: 16px; line-height: 1.5; }
+    .container { max-width: 600px; margin: 0 auto; padding: 16px 16px 48px; }
+    .back-link { display: inline-block; margin-bottom: 10px; color: var(--blue); text-decoration: none; font-size: 0.9375rem; font-weight: 700; }
+    h1 { font-size: 1.35rem; font-weight: 800; margin-bottom: 4px; color: var(--text); }
+    .lead { color: var(--muted); font-size: 0.9rem; margin-bottom: 16px; }
+
+    /* 1. 家族構成プリセット（ワンタップ） */
+    .preset-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 16px; }
+    .p-btn {
+      background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+      padding: 11px 10px; display: flex; align-items: center; gap: 8px;
+      color: var(--text); cursor: pointer; text-align: left; min-width: 0;
+    }
+    .p-btn.active {
+      background: rgba(16, 185, 129, 0.16); border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent);
+    }
+    .p-icon { font-size: 1.45rem; flex-shrink: 0; }
+    .p-name { font-size: 0.875rem; font-weight: 700; color: var(--text); line-height: 1.3; }
+    .p-tag { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+
+    /* 2. ドカンと結論ボックス */
+    .verdict-box {
+      background: linear-gradient(145deg, rgba(16, 185, 129, 0.18), rgba(30, 41, 59, 0.95));
+      border: 2px solid var(--accent); border-radius: 16px;
+      padding: 18px 15px; text-align: center; margin-bottom: 18px;
+    }
+    .v-label { font-size: 0.9rem; color: var(--muted); font-weight: 700; }
+    .v-main { font-size: 2.1rem; font-weight: 800; color: #ffffff; margin: 4px 0 6px; letter-spacing: -0.02em; }
+    .v-sub { font-size: 0.85rem; color: var(--amber); font-weight: 700; margin-bottom: 12px; }
+    .v-kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+    .v-kpi { background: rgba(15, 23, 42, 0.75); border: 1px solid var(--border); border-radius: 10px; padding: 10px 8px; }
+    .v-kpi-lbl { font-size: 0.78rem; color: var(--muted); }
+    .v-kpi-val { font-size: 1.1rem; font-weight: 800; margin-top: 3px; color: var(--text); }
+    .hero-cta {
+      display: block; width: 100%; padding: 13px 12px; border-radius: 12px;
+      background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
+      color: #0f172a; font-weight: 800; font-size: 0.95rem; text-decoration: none;
+      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+    }
+    .hero-cta:active { transform: scale(0.99); }
+
+    /* 3. スライダー調整カード */
+    .sliders-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 16px; margin-bottom: 22px; }
+    .s-row { margin-bottom: 16px; }
+    .s-row:last-child { margin-bottom: 0; }
+    .s-head { display: flex; justify-content: space-between; align-items: baseline; font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+    .s-val { color: var(--green); font-weight: 800; font-size: 1.05rem; }
+    input[type="range"] { width: 100%; accent-color: var(--accent); height: 8px; cursor: pointer; }
+
+    /* 4. 鉄板返礼品ランキング直行タイル */
+    .sec-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 10px; color: var(--text); border-top: 1px solid var(--border); padding-top: 18px; }
+    .tile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+    .tile {
+      background: rgba(30, 41, 59, 0.75); border: 1px solid var(--border); border-radius: 12px;
+      padding: 13px 11px; text-decoration: none; color: inherit;
+      display: flex; flex-direction: column; justify-content: space-between; min-width: 0;
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+    .tile:hover { border-color: var(--accent); background: rgba(30, 41, 59, 0.95); }
+    .t-tag { font-size: 0.75rem; font-weight: 700; color: var(--green); margin-bottom: 4px; }
+    .t-name { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 10px; line-height: 1.35; }
+    .t-btn {
+      background: rgba(245, 158, 11, 0.16); border: 1px solid #f59e0b;
+      color: var(--amber); text-align: center; padding: 7px 6px; border-radius: 8px;
+      font-size: 0.8rem; font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="../?tab=calc" class="back-link">← 損得計算一覧へ戻る</a>
+    <h1>🎁 ふるさと納税 控除上限額 1秒シミュレーター</h1>
+    <p class="lead">家族構成と年収を選ぶだけで、自己負担2,000円の上限目安と実質黒字額を1秒判定！</p>
+
+    <!-- 1. 家族構成ボタン -->
+    <div class="preset-grid" id="familyGrid"></div>
+
+    <!-- 2. 結論ボックス -->
+    <div class="verdict-box">
+      <div class="v-label" id="vLabel">👤 独身・共働き（年収 500万円）の上限目安は…</div>
+      <div class="v-main" id="vMain">約 61,000 円</div>
+      <div class="v-sub" id="vSub">✨ 1万円の返礼品が 6個 もらえて、ポイントだけで自己負担2,000円も黒字化！</div>
+      <div class="v-kpis">
+        <div class="v-kpi">
+          <div class="v-kpi-lbl">返礼品(3割換算)＋還元P</div>
+          <div class="v-kpi-val" id="vTotalBenefit" style="color:var(--green);">+24,400 円相当</div>
+        </div>
+        <div class="v-kpi">
+          <div class="v-kpi-lbl">2,000円負担後の純利益</div>
+          <div class="v-kpi-val" id="vNetProfit" style="color:var(--amber);">+22,400 円おトク</div>
+        </div>
+      </div>
+      <a id="heroRankLink" href="#" target="_blank" rel="nofollow sponsored noopener" class="hero-cta">
+        👑 楽天ふるさと納税 総合人気ランキングを見る（PR） ↗
+      </a>
+    </div>
+
+    <!-- 3. スライダー操作 -->
+    <div class="sliders-card">
+      <div class="s-row">
+        <div class="s-head">
+          <span>💴 あなたの年収（額面）</span>
+          <span class="s-val" id="lblIncome">500 万円</span>
+        </div>
+        <input type="range" id="rngIncome" min="250" max="1500" step="25" value="500" oninput="calc()">
+      </div>
+      <div class="s-row">
+        <div class="s-head">
+          <span>🛍️ 楽天マラソン・SPU等の還元目安</span>
+          <span class="s-val" id="lblRate" style="color:var(--amber);">10 %還元</span>
+        </div>
+        <input type="range" id="rngRate" min="3" max="20" step="1" value="10" oninput="calc()">
+      </div>
+    </div>
+
+    <!-- 4. 鉄板返礼品ランキング6選 -->
+    <div class="sec-title">🏆 失敗しない！楽天ふるさと納税 鉄板返礼品ランキング6選</div>
+    <div class="tile-grid" id="furuTiles"></div>
+  </div>
+
+  <script>
+    const AID = '5876771';
+    const PID = '54';
+    function rakutenUrl(q) {
+      return 'https://af.moshimo.com/af/c/click?a_id=' + AID + '&p_id=' + PID + '&pc_id=54&pl_id=616&url=' +
+        encodeURIComponent('https://search.rakuten.co.jp/search/mall/' + encodeURIComponent(q) + '/');
+    }
+
+    // 総務省目安テーブルに基づく年収別（250万〜1500万）の上限近似ロジック
+    const FAMILY_TYPES = [
+      { id: 'single', icon: '👤', name: '独身・共働き', tag: '扶養家族なし', offset: 0, factor: 1.0 },
+      { id: 'couple', icon: '💑', name: '夫婦（配偶者控除）', tag: '配偶者に収入なし', offset: -9000, factor: 0.88 },
+      { id: 'child1', icon: '👨‍👩‍👧', name: '共働き＋高校生1人', tag: '16〜18歳の扶養1人', offset: -11000, factor: 0.86 },
+      { id: 'child2', icon: '👨‍👩‍👧‍👦', name: '夫婦＋子2人(高・大)', tag: '高校生＋大学生', offset: -28000, factor: 0.72 }
+    ];
+
+    // 独身・共働きベース上限テーブル（万円 -> 円）
+    const BASE_TABLE = [
+      [250, 22000], [300, 28000], [350, 34000], [400, 42000], [450, 52000],
+      [500, 61000], [550, 69000], [600, 77000], [650, 97000], [700, 108000],
+      [750, 118000], [800, 129000], [850, 141000], [900, 152000], [950, 164000],
+      [1000, 176000], [1100, 215000], [1200, 242000], [1300, 295000], [1400, 345000], [1500, 389000]
+    ];
+
+    const TILES = [
+      { tag: '👑 総合人気No.1', name: 'オホーツク産 大粒ホタテ＆厚切り銀鮭', q: 'ふるさと納税 ホタテ 鮭 ランキング' },
+      { tag: '🌾 食費を直撃カット', name: '新米・無洗米 10kg〜20kg 定期便', q: 'ふるさと納税 米 無洗米 20kg 10kg' },
+      { tag: '🧻 半年間買わずに済む', name: 'トイレットペーパー・ティッシュ大容量', q: 'ふるさと納税 トイレットペーパー ティッシュ' },
+      { tag: '🥩 毎日の夕食が豪華に', name: '国産黒毛和牛・豚肉切り落とし小分け', q: 'ふるさと納税 豚肉 牛肉 小分け ランキング' },
+      { tag: '🍺 晩酌代がまるごと浮く', name: 'ビール・強炭酸水・ハイボール缶ケース', q: 'ふるさと納税 ビール 炭酸水 ケース' },
+      { tag: '🎯 端数調整にピッタリ', name: '5,000円〜10,000円ポッキリ人気返礼品', q: 'ふるさと納税 5000円 10000円 人気ランキング' }
+    ];
+
+    let curFam = FAMILY_TYPES[0];
+
+    function interpLimit(incMan, fam) {
+      let base = 61000;
+      for (let i = 0; i < BASE_TABLE.length - 1; i++) {
+        const [x0, y0] = BASE_TABLE[i];
+        const [x1, y1] = BASE_TABLE[i + 1];
+        if (incMan >= x0 && incMan <= x1) {
+          base = y0 + ((incMan - x0) / (x1 - x0)) * (y1 - y0);
+          break;
+        }
+      }
+      if (incMan >= 1500) base = 389000;
+      const raw = Math.max(5000, Math.round((base * fam.factor + fam.offset) / 1000) * 1000);
+      return raw;
+    }
+
+    function renderFamilies() {
+      document.getElementById('familyGrid').innerHTML = FAMILY_TYPES.map(f => `
+        <button type="button" class="p-btn ${f.id === curFam.id ? 'active' : ''}" onclick="selectFam('${f.id}')">
+          <span class="p-icon">${f.icon}</span>
+          <div style="min-width:0;">
+            <div class="p-name">${f.name}</div>
+            <div class="p-tag">${f.tag}</div>
+          </div>
+        </button>
+      `).join('');
+    }
+
+    function selectFam(id) {
+      const f = FAMILY_TYPES.find(x => x.id === id);
+      if (!f) return;
+      curFam = f;
+      renderFamilies();
+      calc();
+    }
+
+    function renderTiles() {
+      document.getElementById('heroRankLink').href = rakutenUrl('ふるさと納税 人気ランキング 総合');
+      document.getElementById('furuTiles').innerHTML = TILES.map(t => `
+        <a href="${rakutenUrl(t.q)}" target="_blank" rel="nofollow sponsored noopener" class="tile">
+          <div>
+            <div class="t-tag">${t.tag}</div>
+            <div class="t-name">${t.name}</div>
+          </div>
+          <div class="t-btn">🎁 楽天で返礼品を見る ↗</div>
+        </a>
+      `).join('');
+    }
+
+    function calc() {
+      const inc = Number(document.getElementById('rngIncome').value) || 500;
+      const rate = Number(document.getElementById('rngRate').value) || 10;
+      document.getElementById('lblIncome').textContent = `${inc.toLocaleString()} 万円`;
+      document.getElementById('lblRate').textContent = `${rate} %還元`;
+
+      const limit = interpLimit(inc, curFam);
+      const giftVal = Math.round(limit * 0.3);
+      const pts = Math.round(limit * (rate / 100));
+      const totalVal = giftVal + pts;
+      const netProfit = totalVal - 2000;
+      const count10k = Math.max(1, Math.floor(limit / 10000));
+
+      document.getElementById('vLabel').textContent = `${curFam.icon} ${curFam.name}（年収 ${inc}万円）の上限目安は…`;
+      document.getElementById('vMain').textContent = `約 ${limit.toLocaleString()} 円`;
+      document.getElementById('vSub').textContent = pts >= 2000
+        ? `✨ 1万円の返礼品が約 ${count10k}個 もらえて、還元ポイント(+${pts.toLocaleString()}P)だけで自己負担2,000円も完全タダ！`
+        : `✨ 1万円の返礼品が約 ${count10k}個 もらえます！（還元ポイント +${pts.toLocaleString()}P）`;
+      document.getElementById('vTotalBenefit').textContent = `+${totalVal.toLocaleString()} 円相当`;
+      document.getElementById('vNetProfit').textContent = `+${netProfit.toLocaleString()} 円おトク`;
+    }
+
+    renderFamilies();
+    renderTiles();
+    calc();
+  </script>
+<!-- Moshimo Official Rakuten Sponsor -->
+<div style="max-width: 600px; margin: 24px auto 12px; padding: 0 16px;">
+  <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F1000%25E5%2586%2586%25E3%2583%259D%25E3%2583%2583%25E3%2582%25AD%25E3%2583%25AA%2520%25E9%2580%2581%25E6%2596%2599%25E7%2584%25A1%25E6%2596%2599%2520%25E3%2581%25B5%25E3%2582%258B%25E3%2581%2595%25E3%2581%25A8%25E7%25B4%258D%25E7%25A8%258E%2520%25E4%25BA%25BA%25E6%25B0%2597%25E3%2583%25A9%25E3%2583%25B3%25E3%2582%25AD%25E3%2583%25B3%25E3%2582%25B0%2F" target="_blank" rel="nofollow sponsored noopener" style="display:flex; align-items:center; justify-content:space-between; gap:10px; background:linear-gradient(135deg, rgba(245,158,11,0.16), rgba(30,41,59,0.92)); border:1px solid rgba(245,158,11,0.5); border-radius:12px; padding:12px 14px; text-decoration:none; color:#f8fafc; margin-bottom:10px;">
+    <div style="min-width:0; flex:1; text-align:left;">
+      <div style="font-size:0.875rem; font-weight:800; color:#fde047; line-height:1.35;">🎁 楽天お買い物マラソン・1,000円ポッキリ＆ふるさと納税人気ランキング</div>
+      <div style="font-size:0.75rem; color:#34d399; font-weight:600; margin-top:3px;">✓ 本日のタイムセール＆買い回り名品をワンタップで確認（PR）</div>
+    </div>
+    <span style="flex-shrink:0; background:rgba(245,158,11,0.22); border:1px solid #f59e0b; color:#fde047; font-size:0.75rem; font-weight:800; padding:6px 10px; border-radius:8px; white-space:nowrap;">楽天で見る ↗</span>
+  </a>
+  <div style="text-align: center; font-size: 0.75rem; color: #64748b;">
+    <span>PR：</span><a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=618&url=https%3A%2F%2Fwww.rakuten.co.jp%2F" rel="nofollow sponsored" target="_blank" style="color: #94a3b8; text-decoration: none; border-bottom: 1px solid #475569;">楽天市場 公式スポンサー</a>
+    <img src="https://i.moshimo.com/af/i/impression?a_id=5876771&p_id=54&pc_id=54&pl_id=618" width="1" height="1" style="border:none;" loading="lazy" alt="">
+  </div>
+</div>
+</body>
+</html>
