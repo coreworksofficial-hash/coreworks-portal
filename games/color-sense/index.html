@@ -1,0 +1,1879 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#160a2c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>色彩センス！絶対色感テスト</title>
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  :root {
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  html.android-apk {
+    --safe-top: max(env(safe-area-inset-top, 0px), 40px);
+    --safe-bottom: max(env(safe-area-inset-bottom, 0px), 24px);
+  }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: linear-gradient(180deg, #160a2c 0%, #2e1065 100%);
+    color: #f8fafc;
+    font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Meiryo', sans-serif;
+    touch-action: manipulation;
+    transition: background 0.35s ease, color 0.35s ease;
+  }
+
+  body.boss-mode {
+    background: linear-gradient(180deg, #2a0a18 0%, #1e1b4b 100%);
+    color: #fff1f2;
+  }
+
+  #app {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: calc(var(--safe-top) + 16px) 18px calc(var(--safe-bottom) + 14px);
+  }
+
+  #top-progress-wrap {
+    position: absolute;
+    top: var(--safe-top);
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.15);
+    overflow: hidden;
+  }
+
+  body.boss-mode #top-progress-wrap {
+    background-color: rgba(255, 255, 255, 0.12);
+  }
+
+  #top-progress-bar {
+    height: 100%;
+    width: 100%;
+    background-color: #f43f5e;
+    transition: width 0.05s linear, background-color 0.2s ease;
+  }
+
+  .header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  .top-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+  }
+
+  .stage-badge {
+    background: #ffffff;
+    border: 2px solid #e7e0d6;
+    color: #be123c;
+    font-size: 14px;
+    font-weight: 900;
+    padding: 6px 13px;
+    border-radius: 999px;
+    letter-spacing: 0.4px;
+    box-shadow: 0 3px 10px rgba(28, 25, 23, 0.06);
+  }
+
+  .stage-badge.boss {
+    background: #881337;
+    border-color: #fb7185;
+    color: #ffe4e6;
+    box-shadow: 0 0 14px rgba(244, 63, 94, 0.45);
+  }
+
+  .step-pill {
+    background: #ffffff;
+    border: 2px solid #e7e0d6;
+    color: #44403c;
+    font-size: 13px;
+    font-weight: 900;
+    padding: 6px 12px;
+    border-radius: 999px;
+  }
+
+  .step-pill.boss {
+    background: #9f1239;
+    border-color: #fda4af;
+    color: #fff1f2;
+  }
+
+  .icon-btn {
+    background: #ffffff;
+    border: 2px solid #e7e0d6;
+    color: #292524;
+    font-size: 14px;
+    font-weight: 900;
+    padding: 6px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  }
+
+  body.boss-mode .icon-btn {
+    background: #4c0519;
+    border-color: #fb7185;
+    color: #fff1f2;
+  }
+
+  .icon-btn:active {
+    transform: scale(0.94);
+  }
+
+  .headline-1 {
+    font-size: 27px;
+    font-weight: 900;
+    color: #ffffff;
+    text-align: center;
+    line-height: 1.25;
+  }
+
+  body.boss-mode .headline-1 {
+    color: #fff1f2;
+  }
+
+  .headline-2 {
+    font-size: 28px;
+    font-weight: 900;
+    color: #fbbf24;
+    text-align: center;
+    line-height: 1.25;
+  }
+
+  body.boss-mode .headline-2 {
+    color: #fda4af;
+  }
+
+  #status-banner {
+    width: 100%;
+    height: 52px;
+    border-radius: 16px;
+    background-color: #ffffff;
+    border: 2px solid #e7e0d6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+    font-weight: 900;
+    color: #292524;
+    box-shadow: 0 4px 14px rgba(28, 25, 23, 0.06);
+    font-variant-numeric: tabular-nums;
+  }
+
+  body.boss-mode #status-banner {
+    background-color: #4c0519;
+    border-color: #fb7185;
+    color: #ffe4e6;
+  }
+
+  #status-banner.correct {
+    background-color: #ecfdf5;
+    border-color: #10b981;
+    color: #047857;
+  }
+
+  #status-banner.reveal {
+    background-color: #fff1f2;
+    border-color: #f43f5e;
+    color: #be123c;
+  }
+
+  #grid-frame {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-height: 50vh;
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 14px;
+    box-shadow: 0 12px 32px rgba(28, 25, 23, 0.09);
+    border: 2px solid #ece5dc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  body.boss-mode #grid-frame {
+    background: #3b0a14;
+    border-color: #9f1239;
+  }
+
+  #grid {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    gap: 10px;
+  }
+
+  .color-tile {
+    border-radius: 16px;
+    cursor: pointer;
+    position: relative;
+    box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.12), 0 3px 8px rgba(0, 0, 0, 0.07);
+    transition: transform 0.08s ease, opacity 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 900;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+  }
+
+  .color-tile:active {
+    transform: scale(0.93);
+  }
+
+  .color-tile.correct-tile {
+    outline: 5px solid #10b981;
+    outline-offset: 2px;
+    transform: scale(1.04);
+    z-index: 2;
+  }
+
+  .color-tile.wrong-tile {
+    outline: 5px solid #ef4444;
+    outline-offset: 2px;
+  }
+
+  .color-tile.dimmed {
+    opacity: 0.16;
+    pointer-events: none;
+  }
+
+  .footer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .rank-box {
+    flex: 1;
+    height: 52px;
+    background: #ffffff;
+    border: 2px solid #e7e0d6;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 900;
+    color: #292524;
+  }
+
+  body.boss-mode .rank-box {
+    background: #4c0519;
+    border-color: #9f1239;
+    color: #ffe4e6;
+  }
+
+  .hint-btn {
+    height: 52px;
+    padding: 0 16px;
+    border-radius: 14px;
+    background: #fffbeb;
+    border: 2px solid #f59e0b;
+    color: #b45309;
+    font-size: 15px;
+    font-weight: 900;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .hint-btn:active {
+    transform: scale(0.95);
+  }
+
+  .hint-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .hint-btn.ad-reward {
+    background: linear-gradient(180deg, #fbbf24 0%, #f59e0b 100%);
+    color: #052e16;
+    border-color: #d97706;
+    box-shadow: 0 3px 12px rgba(245, 158, 11, 0.45);
+    animation: adPulse 1.6s infinite ease-in-out;
+  }
+
+  @keyframes adPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+  }
+
+  /* Stage Clear / Fail / Settings / Hybrid Ad Modals */
+  .overlay-modal,
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 100;
+  }
+
+  .overlay-modal.show,
+  .modal-overlay.show {
+    display: flex;
+  }
+
+  .modal-card {
+    width: 100%;
+    max-width: 400px;
+    background: #ffffff;
+    border: 3px solid #f43f5e;
+    border-radius: 24px;
+    padding: 22px 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+    color: #1c1917;
+  }
+
+  .modal-card.boss-alert {
+    background: linear-gradient(180deg, #3b0a1e 0%, #1e1b4b 100%);
+    border-color: #fb7185;
+    color: #ffffff;
+    box-shadow: 0 0 35px rgba(225, 29, 72, 0.6);
+  }
+
+  .modal-badge {
+    display: inline-block;
+    background: #ffe4e6;
+    color: #be123c;
+    font-size: 14px;
+    font-weight: 900;
+    padding: 5px 14px;
+    border-radius: 999px;
+  }
+
+  .modal-card.boss-alert .modal-badge {
+    background: #e11d48;
+    color: #ffffff;
+  }
+
+  .modal-title {
+    font-size: 25px;
+    font-weight: 900;
+    color: #1c1917;
+  }
+
+  .modal-card.boss-alert .modal-title {
+    color: #ffffff;
+  }
+
+  .modal-iq {
+    font-size: 34px;
+    font-weight: 900;
+    color: #e11d48;
+  }
+
+  .modal-card.boss-alert .modal-iq {
+    color: #fda4af;
+  }
+
+  .modal-comment {
+    font-size: 15px;
+    font-weight: 700;
+    color: #57534e;
+    line-height: 1.45;
+  }
+
+  .modal-card.boss-alert .modal-comment {
+    color: #fecdd3;
+  }
+
+  .primary-btn {
+    width: 100%;
+    border: none;
+    border-radius: 14px;
+    padding: 15px;
+    background: linear-gradient(180deg, #f43f5e 0%, #e11d48 100%);
+    color: #ffffff;
+    font-size: 19px;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(225, 29, 72, 0.35);
+  }
+
+  .primary-btn:active {
+    transform: scale(0.97);
+  }
+
+  /* Settings & Audio Volume Sliders */
+  .setting-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #faf6f0;
+    padding: 8px 12px;
+    border-radius: 12px;
+    border: 1px solid #e7e0d6;
+  }
+
+  .setting-card {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: #faf6f0;
+    border: 1px solid #e7e0d6;
+    border-radius: 12px;
+    padding: 9px 12px;
+  }
+
+  .setting-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .setting-label {
+    font-size: 15px;
+    font-weight: 900;
+    color: #292524;
+  }
+
+  .vol-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding-top: 1px;
+  }
+
+  .vol-slider {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 10px;
+    border-radius: 999px;
+    background: #d6d3d1;
+    outline: none;
+    touch-action: pan-y;
+    cursor: pointer;
+  }
+
+  .vol-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #10b981;
+    border: 3px solid #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+    cursor: pointer;
+  }
+
+  .vol-slider.muted::-webkit-slider-thumb {
+    background: #78716c;
+    border-color: #e7e0d6;
+  }
+
+  .vol-pct {
+    min-width: 44px;
+    text-align: right;
+    font-size: 14px;
+    font-weight: 900;
+    color: #059669;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .vol-pct.muted {
+    color: #78716c;
+  }
+
+  .toggle-btn {
+    min-width: 82px;
+    padding: 6px 12px;
+    border-radius: 9px;
+    font-size: 14px;
+    font-weight: 900;
+    border: none;
+    cursor: pointer;
+  }
+
+  .toggle-btn.on {
+    background: #10b981;
+    color: #ffffff;
+  }
+
+  .toggle-btn.off {
+    background: #d6d3d1;
+    color: #57534e;
+  }
+
+  .mission-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 4px 0 6px;
+  }
+
+  .mission-btn {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 2px solid #e7e0d6;
+    background: #faf6f0;
+    color: #292524;
+    font-size: 14px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  .mission-btn.active {
+    border-color: #e11d48;
+    background: #fff1f2;
+    color: #be123c;
+  }
+
+  .mission-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  /* Hybrid Ad Overlay Modal */
+  .ad-modal-card {
+    border-color: #38bdf8;
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+    color: #f8fafc;
+  }
+  .ad-modal-card .modal-badge {
+    background: #f59e0b;
+    color: #052e16;
+  }
+  .ad-modal-card .modal-title {
+    color: #ffffff;
+  }
+  .ad-pr-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 6px 0 10px;
+    text-align: left;
+  }
+  .ad-pr-card {
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    padding: 18px 14px;
+    border-radius: 16px;
+    background: rgba(30, 41, 59, 0.95);
+    border: 2px solid #f59e0b;
+    color: #f8fafc;
+    text-decoration: none;
+    box-shadow: 0 8px 24px rgba(245, 158, 11, 0.25);
+    transition: transform 0.15s ease, border-color 0.2s ease;
+  }
+  .ad-pr-card.active-pr {
+    display: flex;
+  }
+  .ad-pr-card:active {
+    transform: scale(0.98);
+  }
+  .ad-pr-tag {
+    display: inline-block;
+    align-self: flex-start;
+    background: rgba(245, 158, 11, 0.2);
+    border: 1px solid #fbbf24;
+    color: #fde047;
+    font-size: 12px;
+    font-weight: 900;
+    padding: 3px 10px;
+    border-radius: 99px;
+  }
+  .ad-pr-title {
+    font-size: 16px;
+    font-weight: 900;
+    line-height: 1.45;
+    color: #ffffff;
+  }
+  .ad-pr-cta {
+    margin-top: 6px;
+    background: rgba(56, 189, 248, 0.2);
+    border: 1px solid #38bdf8;
+    color: #38bdf8;
+    font-size: 14px;
+    font-weight: 900;
+    text-align: center;
+    padding: 9px 12px;
+    border-radius: 10px;
+  }
+  .ad-progress-track {
+    width: 100%;
+    height: 10px;
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 99px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .ad-progress-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #38bdf8 0%, #10b981 50%, #fbbf24 100%);
+    transition: width 0.1s linear;
+  }
+  #adCompleteBtn:disabled {
+    background: #334155;
+    color: #94a3b8;
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: none;
+  }
+  #adCompleteBtn.ready {
+    background: linear-gradient(180deg, #fbbf24 0%, #10b981 100%);
+    color: #052e16;
+    box-shadow: 0 4px 18px rgba(16, 185, 129, 0.5);
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="top-progress-wrap">
+    <div id="top-progress-bar"></div>
+  </div>
+
+  <div class="header">
+    <div class="top-row">
+      <div class="stage-badge" id="stageBadge">🎨 MISSION 1 - STAGE 1</div>
+      <div class="step-pill" id="stepPill">第 1 / 3 問</div>
+      <button class="icon-btn" id="settingsBtn">⚙️ 設定</button>
+    </div>
+    <div class="headline-1" id="headline1">1つだけ色が違うパネルを</div>
+    <div class="headline-2" id="headline2">直感でタップ！</div>
+  </div>
+
+  <div id="status-banner">⏱️ 残り 12.0 秒！</div>
+
+  <div id="grid-frame">
+    <div id="grid"></div>
+  </div>
+
+  <div class="footer">
+    <div class="rank-box" id="rankText">🎨 色感IQ 100 ｜ 見習いカラーリスト</div>
+    <button class="hint-btn" id="hintBtn">💡 ヒント (3)</button>
+  </div>
+
+  <!-- Stage Clear / Fail / Boss Alert Modal -->
+  <div class="overlay-modal" id="modal">
+    <div class="modal-card" id="modalCard">
+      <div class="modal-badge" id="modalBadge">STAGE CLEAR!</div>
+      <div class="modal-title" id="modalTitle">ステージクリア！</div>
+      <div class="modal-iq" id="modalIQ">色感IQ 110</div>
+      <div class="modal-comment" id="modalComment">素晴らしい色彩感覚です！</div>
+      <button class="primary-btn" id="modalReviveBtn" style="display:none; margin-bottom:6px; background:linear-gradient(180deg, #f59e0b 0%, #d97706 100%); color:#052e16; box-shadow:0 4px 15px rgba(245,158,11,0.4);">🎬 動画を見て【同じ問題】に再挑戦</button>
+      <button class="primary-btn" id="modalActionBtn">▶️ 次へ進む</button>
+<!-- Coreworks In-Game Monetization & Nav -->
+      <div style="width:100%; margin-top:12px; padding-top:12px; border-top:1px solid rgba(148,163,184,0.2); display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex; gap:8px; width:100%;">
+          <a href="/payback-calc/" style="flex:1; padding:10px 6px; border-radius:8px; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); color:#34d399; font-size:13px; font-weight:700; text-decoration:none; text-align:center;">
+            🚿 元取り1秒計算
+          </a>
+          <a href="/?tab=game" style="flex:1; padding:10px 6px; border-radius:8px; background:rgba(99,102,241,0.16); border:1px solid rgba(99,102,241,0.4); color:#818cf8; font-size:13px; font-weight:700; text-decoration:none; text-align:center;">
+            🧠 脳トレ一覧へ
+          </a>
+        </div>
+        <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E3%2583%259B%25E3%2583%2583%25E3%2583%2588%25E3%2582%25A2%25E3%2582%25A4%25E3%2583%259E%25E3%2582%25B9%25E3%2582%25AF%2520%25E9%259B%25BB%25E6%25B0%2597%25E6%25AF%259B%25E5%25B8%2583%2520%25E7%25AF%2580%25E6%25B0%25B4%25E3%2582%25B7%25E3%2583%25A3%25E3%2583%25AF%25E3%2583%25BC%25E3%2583%2598%25E3%2583%2583%25E3%2583%2589%2520%25E8%25B1%25A1%25E5%258D%25B0%2520%25E6%25B0%25B4%25E7%25AD%2592%2F" target="_blank" rel="nofollow sponsored" style="display:block; width:100%; padding:8px; border-radius:8px; background:rgba(245,158,11,0.14); border:1px solid rgba(245,158,11,0.45); color:#b45309; font-size:12px; font-weight:700; text-decoration:none; text-align:center;">
+          💡 人気の節約・時短アイテムを楽天で見る（PR） ↗
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings & Mission Select Modal -->
+  <div class="overlay-modal" id="settingsModal">
+    <div class="modal-card" style="max-height:92vh; overflow-y:auto;">
+      <div class="modal-badge" id="settingsBadge" style="cursor:pointer; user-select:none;" title="5回連続タップで開発テスト表示を切替">⚙️ 設定 ＆ ステージ選択</div>
+
+      <div class="setting-card">
+        <div class="setting-top">
+          <span class="setting-label">🎵 BGM（背景メロディ）</span>
+          <button class="toggle-btn on" id="toggleBgmBtn">ON</button>
+        </div>
+        <div class="vol-row">
+          <input type="range" min="0" max="100" value="70" class="vol-slider" id="bgmVolumeSlider" aria-label="BGM音量">
+          <span class="vol-pct" id="bgmVolumePct">70%</span>
+        </div>
+      </div>
+
+      <div class="setting-card">
+        <div class="setting-top">
+          <span class="setting-label">🔊 効果音（タップ・正解音）</span>
+          <button class="toggle-btn on" id="toggleSeBtn">ON</button>
+        </div>
+        <div class="vol-row">
+          <input type="range" min="0" max="100" value="80" class="vol-slider" id="seVolumeSlider" aria-label="効果音音量">
+          <span class="vol-pct" id="seVolumePct">80%</span>
+        </div>
+      </div>
+
+      <div class="setting-row" id="devModeRow" style="display:none;">
+        <span class="setting-label">🛠️ 開発テスト（全解放）</span>
+        <button class="toggle-btn off" id="toggleDevBtn">OFF</button>
+      </div>
+
+      <div class="modal-title" style="font-size:16px; margin-top:4px;">① ミッション選択（1〜5）</div>
+      <div class="mission-list" id="missionList"></div>
+
+      <div class="modal-title" id="stageSelectTitle" style="font-size:16px; margin-top:4px;">② ステージ直接ジャンプ（STAGE 1〜10）</div>
+      <div id="stageJumpGrid" style="width:100%; display:grid; grid-template-columns:repeat(5, 1fr); gap:6px; margin-bottom:4px;"></div>
+
+      <button class="primary-btn" id="closeSettingsBtn">✅ 閉じてゲームに戻る</button>
+      <a href="/?tab=game" class="web-portal-link" id="settingsPortalBtn" style="display:block; width:100%; margin-top:4px; padding:10px; border-radius:12px; background:rgba(99,102,241,0.18); border:1px solid rgba(99,102,241,0.45); color:#a5b4fc; font-size:13px; font-weight:800; text-decoration:none; text-align:center;">🏠 ゲーム一覧（ポータル）へ戻る</a>
+    </div>
+  </div>
+
+  <!-- Hybrid Ad Overlay Modal (Direct sibling inside #app) -->
+  <div class="overlay-modal" id="adOverlayModal">
+    <div class="modal-card ad-modal-card">
+      <div class="modal-badge" id="adModalBadge">🎁 ステージクリアボーナス</div>
+      <div class="modal-title" id="adModalTitle" style="font-size:16px; line-height:1.4; margin-bottom:2px;">少し待つと次のステージへ進めます</div>
+
+      <div class="ad-pr-list" id="adPrList">
+        <a class="ad-pr-card active-pr" data-pr-idx="0" href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F1000%25E5%2586%2586%25E3%2583%259D%25E3%2583%2583%25E3%2582%25AD%25E3%2583%25AA%2520%25E9%2580%2581%25E6%2596%2599%25E7%2584%25A1%25E6%2596%2599%2F" target="_blank" rel="nofollow sponsored">
+          <span class="ad-pr-tag">PR・楽天ランキング特選</span>
+          <span class="ad-pr-title">🎁 楽天1,000円ポッキリ＆送料無料ランキング</span>
+          <span class="ad-pr-cta">👉 楽天で人気ランキングを見る ↗</span>
+        </a>
+        <a class="ad-pr-card" data-pr-idx="1" href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E3%2583%259B%25E3%2583%2583%25E3%2583%2588%25E3%2582%25A2%25E3%2582%25A4%25E3%2583%259E%25E3%2582%25B9%25E3%2582%25AF%2520%25E9%259B%25BB%25E6%25B0%2597%25E6%25AF%259B%25E5%25B8%2583%2520%25E7%25AF%2580%25E6%25B0%25B4%25E3%2582%25B7%25E3%2583%25A3%25E3%2583%25AF%25E3%2583%25BC%25E3%2583%2598%25E3%2583%2583%25E3%2583%2589%2520%25E8%25B1%25A1%25E5%258D%25B0%2520%25E6%25B0%25B4%25E7%25AD%2592%2F" target="_blank" rel="nofollow sponsored">
+          <span class="ad-pr-tag">PR・目の疲れ＆色彩集中ケア</span>
+          <span class="ad-pr-title">🔥 目の疲れ＆色彩集中ケア！人気ホットアイマスクランキング</span>
+          <span class="ad-pr-cta">👉 アイケア・休息グッズを楽天で見る ↗</span>
+        </a>
+      </div>
+
+      <div class="ad-progress-track">
+        <div class="ad-progress-fill" id="adProgressBar"></div>
+      </div>
+
+      <button class="primary-btn" id="adCompleteBtn" disabled>あと 5 秒で次へ進めます</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  if (location.protocol === 'file:' || /wv|Android/i.test(navigator.userAgent)) {
+    document.documentElement.classList.add('android-apk');
+  }
+  const MISSION_CONFIG = {
+    1: { name: 'MISSION 1（初級）',     normalSec: 12.0, bossSec: 8.0, baseDelta: 17 },
+    2: { name: 'MISSION 2（中級）',     normalSec: 10.5, bossSec: 7.0, baseDelta: 13 },
+    3: { name: 'MISSION 3（上級）',     normalSec: 9.0,  bossSec: 6.0, baseDelta: 9.5 },
+    4: { name: 'MISSION 4（達人）',     normalSec: 7.5,  bossSec: 5.0, baseDelta: 6.5 },
+    5: { name: 'MISSION 5（最高難度）', normalSec: 6.5,  bossSec: 4.5, baseDelta: 4.0 }
+  };
+
+  // Curated vibrant base HSL palettes (Hue, Saturation, Lightness)
+  const PALETTES = [
+    [348, 82, 56], [16, 86, 54],  [38, 90, 52],  [152, 72, 42],
+    [174, 75, 40], [198, 84, 48], [218, 80, 56], [258, 76, 58],
+    [288, 72, 54], [326, 78, 54], [12, 76, 48],  [140, 65, 44],
+    [205, 78, 46], [242, 70, 56], [310, 68, 50], [45, 88, 48]
+  ];
+
+  function getTitleForIQ(iqVal) {
+    if (iqVal >= 170) return '🌈 絶対色感の神';
+    if (iqVal >= 150) return '👑 色彩マイスター';
+    if (iqVal >= 135) return '🎨 アートディレクター級';
+    if (iqVal >= 120) return '✨ プロデザイナー級';
+    if (iqVal >= 108) return '🖌️ 色彩ハンター';
+    return '🌱 見習いカラーリスト';
+  }
+
+  // ============================================================================
+  // PERSISTENT STATE (Mission, Stage, Unlocked Missions, BGM/SE Volume)
+  // ============================================================================
+  const SAVE_KEY = 'cw_colorsense_save_v1';
+  let state = {
+    mission: 1,
+    stage: 1,
+    maxUnlockedMission: 1,
+    clearedMissions: [],
+    iq: 100,
+    hints: 3,
+    bgmOn: true,
+    bgmEnabled: true,
+    bgmVolume: 0.7,
+    seOn: true,
+    seEnabled: true,
+    seVolume: 0.8,
+    devMode: false
+  };
+
+  function loadProgress() {
+    try {
+      const raw = localStorage.getItem(SAVE_KEY);
+      if (raw) {
+        const p = JSON.parse(raw);
+        if (p.mission >= 1 && p.mission <= 5) state.mission = p.mission;
+        if (p.stage >= 1 && p.stage <= 10) state.stage = p.stage;
+        if (p.maxUnlockedMission >= 1 && p.maxUnlockedMission <= 5) state.maxUnlockedMission = p.maxUnlockedMission;
+        if (Array.isArray(p.clearedMissions)) state.clearedMissions = p.clearedMissions;
+        if (typeof p.iq === 'number') state.iq = p.iq;
+        if (typeof p.hints === 'number') state.hints = p.hints;
+        if (typeof p.bgmOn === 'boolean') state.bgmOn = p.bgmOn;
+        if (typeof p.seOn === 'boolean') state.seOn = p.seOn;
+        if (typeof p.bgmVolume === 'number' && !isNaN(p.bgmVolume)) state.bgmVolume = p.bgmVolume;
+        if (typeof p.seVolume === 'number' && !isNaN(p.seVolume)) state.seVolume = p.seVolume;
+      }
+      // Production default: always start with devMode hidden & off until 5-tap unlocked
+      state.devMode = false;
+
+      const lsBgmEn = localStorage.getItem('bgmEnabled');
+      const lsBgmVol = localStorage.getItem('bgmVolume');
+      const lsSeEn = localStorage.getItem('seEnabled');
+      const lsSeVol = localStorage.getItem('seVolume');
+      if (lsBgmEn !== null) state.bgmOn = state.bgmEnabled = (lsBgmEn === 'true');
+      else if (typeof state.bgmEnabled === 'boolean') state.bgmOn = state.bgmEnabled;
+      if (lsBgmVol !== null && !isNaN(parseFloat(lsBgmVol))) state.bgmVolume = Math.max(0, Math.min(1, parseFloat(lsBgmVol)));
+      if (typeof state.bgmVolume !== 'number' || isNaN(state.bgmVolume)) state.bgmVolume = 0.7;
+
+      if (lsSeEn !== null) state.seOn = state.seEnabled = (lsSeEn === 'true');
+      else if (typeof state.seEnabled === 'boolean') state.seOn = state.seEnabled;
+      if (lsSeVol !== null && !isNaN(parseFloat(lsSeVol))) state.seVolume = Math.max(0, Math.min(1, parseFloat(lsSeVol)));
+      if (typeof state.seVolume !== 'number' || isNaN(state.seVolume)) state.seVolume = 0.8;
+    } catch (e) {}
+  }
+
+  function saveProgress() {
+    try {
+      state.bgmEnabled = !!state.bgmOn;
+      state.seEnabled = !!state.seOn;
+      localStorage.setItem(SAVE_KEY, JSON.stringify(state));
+      localStorage.setItem('bgmEnabled', String(state.bgmEnabled));
+      localStorage.setItem('bgmVolume', String(state.bgmVolume));
+      localStorage.setItem('seEnabled', String(state.seEnabled));
+      localStorage.setItem('seVolume', String(state.seVolume));
+    } catch (e) {}
+  }
+
+  loadProgress();
+
+  // ============================================================================
+  // WEB AUDIO SYNTH (BGM Loop + SE + Real-Time Volume Gain Control!)
+  // ============================================================================
+  let audioCtx = null;
+  let bgmMasterGain = null;
+  let bgmTimer = null;
+  let bgmStep = 0;
+
+  function initAudio() {
+    if (!audioCtx) {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (AC) {
+        audioCtx = new AC();
+        bgmMasterGain = audioCtx.createGain();
+        bgmMasterGain.gain.value = (state.bgmOn && state.bgmVolume > 0) ? state.bgmVolume : 0;
+        bgmMasterGain.connect(audioCtx.destination);
+      }
+    }
+    if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    updateBgmMasterGain();
+    syncBgmLoop();
+  }
+
+  function updateBgmMasterGain() {
+    if (!audioCtx || !bgmMasterGain) return;
+    const targetGain = (state.bgmOn && state.bgmVolume > 0) ? state.bgmVolume : 0;
+    bgmMasterGain.gain.setTargetAtTime(targetGain, audioCtx.currentTime, 0.02);
+  }
+
+  function syncBgmLoop() {
+    if (bgmTimer) {
+      clearInterval(bgmTimer);
+      bgmTimer = null;
+    }
+    if (!state.bgmOn || state.bgmVolume <= 0 || !audioCtx) return;
+
+    const boss = isBossStage(state.stage);
+    const intervalMs = boss ? 250 : 360;
+    const normalNotes = [523.25, 659.25, 783.99, 659.25, 587.33, 698.46, 880.0, 698.46];
+    const bossNotes   = [220.00, 246.94, 261.63, 220.00, 196.00, 246.94, 220.00, 174.61];
+
+    bgmTimer = setInterval(() => {
+      if (!state.bgmOn || state.bgmVolume <= 0 || !audioCtx) return;
+      const settingsOpen = document.getElementById('settingsModal')?.classList.contains('show');
+      if (!isQuestionActive && !settingsOpen) return;
+      try {
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const noteGain = audioCtx.createGain();
+        const notes = isBossStage(state.stage) ? bossNotes : normalNotes;
+        osc.type = isBossStage(state.stage) ? 'sawtooth' : 'sine';
+        osc.frequency.setValueAtTime(notes[bgmStep % notes.length], now);
+        bgmStep++;
+        const baseVol = isBossStage(state.stage) ? 0.065 : 0.085;
+        noteGain.gain.setValueAtTime(baseVol, now);
+        noteGain.gain.exponentialRampToValueAtTime(0.0008, now + (intervalMs / 1000) * 0.85);
+        osc.connect(noteGain);
+        noteGain.connect(bgmMasterGain || audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + (intervalMs / 1000) * 0.9);
+      } catch (e) {}
+    }, intervalMs);
+  }
+
+  function getSeGain(baseGain) {
+    if (!state.seOn || state.seVolume <= 0) return 0;
+    return Math.max(0.001, baseGain * state.seVolume);
+  }
+
+  function playSePreviewTone() {
+    if (!state.seOn || state.seVolume <= 0) return;
+    initAudio();
+    if (!audioCtx) return;
+    const now = audioCtx.currentTime;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(659.25, now);
+    osc.frequency.setValueAtTime(880.00, now + 0.06);
+    gain.gain.setValueAtTime(getSeGain(0.24), now);
+    gain.gain.exponentialRampToValueAtTime(0.0008, now + 0.16);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start(now);
+    osc.stop(now + 0.17);
+  }
+
+  function playTone(freq, type, dur, vol = 0.18, delay = 0) {
+    if (!state.seOn || state.seVolume <= 0) return;
+    initAudio();
+    if (!audioCtx) return;
+    try {
+      const now = audioCtx.currentTime + delay;
+      const osc = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, now);
+      g.gain.setValueAtTime(getSeGain(vol), now);
+      g.gain.exponentialRampToValueAtTime(0.0008, now + dur);
+      osc.connect(g);
+      g.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + dur + 0.02);
+    } catch (e) {}
+  }
+
+  function playHintSound() {
+    playTone(523.25, 'sine', 0.16, 0.18, 0);
+    playTone(783.99, 'sine', 0.18, 0.20, 0.07);
+  }
+  function playTickSound() { playTone(980, 'sine', 0.04, 0.07, 0); }
+  function playCorrectSound() {
+    playTone(587.33, 'triangle', 0.11, 0.22, 0);
+    playTone(880.0, 'triangle', 0.22, 0.24, 0.07);
+  }
+  function playStageClearFanfare() {
+    [523.25, 659.25, 783.99, 1046.5].forEach((f, idx) => playTone(f, 'triangle', 0.24, 0.24, idx * 0.08));
+  }
+  function playBossApproachingSound() {
+    playTone(392, 'sawtooth', 0.18, 0.22, 0);
+    playTone(277.18, 'sawtooth', 0.18, 0.22, 0.18);
+    playTone(392, 'sawtooth', 0.28, 0.26, 0.36);
+  }
+  function playWrongSound() {
+    playTone(210, 'sawtooth', 0.18, 0.20, 0);
+    playTone(155, 'sawtooth', 0.28, 0.22, 0.12);
+  }
+
+  // ============================================================================
+  // MISSION (1..5) & STAGE (1..10) PROGRESSION + HYBRID AD MONETIZATION
+  // ============================================================================
+  const NORMAL_QUESTIONS_PER_STAGE = 3;
+  const STAGES_PER_MISSION = 10;
+
+  let stepInStage = 1;
+  let oddIndex = 0;
+  let currentBaseColor = 'hsl(348, 82%, 56%)';
+  let currentOddColor = 'hsl(348, 82%, 70%)';
+  let timeLimit = 12.0;
+  let timeRemaining = 12.0;
+  let timerId = null;
+  let isQuestionActive = false;
+  let lastTickSec = 12;
+  let lastWrongIndex = null;
+  let pendingInterstitialAfterModal = false;
+  let transitionTimeoutId = null;
+  let settingsPausedRemaining = null;
+  let lastInterstitialAt = performance.now();
+  let questionsSinceLastAd = 0;
+  const AD_COOLDOWN_MS = 100 * 1000;
+  const AD_MIN_QUESTIONS = 10;
+
+  function shouldTriggerInterstitial(clearedStage) {
+    const elapsed = performance.now() - lastInterstitialAt;
+    if (clearedStage % 3 === 0 && questionsSinceLastAd >= AD_MIN_QUESTIONS && elapsed >= AD_COOLDOWN_MS) {
+      return true;
+    }
+    return false;
+  }
+
+  const gridEl = document.getElementById('grid');
+  const bannerEl = document.getElementById('status-banner');
+  const progBarEl = document.getElementById('top-progress-bar');
+  const stageBadgeEl = document.getElementById('stageBadge');
+  const stepPillEl = document.getElementById('stepPill');
+  const headline1El = document.getElementById('headline1');
+  const headline2El = document.getElementById('headline2');
+  const rankTextEl = document.getElementById('rankText');
+  const hintBtnEl = document.getElementById('hintBtn');
+  const modalEl = document.getElementById('modal');
+  const modalCardEl = document.getElementById('modalCard');
+  const modalReviveBtnEl = document.getElementById('modalReviveBtn');
+
+  // Hybrid Ad Engine DOM & State
+  const adOverlayModalEl = document.getElementById('adOverlayModal');
+  const adModalBadgeEl = document.getElementById('adModalBadge');
+  const adModalTitleEl = document.getElementById('adModalTitle');
+  const adPrCards = Array.from(document.querySelectorAll('#adPrList .ad-pr-card'));
+  const adProgressBarEl = document.getElementById('adProgressBar');
+  const adCompleteBtnEl = document.getElementById('adCompleteBtn');
+  let adTimerId = null;
+  let adRewardCallback = null;
+  let currentPrIdx = -1;
+
+  function selectPrCard(idx) {
+    currentPrIdx = ((idx % adPrCards.length) + adPrCards.length) % adPrCards.length;
+    adPrCards.forEach((card, i) => card.classList.toggle('active-pr', i === currentPrIdx));
+  }
+
+  function normalizePlacementType(placementType) {
+    if (placementType === 'reward_revive' || placementType === 'rewarded_revive') return 'rewarded_revive';
+    if (placementType === 'reward_hint' || placementType === 'rewarded_hint') return 'rewarded_hint';
+    return 'interstitial';
+  }
+
+  function showAdModal(placementType, onComplete) {
+    clearInterval(adTimerId);
+    const adType = normalizePlacementType(placementType);
+    const rawCb = typeof onComplete === 'function' ? onComplete : null;
+    adRewardCallback = function() {
+      if (adType === 'interstitial') {
+        lastInterstitialAt = performance.now();
+        questionsSinceLastAd = 0;
+        state.hints = (state.hints || 0) + 1;
+        saveProgress();
+        updateHintButton();
+      }
+      if (rawCb) rawCb();
+    };
+
+    // 1. Native Android AdMob WebView Bridge (if connected)
+    try {
+      if (window.AndroidAdMob) {
+        window.onAndroidAdComplete = function() {
+          const cb = adRewardCallback;
+          adRewardCallback = null;
+          if (cb) cb();
+        };
+        if (adType === 'interstitial' && typeof window.AndroidAdMob.showInterstitialAd === 'function') {
+          window.AndroidAdMob.showInterstitialAd();
+          return;
+        }
+        if (adType !== 'interstitial' && typeof window.AndroidAdMob.showRewardedAd === 'function') {
+          window.AndroidAdMob.showRewardedAd(adType);
+          return;
+        }
+      }
+      // 2. Google H5 Games Ads Placement API (if connected)
+      if (typeof window.adBreak === 'function') {
+        if (adType === 'interstitial') {
+          window.adBreak({
+            type: 'next',
+            name: 'stage_interstitial',
+            adBreakDone: () => {
+              const cb = adRewardCallback;
+              adRewardCallback = null;
+              if (cb) cb();
+            }
+          });
+          return;
+        } else {
+          window.adBreak({
+            type: 'reward',
+            name: adType,
+            beforeReward: (showAdFn) => showAdFn(),
+            adViewed: () => {
+              const cb = adRewardCallback;
+              adRewardCallback = null;
+              if (cb) cb();
+            },
+            adDismissed: () => {}
+          });
+          return;
+        }
+      }
+    } catch (e) {}
+
+    // 3. Built-in 5-Second Interactive Sponsor PR Overlay (Single fixed high-CTR Rakuten card per view)
+    selectPrCard(currentPrIdx + 1);
+
+    const AD_DURATION = 5.0;
+    const initialSec = Math.ceil(AD_DURATION);
+
+    if (adType === 'rewarded_hint') {
+      adModalBadgeEl.textContent = '💡 ヒント補充';
+      adModalTitleEl.textContent = '5秒後にヒントが3回分増えます';
+      adCompleteBtnEl.textContent = `あと ${initialSec} 秒でヒントが増えます`;
+    } else if (adType === 'rewarded_revive') {
+      adModalBadgeEl.textContent = '🔥 同じ問題に再挑戦';
+      adModalTitleEl.textContent = '5秒後に同じ問題へそのまま再挑戦できます';
+      adCompleteBtnEl.textContent = `あと ${initialSec} 秒で再挑戦できます`;
+    } else {
+      adModalBadgeEl.textContent = '🎁 ステージクリアボーナス';
+      adModalTitleEl.textContent = '少し待つと次のステージへ進めます';
+      adCompleteBtnEl.textContent = `あと ${initialSec} 秒で次へ進めます`;
+    }
+
+    adProgressBarEl.style.width = '0%';
+    adCompleteBtnEl.disabled = true;
+    adCompleteBtnEl.classList.remove('ready');
+    adOverlayModalEl.classList.add('show');
+
+    const startMs = performance.now();
+    adTimerId = setInterval(() => {
+      const elapsed = (performance.now() - startMs) / 1000;
+      const rem = Math.max(0, AD_DURATION - elapsed);
+      const pct = Math.min(100, (elapsed / AD_DURATION) * 100);
+      adProgressBarEl.style.width = `${pct}%`;
+
+      if (rem > 0) {
+        const remaining = Math.ceil(rem);
+        if (adType === 'rewarded_hint') {
+          adCompleteBtnEl.textContent = `あと ${remaining} 秒でヒントが増えます`;
+        } else if (adType === 'rewarded_revive') {
+          adCompleteBtnEl.textContent = `あと ${remaining} 秒で再挑戦できます`;
+        } else {
+          adCompleteBtnEl.textContent = `あと ${remaining} 秒で次へ進めます`;
+        }
+      } else {
+        clearInterval(adTimerId);
+        adProgressBarEl.style.width = '100%';
+        adModalBadgeEl.textContent = (adType === 'interstitial') ? '🎁 準備完了！' : '✅ ボーナス獲得完了！';
+        adCompleteBtnEl.disabled = false;
+        adCompleteBtnEl.classList.add('ready');
+        if (adType === 'rewarded_hint') {
+          adCompleteBtnEl.textContent = '💡 ヒント＋3回を受け取る';
+        } else if (adType === 'rewarded_revive') {
+          adCompleteBtnEl.textContent = '🔥 同じ問題に再挑戦する';
+        } else {
+          adCompleteBtnEl.textContent = '▶ 次のステージへ進む';
+        }
+      }
+    }, 80);
+  }
+
+  const showInHouseAdOverlay = showAdModal;
+
+  adCompleteBtnEl.addEventListener('click', () => {
+    if (adCompleteBtnEl.disabled) return;
+    initAudio();
+    clearInterval(adTimerId);
+    adOverlayModalEl.classList.remove('show');
+    const cb = adRewardCallback;
+    adRewardCallback = null;
+    if (cb) cb();
+  });
+
+  window.CoreworksAdBridge = {
+    showAd: showAdModal,
+    requestAd: showAdModal,
+    showInHouseAdOverlay: showAdModal,
+    selectPrCard
+  };
+
+  function isBossStage(st) { return st === 5 || st === 10; }
+
+  // Starts super breezy at 2x2 (4 tiles) in Mission 1 Stage 1-2 and scales up to 7x7 (49 tiles) in Mission 5!
+  function getGridSize(st, missionNum) {
+    const bracket = Math.floor((st - 1) / 2); // 0..4
+    const MAP = {
+      1: [2, 3, 3, 4, 4], // M1: 4 -> 9 -> 9 -> 16 -> 16マス
+      2: [3, 3, 4, 4, 5], // M2: 9 -> 9 -> 16 -> 16 -> 25マス
+      3: [3, 4, 4, 5, 5], // M3: 9 -> 16 -> 16 -> 25 -> 25マス
+      4: [4, 4, 5, 5, 6], // M4: 16 -> 16 -> 25 -> 25 -> 36マス
+      5: [4, 5, 6, 6, 7]  // M5: 16 -> 25 -> 36 -> 36 -> 49マス
+    };
+    const n = (MAP[missionNum] || MAP[1])[Math.min(4, Math.max(0, bracket))];
+    const gap = n <= 3 ? 12 : n <= 5 ? 9 : 6;
+    const radius = n <= 3 ? 20 : n <= 5 ? 14 : 10;
+    return { n, gap, radius };
+  }
+
+  function getRemainingWrongTiles() {
+    const tiles = Array.from(gridEl.querySelectorAll('.color-tile'));
+    return tiles
+      .map((el, idx) => ({ el, idx }))
+      .filter(x => x.idx !== oddIndex && !x.el.classList.contains('dimmed'));
+  }
+
+  function updateHintButton() {
+    const tiles = gridEl.querySelectorAll('.color-tile');
+    const remainingWrongCount = tiles.length > 0 ? getRemainingWrongTiles().length : 1;
+
+    if (tiles.length > 0 && remainingWrongCount === 0) {
+      hintBtnEl.textContent = '💡 残り1枚';
+      hintBtnEl.classList.remove('ad-reward');
+      hintBtnEl.style.background = '';
+      hintBtnEl.style.color = '';
+      hintBtnEl.style.opacity = '0.45';
+      hintBtnEl.style.pointerEvents = 'none';
+      hintBtnEl.disabled = true;
+      return;
+    }
+
+    hintBtnEl.style.opacity = '';
+    hintBtnEl.style.pointerEvents = '';
+
+    if (state.hints > 0) {
+      hintBtnEl.textContent = `💡 ヒント (${state.hints})`;
+      hintBtnEl.classList.remove('ad-reward');
+      hintBtnEl.style.background = '';
+      hintBtnEl.style.color = '';
+      hintBtnEl.disabled = !isQuestionActive;
+    } else {
+      hintBtnEl.textContent = '🎬 ヒント+3';
+      hintBtnEl.classList.add('ad-reward');
+      hintBtnEl.style.background = '#f59e0b';
+      hintBtnEl.style.color = '#052e16';
+      hintBtnEl.disabled = !isQuestionActive;
+    }
+  }
+
+  function updateHUD() {
+    const boss = isBossStage(state.stage);
+    document.body.classList.toggle('boss-mode', boss);
+    stageBadgeEl.classList.toggle('boss', boss);
+    stepPillEl.classList.toggle('boss', boss);
+
+    if (boss) {
+      stageBadgeEl.textContent = `🔥 MISSION ${state.mission} - BOSS ${state.stage}`;
+      stepPillEl.textContent = `⚡ 1問一発勝負！`;
+      headline1El.textContent = `🔥 ${MISSION_CONFIG[state.mission].bossSec.toFixed(1)}秒で見極めろ！`;
+      headline2El.textContent = '極限カラーボス戦！';
+    } else {
+      stageBadgeEl.textContent = `🎨 MISSION ${state.mission} - STAGE ${state.stage}`;
+      stepPillEl.textContent = `第 ${stepInStage} / ${NORMAL_QUESTIONS_PER_STAGE} 問`;
+      headline1El.textContent = '1つだけ色が違うパネルを';
+      headline2El.textContent = '直感でタップ！';
+    }
+
+    rankTextEl.textContent = `🎨 色感IQ ${state.iq} ｜ ${getTitleForIQ(state.iq)}`;
+    updateHintButton();
+  }
+
+  function runQuestionTimer(initialRemainingSec) {
+    clearInterval(timerId);
+    isQuestionActive = true;
+    const baseRemaining = initialRemainingSec;
+    const denom = Math.max(timeLimit, baseRemaining);
+    lastTickSec = Math.ceil(baseRemaining);
+    updateHUD();
+
+    const startTime = performance.now();
+    timerId = setInterval(() => {
+      if (!isQuestionActive) return;
+      const elapsed = (performance.now() - startTime) / 1000;
+      timeRemaining = Math.max(0, baseRemaining - elapsed);
+
+      const ratio = Math.min(100, (timeRemaining / denom) * 100);
+      progBarEl.style.width = `${ratio}%`;
+      if (timeRemaining <= 2.5) {
+        progBarEl.style.backgroundColor = '#ef4444';
+      } else {
+        progBarEl.style.backgroundColor = isBossStage(state.stage) ? '#fb7185' : '#f43f5e';
+      }
+
+      const secInt = Math.ceil(timeRemaining);
+      if (secInt < lastTickSec && secInt > 0) {
+        lastTickSec = secInt;
+        playTickSound();
+      }
+      bannerEl.textContent = `⏱️ 残り ${timeRemaining.toFixed(1)} 秒！`;
+      if (timeRemaining <= 0) {
+        lastWrongIndex = null;
+        onFail('timeup');
+      }
+    }, 50);
+  }
+
+  function startQuestion() {
+    clearInterval(timerId);
+    clearTimeout(transitionTimeoutId);
+    transitionTimeoutId = null;
+    settingsPausedRemaining = null;
+    modalEl.classList.remove('show');
+    lastWrongIndex = null;
+    isQuestionActive = true;
+    syncBgmLoop();
+
+    const boss = isBossStage(state.stage);
+    const mCfg = MISSION_CONFIG[state.mission] || MISSION_CONFIG[1];
+    const { n, gap, radius } = getGridSize(state.stage, state.mission);
+    const total = n * n;
+
+    // Color delta gently narrows across stages within the mission
+    const stageFactor = 1 - ((state.stage - 1) / 9) * 0.35;
+    const deltaL = Math.max(3.2, mCfg.baseDelta * stageFactor);
+
+    const [h, s, l] = PALETTES[Math.floor(Math.random() * PALETTES.length)];
+    const dir = l > 52 ? -1 : 1;
+    const oddL = Math.min(88, Math.max(18, l + dir * deltaL));
+    currentBaseColor = `hsl(${h}, ${s}%, ${l}%)`;
+    currentOddColor = `hsl(${h}, ${s}%, ${oddL}%)`;
+
+    oddIndex = Math.floor(Math.random() * total);
+    timeLimit = boss ? mCfg.bossSec : mCfg.normalSec;
+    timeRemaining = timeLimit;
+    lastTickSec = Math.ceil(timeRemaining);
+
+    bannerEl.className = '';
+    bannerEl.textContent = `⏱️ 残り ${timeRemaining.toFixed(1)} 秒！`;
+    progBarEl.style.width = '100%';
+    progBarEl.style.backgroundColor = '#f43f5e';
+
+    gridEl.style.gridTemplateColumns = `repeat(${n}, 1fr)`;
+    gridEl.style.gridTemplateRows = `repeat(${n}, 1fr)`;
+    gridEl.style.gap = `${gap}px`;
+    gridEl.innerHTML = '';
+
+    for (let i = 0; i < total; i++) {
+      const tile = document.createElement('div');
+      tile.className = 'color-tile';
+      tile.style.borderRadius = `${radius}px`;
+      tile.style.backgroundColor = (i === oddIndex) ? currentOddColor : currentBaseColor;
+      tile.addEventListener('pointerdown', () => onTileTap(i, tile));
+      gridEl.appendChild(tile);
+    }
+
+    runQuestionTimer(timeRemaining);
+  }
+
+  function onTileTap(index, tileEl) {
+    if (!isQuestionActive) return;
+    initAudio();
+
+    if (index === oddIndex) {
+      isQuestionActive = false;
+      clearInterval(timerId);
+      tileEl.classList.add('correct-tile');
+      tileEl.textContent = '✓';
+
+      const boss = isBossStage(state.stage);
+      const totalQuestions = boss ? 1 : NORMAL_QUESTIONS_PER_STAGE;
+      const clearSec = Math.max(0.2, timeLimit - timeRemaining).toFixed(1);
+      state.iq += timeRemaining >= timeLimit * 0.6 ? 2 : 1;
+      questionsSinceLastAd++;
+
+      bannerEl.className = 'correct';
+      bannerEl.textContent = `🎉 正解！ ${clearSec}秒で識別！`;
+      updateHUD();
+
+      if (stepInStage < totalQuestions) {
+        playCorrectSound();
+        clearTimeout(transitionTimeoutId);
+        transitionTimeoutId = setTimeout(() => { transitionTimeoutId = null; stepInStage++; startQuestion(); }, 750);
+      } else {
+        const clearedStage = state.stage;
+        const clearedMission = state.mission;
+        pendingInterstitialAfterModal = shouldTriggerInterstitial(clearedStage);
+
+        if (clearedStage >= STAGES_PER_MISSION) {
+          playStageClearFanfare();
+          state.iq += 5;
+          state.hints = Math.min(5, state.hints + 2);
+          if (!state.clearedMissions.includes(clearedMission)) state.clearedMissions.push(clearedMission);
+          if (clearedMission < 5) {
+            state.maxUnlockedMission = Math.max(state.maxUnlockedMission, clearedMission + 1);
+            state.mission = clearedMission + 1;
+            state.stage = 1;
+          } else {
+            state.stage = 1;
+          }
+          saveProgress();
+          updateHUD();
+          clearTimeout(transitionTimeoutId);
+          transitionTimeoutId = setTimeout(() => {
+            transitionTimeoutId = null;
+            showModal({
+              isBossAlert: false,
+              showRevive: false,
+              badge: `🏆 MISSION ${clearedMission} 完全制覇！`,
+              title: clearedMission < 5 ? `MISSION ${clearedMission + 1} 解放！` : `全5ミッション制覇！`,
+              iqText: `色感IQ ${state.iq}`,
+              comment: `${getTitleForIQ(state.iq)}<br>⚙️設定からいつでも再挑戦できます`,
+              btnText: clearedMission < 5 ? `🚀 MISSION ${state.mission} へ進む` : `👑 もう一度挑戦する`
+            });
+          }, 850);
+        } else {
+          state.stage++;
+          state.iq += boss ? 4 : 2;
+          state.hints = Math.min(5, state.hints + (boss ? 2 : 1));
+          saveProgress();
+          updateHUD();
+          const nextIsBoss = isBossStage(state.stage);
+          if (nextIsBoss) {
+            playCorrectSound();
+            clearTimeout(transitionTimeoutId);
+            transitionTimeoutId = setTimeout(() => {
+              transitionTimeoutId = null;
+              playBossApproachingSound();
+              showModal({
+                isBossAlert: true,
+                showRevive: false,
+                badge: '⚠️ WARNING：BOSS STAGE 出現！',
+                title: `次はBOSS STAGE ${state.stage}！`,
+                iqText: `制限時間 ${MISSION_CONFIG[state.mission].bossSec.toFixed(1)} 秒・1発勝負`,
+                comment: `STAGE ${clearedStage} クリア！<br>次は1問だけの超接近カラー勝負です！`,
+                btnText: `🔥 BOSS STAGE ${state.stage} に挑む！`
+              });
+            }, 850);
+          } else {
+            playStageClearFanfare();
+            clearTimeout(transitionTimeoutId);
+            transitionTimeoutId = setTimeout(() => {
+              transitionTimeoutId = null;
+              showModal({
+                isBossAlert: false,
+                showRevive: false,
+                badge: boss ? '👑 BOSS 撃破！！' : '🎉 STAGE CLEAR!',
+                title: `STAGE ${clearedStage} クリア！`,
+                iqText: `色感IQ ${state.iq}`,
+                comment: `${getTitleForIQ(state.iq)}<br>💡ヒントが${boss ? 2 : 1}個回復しました！`,
+                btnText: `▶️ STAGE ${state.stage} へ進む`
+              });
+            }, 850);
+          }
+        }
+      }
+    } else {
+      lastWrongIndex = index;
+      tileEl.classList.add('wrong-tile');
+      tileEl.textContent = '×';
+      onFail('wrong');
+    }
+  }
+
+  function onFail(reason) {
+    isQuestionActive = false;
+    clearInterval(timerId);
+    pendingInterstitialAfterModal = false;
+    playWrongSound();
+
+    bannerEl.className = 'reveal';
+    bannerEl.textContent = reason === 'wrong' ? '❌ お手つき！' : '⏰ 時間切れ！';
+    updateHUD();
+
+    const boss = isBossStage(state.stage);
+    const canRevive = true;
+    const reviveText = '🎬 動画を見て【同じ問題】に再挑戦';
+
+    const failComment = (stepInStage >= 2)
+      ? `動画を見ると、第1問に戻らず<b>同じ問題にそのまま再挑戦</b>できます！`
+      : `動画を見ると、<b>同じ問題（同じ配置）にそのまま再挑戦</b>できます！`;
+
+    clearTimeout(transitionTimeoutId);
+    transitionTimeoutId = setTimeout(() => {
+      transitionTimeoutId = null;
+      showModal({
+        isBossAlert: boss,
+        showRevive: canRevive,
+        reviveBtnText: reviveText,
+        badge: reason === 'wrong' ? '❌ お手つき！' : '⏰ 時間切れ！',
+        title: boss ? `BOSS STAGE ${state.stage} 失敗` : `STAGE ${state.stage}（第${stepInStage}問でミス）`,
+        iqText: `色感IQ ${state.iq}`,
+        comment: failComment,
+        btnText: (stepInStage === 1 || boss)
+          ? `🔄 別の問題でやり直す`
+          : `🔄 1問目からやり直す`
+      });
+    }, 900);
+  }
+
+  function showModal({ isBossAlert, showRevive, reviveBtnText, badge, title, iqText, comment, btnText }) {
+    modalCardEl.classList.toggle('boss-alert', !!isBossAlert);
+    document.getElementById('modalBadge').textContent = badge;
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalIQ').textContent = iqText;
+    document.getElementById('modalComment').innerHTML = comment;
+    document.getElementById('modalActionBtn').textContent = btnText;
+    if (modalReviveBtnEl) {
+      modalReviveBtnEl.style.display = showRevive ? 'block' : 'none';
+      if (reviveBtnText) {
+        modalReviveBtnEl.textContent = reviveBtnText;
+      }
+    }
+    modalEl.classList.add('show');
+  }
+
+  // Retry the exact same question (same board & layout, full timer reset) after watching 5s ad
+  modalReviveBtnEl.addEventListener('click', () => {
+    initAudio();
+    modalEl.classList.remove('show');
+    showAdModal('rewarded_revive', () => {
+      const boss = isBossStage(state.stage);
+      const mCfg = MISSION_CONFIG[state.mission] || MISSION_CONFIG[1];
+      const tiles = Array.from(gridEl.querySelectorAll('.color-tile'));
+
+      tiles.forEach(t => {
+        t.classList.remove('correct-tile', 'wrong-tile');
+        t.textContent = '';
+      });
+
+      timeLimit = boss ? mCfg.bossSec : mCfg.normalSec;
+      timeRemaining = timeLimit;
+      bannerEl.className = '';
+      bannerEl.textContent = `🔥 同じ問題に再挑戦！残り ${timeRemaining.toFixed(1)} 秒！`;
+      progBarEl.style.width = '100%';
+      progBarEl.style.backgroundColor = boss ? '#fb7185' : '#f43f5e';
+      syncBgmLoop();
+      runQuestionTimer(timeRemaining);
+    });
+  });
+
+  document.getElementById('modalActionBtn').addEventListener('click', () => {
+    initAudio();
+    if (pendingInterstitialAfterModal) {
+      pendingInterstitialAfterModal = false;
+      modalEl.classList.remove('show');
+      showAdModal('interstitial', () => {
+        stepInStage = 1;
+        startQuestion();
+      });
+    } else {
+      stepInStage = 1;
+      startQuestion();
+    }
+  });
+
+  // Hint button (Uses 1 hint if available, or opens 5s Rewarded Ad for +3 hints & +2.0s bonus!)
+  function useHint() {
+    if (!isQuestionActive) return;
+    const remainingWrong = getRemainingWrongTiles();
+    if (remainingWrong.length === 0) {
+      updateHintButton();
+      return;
+    }
+
+    initAudio();
+
+    if (state.hints <= 0) {
+      const pausedRemaining = timeRemaining;
+      isQuestionActive = false;
+      clearInterval(timerId);
+      showAdModal('rewarded_hint', () => {
+        state.hints += 3;
+        saveProgress();
+        playHintSound();
+        const resumedSec = pausedRemaining + 2.0;
+        timeLimit = Math.max(timeLimit, resumedSec);
+        timeRemaining = resumedSec;
+        bannerEl.className = '';
+        bannerEl.textContent = `💡 ヒント＋3回！残り ${timeRemaining.toFixed(1)} 秒！`;
+        syncBgmLoop();
+        runQuestionTimer(timeRemaining);
+      });
+      return;
+    }
+
+    playHintSound();
+    state.hints--;
+    saveProgress();
+    remainingWrong.sort(() => Math.random() - 0.5);
+    const count = Math.max(1, Math.floor(remainingWrong.length * 0.5));
+    for (let i = 0; i < count && i < remainingWrong.length; i++) {
+      remainingWrong[i].el.classList.add('dimmed');
+    }
+    updateHUD();
+  }
+
+  hintBtnEl.addEventListener('click', useHint);
+
+  // ============================================================================
+  // SETTINGS MODAL (BGM / SE Toggle + Volume Sliders & Mission 1..5 Selection)
+  // ============================================================================
+  const settingsModalEl = document.getElementById('settingsModal');
+  const settingsBadgeEl = document.getElementById('settingsBadge');
+  const devModeRowEl = document.getElementById('devModeRow');
+  const toggleBgmBtn = document.getElementById('toggleBgmBtn');
+  const toggleSeBtn = document.getElementById('toggleSeBtn');
+  const toggleDevBtn = document.getElementById('toggleDevBtn');
+  const bgmVolumeSlider = document.getElementById('bgmVolumeSlider');
+  const bgmVolumePct = document.getElementById('bgmVolumePct');
+  const seVolumeSlider = document.getElementById('seVolumeSlider');
+  const seVolumePct = document.getElementById('seVolumePct');
+  const missionListEl = document.getElementById('missionList');
+  const stageJumpGridEl = document.getElementById('stageJumpGrid');
+  const stageSelectTitleEl = document.getElementById('stageSelectTitle');
+  let lastSePreviewTime = 0;
+
+  // 5-Tap Secret Command on Settings Modal Badge to Reveal/Hide Developer Mode
+  window.__cwSecretTapBound = true;
+  let secretTapCount = 0;
+  let secretTapTimer = null;
+  if (settingsBadgeEl && devModeRowEl) {
+    settingsBadgeEl.addEventListener('click', () => {
+      secretTapCount++;
+      clearTimeout(secretTapTimer);
+      secretTapTimer = setTimeout(() => { secretTapCount = 0; }, 1500);
+      if (secretTapCount >= 5) {
+        secretTapCount = 0;
+        const isHidden = devModeRowEl.style.display === 'none';
+        devModeRowEl.style.display = isHidden ? 'flex' : 'none';
+        if (!isHidden && state.devMode) {
+          state.devMode = false;
+          saveProgress();
+        }
+        renderSettingsModal();
+      }
+    });
+  }
+
+  function updateSliderVisual(sliderEl, pctEl, isEnabled, volFloat) {
+    const pct = isEnabled ? Math.round(volFloat * 100) : 0;
+    sliderEl.value = String(pct);
+    pctEl.textContent = `${pct}%`;
+    sliderEl.classList.toggle('muted', !isEnabled || pct === 0);
+    pctEl.classList.toggle('muted', !isEnabled || pct === 0);
+    const activeColor = (!isEnabled || pct === 0) ? '#78716c' : '#10b981';
+    sliderEl.style.background = `linear-gradient(90deg, ${activeColor} ${pct}%, #d6d3d1 ${pct}%)`;
+  }
+
+  function renderAudioControls() {
+    toggleBgmBtn.textContent = state.bgmOn ? 'ON' : 'OFF';
+    toggleBgmBtn.className = 'toggle-btn ' + (state.bgmOn ? 'on' : 'off');
+    updateSliderVisual(bgmVolumeSlider, bgmVolumePct, state.bgmOn, state.bgmVolume);
+
+    toggleSeBtn.textContent = state.seOn ? 'ON' : 'OFF';
+    toggleSeBtn.className = 'toggle-btn ' + (state.seOn ? 'on' : 'off');
+    updateSliderVisual(seVolumeSlider, seVolumePct, state.seOn, state.seVolume);
+  }
+
+  function renderSettingsModal() {
+    renderAudioControls();
+
+    toggleDevBtn.textContent = state.devMode ? 'ON' : 'OFF';
+    toggleDevBtn.className = 'toggle-btn ' + (state.devMode ? 'on' : 'off');
+
+    missionListEl.innerHTML = [1, 2, 3, 4, 5].map(m => {
+      const unlocked = true;
+      const cleared = state.clearedMissions.includes(m);
+      const isCurrent = (m === state.mission);
+      const cfg = MISSION_CONFIG[m];
+      const statusText = state.devMode
+        ? (isCurrent ? `▶️ 選択中 (STAGE ${state.stage})` : '🛠️ テスト解放中')
+        : (cleared ? '🏆 制覇済（再挑戦OK）' : (unlocked ? (isCurrent ? `▶️ 挑戦中 (STAGE ${state.stage})` : '挑戦可能') : '🔒 未解放'));
+      return `<button class="mission-btn ${isCurrent ? 'active' : ''}" data-mission="${m}" ${unlocked ? '' : 'disabled'}>
+        <span>${cfg.name}（${cfg.normalSec}秒）</span>
+        <span style="font-size:13px;">${statusText}</span>
+      </button>`;
+    }).join('');
+
+    missionListEl.querySelectorAll('.mission-btn[data-mission]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const m = Number(btn.getAttribute('data-mission'));
+        state.mission = m;
+        state.stage = 1;
+        stepInStage = 1;
+        settingsPausedRemaining = null;
+        saveProgress();
+        settingsModalEl.classList.remove('show');
+        startQuestion();
+      });
+    });
+
+    stageSelectTitleEl.style.display = 'block';
+      stageJumpGridEl.style.display = 'grid';
+      stageJumpGridEl.innerHTML = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(st => {
+        const isBoss = (st === 5 || st === 10);
+        const active = (st === state.stage);
+        const bg = active ? '#e11d48' : (isBoss ? '#ffe4e6' : '#faf6f0');
+        const col = active ? '#ffffff' : (isBoss ? '#be123c' : '#292524');
+        const bdr = active ? '#e11d48' : (isBoss ? '#f43f5e' : '#e7e0d6');
+        return `<button data-stage="${st}" style="padding:10px 4px; border-radius:10px; border:2px solid ${bdr}; background:${bg}; color:${col}; font-size:14px; font-weight:900; cursor:pointer;">
+          ${isBoss ? '🔥B' + st : 'S' + st}
+        </button>`;
+      }).join('');
+
+      stageJumpGridEl.querySelectorAll('button[data-stage]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.stage = Number(btn.getAttribute('data-stage'));
+          stepInStage = 1;
+          settingsPausedRemaining = null;
+          if (state.hints < 5) state.hints = 5;
+          saveProgress();
+          settingsModalEl.classList.remove('show');
+          startQuestion();
+        });
+      });
+    
+  }
+
+  function openSettingsModal() {
+    if (settingsModalEl.classList.contains('show')) return;
+    if (adOverlayModalEl.classList.contains('show')) return;
+    clearTimeout(transitionTimeoutId);
+    transitionTimeoutId = null;
+    if (isQuestionActive && timeRemaining > 0) {
+      settingsPausedRemaining = timeRemaining;
+    } else {
+      settingsPausedRemaining = null;
+    }
+    isQuestionActive = false;
+    clearInterval(timerId);
+    renderSettingsModal();
+    settingsModalEl.classList.add('show');
+    initAudio();
+  }
+
+  function closeSettingsAndResume() {
+    if (!settingsModalEl.classList.contains('show')) return;
+    settingsModalEl.classList.remove('show');
+    if (modalEl.classList.contains('show') || adOverlayModalEl.classList.contains('show')) {
+      return;
+    }
+    if (settingsPausedRemaining !== null && settingsPausedRemaining > 0.05 && gridEl.children.length > 0) {
+      const rem = settingsPausedRemaining;
+      settingsPausedRemaining = null;
+      runQuestionTimer(rem);
+    } else {
+      settingsPausedRemaining = null;
+      startQuestion();
+    }
+  }
+
+  document.getElementById('settingsBtn').addEventListener('click', openSettingsModal);
+
+  settingsModalEl.addEventListener('click', (e) => {
+    if (e.target === settingsModalEl) {
+      closeSettingsAndResume();
+    }
+  });
+
+  toggleBgmBtn.addEventListener('click', () => {
+    state.bgmOn = !state.bgmOn;
+    if (state.bgmOn && state.bgmVolume <= 0) {
+      state.bgmVolume = 0.7;
+    }
+    saveProgress();
+    initAudio();
+    renderAudioControls();
+  });
+
+  bgmVolumeSlider.addEventListener('input', () => {
+    const val = Number(bgmVolumeSlider.value);
+    state.bgmVolume = Math.max(0, Math.min(1, val / 100));
+    if (val > 0 && !state.bgmOn) {
+      state.bgmOn = true;
+    } else if (val === 0 && state.bgmOn) {
+      state.bgmOn = false;
+    }
+    saveProgress();
+    initAudio();
+    updateBgmMasterGain();
+    renderAudioControls();
+  });
+
+  toggleSeBtn.addEventListener('click', () => {
+    state.seOn = !state.seOn;
+    if (state.seOn && state.seVolume <= 0) {
+      state.seVolume = 0.8;
+    }
+    saveProgress();
+    if (state.seOn) playCorrectSound();
+    renderAudioControls();
+  });
+
+  seVolumeSlider.addEventListener('input', () => {
+    const val = Number(seVolumeSlider.value);
+    state.seVolume = Math.max(0, Math.min(1, val / 100));
+    if (val > 0 && !state.seOn) {
+      state.seOn = true;
+    } else if (val === 0 && state.seOn) {
+      state.seOn = false;
+    }
+    saveProgress();
+    renderAudioControls();
+    const nowMs = performance.now();
+    if (state.seOn && val > 0 && nowMs - lastSePreviewTime > 120) {
+      lastSePreviewTime = nowMs;
+      playSePreviewTone();
+    }
+  });
+
+  seVolumeSlider.addEventListener('change', () => {
+    if (state.seOn && state.seVolume > 0) {
+      lastSePreviewTime = performance.now();
+      playSePreviewTone();
+    }
+  });
+
+  toggleDevBtn.addEventListener('click', () => {
+    state.devMode = !state.devMode;
+    saveProgress();
+    renderSettingsModal();
+  });
+
+  document.getElementById('closeSettingsBtn').addEventListener('click', () => {
+    closeSettingsAndResume();
+  });
+
+  startQuestion();
+})();
+</script>
+</body>
+</html>

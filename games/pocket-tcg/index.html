@@ -1565,7 +1565,7 @@
           <div class="reveal-cards-grid" id="revealCardsGrid"></div>
           <div class="pack-actions-box">
             <button class="action-btn btn-gold" id="flipAllCardsBtn">⚡ すべて一括でめくる</button>
-            <div style="display:flex; gap:6px; width:100%;" id="afterRevealBtns" style="display:none;">
+            <div style="display:flex; gap:6px; width:100%;" id="afterRevealBtns">
               <button class="action-btn btn-cyan" id="openAnotherPackBtn" style="flex:1;">📦 続けてもう1パック剥く</button>
               <button class="action-btn btn-purple" id="goBattleFromPackBtn" style="flex:1;">⚔️ このカードでバトルへ</button>
             </div>
@@ -1736,10 +1736,10 @@
       <!-- Coreworks In-Game Monetization & Nav -->
       <div style="width:100%; margin-top:8px; padding-top:10px; border-top:1px solid rgba(148,163,184,0.2); display:flex; flex-direction:column; gap:6px;">
         <div style="display:flex; gap:6px; width:100%;">
-          <a href="../../payback-calc/" style="flex:1; padding:8px 4px; border-radius:8px; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); color:#34d399; font-size:12px; font-weight:700; text-decoration:none; text-align:center;">
+          <a href="/payback-calc/" style="flex:1; padding:8px 4px; border-radius:8px; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); color:#34d399; font-size:12px; font-weight:700; text-decoration:none; text-align:center;">
             🚿 元取り1秒計算
           </a>
-          <a href="../../?tab=game" style="flex:1; padding:8px 4px; border-radius:8px; background:rgba(99,102,241,0.16); border:1px solid rgba(99,102,241,0.4); color:#818cf8; font-size:12px; font-weight:700; text-decoration:none; text-align:center;">
+          <a href="/?tab=game" style="flex:1; padding:8px 4px; border-radius:8px; background:rgba(99,102,241,0.16); border:1px solid rgba(99,102,241,0.4); color:#818cf8; font-size:12px; font-weight:700; text-decoration:none; text-align:center;">
             🧠 ゲーム一覧へ
           </a>
         </div>
@@ -1792,6 +1792,7 @@
       <div id="stageJumpGrid" style="width:100%; display:grid; grid-template-columns:repeat(2, 1fr); gap:5px;"></div>
 
       <button class="action-btn btn-cyan" id="closeSettingsBtn">✅ 閉じてゲームに戻る</button>
+      <a href="/?tab=game" class="web-portal-link" id="settingsPortalBtn" style="display:block; width:100%; margin-top:6px; padding:10px; border-radius:12px; background:rgba(99,102,241,0.18); border:1px solid rgba(99,102,241,0.45); color:#a5b4fc; font-size:13px; font-weight:800; text-decoration:none; text-align:center;">🏠 ゲーム一覧（ポータル）へ戻る</a>
     </div>
   </div>
 
@@ -2456,6 +2457,9 @@
       swipeStartX = null;
       requestOpenCurrentPack();
     }
+  });
+  boosterPackEl.addEventListener('click', () => {
+    if (!packIsTearing) requestOpenCurrentPack();
   });
 
   openPackMainBtn.addEventListener('click', requestOpenCurrentPack);
@@ -3527,7 +3531,7 @@
     stageJumpGridEl.innerHTML = Object.keys(STAGE_CONFIG).map(k => {
       const st = Number(k);
       const cfg = STAGE_CONFIG[st];
-      const unlocked = state.devMode || st <= state.maxUnlockedStage;
+      const unlocked = true;
       const isCur = (st === state.stage);
       return `<button data-st="${st}" ${unlocked ? '' : 'disabled'} style="padding:8px 6px; border-radius:8px; border:1px solid ${isCur ? '#38bdf8' : 'rgba(148,163,184,0.3)'}; background:${isCur ? 'rgba(56,189,248,0.25)' : 'rgba(15,23,42,0.8)'}; color:${unlocked ? '#fff' : '#64748b'}; font-size:11px; font-weight:800; cursor:pointer; text-align:left;">
         ${unlocked ? '⚔️' : '🔒'} ${cfg.name}
