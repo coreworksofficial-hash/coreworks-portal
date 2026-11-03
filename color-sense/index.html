@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta name="theme-color" content="#faf6f0">
+<meta name="theme-color" content="#160a2c">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <title>色彩センス！絶対色感テスト</title>
@@ -18,19 +18,28 @@
     -webkit-tap-highlight-color: transparent;
   }
 
+  :root {
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  html.android-apk {
+    --safe-top: max(env(safe-area-inset-top, 0px), 40px);
+    --safe-bottom: max(env(safe-area-inset-bottom, 0px), 24px);
+  }
+
   html, body {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background-color: #faf6f0;
-    color: #1c1917;
+    background: linear-gradient(180deg, #160a2c 0%, #2e1065 100%);
+    color: #f8fafc;
     font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Meiryo', sans-serif;
     touch-action: manipulation;
-    transition: background-color 0.35s ease, color 0.35s ease;
+    transition: background 0.35s ease, color 0.35s ease;
   }
 
   body.boss-mode {
-    background-color: #2a1215;
+    background: linear-gradient(180deg, #2a0a18 0%, #1e1b4b 100%);
     color: #fff1f2;
   }
 
@@ -44,16 +53,16 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    padding: calc(env(safe-area-inset-top, 0px) + 18px) 18px calc(env(safe-area-inset-bottom, 0px) + 42px);
+    padding: calc(var(--safe-top) + 16px) 18px calc(var(--safe-bottom) + 14px);
   }
 
   #top-progress-wrap {
     position: absolute;
-    top: 0;
+    top: var(--safe-top);
     left: 0;
     width: 100%;
     height: 10px;
-    background-color: rgba(28, 25, 23, 0.08);
+    background-color: rgba(255, 255, 255, 0.15);
     overflow: hidden;
   }
 
@@ -145,7 +154,7 @@
   .headline-1 {
     font-size: 27px;
     font-weight: 900;
-    color: #1c1917;
+    color: #ffffff;
     text-align: center;
     line-height: 1.25;
   }
@@ -157,7 +166,7 @@
   .headline-2 {
     font-size: 28px;
     font-weight: 900;
-    color: #e11d48;
+    color: #fbbf24;
     text-align: center;
     line-height: 1.25;
   }
@@ -704,7 +713,7 @@
       <div class="modal-title" id="modalTitle">ステージクリア！</div>
       <div class="modal-iq" id="modalIQ">色感IQ 110</div>
       <div class="modal-comment" id="modalComment">素晴らしい色彩感覚です！</div>
-      <button class="primary-btn" id="modalReviveBtn" style="display:none; margin-bottom:6px; background:linear-gradient(180deg, #f59e0b 0%, #d97706 100%); color:#052e16; box-shadow:0 4px 15px rgba(245,158,11,0.4);">🎬 広告を見てこの問題から復活</button>
+      <button class="primary-btn" id="modalReviveBtn" style="display:none; margin-bottom:6px; background:linear-gradient(180deg, #f59e0b 0%, #d97706 100%); color:#052e16; box-shadow:0 4px 15px rgba(245,158,11,0.4);">🎬 動画を見て【同じ問題】に再挑戦</button>
       <button class="primary-btn" id="modalActionBtn">▶️ 次へ進む</button>
 <!-- Coreworks In-Game Monetization & Nav -->
       <div style="width:100%; margin-top:12px; padding-top:12px; border-top:1px solid rgba(148,163,184,0.2); display:flex; flex-direction:column; gap:8px;">
@@ -795,6 +804,9 @@
 
 <script>
 (() => {
+  if (location.protocol === 'file:' || /wv|Android/i.test(navigator.userAgent)) {
+    document.documentElement.classList.add('android-apk');
+  }
   const MISSION_CONFIG = {
     1: { name: 'MISSION 1（初級）',     normalSec: 12.0, bossSec: 8.0, baseDelta: 17 },
     2: { name: 'MISSION 2（中級）',     normalSec: 10.5, bossSec: 7.0, baseDelta: 13 },
@@ -1141,9 +1153,9 @@
       adModalTitleEl.textContent = '5秒後にヒントが3回分増えます';
       adCompleteBtnEl.textContent = `あと ${initialSec} 秒でヒントが増えます`;
     } else if (adType === 'rewarded_revive') {
-      adModalBadgeEl.textContent = '🔥 コンティニュー';
-      adModalTitleEl.textContent = '5秒後にこの問題から復活できます';
-      adCompleteBtnEl.textContent = `あと ${initialSec} 秒で復活できます`;
+      adModalBadgeEl.textContent = '🔥 同じ問題に再挑戦';
+      adModalTitleEl.textContent = '5秒後に同じ問題へそのまま再挑戦できます';
+      adCompleteBtnEl.textContent = `あと ${initialSec} 秒で再挑戦できます`;
     } else {
       adModalBadgeEl.textContent = '🎁 ステージクリアボーナス';
       adModalTitleEl.textContent = '少し待つと次のステージへ進めます';
@@ -1167,7 +1179,7 @@
         if (adType === 'rewarded_hint') {
           adCompleteBtnEl.textContent = `あと ${remaining} 秒でヒントが増えます`;
         } else if (adType === 'rewarded_revive') {
-          adCompleteBtnEl.textContent = `あと ${remaining} 秒で復活できます`;
+          adCompleteBtnEl.textContent = `あと ${remaining} 秒で再挑戦できます`;
         } else {
           adCompleteBtnEl.textContent = `あと ${remaining} 秒で次へ進めます`;
         }
@@ -1180,7 +1192,7 @@
         if (adType === 'rewarded_hint') {
           adCompleteBtnEl.textContent = '💡 ヒント＋3回を受け取る';
         } else if (adType === 'rewarded_revive') {
-          adCompleteBtnEl.textContent = '🔥 この問題から復活する';
+          adCompleteBtnEl.textContent = '🔥 同じ問題に再挑戦する';
         } else {
           adCompleteBtnEl.textContent = '▶ 次のステージへ進む';
         }
@@ -1479,14 +1491,12 @@
     updateHUD();
 
     const boss = isBossStage(state.stage);
-    const canRevive = (stepInStage >= 2) || boss;
-    const reviveText = '🎬 広告を見てこの問題から復活';
+    const canRevive = true;
+    const reviveText = '🎬 動画を見て【同じ問題】に再挑戦';
 
     const failComment = (stepInStage >= 2)
-      ? `広告を見ると、第1問に戻らず<b>この問題から</b>復活できます！`
-      : (boss
-        ? `広告を見ると、<b>この問題から</b>そのまま復活できます！`
-        : `色の違いに注目して、もう一度挑戦しましょう！`);
+      ? `動画を見ると、第1問に戻らず<b>同じ問題にそのまま再挑戦</b>できます！`
+      : `動画を見ると、<b>同じ問題（同じ配置）にそのまま再挑戦</b>できます！`;
 
     setTimeout(() => {
       showModal({
@@ -1494,12 +1504,12 @@
         showRevive: canRevive,
         reviveBtnText: reviveText,
         badge: reason === 'wrong' ? '❌ お手つき！' : '⏰ 時間切れ！',
-        title: boss ? `BOSS STAGE ${state.stage} 失敗` : `STAGE ${state.stage} 失敗`,
+        title: boss ? `BOSS STAGE ${state.stage} 失敗` : `STAGE ${state.stage}（第${stepInStage}問でミス）`,
         iqText: `色感IQ ${state.iq}`,
         comment: failComment,
-        btnText: boss
-          ? `🔄 もう一度挑戦する`
-          : `🔄 第1問からやり直す`
+        btnText: (stepInStage === 1 || boss)
+          ? `🔄 別の問題でやり直す`
+          : `🔄 1問目からやり直す`
       });
     }, 900);
   }
@@ -1520,7 +1530,7 @@
     modalEl.classList.add('show');
   }
 
-  // Revive on the exact same question after watching 5s ad
+  // Retry the exact same question (same board & layout, full timer reset) after watching 5s ad
   modalReviveBtnEl.addEventListener('click', () => {
     initAudio();
     modalEl.classList.remove('show');
@@ -1534,31 +1544,10 @@
         t.textContent = '';
       });
 
-      const dimTargetCount = boss ? 2 : 1;
-      let dimmedNow = 0;
-
-      if (lastWrongIndex !== null && tiles[lastWrongIndex] && lastWrongIndex !== oddIndex && !tiles[lastWrongIndex].classList.contains('dimmed')) {
-        tiles[lastWrongIndex].classList.add('dimmed');
-        dimmedNow++;
-      }
-
-      const normalCandidates = tiles
-        .map((el, idx) => ({ el, idx }))
-        .filter(x => x.idx !== oddIndex && !x.el.classList.contains('dimmed'));
-      normalCandidates.sort(() => Math.random() - 0.5);
-
-      while (dimmedNow < dimTargetCount && normalCandidates.length > 0) {
-        const picked = normalCandidates.pop();
-        if (picked) {
-          picked.el.classList.add('dimmed');
-          dimmedNow++;
-        }
-      }
-
-      timeLimit = (boss ? mCfg.bossSec : mCfg.normalSec) + 5.0;
+      timeLimit = boss ? mCfg.bossSec : mCfg.normalSec;
       timeRemaining = timeLimit;
       bannerEl.className = '';
-      bannerEl.textContent = `🔥 復活成功！残り ${timeRemaining.toFixed(1)} 秒！`;
+      bannerEl.textContent = `🔥 同じ問題に再挑戦！残り ${timeRemaining.toFixed(1)} 秒！`;
       progBarEl.style.width = '100%';
       progBarEl.style.backgroundColor = boss ? '#fb7185' : '#f43f5e';
       syncBgmLoop();

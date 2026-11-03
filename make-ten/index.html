@@ -18,6 +18,15 @@
     -webkit-tap-highlight-color: transparent;
   }
 
+  :root {
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  html.android-apk {
+    --safe-top: max(env(safe-area-inset-top, 0px), 40px);
+    --safe-bottom: max(env(safe-area-inset-bottom, 0px), 24px);
+  }
+
   html, body {
     width: 100%;
     height: 100%;
@@ -43,12 +52,12 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    padding: calc(env(safe-area-inset-top, 0px) + 18px) 18px calc(env(safe-area-inset-bottom, 0px) + 42px);
+    padding: calc(var(--safe-top) + 16px) 18px calc(var(--safe-bottom) + 14px);
   }
 
   #top-progress-wrap {
     position: absolute;
-    top: 0;
+    top: var(--safe-top);
     left: 0;
     width: 100%;
     height: 10px;
@@ -613,7 +622,7 @@
       <div class="modal-title" id="modalTitle">ステージクリア！</div>
       <div class="modal-iq" id="modalIQ">計算IQ 110</div>
       <div class="modal-comment" id="modalComment">超高速の閃きです！</div>
-      <button class="primary-btn" id="modalReviveBtn" style="display:none; margin-bottom:4px; font-size:16px; background:linear-gradient(180deg, #f59e0b 0%, #d97706 100%); color:#052e16; box-shadow:0 4px 15px rgba(245,158,11,0.4);">🎬 広告を見てこの問題から復活</button>
+      <button class="primary-btn" id="modalReviveBtn" style="display:none; margin-bottom:4px; font-size:16px; background:linear-gradient(180deg, #f59e0b 0%, #d97706 100%); color:#052e16; box-shadow:0 4px 15px rgba(245,158,11,0.4);">🎬 動画を見て【同じ問題】に再挑戦</button>
       <button class="primary-btn" id="modalActionBtn">次のステージへ</button>
       <!-- Coreworks In-Game Monetization & Nav -->
       <div style="width:100%; margin-top:8px; padding-top:10px; border-top:1px solid rgba(148,163,184,0.2); display:flex; flex-direction:column; gap:8px;">
@@ -710,6 +719,9 @@
 
 <script>
 (() => {
+  if (location.protocol === 'file:' || /wv|Android/i.test(navigator.userAgent)) {
+    document.documentElement.classList.add('android-apk');
+  }
   const MISSION_CONFIG = {
     1: { name: 'MISSION 1（初級：合計10）',     normalSec: 12.0, bossSec: 8.0, targets: [10, 10] },
     2: { name: 'MISSION 2（中級：合計15・20）', normalSec: 10.5, bossSec: 7.0, targets: [15, 20] },
@@ -983,9 +995,9 @@
   function getAdCopy(placement, remaining) {
     if (placement === 'rewarded_revive') {
       return {
-        subtext: '5秒後にこの問題から復活できます',
-        countdownBtn: `あと ${remaining} 秒で復活できます`,
-        completeBtn: '🔥 この問題から復活する'
+        subtext: '5秒後に同じ問題へそのまま再挑戦できます',
+        countdownBtn: `あと ${remaining} 秒で再挑戦できます`,
+        completeBtn: '🔥 同じ問題に再挑戦する'
       };
     }
     if (placement === 'rewarded_hint') {
@@ -1471,13 +1483,11 @@
     updateHUD();
 
     const boss = isBossStage(state.stage);
-    const canRevive = boss || stepInStage >= 2;
-    const reviveText = '🎬 広告を見てこの問題から復活';
+    const canRevive = true;
+    const reviveText = '🎬 動画を見て【同じ問題】に再挑戦';
     const failComment = stepInStage >= 2
-      ? '広告を見ると、第1問に戻らず<b>この問題から</b>復活できます！'
-      : (boss
-        ? '広告を見ると、<b>この問題から</b>そのまま復活できます！'
-        : '惜しい！第1問から再挑戦します！');
+      ? '動画を見ると、第1問に戻らず<b>同じ問題にそのまま再挑戦</b>できます！'
+      : '動画を見ると、<b>同じ問題（同じ配置）にそのまま再挑戦</b>できます！';
 
     setTimeout(() => {
       showModal({
@@ -1485,10 +1495,10 @@
         showRevive: canRevive,
         reviveText,
         badge: reason === 'wrong' ? '❌ お手つき！' : '⏱️ TIME UP!',
-        title: boss ? `BOSS STAGE ${state.stage} 失敗` : `STAGE ${state.stage} 失敗`,
+        title: boss ? `BOSS STAGE ${state.stage} 失敗` : `STAGE ${state.stage}（第${stepInStage}問でミス）`,
         iqText: `計算IQ ${state.iq}`,
         comment: failComment,
-        btnText: boss ? '🔄 もう一度挑戦する' : '🔄 第1問からやり直す'
+        btnText: (stepInStage === 1 || boss) ? '🔄 別の問題でやり直す' : '🔄 1問目からやり直す'
       });
     }, 900);
   }
@@ -1511,7 +1521,7 @@
     modalEl.classList.add('show');
   }
 
-  // Revive on the exact same question after watching 5s ad
+  // Retry the exact same question (same board & layout, full timer reset) after watching 5s ad
   modalReviveBtnEl.addEventListener('click', () => {
     initAudio();
     modalEl.classList.remove('show');
@@ -1525,21 +1535,10 @@
         c.classList.remove('correct-card', 'wrong-card', 'selected');
       });
 
-      if (lastWrongIndex !== null && cards[lastWrongIndex] && !answerIndices.includes(lastWrongIndex)) {
-        cards[lastWrongIndex].classList.add('dimmed');
-      } else {
-        const normalCandidates = cards
-          .map((el, idx) => ({ el, idx }))
-          .filter(x => !answerIndices.includes(x.idx) && !x.el.classList.contains('dimmed'));
-        if (normalCandidates.length > 0) {
-          normalCandidates[Math.floor(Math.random() * normalCandidates.length)].el.classList.add('dimmed');
-        }
-      }
-
-      timeLimit = (boss ? mCfg.bossSec : mCfg.normalSec) + 5.0;
+      timeLimit = boss ? mCfg.bossSec : mCfg.normalSec;
       timeRemaining = timeLimit;
       bannerEl.className = '';
-      bannerEl.textContent = `🔥 復活成功！残り ${timeRemaining.toFixed(1)} 秒！（1枚目を選択）`;
+      bannerEl.textContent = `🔥 同じ問題に再挑戦！残り ${timeRemaining.toFixed(1)} 秒！（1枚目を選択）`;
       progBarEl.style.width = '100%';
       progBarEl.style.backgroundColor = boss ? '#fb7185' : '#34d399';
       syncBgmLoop();
