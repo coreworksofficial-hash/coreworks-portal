@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>CRYSTAL SLING RPG — 3D Pinball & Hologram Cards</title>
+<link rel="icon" type="image/jpeg" href="assets/card_dragon.jpg">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cinzel:wght@700;800&display=swap');
 
@@ -212,36 +213,174 @@
     color: #ff6987;
   }
 
-  /* Studio Quick-Switch Floating Pill (Top Center) */
-  .mode-switch-pill {
+  /* Top Compact Stage Selector & Studio Switch Strip */
+  .top-stage-strip {
     position: absolute;
-    top: 56px;
+    top: 54px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 6;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 6px;
-    padding: 5px 12px;
-    border-radius: 20px;
-    background: rgba(24, 26, 42, 0.72);
-    border: 1px solid rgba(180, 210, 255, 0.28);
-    backdrop-filter: blur(10px);
-    color: #e4eeff;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
+    gap: 5px;
+    width: 94%;
+    max-width: 432px;
+    pointer-events: none;
+  }
+  .stage-pill-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 4px 7px;
+    border-radius: 22px;
+    background: rgba(16, 18, 32, 0.82);
+    border: 1px solid rgba(160, 200, 255, 0.32);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.55);
+    pointer-events: auto;
+  }
+  .stage-pill-btn {
+    position: relative;
+    padding: 4px 9px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(38, 44, 68, 0.65);
+    color: rgba(215, 226, 248, 0.82);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.03em;
     cursor: pointer;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.45);
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+  .stage-pill-btn:hover {
+    border-color: rgba(56, 242, 255, 0.6);
+    color: #ffffff;
+  }
+  .stage-pill-btn.active {
+    background: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+    border-color: #7af7ff;
+    color: #ffffff;
+    box-shadow: 0 0 12px rgba(56, 242, 255, 0.55);
+  }
+  .stage-pill-btn.cleared::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #ffd463;
+    box-shadow: 0 0 6px #ffd463;
+  }
+  .mode-switch-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(56, 242, 255, 0.18) 0%, rgba(184, 69, 255, 0.26) 100%);
+    border: 1px solid rgba(110, 235, 255, 0.55);
+    color: #e4eeff;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    cursor: pointer;
     transition: transform 0.15s ease, border-color 0.2s ease;
+    white-space: nowrap;
   }
   .mode-switch-pill:hover {
-    border-color: rgba(56, 242, 255, 0.75);
-    transform: translateX(-50%) translateY(-1px);
+    border-color: #38f2ff;
+    transform: translateY(-1px);
   }
   .mode-switch-pill svg {
-    width: 14px;
-    height: 14px;
+    width: 13px;
+    height: 13px;
+  }
+  .stage-synergy-bar {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 3px 11px;
+    border-radius: 14px;
+    background: rgba(14, 16, 28, 0.76);
+    border: 1px solid rgba(255, 216, 110, 0.35);
+    color: #ffe89e;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    pointer-events: auto;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.45);
+  }
+  .stage-synergy-bar .syn-atk {
+    color: #49f2ff;
+    font-weight: 800;
+  }
+  .stage-synergy-bar .syn-best {
+    color: rgba(215, 224, 245, 0.8);
+  }
+
+  /* Gleaming Synergy & Level Up Badges on 3D Hologram Card */
+  .holo-card-badges {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    z-index: 5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    pointer-events: none;
+  }
+  .holo-lv-pill {
+    padding: 3px 8px;
+    border-radius: 10px;
+    background: rgba(16, 20, 34, 0.84);
+    border: 1.5px solid #ffe074;
+    color: #ffe898;
+    font-size: 9.5px;
+    font-weight: 900;
+    letter-spacing: 0.03em;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.55);
+  }
+  .holo-new-badge {
+    padding: 3px 8px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #ff5e7e 0%, #f59e0b 100%);
+    border: 1.5px solid #ffffff;
+    color: #ffffff;
+    font-size: 9.5px;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    box-shadow: 0 0 14px rgba(245, 158, 11, 0.8);
+    animation: badgePulse 1.3s infinite alternate ease-in-out;
+  }
+  @keyframes badgePulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.07); }
+  }
+  .studio-apk-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    height: 40px;
+    padding: 0 11px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 800;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.28);
+    transition: transform 0.12s ease;
+  }
+  .studio-apk-pill:active {
+    transform: scale(0.95);
   }
 
   /* Bottom Frosted Glass Control Deck (Mockup B Exact Reproduction) */
@@ -1235,28 +1374,44 @@
       </div>
     </header>
 
-    <!-- Quick Switch Pill to 3D Card Studio -->
-    <button class="mode-switch-pill" id="btn-open-studio">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#49e6ff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="4" y="3" width="12" height="16" rx="2"/>
-        <path d="M16 7h2a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H8"/>
-      </svg>
-      <span>3D HOLOGRAM CARDS</span>
-    </button>
+    <!-- Compact 5-Stage Selector Pill & 3D Card Studio Switch -->
+    <div class="top-stage-strip">
+      <div class="stage-pill-row">
+        <div id="stage-selector-pills" style="display:flex;gap:4px;">
+          <button class="stage-pill-btn active" data-stage="0">STAGE 1</button>
+          <button class="stage-pill-btn" data-stage="1">2</button>
+          <button class="stage-pill-btn" data-stage="2">3</button>
+          <button class="stage-pill-btn" data-stage="3">4</button>
+          <button class="stage-pill-btn" data-stage="4">5</button>
+        </div>
+        <button class="mode-switch-pill" id="btn-open-studio">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#49e6ff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="3" width="12" height="16" rx="2"/>
+            <path d="M16 7h2a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H8"/>
+          </svg>
+          <span>3D CARDS</span>
+        </button>
+      </div>
+      <div class="stage-synergy-bar" id="stage-synergy-bar" title="Tap to view this Boss's 3D Hologram Card">
+        <span id="txt-stage-card-syn">CARD #1 炎竜イグニス Lv.1</span>
+        <span class="syn-atk" id="txt-stage-atk-bonus">ATK +15%</span>
+        <span class="syn-best" id="txt-stage-best">BEST: --</span>
+      </div>
+    </div>
 
     <!-- Bottom Frosted Glass Panel (Mockup B Exact Reproduction) -->
     <footer class="battle-bottom-deck">
       <div class="deck-status-row">
         <div class="status-metric">
           <span class="metric-label">TURN</span>
-          <span class="metric-val" id="txt-turn">15</span>
+          <span class="metric-val" id="txt-turn">1</span>
         </div>
         <div class="status-metric interactive" id="btn-speed" title="Tap to toggle battle speed">
           <span class="metric-label">SPEED</span>
           <span class="metric-val" id="txt-speed">x1.0</span>
         </div>
         <button class="pause-capsule" id="btn-pause" title="Pause / Switch to Cards">
-          <span>PAUSE</span>
+          <span>CARDS</span>
           <div class="pause-bars"><i></i><i></i></div>
         </button>
         <div class="status-metric interactive" id="btn-mana" title="Tap at 10/10 Mana for Crystal Burst">
@@ -1264,12 +1419,12 @@
           <span class="metric-val mana-glow" id="txt-mana">8/10</span>
         </div>
         <div class="status-metric">
-          <span class="metric-label">BATTLE WAVE</span>
-          <span class="metric-val" id="txt-wave">1/3</span>
+          <span class="metric-label">STAGE</span>
+          <span class="metric-val" id="txt-wave">1/5</span>
         </div>
       </div>
 
-      <!-- 4 Unit Cards (ORION / AURORA / LIAM / ELARA) -->
+      <!-- 4 Unit Cards (IGNIS / VALKYRIA / CELESTIA / KRONOS) -->
       <div class="unit-cards-grid" id="unit-cards-container">
         <!-- Populated dynamically by JS with clean custom SVGs -->
       </div>
@@ -1299,6 +1454,14 @@
             <path d="M5 20c0-3.87 3.13-7 7-7s7 3.13 7 7"/>
           </svg>
         </button>
+        <a href="/apk/CrystalSlingRPG_v1.apk" download="CrystalSlingRPG_v1.apk" id="btn-download-apk" class="studio-apk-pill web-portal-link" title="Android APK版をワンタップでダウンロード">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          <span>APK版</span>
+        </a>
       </div>
 
       <div class="studio-currency-pill">
@@ -1325,20 +1488,20 @@
         <!-- 3 Physical Stacked Cards visibly peeking out behind in 3D space -->
         <div class="holo-stack-card stack-pos-3" id="deck-back-card-3" title="Tap to flip to this card">
           <div class="stack-inner">
-            <div class="stack-head"><span id="stack-title-3">LIAM — EMERALD STAG</span><span>HP 190</span></div>
+            <div class="stack-head"><span id="stack-title-3">黄金の聖杯 / 機神クロノス</span><span id="stack-hp-3">LV.1</span></div>
             <div class="stack-art" id="stack-art-3" style="background-image:url('assets/card_liam.jpg')"></div>
           </div>
         </div>
         <div class="holo-stack-card stack-pos-2" id="deck-back-card-2" title="Tap to flip to this card">
           <div class="stack-inner">
-            <div class="stack-head"><span id="stack-title-2">AURORA — ABYSS LEVIATHAN</span><span>HP 175</span></div>
+            <div class="stack-head"><span id="stack-title-2">魔導師セレスティア</span><span id="stack-hp-2">LV.1</span></div>
             <div class="stack-art" id="stack-art-2" style="background-image:url('assets/card_aurora.jpg')"></div>
           </div>
         </div>
         <div class="holo-stack-card stack-pos-1" id="deck-back-card-1" title="Tap to flip to next card">
           <div class="stack-inner">
-            <div class="stack-head"><span id="stack-title-1">ORION — SOLAR PHOENIX</span><span>HP 170</span></div>
-            <div class="stack-art" id="stack-art-1" style="background-image:url('assets/card_orion.jpg')"></div>
+            <div class="stack-head"><span id="stack-title-1">聖騎士ヴァルキリア</span><span id="stack-hp-1">LV.1</span></div>
+            <div class="stack-art" id="stack-art-1" style="background-image:url('assets/card_elara.jpg')"></div>
           </div>
         </div>
 
@@ -1352,7 +1515,7 @@
             <div class="holo-foil-glare" id="holo-glare"></div>
             <div class="holo-inner-frame">
               <div class="holo-header">
-                <span class="holo-title" id="card-title">CELESTIAL LIGHTNING DRAGON</span>
+                <span class="holo-title" id="card-title">炎竜イグニス</span>
                 <div class="holo-hp-group">
                   <span class="holo-hp-label">HP</span>
                   <span class="holo-hp-val" id="card-hp">150</span>
@@ -1360,8 +1523,13 @@
                 </div>
               </div>
 
-              <div class="holo-art-window" id="card-art-window" style="background-image:url('assets/card_dragon.jpg')">
-                <img class="holo-art-img" id="card-art-img" src="assets/card_dragon.jpg" alt="3D Hologram Card Art">
+              <div class="holo-art-window" id="card-art-window" style="background-image:url('assets/card_orion.jpg')">
+                <img class="holo-art-img" id="card-art-img" src="assets/card_orion.jpg" alt="3D Hologram Card Art">
+
+                <div class="holo-card-badges">
+                  <span class="holo-lv-pill" id="card-lv-synergy">LV.1 · ATK +15% · SKILL x1.65</span>
+                  <span class="holo-new-badge" id="card-new-badge">STAGE 1 DROP</span>
+                </div>
 
                 <div class="holo-moves-plate">
                   <div class="holo-move-row">
@@ -1490,140 +1658,327 @@
   };
 
   /* =========================================================
-     2. GAME DATA: CARDS, UNITS & 3D CRYSTAL BOSSES
+     2. GAME DATA: 5 CARDS, 5 BOSS STAGES & PERSISTENT SAVE
      ========================================================= */
+  const SAVE_KEY = 'coreworks_crystal_sling_save_v1';
+
   const CARDS_DB = [
     {
-      id: 'dragon',
-      unitName: 'DRAKE',
-      cardTitle: 'CELESTIAL LIGHTNING DRAGON',
-      element: 'light',
-      elemLabel: 'Light',
-      hpStat: 150,
-      hpPct: 100,
-      level: 5,
-      atk: 26500,
-      img: 'assets/card_dragon.jpg',
-      orbColor: '#ffe066',
-      orbCore: '#38f2ff',
-      move1: { name: 'STORM BOLT', dmg: '- 110', type: 'bolt', bg: '#e6b832' },
-      move2: { name: 'Cosmic Surge', dmg: '- 70', type: 'water', bg: '#2b86d9' }
-    },
-    {
       id: 'orion',
-      unitName: 'ORION',
-      cardTitle: 'ORION — SOLAR PHOENIX',
+      stageNum: 1,
+      unitName: '炎竜イグニス',
+      cardTitle: '炎竜イグニス',
+      subTitle: 'IGNIS — OBSIDIAN FLAME DRAGON',
       element: 'fire',
       elemLabel: 'Fire',
-      hpStat: 140,
-      hpPct: 92,
-      level: 4,
-      atk: 22400,
+      hpStat: 150,
+      hpPct: 100,
+      level: 1,
+      unlocked: true,
+      lastBadge: 'STAGE 1 DROP',
+      baseAtk: 28000,
+      atk: 32200,
       img: 'assets/card_orion.jpg',
       orbColor: '#ff6842',
       orbCore: '#ffcb57',
-      move1: { name: 'SOLAR FLARE', dmg: '- 105', type: 'fire', bg: '#e0533c' },
-      move2: { name: 'Phoenix Nova', dmg: '- 65', type: 'bolt', bg: '#e6b832' }
-    },
-    {
-      id: 'aurora',
-      unitName: 'AURORA',
-      cardTitle: 'AURORA — ABYSS LEVIATHAN',
-      element: 'water',
-      elemLabel: 'Water',
-      hpStat: 145,
-      hpPct: 78,
-      level: 4,
-      atk: 21800,
-      img: 'assets/card_aurora.jpg',
-      orbColor: '#38b6ff',
-      orbCore: '#7af7ff',
-      move1: { name: 'GLACIAL PRISM', dmg: '- 95', type: 'water', bg: '#2b86d9' },
-      move2: { name: 'Aurora Tide', dmg: '- 75', type: 'water', bg: '#1967b2' }
-    },
-    {
-      id: 'liam',
-      unitName: 'LIAM',
-      cardTitle: 'LIAM — EMERALD STAG',
-      element: 'grass',
-      elemLabel: 'Grass',
-      hpStat: 160,
-      hpPct: 100,
-      level: 4,
-      atk: 20500,
-      img: 'assets/card_liam.jpg',
-      orbColor: '#4cd97b',
-      orbCore: '#a6ffcb',
-      move1: { name: 'JADE ANTLER', dmg: '- 90', type: 'grass', bg: '#2ea856' },
-      move2: { name: 'Sylvan Pulse', dmg: '- 60', type: 'bolt', bg: '#e6b832' }
+      move1: { name: '黒曜フレア', dmgBase: 115, dmg: '- 115', type: 'fire', bg: '#e0533c' },
+      move2: { name: '紅蓮ノヴァ', dmgBase: 75, dmg: '- 75', type: 'bolt', bg: '#e6b832' }
     },
     {
       id: 'elara',
-      unitName: 'ELARA',
-      cardTitle: 'ELARA — STARLIGHT VALKYRIE',
-      element: 'light',
-      elemLabel: 'Light',
-      hpStat: 135,
-      hpPct: 65,
-      level: 4,
-      atk: 24000,
+      stageNum: 2,
+      unitName: '聖騎士ヴァルキリア',
+      cardTitle: '聖騎士ヴァルキリア',
+      subTitle: 'VALKYRIA — FROST PALADIN',
+      element: 'water',
+      elemLabel: 'Frost',
+      hpStat: 155,
+      hpPct: 100,
+      level: 1,
+      unlocked: false,
+      lastBadge: 'STAGE 2 DROP',
+      baseAtk: 29500,
+      atk: 29500,
       img: 'assets/card_elara.jpg',
-      orbColor: '#f5ce52',
-      orbCore: '#ffffff',
-      move1: { name: 'ASTRAL LANCE', dmg: '- 115', type: 'bolt', bg: '#e6b832' },
-      move2: { name: 'Prism Wing', dmg: '- 70', type: 'light', bg: '#d49b1f' }
+      orbColor: '#38b6ff',
+      orbCore: '#a8f9ff',
+      move1: { name: '蒼氷の聖槍', dmgBase: 120, dmg: '- 120', type: 'water', bg: '#2b86d9' },
+      move2: { name: '白銀の翼盾', dmgBase: 80, dmg: '- 80', type: 'light', bg: '#d49b1f' }
+    },
+    {
+      id: 'aurora',
+      stageNum: 3,
+      unitName: '魔導師セレスティア',
+      cardTitle: '魔導師セレスティア',
+      subTitle: 'CELESTIA — STARLIGHT ARCHMAGE',
+      element: 'grass',
+      elemLabel: 'Astral',
+      hpStat: 160,
+      hpPct: 100,
+      level: 1,
+      unlocked: false,
+      lastBadge: 'STAGE 3 DROP',
+      baseAtk: 31000,
+      atk: 31000,
+      img: 'assets/card_aurora.jpg',
+      orbColor: '#c850ff',
+      orbCore: '#7af7ff',
+      move1: { name: '星詠みの奔流', dmgBase: 125, dmg: '- 125', type: 'water', bg: '#6d35d9' },
+      move2: { name: 'アストラル・プリズム', dmgBase: 85, dmg: '- 85', type: 'bolt', bg: '#1967b2' }
+    },
+    {
+      id: 'liam',
+      stageNum: 4,
+      unitName: '黄金の聖杯 / 機神クロノス',
+      cardTitle: '黄金の聖杯 / 機神クロノス',
+      subTitle: 'KRONOS — GOLDEN GRAIL CORE',
+      element: 'light',
+      elemLabel: 'Chrono',
+      hpStat: 175,
+      hpPct: 100,
+      level: 1,
+      unlocked: false,
+      lastBadge: 'STAGE 4 DROP',
+      baseAtk: 33000,
+      atk: 33000,
+      img: 'assets/card_liam.jpg',
+      orbColor: '#4cd97b',
+      orbCore: '#ffe066',
+      move1: { name: '時空の聖杯', dmgBase: 135, dmg: '- 135', type: 'grass', bg: '#2ea856' },
+      move2: { name: '黄金機神砲', dmgBase: 90, dmg: '- 90', type: 'bolt', bg: '#d49b1f' }
+    },
+    {
+      id: 'dragon',
+      stageNum: 5,
+      unitName: '伝説の創世竜',
+      cardTitle: '伝説の創世竜',
+      subTitle: 'ASTRAL BAHAMUT — GENESIS DRAGON',
+      element: 'light',
+      elemLabel: 'Genesis',
+      hpStat: 190,
+      hpPct: 100,
+      level: 1,
+      unlocked: false,
+      lastBadge: 'STAGE 5 DROP',
+      baseAtk: 38000,
+      atk: 38000,
+      img: 'assets/card_dragon.jpg',
+      orbColor: '#ffe066',
+      orbCore: '#38f2ff',
+      move1: { name: '創世の雷光', dmgBase: 150, dmg: '- 150', type: 'bolt', bg: '#e6b832' },
+      move2: { name: '次元崩壊ブレス', dmgBase: 105, dmg: '- 105', type: 'fire', bg: '#e0533c' }
     }
   ];
 
-  // Default 4 units matching Mockup B: ORION, AURORA, LIAM, ELARA
-  let activeSquadIds = ['orion', 'aurora', 'liam', 'elara'];
-  let selectedStudioCardId = 'dragon';
+  // Calculate Card <-> 3D Orb Synergy (ATK Bonus % & Strike Skill Multiplier)
+  function getCardAtkBonusPct(card) {
+    return (card.level - 1) * 25 + (card.unlocked ? 15 : 0);
+  }
+  function getCardSkillMult(card) {
+    return +(1.50 + (card.level - 1) * 0.22 + (card.unlocked ? 0.15 : 0)).toFixed(2);
+  }
+  function syncCardStats() {
+    CARDS_DB.forEach(c => {
+      const bonusPct = getCardAtkBonusPct(c);
+      c.atk = Math.round(c.baseAtk * (1 + bonusPct / 100));
+      const m1 = Math.round(c.move1.dmgBase * (1 + (c.level - 1) * 0.18));
+      const m2 = Math.round(c.move2.dmgBase * (1 + (c.level - 1) * 0.18));
+      c.move1.dmg = `- ${m1}`;
+      c.move2.dmg = `- ${m2}`;
+    });
+  }
 
+  // Default 4 units in active squad
+  let activeSquadIds = ['orion', 'elara', 'aurora', 'liam'];
+  let selectedStudioCardId = 'orion';
+
+  // Full 5-Stage Boss Campaign
   const BOSS_WAVES = [
     {
-      name: 'CRYSALIS',
-      lvl: 'LVL 35',
-      maxHp: 2000000,
-      currHp: 1450300,
-      img: 'assets/boss_crysalis.jpg',
-      auraColor: '#b845ff',
-      coreColor: '#38f2ff'
-    },
-    {
-      name: 'IGNIS REX',
-      lvl: 'LVL 42',
-      maxHp: 2800000,
-      currHp: 2800000,
+      stageNum: 1,
+      name: '黒曜竜イグニス・レックス',
+      lvl: 'STAGE 1 · LVL 35',
+      maxHp: 360000,
+      currHp: 360000,
       img: 'assets/boss_ignis.jpg',
+      tintKey: 'ignis_s1',
       auraColor: '#ff4e2b',
-      coreColor: '#ffcb47'
+      coreColor: '#ffcb47',
+      dropCardId: 'orion',
+      attackName: '黒曜の劫火 (Obsidian Nova)',
+      attackInterval: 2,
+      attackDmgPct: 6,
+      bumpers: [
+        { rx: 0.24, ry: 0.47, r: 19, color: '#ff6842', core: '#ffcb57' },
+        { rx: 0.76, ry: 0.47, r: 19, color: '#ff6842', core: '#ffcb57' }
+      ]
     },
     {
-      name: 'VOID LEVIATHAN',
-      lvl: 'LVL 50',
-      maxHp: 3600000,
-      currHp: 3600000,
+      stageNum: 2,
+      name: '蒼氷の聖騎士ヴァルキリア',
+      lvl: 'STAGE 2 · LVL 42',
+      maxHp: 450000,
+      currHp: 450000,
+      img: 'assets/boss_crysalis.jpg',
+      tintKey: 'valkyria_s2',
+      auraColor: '#38f2ff',
+      coreColor: '#a8f9ff',
+      dropCardId: 'elara',
+      attackName: '絶対零度の聖槍 (Glacial Lance)',
+      attackInterval: 2,
+      attackDmgPct: 7,
+      bumpers: [
+        { rx: 0.22, ry: 0.44, r: 18, color: '#38f2ff', core: '#ffffff' },
+        { rx: 0.78, ry: 0.44, r: 18, color: '#38f2ff', core: '#ffffff' },
+        { rx: 0.50, ry: 0.52, r: 16, color: '#5ec2ff', core: '#a8f9ff' }
+      ]
+    },
+    {
+      stageNum: 3,
+      name: '星詠みの大魔導セレスティア',
+      lvl: 'STAGE 3 · LVL 50',
+      maxHp: 560000,
+      currHp: 560000,
+      img: 'assets/boss_crysalis.jpg',
+      tintKey: 'celestia_s3',
+      auraColor: '#c850ff',
+      coreColor: '#ff7ae5',
+      dropCardId: 'aurora',
+      attackName: '星屑のメテオ (Starlight Meteor)',
+      attackInterval: 2,
+      attackDmgPct: 8,
+      bumpers: [
+        { rx: 0.26, ry: 0.43, r: 18, color: '#c850ff', core: '#ff94f2' },
+        { rx: 0.74, ry: 0.43, r: 18, color: '#c850ff', core: '#ff94f2' },
+        { rx: 0.34, ry: 0.55, r: 15, color: '#38f2ff', core: '#ffffff' },
+        { rx: 0.66, ry: 0.55, r: 15, color: '#38f2ff', core: '#ffffff' }
+      ]
+    },
+    {
+      stageNum: 4,
+      name: '深淵の機神クロノス・コア',
+      lvl: 'STAGE 4 · LVL 60',
+      maxHp: 680000,
+      currHp: 680000,
       img: 'assets/boss_leviathan.jpg',
-      auraColor: '#00e1ff',
-      coreColor: '#7b42ff'
+      tintKey: 'kronos_s4',
+      auraColor: '#f6c445',
+      coreColor: '#4cd97b',
+      dropCardId: 'liam',
+      attackName: '時空断絶レーザー (Chrono Laser)',
+      attackInterval: 2,
+      attackDmgPct: 9,
+      bumpers: [
+        { rx: 0.21, ry: 0.47, r: 19, color: '#f6c445', core: '#fff5b8' },
+        { rx: 0.79, ry: 0.47, r: 19, color: '#f6c445', core: '#fff5b8' },
+        { rx: 0.50, ry: 0.49, r: 18, color: '#4cd97b', core: '#c2ffda' }
+      ]
+    },
+    {
+      stageNum: 5,
+      name: '次元皇アストラル・バハムート',
+      lvl: 'STAGE 5 · LVL 75',
+      maxHp: 850000,
+      currHp: 850000,
+      img: 'assets/boss_leviathan.jpg',
+      tintKey: 'bahamut_s5',
+      auraColor: '#00f2ff',
+      coreColor: '#ffe066',
+      dropCardId: 'dragon',
+      attackName: '創世ラグナロク (Genesis Ragnarok)',
+      attackInterval: 2,
+      attackDmgPct: 10,
+      bumpers: [
+        { rx: 0.23, ry: 0.43, r: 19, color: '#ffe066', core: '#ffffff' },
+        { rx: 0.77, ry: 0.43, r: 19, color: '#ffe066', core: '#ffffff' },
+        { rx: 0.34, ry: 0.55, r: 16, color: '#00f2ff', core: '#b845ff' },
+        { rx: 0.66, ry: 0.55, r: 16, color: '#00f2ff', core: '#b845ff' }
+      ]
     }
   ];
 
   let state = {
     gold: 10250,
     gems: 1450,
-    turn: 15,
+    turn: 1,
     speedIndex: 0,
     speeds: [1.0, 1.5, 2.0],
     mana: 8,
     maxMana: 10,
     waveIndex: 0,
-    activeUnitIdx: 1, // Start on Blue/Water orb (AURORA) like Mockup B's cyan orb at bottom center
+    clearedStages: [],
+    bestTurns: {},
+    activeUnitIdx: 1,
     phase: 'AIMING', // 'AIMING' | 'MOVING'
     hitStopFrames: 0,
     shakeTime: 0,
     shakeMag: 0
   };
+
+  function saveGameProgress() {
+    try {
+      const cardLevels = {};
+      const unlockedCards = {};
+      const cardBadges = {};
+      CARDS_DB.forEach(c => {
+        cardLevels[c.id] = c.level;
+        unlockedCards[c.id] = !!c.unlocked;
+        cardBadges[c.id] = c.lastBadge || '';
+      });
+      const payload = {
+        version: 1,
+        gold: state.gold,
+        gems: state.gems,
+        waveIndex: state.waveIndex,
+        clearedStages: state.clearedStages,
+        bestTurns: state.bestTurns,
+        activeSquadIds,
+        selectedStudioCardId,
+        cardLevels,
+        unlockedCards,
+        cardBadges,
+        updatedAt: Date.now()
+      };
+      localStorage.setItem(SAVE_KEY, JSON.stringify(payload));
+    } catch (e) {}
+  }
+
+  function loadGameProgress() {
+    try {
+      const raw = localStorage.getItem(SAVE_KEY);
+      if (!raw) {
+        syncCardStats();
+        return;
+      }
+      const data = JSON.parse(raw);
+      if (typeof data.gold === 'number') state.gold = data.gold;
+      if (typeof data.gems === 'number') state.gems = data.gems;
+      if (typeof data.waveIndex === 'number' && data.waveIndex >= 0 && data.waveIndex < BOSS_WAVES.length) {
+        state.waveIndex = data.waveIndex;
+      }
+      if (Array.isArray(data.clearedStages)) state.clearedStages = data.clearedStages;
+      if (data.bestTurns && typeof data.bestTurns === 'object') state.bestTurns = data.bestTurns;
+      if (Array.isArray(data.activeSquadIds) && data.activeSquadIds.length === 4) {
+        activeSquadIds = data.activeSquadIds;
+      }
+      if (typeof data.selectedStudioCardId === 'string') {
+        selectedStudioCardId = data.selectedStudioCardId;
+      }
+      CARDS_DB.forEach(c => {
+        if (data.cardLevels && typeof data.cardLevels[c.id] === 'number') {
+          c.level = Math.max(1, data.cardLevels[c.id]);
+        }
+        if (data.unlockedCards && typeof data.unlockedCards[c.id] === 'boolean') {
+          c.unlocked = data.unlockedCards[c.id];
+        }
+        if (data.cardBadges && typeof data.cardBadges[c.id] === 'string' && data.cardBadges[c.id]) {
+          c.lastBadge = data.cardBadges[c.id];
+        }
+      });
+    } catch (e) {}
+    syncCardStats();
+  }
+  loadGameProgress();
 
   /* =========================================================
      3. HIGH-END IMPULSE-RESPONSE + PHYSICAL MODELING AUDIO ENGINE
@@ -2090,7 +2445,7 @@
   const loadedImages = {};
   const processedBossCanvas = {};
 
-  function removeBlackBackground(img) {
+  function removeBlackBackground(img, tintKey = '') {
     const c = document.createElement('canvas');
     const w = img.naturalWidth || 512;
     const h = img.naturalHeight || 512;
@@ -2102,13 +2457,32 @@
       const imgData = bCtx.getImageData(0, 0, w, h);
       const d = imgData.data;
       for (let i = 0; i < d.length; i += 4) {
-        const r = d[i], g = d[i + 1], b = d[i + 2];
+        let r = d[i], g = d[i + 1], b = d[i + 2];
         const maxC = Math.max(r, g, b);
         const lum = r * 0.299 + g * 0.587 + b * 0.114;
         if (maxC < 18 && lum < 14) {
           d[i + 3] = 0;
+          continue;
         } else if (maxC < 48) {
           d[i + 3] = Math.min(255, Math.floor(((maxC - 14) / 34) * 255));
+        }
+        // Apply distinct elemental color grading per stage
+        if (tintKey === 'valkyria_s2') {
+          d[i] = Math.min(255, Math.round(r * 0.55 + b * 0.25));
+          d[i + 1] = Math.min(255, Math.round(g * 1.12 + b * 0.35));
+          d[i + 2] = Math.min(255, Math.round(b * 1.28 + r * 0.2));
+        } else if (tintKey === 'celestia_s3') {
+          d[i] = Math.min(255, Math.round(r * 1.18 + b * 0.22));
+          d[i + 1] = Math.min(255, Math.round(g * 0.65 + r * 0.15));
+          d[i + 2] = Math.min(255, Math.round(b * 1.25 + r * 0.25));
+        } else if (tintKey === 'kronos_s4') {
+          d[i] = Math.min(255, Math.round(lum * 1.25 + r * 0.25));
+          d[i + 1] = Math.min(255, Math.round(lum * 1.05 + g * 0.2));
+          d[i + 2] = Math.min(255, Math.round(b * 0.45));
+        } else if (tintKey === 'bahamut_s5') {
+          d[i] = Math.min(255, Math.round(r * 1.15 + g * 0.2));
+          d[i + 1] = Math.min(255, Math.round(g * 1.15 + b * 0.2));
+          d[i + 2] = Math.min(255, Math.round(b * 1.25 + r * 0.15));
         }
       }
       bCtx.putImageData(imgData, 0, 0);
@@ -2144,16 +2518,21 @@
       img.onload = () => {
         loadedImages[url] = img;
         if (url.includes('boss_')) {
-          processedBossCanvas[url] = removeBlackBackground(img);
+          processedBossCanvas[url] = removeBlackBackground(img, '');
+          BOSS_WAVES.forEach(bw => {
+            if (bw.img === url && bw.tintKey) {
+              processedBossCanvas[bw.tintKey] = removeBlackBackground(img, bw.tintKey);
+            }
+          });
         }
       };
-      img.src = url;
+      img.src = (window.__APK_ASSET_DATA_URLS && window.__APK_ASSET_DATA_URLS[url]) || url;
     });
   }
   preloadAssets();
 
   /* =========================================================
-     5. UI RENDERERS (BOTTOM DECK & STUDIO VIEW)
+     5. UI RENDERERS (BOTTOM DECK, TOP STAGE PILLS & STUDIO VIEW)
      ========================================================= */
   const unitCardsContainer = document.getElementById('unit-cards-container');
 
@@ -2162,26 +2541,28 @@
   }
 
   function renderBattleUnitDeck() {
+    syncCardStats();
     unitCardsContainer.innerHTML = '';
     activeSquadIds.forEach((id, idx) => {
       const unit = getCardById(id);
+      const bonusPct = getCardAtkBonusPct(unit);
       const slot = document.createElement('div');
       slot.className = `unit-slot ${unit.element} ${idx === state.activeUnitIdx ? 'active-turn' : ''}`;
       slot.innerHTML = `
         <div>
           <div class="unit-top-row">
-            <span class="unit-idx">Unit ${idx + 1}</span>
+            <span class="unit-idx">Lv.${unit.level} (+${bonusPct}%)</span>
             <div class="unit-elem-big-icon" style="color:${unit.orbColor}">${SVG_ICONS[unit.element]}</div>
           </div>
           <div class="unit-title">${unit.unitName}</div>
           <div class="unit-elem-tag">
             ${SVG_ICONS[unit.element]}
-            <span>${unit.elemLabel}</span>
+            <span>ATK ${(unit.atk / 1000).toFixed(1)}k</span>
           </div>
         </div>
         <div class="unit-hp-bar">
           <div class="unit-hp-fill" style="width:${unit.hpPct}%"></div>
-          <span>HP Bar</span>
+          <span>HP</span>
           <span>${unit.hpPct}%</span>
         </div>
       `;
@@ -2196,7 +2577,8 @@
   }
 
   function updateBattleHud() {
-    const boss = BOSS_WAVES[state.waveIndex];
+    syncCardStats();
+    const boss = BOSS_WAVES[state.waveIndex] || BOSS_WAVES[0];
     document.getElementById('boss-lvl-txt').textContent = boss.lvl;
     document.getElementById('boss-name-txt').textContent = boss.name;
     const pct = Math.max(0, Math.min(100, (boss.currHp / boss.maxHp) * 100));
@@ -2212,6 +2594,57 @@
 
     document.getElementById('studio-gems-val').textContent = state.gems.toLocaleString();
     document.getElementById('studio-gold-val').textContent = (state.gold / 1000).toFixed(1) + 'k';
+
+    // Update Compact 5-Stage Selector Pills & Card Synergy Bar
+    document.querySelectorAll('#stage-selector-pills .stage-pill-btn').forEach(btn => {
+      const sIdx = Number(btn.getAttribute('data-stage'));
+      const stageNum = sIdx + 1;
+      btn.classList.toggle('active', sIdx === state.waveIndex);
+      btn.classList.toggle('cleared', state.clearedStages.includes(stageNum));
+      btn.textContent = sIdx === state.waveIndex ? `STAGE ${stageNum}` : `${stageNum}`;
+    });
+
+    const dropCard = getCardById(boss.dropCardId);
+    const bonusPct = getCardAtkBonusPct(dropCard);
+    const bestTurn = state.bestTurns[boss.stageNum];
+    const synNameEl = document.getElementById('txt-stage-card-syn');
+    const synAtkEl = document.getElementById('txt-stage-atk-bonus');
+    const synBestEl = document.getElementById('txt-stage-best');
+    if (synNameEl) synNameEl.textContent = `CARD #${boss.stageNum} ${dropCard.cardTitle} Lv.${dropCard.level}`;
+    if (synAtkEl) synAtkEl.textContent = `ATK +${bonusPct}% · SKILL x${getCardSkillMult(dropCard)}`;
+    if (synBestEl) synBestEl.textContent = bestTurn ? `BEST: ${bestTurn}T` : 'BEST: --';
+  }
+
+  function selectStage(stageIdx) {
+    if (stageIdx < 0 || stageIdx >= BOSS_WAVES.length) return;
+    initAudio();
+    state.waveIndex = stageIdx;
+    state.turn = 1;
+    state.phase = 'AIMING';
+    const boss = BOSS_WAVES[state.waveIndex];
+    boss.currHp = boss.maxHp;
+    CARDS_DB.forEach(c => { c.hpPct = 100; });
+    initOrbs();
+    renderBattleUnitDeck();
+    updateBattleHud();
+    saveGameProgress();
+    playCardFlip();
+  }
+
+  document.querySelectorAll('#stage-selector-pills .stage-pill-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const sIdx = Number(btn.getAttribute('data-stage'));
+      selectStage(sIdx);
+    });
+  });
+
+  const stageSynergyBar = document.getElementById('stage-synergy-bar');
+  if (stageSynergyBar) {
+    stageSynergyBar.addEventListener('click', () => {
+      const boss = BOSS_WAVES[state.waveIndex] || BOSS_WAVES[0];
+      selectedStudioCardId = boss.dropCardId;
+      openStudioView();
+    });
   }
 
   /* =========================================================
@@ -2354,31 +2787,52 @@
     spawnCrystalSparks(bossAnim.x, bossAnim.y, '#38f2ff', 42);
     spawnCrystalSparks(bossAnim.x, bossAnim.y, '#ffe066', 32);
 
-    state.gems += 150;
-    state.gold += 1250;
+    const clearedBoss = BOSS_WAVES[state.waveIndex] || BOSS_WAVES[0];
+    const stageNum = clearedBoss.stageNum;
+    const clearTurn = Math.max(1, state.turn);
 
-    if (state.waveIndex < BOSS_WAVES.length - 1) {
-      state.waveIndex++;
-      const nextBoss = BOSS_WAVES[state.waveIndex];
-      nextBoss.currHp = nextBoss.maxHp;
-      updateBattleHud();
-      showModal(
-        'WAVE CLEARED',
-        `${nextBoss.name} AWAKENS!`,
-        nextBoss.img,
-        `Earned +1,250 Gold & +150 Crystal Gems! Prepare for Wave ${state.waveIndex + 1}/3.`
-      );
-    } else {
-      state.waveIndex = 0;
-      BOSS_WAVES.forEach(b => { b.currHp = b.maxHp; });
-      updateBattleHud();
-      showModal(
-        'ALL WAVES CONQUERED',
-        'CRYSTAL ARENA CHAMPION!',
-        'assets/card_dragon.jpg',
-        'You shattered all 3 Crystal Titans! +2,500 Gold & +300 Gems awarded. Open a 3D Hologram Pack in the Studio!'
-      );
+    if (!state.clearedStages.includes(stageNum)) {
+      state.clearedStages.push(stageNum);
     }
+    if (!state.bestTurns[stageNum] || clearTurn < state.bestTurns[stageNum]) {
+      state.bestTurns[stageNum] = clearTurn;
+    }
+
+    // Unlock or Level Up the Stage's 3D Hologram Card!
+    const dropCard = getCardById(clearedBoss.dropCardId);
+    const wasUnlocked = dropCard.unlocked;
+    const prevLv = dropCard.level;
+    dropCard.unlocked = true;
+    dropCard.level = wasUnlocked ? prevLv + 1 : Math.max(2, prevLv + 1);
+    dropCard.lastBadge = wasUnlocked ? '▲ LEVEL UP!' : '★ NEW CARD!';
+    syncCardStats();
+
+    selectedStudioCardId = dropCard.id;
+    state.gems += 150;
+    state.gold += 1500;
+
+    // Advance to next stage (or loop back / stay ready)
+    const nextIdx = (state.waveIndex + 1) % BOSS_WAVES.length;
+    state.waveIndex = nextIdx;
+    state.turn = 1;
+    state.phase = 'AIMING';
+    orbs.forEach(o => { o.vx = 0; o.vy = 0; });
+    CARDS_DB.forEach(c => { c.hpPct = 100; });
+    BOSS_WAVES[state.waveIndex].currHp = BOSS_WAVES[state.waveIndex].maxHp;
+
+    saveGameProgress();
+    renderBattleUnitDeck();
+    updateBattleHud();
+
+    const badgeTxt = wasUnlocked ? '▲ LEVEL UP! · STAGE CLEAR' : '★ NEW CARD! · STAGE CLEAR';
+    const bonusPct = getCardAtkBonusPct(dropCard);
+    const skillMult = getCardSkillMult(dropCard);
+    showModal(
+      badgeTxt,
+      `${dropCard.cardTitle} (Lv.${dropCard.level})`,
+      dropCard.img,
+      `【${clearedBoss.name}】を撃破！3Dホロカード「${dropCard.cardTitle}」が Lv.${dropCard.level} に昇華！ 3Dオーブ攻撃力 +${bonusPct}% (ATK ${dropCard.atk.toLocaleString()}) ＆ ストライク倍率 x${skillMult} に強化されました！`
+    );
   }
 
   /* =========================================================
@@ -2549,6 +3003,33 @@
               playBounce(0.96, hitIntensity);
             }
 
+            // 3D Crystal Bumper Collisions (Stage-Specific Layout!)
+            const stageBumpers = (BOSS_WAVES[state.waveIndex] && BOSS_WAVES[state.waveIndex].bumpers) || [];
+            stageBumpers.forEach((bmp) => {
+              const bx = cw * bmp.rx;
+              const by = ch * bmp.ry;
+              const dxBmp = orb.x - bx;
+              const dyBmp = orb.y - by;
+              const distBmp = Math.hypot(dxBmp, dyBmp);
+              const minDistBmp = orb.r + bmp.r;
+              if (distBmp < minDistBmp && distBmp > 0.001) {
+                const nx = dxBmp / distBmp;
+                const ny = dyBmp / distBmp;
+                orb.x = bx + nx * minDistBmp;
+                orb.y = by + ny * minDistBmp;
+                const dot = orb.vx * nx + orb.vy * ny;
+                orb.vx = (orb.vx - 2 * dot * nx) * 1.08;
+                orb.vy = (orb.vy - 2 * dot * ny) * 1.08;
+                orb.moveHeading = Math.atan2(orb.vy, orb.vx);
+                bmp.hitFlash = 1.0;
+                spawnCrystalSparks(bx, by, bmp.color, 12);
+                playBounce(1.38, 0.95);
+                const unitCard = getCardById(orb.id);
+                const ricochetDmg = unitCard.atk * 0.45;
+                dealBossDamage(ricochetDmg, bossAnim.x + (Math.random() - 0.5) * 40, bossAnim.y, false);
+              }
+            });
+
             // Boss Collision
             const dxB = orb.x - bossAnim.x;
             const dyB = orb.y - bossAnim.y;
@@ -2572,7 +3053,8 @@
               const isWeakHit = Math.hypot(orb.x - weakX, orb.y - weakY) < 42;
 
               const unitCard = getCardById(orb.id);
-              const dmg = unitCard.atk * (isWeakHit ? 2.4 : 1.15) * (0.92 + Math.random() * 0.16);
+              const skillMult = getCardSkillMult(unitCard);
+              const dmg = unitCard.atk * (isWeakHit ? 2.4 : 1.15) * (skillMult / 1.5) * (0.92 + Math.random() * 0.16);
 
               dealBossDamage(dmg, orb.x, orb.y, isWeakHit);
               spawnCrystalSparks(orb.x, orb.y, isWeakHit ? '#ffe066' : unitCard.orbColor, isWeakHit ? 24 : 14);
@@ -2622,6 +3104,7 @@
                 if (!other.comboTriggered) {
                   other.comboTriggered = true;
                   const allyCard = getCardById(other.id);
+                  const skillMult = getCardSkillMult(allyCard);
                   laserLinks.push({
                     x1: other.x,
                     y1: other.y,
@@ -2640,7 +3123,7 @@
                     color: allyCard.orbColor,
                     alpha: 1
                   });
-                  const comboDmg = allyCard.atk * 1.65;
+                  const comboDmg = allyCard.atk * skillMult;
                   dealBossDamage(comboDmg, bossAnim.x, bossAnim.y, true);
                   spawnCrystalSparks(bossAnim.x, bossAnim.y, allyCard.orbColor, 18);
                   playCrit(1.18);
@@ -2659,6 +3142,33 @@
         state.phase = 'AIMING';
         state.turn++;
         state.activeUnitIdx = (state.activeUnitIdx + 1) % orbs.length;
+
+        // Boss Elemental Attack Pattern every N turns
+        const boss = BOSS_WAVES[state.waveIndex] || BOSS_WAVES[0];
+        if (boss.currHp > 0 && state.turn % (boss.attackInterval || 2) === 0) {
+          shockwaves.push({
+            x: bossAnim.x,
+            y: bossAnim.y,
+            r: 20,
+            maxR: 165,
+            color: boss.auraColor,
+            alpha: 1.0
+          });
+          floatingTexts.push({
+            x: bossAnim.x,
+            y: bossAnim.y - bossAnim.radius * 0.7,
+            text: boss.attackName,
+            color: boss.coreColor,
+            scale: 0.95,
+            alpha: 1.15,
+            vy: -1.1
+          });
+          activeSquadIds.forEach(uid => {
+            const u = getCardById(uid);
+            u.hpPct = Math.max(25, u.hpPct - (boss.attackDmgPct || 6));
+          });
+        }
+
         renderBattleUnitDeck();
         updateBattleHud();
       }
@@ -3082,7 +3592,7 @@
     ctx.fillRect(0, 0, cw, ch);
 
     // 2. Boss Pedestal Magic Circle Glow
-    const boss = BOSS_WAVES[state.waveIndex];
+    const boss = BOSS_WAVES[state.waveIndex] || BOSS_WAVES[0];
     const pulseScale = 1 + Math.sin(bossAnim.pulse) * 0.035;
 
     ctx.save();
@@ -3097,8 +3607,52 @@
     ctx.stroke();
     ctx.restore();
 
-    // 3. 3D Crystal Boss Render (Transparent Keyed + Screen Glow)
-    const bossCanvas = processedBossCanvas[boss.img];
+    // 2B. Stage-Specific 3D Faceted Crystal Bumpers
+    const stageBumpers = boss.bumpers || [];
+    stageBumpers.forEach((bmp, bIdx) => {
+      const bx = cw * bmp.rx;
+      const by = ch * bmp.ry;
+      const br = bmp.r;
+      if (bmp.hitFlash > 0) bmp.hitFlash = Math.max(0, bmp.hitFlash - 0.08);
+      const bScale = 1 + (bmp.hitFlash || 0) * 0.22 + Math.sin(bossAnim.pulse * 1.5 + bIdx) * 0.04;
+
+      ctx.save();
+      ctx.translate(bx, by);
+      ctx.scale(bScale, bScale);
+
+      // Bumper floor shadow
+      ctx.beginPath();
+      ctx.arc(2, 5, br * 0.95, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.65)';
+      ctx.fill();
+
+      // Octagonal 3D crystal bumper body
+      ctx.beginPath();
+      for (let s = 0; s < 8; s++) {
+        const a = (s * Math.PI) / 4 + bossAnim.pulse * 0.25;
+        const px = Math.cos(a) * br;
+        const py = Math.sin(a) * br;
+        if (s === 0) ctx.moveTo(px, py);
+        else ctx.lineTo(px, py);
+      }
+      ctx.closePath();
+      const bmpGrad = ctx.createRadialGradient(-br * 0.3, -br * 0.3, br * 0.1, 0, 0, br);
+      bmpGrad.addColorStop(0, '#ffffff');
+      bmpGrad.addColorStop(0.35, bmp.core);
+      bmpGrad.addColorStop(0.78, bmp.color);
+      bmpGrad.addColorStop(1, '#120c24');
+      ctx.fillStyle = bmpGrad;
+      ctx.shadowColor = bmp.color;
+      ctx.shadowBlur = bmp.hitFlash > 0.1 ? 24 : 12;
+      ctx.fill();
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 1.6;
+      ctx.stroke();
+      ctx.restore();
+    });
+
+    // 3. 3D Crystal Boss Render (Stage-Tinted Transparent Keyed + Screen Glow)
+    const bossCanvas = processedBossCanvas[boss.tintKey] || processedBossCanvas[boss.img];
     const bossSize = bossAnim.radius * 2.55 * pulseScale;
     if (bossCanvas) {
       ctx.save();
@@ -3106,7 +3660,7 @@
         ctx.globalCompositeOperation = 'screen';
       }
       ctx.shadowColor = bossAnim.hitFlash > 0.1 ? '#ffffff' : boss.auraColor;
-      ctx.shadowBlur = bossAnim.hitFlash > 0.1 ? 36 : 22;
+      ctx.shadowBlur = bossAnim.hitFlash > 0.1 ? 36 : 24;
       ctx.drawImage(
         bossCanvas,
         bossAnim.x - bossSize * 0.5,
@@ -3247,6 +3801,7 @@
   }
 
   function renderStudioCard(cardId) {
+    syncCardStats();
     selectedStudioCardId = cardId;
     const currIdx = Math.max(0, CARDS_DB.findIndex(c => c.id === cardId));
     const card = CARDS_DB[currIdx] || CARDS_DB[0];
@@ -3257,6 +3812,17 @@
     cardArtImg.src = card.img;
     if (cardArtWindow) {
       cardArtWindow.style.backgroundImage = `url('${card.img}')`;
+    }
+
+    const bonusPct = getCardAtkBonusPct(card);
+    const skillMult = getCardSkillMult(card);
+    const lvSynergyEl = document.getElementById('card-lv-synergy');
+    if (lvSynergyEl) {
+      lvSynergyEl.textContent = `LV.${card.level} · ATK +${bonusPct}% · SKILL x${skillMult}`;
+    }
+    const newBadgeEl = document.getElementById('card-new-badge');
+    if (newBadgeEl) {
+      newBadgeEl.textContent = card.lastBadge || `STAGE ${card.stageNum} DROP`;
     }
 
     const orb1 = document.getElementById('move-orb-1');
@@ -3284,9 +3850,11 @@
     for (let offset = 1; offset <= 3; offset++) {
       const stackCard = CARDS_DB[(currIdx + offset) % CARDS_DB.length];
       const titleEl = document.getElementById(`stack-title-${offset}`);
+      const hpEl = document.getElementById(`stack-hp-${offset}`);
       const artEl = document.getElementById(`stack-art-${offset}`);
       const cardEl = document.getElementById(`deck-back-card-${offset}`);
       if (titleEl) titleEl.textContent = stackCard.cardTitle;
+      if (hpEl) hpEl.textContent = `LV.${stackCard.level} (+${getCardAtkBonusPct(stackCard)}%)`;
       if (artEl) artEl.style.backgroundImage = `url('${stackCard.img}')`;
       if (cardEl) cardEl.setAttribute('data-card-id', stackCard.id);
     }
@@ -3517,6 +4085,8 @@
       initOrbs();
       renderBattleUnitDeck();
       renderStudioCard(card.id);
+      updateBattleHud();
+      saveGameProgress();
       playCrystalSound('combo', 1.15);
     }
   });
@@ -3525,19 +4095,24 @@
   function triggerHoloPackOpening() {
     playCrystalSound('combo', 1.3);
     const pulled = CARDS_DB[Math.floor(Math.random() * CARDS_DB.length)];
+    const wasUnlocked = pulled.unlocked;
+    pulled.unlocked = true;
     pulled.level++;
-    pulled.atk = Math.round(pulled.atk * 1.18);
-    pulled.hpStat += 10;
+    pulled.lastBadge = wasUnlocked ? '▲ LEVEL UP!' : '★ NEW CARD!';
+    syncCardStats();
+    saveGameProgress();
 
     renderStudioCard(pulled.id);
     renderStudioThumbs();
     renderBattleUnitDeck();
+    updateBattleHud();
 
+    const bonusPct = getCardAtkBonusPct(pulled);
     showModal(
-      '3D HOLOGRAM PACK OPENED',
-      `${pulled.cardTitle}`,
+      wasUnlocked ? '▲ LEVEL UP! · 3D HOLO PACK' : '★ NEW CARD! · 3D HOLO PACK',
+      `${pulled.cardTitle} (Lv.${pulled.level})`,
       pulled.img,
-      `Level Up to LV.${pulled.level}! Attack power boosted to ${pulled.atk.toLocaleString()} & HP increased to ${pulled.hpStat + (pulled.level - 1) * 10}.`
+      `3Dホログラムパックから「${pulled.cardTitle}」が出現！ Lv.${pulled.level} に昇華し、3Dオーブ攻撃力 +${bonusPct}% (ATK ${pulled.atk.toLocaleString()}) に強化されました！`
     );
   }
 
