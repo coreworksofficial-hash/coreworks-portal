@@ -866,6 +866,23 @@
   let timeLimit = 12.0;
   let timeRemaining = 12.0;
   let pendingInterstitialAfterModal = false;
+  let isMemorizing = false;
+  let hintFlashTimeoutId = null;
+  let transitionTimeoutId = null;
+  let settingsPausedRemaining = null;
+  let settingsPausedMemorizing = false;
+  let lastInterstitialAt = performance.now();
+  let questionsSinceLastAd = 0;
+  const AD_COOLDOWN_MS = 100 * 1000;
+  const AD_MIN_QUESTIONS = 10;
+
+  function shouldTriggerInterstitial(clearedStage) {
+    const elapsed = performance.now() - lastInterstitialAt;
+    if (clearedStage % 3 === 0 && questionsSinceLastAd >= AD_MIN_QUESTIONS && elapsed >= AD_COOLDOWN_MS) {
+      return true;
+    }
+    return false;
+  }
 
   const gridEl = document.getElementById('grid');
   const bannerEl = document.getElementById('status-banner');
@@ -933,6 +950,8 @@
 
   function finishAdAndRunCallback() {
     if (currentAdType === 'interstitial') {
+      lastInterstitialAt = performance.now();
+      questionsSinceLastAd = 0;
       state.hints = Math.min(5, (state.hints || 0) + 1);
       saveProgress();
       updateHUD();
@@ -1116,8 +1135,14 @@
   function runFlashAndAnswerSequence() {
     clearInterval(timerId);
     clearTimeout(flashTimeoutId);
+    clearTimeout(hintFlashTimeoutId);
+    clearTimeout(transitionTimeoutId);
+    transitionTimeoutId = null;
+    settingsPausedRemaining = null;
+    settingsPausedMemorizing = false;
     modalEl.classList.remove('show');
     canTap = false;
+    isMemorizing = true;
     foundSet.clear();
 
     const mCfg = MISSION_CONFIG[state.mission] || MISSION_CONFIG[1];
@@ -1135,6 +1160,8 @@
     playFlashSound();
 
     flashTimeoutId = setTimeout(() => {
+      flashTimeoutId = null;
+      isMemorizing = false;
       panels.forEach(el => {
         el.classList.remove('lit');
         el.textContent = '';
@@ -1148,6 +1175,12 @@
   function startQuestion() {
     clearInterval(timerId);
     clearTimeout(flashTimeoutId);
+    clearTimeout(hintFlashTimeoutId);
+    clearTimeout(transitionTimeoutId);
+    transitionTimeoutId = null;
+    settingsPausedRemaining = null;
+    settingsPausedMemorizing = false;
+    isMemorizing = false;
     modalEl.classList.remove('show');
     canTap = false;
 
@@ -1196,8 +1229,10 @@
         bannerEl.textContent = `👆 光ったパネルをタップ！（残り ${rem} 枚）`;
       } else {
         canTap = false;
+        isMemorizing = false;
         clearInterval(timerId);
         state.iq += 2;
+        questionsSinceLastAd++;
         bannerEl.className = 'correct';
         bannerEl.textContent = `🎉 パーフェクト記憶！`;
         updateHUD();
@@ -1206,11 +1241,12 @@
         const totalQuestions = boss ? 1 : NORMAL_QUESTIONS_PER_STAGE;
 
         if (stepInStage < totalQuestions) {
-          setTimeout(() => { stepInStage++; startQuestion(); }, 800);
+          clearTimeout(transitionTimeoutId);
+          transitionTimeoutId = setTimeout(() => { transitionTimeoutId = null; stepInStage++; startQuestion(); }, 800);
         } else {
           const clearedStage = state.stage;
           const clearedMission = state.mission;
-          pendingInterstitialAfterModal = (clearedStage % 3 === 0);
+          pendingInterstitialAfterModal = shouldTriggerInterstitial(clearedStage);
 
           if (clearedStage >= STAGES_PER_MISSION) {
             playStageClearFanfare();
@@ -1226,7 +1262,9 @@
             }
             saveProgress();
             updateHUD();
-            setTimeout(() => {
+            clearTimeout(transitionTimeoutId);
+            transitionTimeoutId = setTimeout(() => {
+              transitionTimeoutId = null;
               showModal({
                 isBossAlert: false,
                 showRevive: false,
@@ -1246,7 +1284,9 @@
             const nextIsBoss = isBossStage(state.stage);
             if (nextIsBoss) {
               playStageClearFanfare();
-              setTimeout(() => {
+              clearTimeout(transitionTimeoutId);
+              transitionTimeoutId = setTimeout(() => {
+                transitionTimeoutId = null;
                 playBossApproachingSound();
                 showModal({
                   isBossAlert: true,
@@ -1260,7 +1300,9 @@
               }, 900);
             } else {
               playStageClearFanfare();
-              setTimeout(() => {
+              clearTimeout(transitionTimeoutId);
+              transitionTimeoutId = setTimeout(() => {
+                transitionTimeoutId = null;
                 showModal({
                   isBossAlert: false,
                   showRevive: false,
@@ -1284,8 +1326,10 @@
 
   function onFail(reason) {
     canTap = false;
+    isMemorizing = false;
     clearInterval(timerId);
     clearTimeout(flashTimeoutId);
+    clearTimeout(hintFlashTimeoutId);
     pendingInterstitialAfterModal = false;
     playWrongSound();
 
@@ -1297,7 +1341,9 @@
     const boss = isBossStage(state.stage);
     const retryBtnText = stepInStage === 1 ? '🔄 別の問題でやり直す' : '🔄 1問目からやり直す';
 
-    setTimeout(() => {
+    clearTimeout(transitionTimeoutId);
+    transitionTimeoutId = setTimeout(() => {
+      transitionTimeoutId = null;
       showModal({
         isBossAlert: boss,
         showRevive: true,
@@ -1380,7 +1426,9 @@
         panels[idx].textContent = '★';
       }
     });
-    setTimeout(() => {
+    clearTimeout(hintFlashTimeoutId);
+    hintFlashTimeoutId = setTimeout(() => {
+      hintFlashTimeoutId = null;
       targetSet.forEach(idx => {
         if (!foundSet.has(idx) && panels[idx]) {
           panels[idx].classList.remove('lit');
@@ -1471,6 +1519,8 @@
           state.mission = m;
           state.stage = 1;
           stepInStage = 1;
+          settingsPausedRemaining = null;
+          settingsPausedMemorizing = false;
           saveProgress();
           if (state.devMode) {
             renderSettingsModal();
@@ -1500,6 +1550,8 @@
         btn.addEventListener('click', () => {
           state.stage = Number(btn.getAttribute('data-stage'));
           stepInStage = 1;
+          settingsPausedRemaining = null;
+          settingsPausedMemorizing = false;
           if (state.hints < 5) state.hints = 5;
           saveProgress();
           settingsModalEl.classList.remove('show');
@@ -1512,13 +1564,68 @@
     }
   }
 
-  document.getElementById('settingsBtn').addEventListener('click', () => {
+  function openSettingsModal() {
+    if (settingsModalEl.classList.contains('show')) return;
+    if (adOverlayModalEl.classList.contains('show')) return;
+    clearTimeout(transitionTimeoutId);
+    transitionTimeoutId = null;
+    if (isMemorizing) {
+      settingsPausedMemorizing = true;
+      settingsPausedRemaining = null;
+    } else if (canTap && timeRemaining > 0) {
+      settingsPausedMemorizing = false;
+      settingsPausedRemaining = timeRemaining;
+    } else {
+      settingsPausedMemorizing = false;
+      settingsPausedRemaining = null;
+    }
     canTap = false;
+    isMemorizing = false;
     clearInterval(timerId);
     clearTimeout(flashTimeoutId);
+    flashTimeoutId = null;
+    if (hintFlashTimeoutId) {
+      clearTimeout(hintFlashTimeoutId);
+      hintFlashTimeoutId = null;
+      const panels = gridEl.querySelectorAll('.panel');
+      targetSet.forEach(idx => {
+        if (!foundSet.has(idx) && panels[idx]) {
+          panels[idx].classList.remove('lit');
+          panels[idx].textContent = '';
+        }
+      });
+    }
     renderSettingsModal();
     settingsModalEl.classList.add('show');
     initAudio();
+  }
+
+  function closeSettingsAndResume() {
+    if (!settingsModalEl.classList.contains('show')) return;
+    settingsModalEl.classList.remove('show');
+    if (modalEl.classList.contains('show') || adOverlayModalEl.classList.contains('show')) {
+      return;
+    }
+    if (settingsPausedMemorizing && targetSet.size > 0 && gridEl.children.length > 0) {
+      settingsPausedMemorizing = false;
+      runFlashAndAnswerSequence();
+    } else if (settingsPausedRemaining !== null && settingsPausedRemaining > 0.05 && gridEl.children.length > 0) {
+      const rem = settingsPausedRemaining;
+      settingsPausedRemaining = null;
+      runAnswerTimer(rem);
+    } else {
+      settingsPausedMemorizing = false;
+      settingsPausedRemaining = null;
+      startQuestion();
+    }
+  }
+
+  document.getElementById('settingsBtn').addEventListener('click', openSettingsModal);
+
+  settingsModalEl.addEventListener('click', (e) => {
+    if (e.target === settingsModalEl) {
+      closeSettingsAndResume();
+    }
   });
 
   toggleBgmBtn.addEventListener('click', () => {
@@ -1576,8 +1683,7 @@
   });
 
   document.getElementById('closeSettingsBtn').addEventListener('click', () => {
-    settingsModalEl.classList.remove('show');
-    startQuestion();
+    closeSettingsAndResume();
   });
 
   startQuestion();

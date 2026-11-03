@@ -1046,6 +1046,20 @@
   let lastTickSec = 12;
   let lastWrongIndex = null;
   let pendingInterstitialAfterModal = false;
+  let transitionTimeoutId = null;
+  let settingsPausedRemaining = null;
+  let lastInterstitialAt = performance.now();
+  let questionsSinceLastAd = 0;
+  const AD_COOLDOWN_MS = 100 * 1000;
+  const AD_MIN_QUESTIONS = 10;
+
+  function shouldTriggerInterstitial(clearedStage) {
+    const elapsed = performance.now() - lastInterstitialAt;
+    if (clearedStage % 3 === 0 && questionsSinceLastAd >= AD_MIN_QUESTIONS && elapsed >= AD_COOLDOWN_MS) {
+      return true;
+    }
+    return false;
+  }
 
   const gridEl = document.getElementById('grid');
   const bannerEl = document.getElementById('status-banner');
@@ -1088,6 +1102,8 @@
     const rawCb = typeof onComplete === 'function' ? onComplete : null;
     adRewardCallback = function() {
       if (adType === 'interstitial') {
+        lastInterstitialAt = performance.now();
+        questionsSinceLastAd = 0;
         state.hints = (state.hints || 0) + 1;
         saveProgress();
         updateHintButton();
@@ -1336,6 +1352,9 @@
 
   function startQuestion() {
     clearInterval(timerId);
+    clearTimeout(transitionTimeoutId);
+    transitionTimeoutId = null;
+    settingsPausedRemaining = null;
     modalEl.classList.remove('show');
     lastWrongIndex = null;
     isQuestionActive = true;
@@ -1397,6 +1416,7 @@
       const totalQuestions = boss ? 1 : NORMAL_QUESTIONS_PER_STAGE;
       const clearSec = Math.max(0.2, timeLimit - timeRemaining).toFixed(1);
       state.iq += timeRemaining >= timeLimit * 0.6 ? 2 : 1;
+      questionsSinceLastAd++;
 
       bannerEl.className = 'correct';
       bannerEl.textContent = `🎉 正解！ ${clearSec}秒で識別！`;
@@ -1404,11 +1424,12 @@
 
       if (stepInStage < totalQuestions) {
         playCorrectSound();
-        setTimeout(() => { stepInStage++; startQuestion(); }, 750);
+        clearTimeout(transitionTimeoutId);
+        transitionTimeoutId = setTimeout(() => { transitionTimeoutId = null; stepInStage++; startQuestion(); }, 750);
       } else {
         const clearedStage = state.stage;
         const clearedMission = state.mission;
-        pendingInterstitialAfterModal = (clearedStage % 3 === 0);
+        pendingInterstitialAfterModal = shouldTriggerInterstitial(clearedStage);
 
         if (clearedStage >= STAGES_PER_MISSION) {
           playStageClearFanfare();
@@ -1424,7 +1445,9 @@
           }
           saveProgress();
           updateHUD();
-          setTimeout(() => {
+          clearTimeout(transitionTimeoutId);
+          transitionTimeoutId = setTimeout(() => {
+            transitionTimeoutId = null;
             showModal({
               isBossAlert: false,
               showRevive: false,
@@ -1444,7 +1467,9 @@
           const nextIsBoss = isBossStage(state.stage);
           if (nextIsBoss) {
             playCorrectSound();
-            setTimeout(() => {
+            clearTimeout(transitionTimeoutId);
+            transitionTimeoutId = setTimeout(() => {
+              transitionTimeoutId = null;
               playBossApproachingSound();
               showModal({
                 isBossAlert: true,
@@ -1458,7 +1483,9 @@
             }, 850);
           } else {
             playStageClearFanfare();
-            setTimeout(() => {
+            clearTimeout(transitionTimeoutId);
+            transitionTimeoutId = setTimeout(() => {
+              transitionTimeoutId = null;
               showModal({
                 isBossAlert: false,
                 showRevive: false,
@@ -1498,7 +1525,9 @@
       ? `動画を見ると、第1問に戻らず<b>同じ問題にそのまま再挑戦</b>できます！`
       : `動画を見ると、<b>同じ問題（同じ配置）にそのまま再挑戦</b>できます！`;
 
-    setTimeout(() => {
+    clearTimeout(transitionTimeoutId);
+    transitionTimeoutId = setTimeout(() => {
+      transitionTimeoutId = null;
       showModal({
         isBossAlert: boss,
         showRevive: canRevive,
@@ -1700,6 +1729,7 @@
           state.mission = m;
           state.stage = 1;
           stepInStage = 1;
+          settingsPausedRemaining = null;
           saveProgress();
           if (state.devMode) {
             renderSettingsModal();
@@ -1729,6 +1759,7 @@
         btn.addEventListener('click', () => {
           state.stage = Number(btn.getAttribute('data-stage'));
           stepInStage = 1;
+          settingsPausedRemaining = null;
           if (state.hints < 5) state.hints = 5;
           saveProgress();
           settingsModalEl.classList.remove('show');
@@ -1741,12 +1772,45 @@
     }
   }
 
-  document.getElementById('settingsBtn').addEventListener('click', () => {
+  function openSettingsModal() {
+    if (settingsModalEl.classList.contains('show')) return;
+    if (adOverlayModalEl.classList.contains('show')) return;
+    clearTimeout(transitionTimeoutId);
+    transitionTimeoutId = null;
+    if (isQuestionActive && timeRemaining > 0) {
+      settingsPausedRemaining = timeRemaining;
+    } else {
+      settingsPausedRemaining = null;
+    }
     isQuestionActive = false;
     clearInterval(timerId);
     renderSettingsModal();
     settingsModalEl.classList.add('show');
     initAudio();
+  }
+
+  function closeSettingsAndResume() {
+    if (!settingsModalEl.classList.contains('show')) return;
+    settingsModalEl.classList.remove('show');
+    if (modalEl.classList.contains('show') || adOverlayModalEl.classList.contains('show')) {
+      return;
+    }
+    if (settingsPausedRemaining !== null && settingsPausedRemaining > 0.05 && gridEl.children.length > 0) {
+      const rem = settingsPausedRemaining;
+      settingsPausedRemaining = null;
+      runQuestionTimer(rem);
+    } else {
+      settingsPausedRemaining = null;
+      startQuestion();
+    }
+  }
+
+  document.getElementById('settingsBtn').addEventListener('click', openSettingsModal);
+
+  settingsModalEl.addEventListener('click', (e) => {
+    if (e.target === settingsModalEl) {
+      closeSettingsAndResume();
+    }
   });
 
   toggleBgmBtn.addEventListener('click', () => {
@@ -1814,8 +1878,7 @@
   });
 
   document.getElementById('closeSettingsBtn').addEventListener('click', () => {
-    settingsModalEl.classList.remove('show');
-    startQuestion();
+    closeSettingsAndResume();
   });
 
   startQuestion();

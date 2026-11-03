@@ -513,7 +513,7 @@
     <header class="header">
       <img id="header-icon" src="/store-kit/assets/icon_512.png?v=2" alt="アプリアイコン">
       <div class="header-info">
-        <span class="header-badge" id="header-badge">📱 第1弾：最新v63 (API 36・黒帯ゼロ＆アイコン最適化)</span>
+        <span class="header-badge" id="header-badge">📱 第1弾：最新v64 (API 36・設定フリーズ修正＆広告頻度最適化)</span>
         <h1 id="header-title">瞬間脳トレ！漢字間違い探しIQ<br>1タップ・ストア申請キット</h1>
         <p>上のタブでアプリを切り替えるだけで、文章コピー・AAB保存・全15画面の回答が5分で完了します。</p>
       </div>
@@ -646,13 +646,12 @@
       <div class="copy-item">
         <div class="copy-header">
           <span class="copy-label">⑤ リリースノート（Alphaテスト提出用）</span>
-          <span class="copy-meta">v6.3.0 (versionCode 63)</span>
+          <span class="copy-meta">v6.4.0 (versionCode 64)</span>
         </div>
         <div class="copy-box" id="text-release-notes">&lt;ja-JP&gt;
-・『瞬間脳トレ！漢字間違い探しIQ』最新リリース（v6.3.0 / Build 63 / Android APIレベル36対応）
-・全画面フルスクリーン（上下の黒帯解消）・大画面/折りたたみ端末の画面サイズ変更に完全対応
-・1問目やボス戦でも広告視聴で「同じ問題（同じ盤面）」にそのまま再挑戦できる機能を追加
-・Android Adaptive Icon（クローバー型・丸型等）のセーフゾーン最適化
+・『瞬間脳トレ！漢字間違い探しIQ』最新リリース（v6.4.0 / Build 64 / Android APIレベル36対応）
+・設定画面を開いた際の一時停止・再開処理の安定化（残り時間を維持したまま再開）
+・広告表示頻度の最適化による快適プレイ改善、およびフルスクリーン・大画面対応
 &lt;/ja-JP&gt;</div>
         <button type="button" class="copy-btn" data-target="text-release-notes">📋 ワンタップでコピー</button>
       </div>
@@ -697,13 +696,13 @@
       <!-- 1. AAB & APK -->
       <div class="dl-block">
         <div class="dl-title">📦 1. アプリ本体ファイル（Google Play用 AAB ／ Amazon用 APK）</div>
-        <div class="dl-sub">🔵 <strong>Google Play Console（クローズドテスト Alpha）</strong> には青ボタンの <strong>AABファイル（.aab）</strong> をアップロードしてください（<strong>v6.3.0 / versionCode=63 / targetSdk=36（APIレベル36・大画面＆黒帯ゼロ対応）</strong>）</div>
-        <a id="dl-aab-btn" class="dl-btn aab-main" href="/apk/KanjiBrainIQ_v6.aab?v=63" download="KanjiBrainIQ_v6.aab">
-          📥 1-A. Google Play専用 AAB（KanjiBrainIQ_v6.aab v63）を保存
+        <div class="dl-sub">🔵 <strong>Google Play Console（クローズドテスト Alpha）</strong> には青ボタンの <strong>AABファイル（.aab）</strong> をアップロードしてください（<strong>v6.4.0 / versionCode=64 / targetSdk=36（APIレベル36・快適操作＆広告最適化対応）</strong>）</div>
+        <a id="dl-aab-btn" class="dl-btn aab-main" href="/apk/KanjiBrainIQ_v6.aab?v=64" download="KanjiBrainIQ_v6.aab">
+          📥 1-A. Google Play専用 AAB（KanjiBrainIQ_v6.aab v64）を保存
         </a>
-        <div class="dl-sub" style="margin-top: 6px;">🟠 <strong>Amazon Appstore</strong> またはスマホ直接インストールにはオレンジボタンの <strong>APKファイル（.apk）</strong> を使用します（v6.3.0 / versionCode=63 / targetSdk=36）</div>
-        <a id="dl-apk-btn" class="dl-btn apk-main" href="/apk/KanjiBrainIQ_v6.apk?v=63" download="KanjiBrainIQ_v6.apk">
-          📥 1-B. アプリ本体 APK（KanjiBrainIQ_v6.apk v63）を保存
+        <div class="dl-sub" style="margin-top: 6px;">🟠 <strong>Amazon Appstore</strong> またはスマホ直接インストールにはオレンジボタンの <strong>APKファイル（.apk）</strong> を使用します（v6.4.0 / versionCode=64 / targetSdk=36）</div>
+        <a id="dl-apk-btn" class="dl-btn apk-main" href="/apk/KanjiBrainIQ_v6.apk?v=64" download="KanjiBrainIQ_v6.apk">
+          📥 1-B. アプリ本体 APK（KanjiBrainIQ_v6.apk v64）を保存
         </a>
       </div>
 
@@ -896,7 +895,7 @@
     (function () {
       var APPS = {
         kanji: {
-          badge: '📱 第1弾：最新v63 (API 36・黒帯ゼロ＆アイコン最適化)',
+          badge: '📱 第1弾：最新v64 (API 36・設定フリーズ修正＆広告頻度最適化)',
           headerTitle: '瞬間脳トレ！漢字間違い探しIQ<br>1タップ・ストア申請キット',
           titleShort: '瞬間脳トレ！漢字間違い探しIQ',
           metaTitleShort: '13文字 / 30文字以内',
@@ -906,15 +905,15 @@
           shortDesc: '制限時間内に1つだけ違う漢字を見破れ！白と百、大と太など全180問の直感間違い探しであなたの認定脳IQと観察力ランクをスピード診断。毎日楽しく脳活パズル！',
           metaShortDesc: '75文字 / 80文字以内',
           fullDesc: '「白」の中に1つだけ隠れた「百」、「待」の中に紛れ込んだ「持」……あなたは制限時間内（初級12秒〜最高難度ボス4秒）に見破ることができますか？\n\n『瞬間脳トレ！漢字間違い探しIQ』は、画面に並ぶ漢字や熟語・記号の中から「1つだけ違う仲間外れ」を直感タップで見つけ出す、爽快スピード脳トレ＆観察力IQテストアプリです！\n\n面倒な会員登録やログインは一切不要。アプリを開いて1秒でスタートでき、通勤・通学のスキマ時間や毎日の脳活・認知症予防・集中力アップに最適です。\n\n━━━━━━━━━━━━━━━━━━━━\n🔥 ここが面白い！5つの特徴\n━━━━━━━━━━━━━━━━━━━━\n\n【1】全5ミッション・合計180ステージの大ボリューム！\n・MISSION 1：漢字の違和感探し（白/百、大/太、待/持、未/末 など）\n・MISSION 2：二字熟語・四字熟語バグ（熟語に潜む1文字のダミーを発見）\n・MISSION 3：カタカナ・類似記号トラップ（シ/ツ、ソ/ンなどゲシュタルト崩壊に挑む）\n・MISSION 4：超密グリッド・周辺視野テスト（高密度パネルで右脳の瞬間認識を鍛える）\n・MISSION 5：神眼マスター・極限タイムアタック（IQ140超えを目指す上級者ステージ）\n\n【2】5ステージごとに突入する「BOSS STAGE」の緊張感！\nステージ5やステージ10では、制限時間が短縮されグリッドが拡大する「ボスステージ」が出現！ノーミス連続コンボを決めてスピード突破すると、認定脳IQが一気に跳ね上がります。\n\n【3】クリアするほど進化する「認定脳IQ」＆「ランク称号」！\n回答スピードと正確さに応じて、あなたの「認定脳IQスコア」がリアルタイムに上昇！\n「観察ルーキー」から「違和感ハンター」「鷹の目マスター」、そして最高峰の「瞬間認識の天才」「神の領域」まで、最高ランクを目指して挑戦しましょう。\n\n【4】電車内でも安心！BGM・効果音の個別音量スライダー搭載\nゲームを盛り上げる軽快なサウンド（WebAudio音源）を搭載しつつ、画面右上の「音量設定」からBGMと効果音（SE）のバランスを0%〜100%まで個別に微調整＆ワンタップ消音が可能。設定は端末に自動保存されます。\n\n【5】個人情報収集ゼロ・完全無料で安心プレイ\n氏名や連絡先、位置情報などの個人情報は一切取得しません。ゲームの進行記録やハイスコアは端末内に安全に保存されるため、お子様からシニアの方まで家族みんなで安心して遊べます。\n\n━━━━━━━━━━━━━━━━━━━━\n💡 こんな方におすすめ！\n━━━━━━━━━━━━━━━━━━━━\n・漢字クイズ、間違い探し、アハ体験、目の体操が好きな方\n・短時間でスカッと頭を切り替えたい方、集中力や周辺視野を鍛えたい方\n・毎日の脳トレ・脳年齢チェック・ボケ防止習慣を楽しく続けたい方\n・家族や友達と「どこまでクリアできた？」「IQいくつになった？」と競い合いたい方\n\nさあ、あなたの目と脳は全180問の違和感を見破れるか？今すぐ無料でチャレンジ！',
-          releaseNotes: '<ja-JP>\n・『瞬間脳トレ！漢字間違い探しIQ』最新リリース（v6.3.0 / Build 63 / Android APIレベル36対応）\n・全画面フルスクリーン（上下の黒帯解消）・大画面/折りたたみ端末の画面サイズ変更に完全対応\n・1問目やボス戦でも広告視聴で「同じ問題（同じ盤面）」にそのまま再挑戦できる機能を追加\n・Android Adaptive Icon（クローバー型・丸型等）のセーフゾーン最適化\n</ja-JP>',
-          aabUrl: '/apk/KanjiBrainIQ_v6.aab?v=63',
+          releaseNotes: '<ja-JP>\n・『瞬間脳トレ！漢字間違い探しIQ』最新リリース（v6.4.0 / Build 64 / Android APIレベル36対応）\n・設定画面を開いた際の一時停止・再開処理の安定化（残り時間を維持したまま再開）\n・広告表示頻度の最適化による快適プレイ改善、およびフルスクリーン・大画面対応\n</ja-JP>',
+          aabUrl: '/apk/KanjiBrainIQ_v6.aab?v=64',
           aabFile: 'KanjiBrainIQ_v6.aab',
-          apkUrl: '/apk/KanjiBrainIQ_v6.apk?v=63',
+          apkUrl: '/apk/KanjiBrainIQ_v6.apk?v=64',
           apkFile: 'KanjiBrainIQ_v6.apk',
           assetDir: '/store-kit/assets'
         },
         colorsense: {
-          badge: '🎨 第2弾：最新v63 (API 36・黒帯ゼロ＆アイコン最適化)',
+          badge: '🎨 第2弾：最新v64 (API 36・設定フリーズ修正＆広告頻度最適化)',
           headerTitle: '絶対色感！色彩間違い探しIQ<br>1タップ・ストア申請キット',
           titleShort: '絶対色感！色彩間違い探しIQ',
           metaTitleShort: '13文字 / 30文字以内',
@@ -924,15 +923,15 @@
           shortDesc: '1つだけ微妙に色が違うパネルを直感で見破れ！2×2から最大7×7まで全50ステージの色彩識別テストであなたの認定色感IQとカラーリスト称号をスピード診断！',
           metaShortDesc: '75文字 / 80文字以内',
           fullDesc: '並ぶカラーパネルの中に1枚だけ紛れ込んだ「微妙に明度・トーンが違うパネル」……あなたの目は制限時間内に見破ることができますか？\n\n『絶対色感！色彩間違い探しIQ』は、美しいHSLカラーパレットの中から「1つだけ色が違うパネル」を直感タップで見つけ出す、爽快スピード色彩感覚テスト＆右脳トレーニングアプリです！\n\n面倒な会員登録やログインは一切不要。アプリを開いて1秒でスタートでき、通勤・通学のスキマ時間やイラスト・デザイン感覚のチェック、毎日の目の体操・集中力アップに最適です。\n\n━━━━━━━━━━━━━━━━━━━━\n🎨 ここが面白い！5つの特徴\n━━━━━━━━━━━━━━━━━━━━\n\n【1】全5ミッション・合計50ステージ（最大7×7＝49枚）の段階的チャレンジ！\n・MISSION 1（初級）：2×2（4枚）〜4×4（16枚）・まずは爽快に見分けられる明度差からスタート！\n・MISSION 2（中級）：3×3〜5×5（25枚）・徐々に縮まるトーンの差を見抜く色彩トレーニング\n・MISSION 3（上級）：高密度パネル×制限時間9秒のスピード色感テスト\n・MISSION 4（達人）：最大6×6（36枚）・プロデザイナー領域の微妙な色彩差に挑戦\n・MISSION 5（最高難度）：最大7×7（49枚）・明度差わずか数%を見極める神眼タイムアタック\n\n【2】5ステージごとに突入する「BOSS STAGE」の緊張感！\nステージ5やステージ10では、制限時間が短縮される「1問一発勝負の極限カラーボス戦」が出現！見事クリアすると色感IQボーナスとヒント回復を獲得できます。\n\n【3】クリアするほど進化する「認定色感IQ」＆「カラーリスト称号」！\n回答スピードと正確さに応じて、あなたの「色感IQスコア」がリアルタイムに上昇！\n「見習いカラーリスト」から「色彩ハンター」「プロデザイナー級」「アートディレクター級」、そして最高峰の「絶対色感の神」まで、最高ランクを目指して挑戦しましょう。\n\n【4】電車内でも安心！BGM・効果音の個別音量スライダー搭載\n心地よいWebAudioシンセBGMと爽快なクリア効果音を搭載しつつ、画面右上の「設定」からBGMと効果音（SE）の音量を0%〜100%まで個別に微調整＆ワンタップ消音が可能。設定は端末に自動保存されます。\n\n【5】個人情報収集ゼロ・完全無料で安心プレイ\n氏名や連絡先、位置情報などの個人情報は一切取得しません。ゲームの進行記録やハイスコアは端末内に安全に保存されるため、お子様から大人・クリエイターの方まで安心して遊べます。\n\n━━━━━━━━━━━━━━━━━━━━\n💡 こんな方におすすめ！\n━━━━━━━━━━━━━━━━━━━━\n・色彩検定やカラーコーディネート、イラスト、Webデザインに興味がある方\n・自分の「絶対色感」「色の見分け力」がどのくらいのレベルか試してみたい方\n・短時間でスカッと頭を切り替えたい方、直感力や右脳の観察力を鍛えたい方\n・家族や友達と「色感IQいくつになった？」と競い合いたい方\n\nさあ、あなたの目はプロデザイナー級の色彩差を見破れるか？今すぐ無料でチャレンジ！',
-          releaseNotes: '<ja-JP>\n・『絶対色感！色彩間違い探しIQ』最新リリース（v6.3.0 / Build 63 / Android APIレベル36対応）\n・全画面フルスクリーン（上下の黒帯解消）・大画面/折りたたみ端末の画面サイズ変更に完全対応\n・1問目やボス戦でも広告視聴で「同じ問題（同じ盤面）」にそのまま再挑戦できる機能を追加\n・Android Adaptive Icon（クローバー型・丸型等）のセーフゾーン最適化\n</ja-JP>',
-          aabUrl: '/apk/ColorSenseIQ_v6.aab?v=63',
+          releaseNotes: '<ja-JP>\n・『絶対色感！色彩間違い探しIQ』最新リリース（v6.4.0 / Build 64 / Android APIレベル36対応）\n・設定画面を開いた際の一時停止・再開処理の安定化（残り時間を維持したまま再開）\n・広告表示頻度の最適化による快適プレイ改善、およびフルスクリーン・大画面対応\n</ja-JP>',
+          aabUrl: '/apk/ColorSenseIQ_v6.aab?v=64',
           aabFile: 'ColorSenseIQ_v6.aab',
-          apkUrl: '/apk/ColorSenseIQ_v6.apk?v=63',
+          apkUrl: '/apk/ColorSenseIQ_v6.apk?v=64',
           apkFile: 'ColorSenseIQ_v6.apk',
           assetDir: '/store-kit/assets/colorsense'
         },
         maketen: {
-          badge: '🧮 第3弾：最新v63 (API 36・黒帯ゼロ＆アイコン最適化)',
+          badge: '🧮 第3弾：最新v64 (API 36・設定フリーズ修正＆広告頻度最適化)',
           headerTitle: '瞬間暗算！テンパズル脳トレIQ<br>1タップ・ストア申請キット',
           titleShort: '瞬間暗算！テンパズル脳トレIQ',
           metaTitleShort: '14文字 / 30文字以内',
@@ -942,10 +941,10 @@
           shortDesc: '足して「10」になる2枚のカードを制限時間内に瞬時にタップ！端数ターゲットやボス戦を含む全5ミッションであなたの計算IQと暗算ランクをスピード診断！',
           metaShortDesc: '75文字 / 80文字以内',
           fullDesc: '並んだ数字カードの中から「足して10になる2枚」を、あなたは制限時間内に何秒で見つけられますか？\n\n『瞬間暗算！テンパズル脳トレIQ』は、画面の数字パネルからターゲットの合計値になる「たった1組のペア」を直感タップで射抜く、爽快スピード暗算＆計算脳トレIQテストアプリです！\n\n面倒な会員登録やログインは一切不要。アプリを開いて1秒でスタートでき、通勤・通学のスキマ時間や毎日の脳活・暗算トレーニング・集中力アップに最適です。\n\n━━━━━━━━━━━━━━━━━━━━\n🔥 ここが面白い！5つの特徴\n━━━━━━━━━━━━━━━━━━━━\n\n【1】毎回ランダム生成！全5ミッション・50ステージの段階進化バトル！\n・MISSION 1（初級：合計10）：まずは王道のメイク10！足して10になる2枚を気持ちよく即タップ\n・MISSION 2（中級：合計15・20）：ターゲットが15・20に変化！繰り上がり暗算でスピード加速\n・MISSION 3（上級：合計20〜30）：パネル枚数が増加！視野を広げて正解ペアを一瞬でサーチ\n・MISSION 4（達人：端数ターゲット）：17・23・28・34などキリの良くない端数合計で前頭葉をフル回転\n・MISSION 5（最高難度：暗算極限）：29・37・43・50×高密度4×4パネル！人間スパコンを目指す最高峰ステージ\n\n【2】答えのペアは必ず「1組だけ」の気持ちいい問題設計！\nどの問題も「足してターゲットになる組み合わせが盤面に必ず1組だけ存在する」ように数学アルゴリズムでリアルタイム生成！迷いや理不尽さがなく、見つけた瞬間の「ピタッと合致するアハ体験」がクセになります。\n\n【3】5ステージごとに突入する「BOSS STAGE」＆「計算IQ称号」！\nステージ5やステージ10では、制限時間が短縮される「1問一発勝負のボスステージ」が出現！\nクリアするほどあなたの「認定計算IQスコア」が上昇し、「暗算ルーキー」から「高速頭脳派」「数学マスター」「瞬間暗算の天才」、そして最高峰の「人間スパコン」へとランク称号が進化します。\n\n【4】電車内でも安心！BGM・効果音の個別音量スライダー搭載\n軽快なシンセBGMと心地よいタップ効果音を搭載しつつ、画面右上の「設定」からBGMと効果音（SE）の音量を0%〜100%まで個別にスライダー調整＆ワンタップ消音が可能。設定は端末に自動保存されます。\n\n【5】個人情報収集ゼロ・完全無料で安心プレイ\n氏名や連絡先、位置情報などの個人情報は一切取得しません。ゲームの進行記録や計算IQスコアは端末内に安全に保存されるため、小学生の算数・暗算練習から大人の脳トレ・シニアの脳活まで家族みんなで安心して遊べます。\n\n━━━━━━━━━━━━━━━━━━━━\n💡 こんな方におすすめ！\n━━━━━━━━━━━━━━━━━━━━\n・メイク10（テンパズル）、数字パズル、暗算ゲーム、算数クイズが好きな方\n・短時間でスカッと頭を回転させたい方、計算スピードやワーキングメモリを鍛えたい方\n・毎日の脳トレ・脳年齢チェック・認知症予防を楽しく続けたい方\n・お子様の足し算・繰り上がり暗算のセンスをゲーム感覚で伸ばしたい方\n\nさあ、あなたの頭脳は制限時間内に正解ペアを見抜けるか？今すぐ無料でチャレンジ！',
-          releaseNotes: '<ja-JP>\n・『瞬間暗算！テンパズル脳トレIQ』最新リリース（v6.3.0 / Build 63 / Android APIレベル36対応）\n・全画面フルスクリーン（上下の黒帯解消）・大画面/折りたたみ端末の画面サイズ変更に完全対応\n・1問目やボス戦でも広告視聴で「同じ問題（同じ盤面）」にそのまま再挑戦できる機能を追加\n・Android Adaptive Icon（クローバー型・丸型等）のセーフゾーン最適化\n</ja-JP>',
-          aabUrl: '/apk/MakeTenIQ_v6.aab?v=63',
+          releaseNotes: '<ja-JP>\n・『瞬間暗算！テンパズル脳トレIQ』最新リリース（v6.4.0 / Build 64 / Android APIレベル36対応）\n・設定画面を開いた際の一時停止・再開処理の安定化（残り時間を維持したまま再開）\n・広告表示頻度の最適化による快適プレイ改善、およびフルスクリーン・大画面対応\n</ja-JP>',
+          aabUrl: '/apk/MakeTenIQ_v6.aab?v=64',
           aabFile: 'MakeTenIQ_v6.aab',
-          apkUrl: '/apk/MakeTenIQ_v6.apk?v=63',
+          apkUrl: '/apk/MakeTenIQ_v6.apk?v=64',
           apkFile: 'MakeTenIQ_v6.apk',
           assetDir: '/store-kit/assets/maketen'
         }
@@ -980,12 +979,12 @@
         var aabBtn = document.getElementById('dl-aab-btn');
         aabBtn.href = data.aabUrl;
         aabBtn.setAttribute('download', data.aabFile);
-        aabBtn.textContent = '📥 1-A. Google Play専用 AAB（' + data.aabFile + ' v63）を保存';
+        aabBtn.textContent = '📥 1-A. Google Play専用 AAB（' + data.aabFile + ' v64）を保存';
 
         var apkBtn = document.getElementById('dl-apk-btn');
         apkBtn.href = data.apkUrl;
         apkBtn.setAttribute('download', data.apkFile);
-        apkBtn.textContent = '📥 1-B. アプリ本体 APK（' + data.apkFile + ' v63）を保存';
+        apkBtn.textContent = '📥 1-B. アプリ本体 APK（' + data.apkFile + ' v64）を保存';
 
         // Images & Download Links
         var iconUrl = data.assetDir + '/icon_512.png?v=3';

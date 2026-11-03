@@ -566,10 +566,13 @@
       <div class="step-pill" id="stepPill">第 1 / 3 問</div>
       <button class="icon-btn" id="settingsBtn">⚙️ 設定</button>
     </div>
-    <div class="next-card">
-      <span class="next-label">1から順番！次は</span>
-      <span class="next-num" id="nextNumEl">1</span>
-      <span class="next-label">をタップ！</span>
+    <div class="next-card" id="nextCardEl" style="flex-direction:column; gap:3px; padding:7px 14px;">
+      <div id="ruleBadgeEl" style="font-size:12.5px; font-weight:900; color:#fef08a; letter-spacing:0.2px;">⚡ 小さい順に爆速連打せよ！</div>
+      <div style="display:flex; align-items:center; justify-content:center; gap:8px;">
+        <span class="next-label" id="nextPreLabelEl">次は</span>
+        <span class="next-num" id="nextNumEl">1</span>
+        <span class="next-label" id="nextPostLabelEl">をタップ！</span>
+      </div>
     </div>
   </div>
 
@@ -689,11 +692,11 @@
   }
 
   const MISSION_CONFIG = {
-    1: { name: 'MISSION 1（初級：4〜9枚）',     secPerTile: 1.8,  minSec: 9.0 },
-    2: { name: 'MISSION 2（中級：6〜12枚）',    secPerTile: 1.4,  minSec: 8.5 },
-    3: { name: 'MISSION 3（上級：9〜16枚）',    secPerTile: 1.15, minSec: 8.0 },
-    4: { name: 'MISSION 4（達人：12〜20枚）',   secPerTile: 0.95, minSec: 8.0 },
-    5: { name: 'MISSION 5（最高難度：最大25枚）', secPerTile: 0.80, minSec: 7.5 }
+    1: { name: 'MISSION 1（初級：9〜20マス）',    secPerTile: 0.62, minSec: 5.5 },
+    2: { name: 'MISSION 2（中級：12〜25マス）',   secPerTile: 0.56, minSec: 6.2 },
+    3: { name: 'MISSION 3（上級：16〜25マス）',   secPerTile: 0.52, minSec: 6.8 },
+    4: { name: 'MISSION 4（達人：20〜25マス）',   secPerTile: 0.48, minSec: 7.2 },
+    5: { name: 'MISSION 5（神速：全25マス極限）', secPerTile: 0.44, minSec: 7.5 }
   };
 
   function getTitleForIQ(iqVal) {
@@ -862,7 +865,11 @@
 
   let stepInStage = 1;
   let currentTarget = 1;
-  let maxNumber = 4;
+  let targetIdx = 0;
+  let targetSequence = [];
+  let initialBoardValues = [];
+  let currentRule = { mode: 'asc', badge: '⚡ 1から順番に連打せよ！', shuffleOnTap: false, dummyCount: 0 };
+  let maxNumber = 9;
   let lastNumsKey = '';
   let tileElementsByNum = new Map();
   let isQuestionActive = false;
@@ -870,6 +877,20 @@
   let timeLimit = 10.0;
   let timeRemaining = 10.0;
   let pendingInterstitialAfterModal = false;
+  let transitionTimeoutId = null;
+  let settingsPausedRemaining = null;
+  let lastInterstitialAt = performance.now();
+  let questionsSinceLastAd = 0;
+  const AD_COOLDOWN_MS = 110 * 1000;
+  const AD_MIN_QUESTIONS = 12;
+
+  function shouldTriggerInterstitial(clearedStage) {
+    const elapsed = performance.now() - lastInterstitialAt;
+    if (clearedStage % 3 === 0 && questionsSinceLastAd >= AD_MIN_QUESTIONS && elapsed >= AD_COOLDOWN_MS) {
+      return true;
+    }
+    return false;
+  }
 
   const gridEl = document.getElementById('grid');
   const bannerEl = document.getElementById('status-banner');
@@ -877,6 +898,9 @@
   const stageBadgeEl = document.getElementById('stageBadge');
   const stepPillEl = document.getElementById('stepPill');
   const nextNumEl = document.getElementById('nextNumEl');
+  const ruleBadgeEl = document.getElementById('ruleBadgeEl');
+  const nextPreLabelEl = document.getElementById('nextPreLabelEl');
+  const nextPostLabelEl = document.getElementById('nextPostLabelEl');
   const rankTextEl = document.getElementById('rankText');
   const hintBtnEl = document.getElementById('hintBtn');
   const modalEl = document.getElementById('modal');
@@ -938,6 +962,8 @@
 
   function finishAdAndRunCallback() {
     if (currentAdType === 'interstitial') {
+      lastInterstitialAt = performance.now();
+      questionsSinceLastAd = 0;
       state.hints = Math.min(5, (state.hints || 0) + 1);
       saveProgress();
       updateHUD();
@@ -1036,45 +1062,97 @@
   function isBossStage(st) { return st === 5 || st === 10; }
 
   function getGridSpec(st, missionNum) {
-    const bracket = Math.floor((st - 1) / 2); // 0..4
-    const MAP = {
-      1: [
-        { cols: 2, rows: 2, font: 42 },
-        { cols: 2, rows: 3, font: 38 },
-        { cols: 2, rows: 3, font: 38 },
-        { cols: 3, rows: 3, font: 34 },
-        { cols: 3, rows: 3, font: 34 }
-      ],
-      2: [
-        { cols: 2, rows: 3, font: 38 },
-        { cols: 3, rows: 3, font: 34 },
-        { cols: 3, rows: 3, font: 34 },
-        { cols: 3, rows: 4, font: 30 },
-        { cols: 3, rows: 4, font: 30 }
-      ],
-      3: [
-        { cols: 3, rows: 3, font: 34 },
-        { cols: 3, rows: 4, font: 30 },
-        { cols: 3, rows: 4, font: 30 },
-        { cols: 4, rows: 4, font: 27 },
-        { cols: 4, rows: 4, font: 27 }
-      ],
-      4: [
-        { cols: 3, rows: 4, font: 30 },
-        { cols: 4, rows: 4, font: 27 },
-        { cols: 4, rows: 4, font: 27 },
-        { cols: 4, rows: 5, font: 24 },
-        { cols: 4, rows: 5, font: 24 }
-      ],
-      5: [
-        { cols: 4, rows: 4, font: 27 },
-        { cols: 4, rows: 5, font: 24 },
-        { cols: 4, rows: 5, font: 24 },
-        { cols: 5, rows: 5, font: 22 },
-        { cols: 5, rows: 5, font: 22 }
-      ]
+    // 3x3 (9マス) is ONLY for Mission 1 Stage 1! Scales rapidly to 3x4 -> 4x4 -> 4x5 -> 5x5!
+    if (missionNum === 1) {
+      if (st === 1) return { cols: 3, rows: 3, font: 32 }; // 9マス (M1 Stage 1のみ)
+      if (st <= 3)  return { cols: 3, rows: 4, font: 28 }; // 12マス
+      if (st <= 6)  return { cols: 4, rows: 4, font: 25 }; // 16マス
+      if (st <= 8)  return { cols: 4, rows: 5, font: 22 }; // 20マス
+      return { cols: 5, rows: 5, font: 20 };               // 25マス (Stage 9-10)
+    }
+    if (missionNum === 2) {
+      if (st <= 2)  return { cols: 3, rows: 4, font: 28 }; // 12マス
+      if (st <= 5)  return { cols: 4, rows: 4, font: 25 }; // 16マス
+      if (st <= 8)  return { cols: 4, rows: 5, font: 22 }; // 20マス
+      return { cols: 5, rows: 5, font: 20 };               // 25マス
+    }
+    if (missionNum === 3) {
+      if (st <= 3)  return { cols: 4, rows: 4, font: 25 }; // 16マス
+      if (st <= 6)  return { cols: 4, rows: 5, font: 22 }; // 20マス
+      return { cols: 5, rows: 5, font: 20 };               // 25マス
+    }
+    if (missionNum === 4) {
+      if (st <= 3)  return { cols: 4, rows: 5, font: 22 }; // 20マス
+      return { cols: 5, rows: 5, font: 20 };               // 25マス
+    }
+    return { cols: 5, rows: 5, font: 20 };                 // M5: 常時 5x5 (25マス)
+  }
+
+  function buildStageRuleAndNumbers(st, missionNum, totalCells) {
+    // Determine brain-training rule based on stage & mission
+    let mode = 'asc';
+    let shuffleOnTap = false;
+    let dummyCount = 0;
+    let badge = '⚡ 1から小さい順に連打せよ！';
+    let preLabel = '最小は';
+
+    if (st === 5) {
+      // Mid-boss: Reverse Countdown (Largest -> Smallest) + Stepping numbers in M2+
+      mode = (missionNum >= 2) ? 'desc_step' : 'desc';
+      badge = '🔥 中ボス：最大値から【逆順（大きい順）】にタップせよ！';
+      preLabel = '最大は';
+    } else if (st === 10) {
+      // Final Boss: Reverse Countdown + Position Shuffle on every tap!
+      mode = (missionNum >= 3) ? 'desc_step' : 'desc';
+      shuffleOnTap = true;
+      badge = '👑 最終ボス：【逆順】＆タップごとに残りマスがシャッフル！';
+      preLabel = '最大は';
+    } else if (st === 4 || st === 8) {
+      // Stepping numbers + Dummy trap tiles
+      mode = 'step_dummy';
+      dummyCount = totalCells >= 20 ? 3 : 2;
+      badge = `🧠 飛び石の数字を【小さい順】にタップ！（💀ダミー${dummyCount}枚は押すな）`;
+      preLabel = '最小は';
+    } else if (st === 7 || st === 9 || (missionNum >= 3 && st === 6)) {
+      // Dynamic Shuffle on tap + Stepping numbers
+      mode = 'step';
+      shuffleOnTap = true;
+      badge = '🌀 脳トレ：飛び石の数字を【小さい順】！（タップごとに配置シャッフル）';
+      preLabel = '最小は';
+    } else if (st >= 3 || missionNum >= 2) {
+      // Stepping stones (non-consecutive numbers e.g. 3, 7, 12, 18...)
+      mode = 'step';
+      badge = '🔢 飛び石ナンバー！盤面で【一番小さい数字】から順にタップ！';
+      preLabel = '最小は';
+    }
+
+    const activeCount = totalCells - dummyCount;
+    const seq = [];
+    if (mode === 'asc' || mode === 'desc') {
+      for (let i = 1; i <= activeCount; i++) seq.push(i);
+    } else {
+      let cur = 1 + Math.floor(Math.random() * 5); // start at 2..6
+      for (let i = 0; i < activeCount; i++) {
+        seq.push(cur);
+        cur += 2 + Math.floor(Math.random() * 5); // random step +2..+6
+      }
+    }
+
+    if (mode === 'desc' || mode === 'desc_step') {
+      seq.reverse();
+    }
+
+    const boardItems = seq.map(v => ({ val: v, isDummy: false }));
+    const dummySymbols = ['💀', '❌', '💣', '⚡'];
+    for (let d = 0; d < dummyCount; d++) {
+      boardItems.push({ val: dummySymbols[d % dummySymbols.length], isDummy: true });
+    }
+
+    return {
+      seq,
+      boardItems,
+      rule: { mode, badge, preLabel, shuffleOnTap, dummyCount }
     };
-    return (MAP[missionNum] || MAP[1])[Math.min(4, Math.max(0, bracket))];
   }
 
   function updateHUD() {
@@ -1110,80 +1188,145 @@
       const elapsed = (performance.now() - startTime) / 1000;
       timeRemaining = Math.max(0, baseSec - elapsed);
       progBarEl.style.width = `${Math.min(100, (timeRemaining / denom) * 100)}%`;
-      const remCount = maxNumber - currentTarget + 1;
-      bannerEl.textContent = `⏱️ 残り ${timeRemaining.toFixed(1)} 秒！（残り ${remCount} 枚）`;
+      const remCount = Math.max(0, targetSequence.length - targetIdx);
+      bannerEl.textContent = `⏱️ 残り ${timeRemaining.toFixed(1)} 秒！（あと ${remCount} 枚）`;
       if (timeRemaining <= 0) onFail('timeup');
     }, 50);
   }
 
-  function startQuestion() {
-    clearInterval(timerId);
-    modalEl.classList.remove('show');
-    isQuestionActive = true;
-    currentTarget = 1;
-    nextNumEl.textContent = '1';
-
-    const boss = isBossStage(state.stage);
-    const mCfg = MISSION_CONFIG[state.mission] || MISSION_CONFIG[1];
-    const { cols, rows, font } = getGridSpec(state.stage, state.mission);
-    maxNumber = cols * rows;
-
-    const nums = Array.from({ length: maxNumber }, (_, i) => i + 1);
-    let attempts = 0;
-    let key = '';
-    do {
-      for (let i = nums.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [nums[i], nums[j]] = [nums[j], nums[i]];
-      }
-      key = nums.join(',');
-      attempts++;
-    } while (key === lastNumsKey && attempts < 10);
-    lastNumsKey = key;
-
-    timeLimit = Math.max(mCfg.minSec, maxNumber * mCfg.secPerTile * (boss ? 0.85 : 1.0));
-    timeRemaining = timeLimit;
-
-    bannerEl.className = '';
-    bannerEl.textContent = `⏱️ 残り ${timeRemaining.toFixed(1)} 秒！（残り ${maxNumber} 枚）`;
-    progBarEl.style.width = '100%';
-
+  function renderBoardFromItems(items, cols, rows, font) {
     gridEl.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
     gridEl.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
     gridEl.innerHTML = '';
     tileElementsByNum.clear();
 
-    for (let i = 0; i < maxNumber; i++) {
-      const n = nums[i];
+    for (let i = 0; i < items.length; i++) {
+      const it = items[i];
       const tile = document.createElement('div');
       tile.className = 'num-tile';
       tile.style.fontSize = `${font}px`;
-      tile.textContent = String(n);
-      tile.addEventListener('pointerdown', () => onTileTap(n, tile));
+      if (it.isDummy) {
+        tile.style.backgroundColor = '#3b1520';
+        tile.style.borderColor = '#9f1239';
+        tile.style.color = '#fda4af';
+      }
+      tile.textContent = String(it.val);
+      tile.addEventListener('pointerdown', () => onTileTap(it, tile));
       gridEl.appendChild(tile);
-      tileElementsByNum.set(n, tile);
+      if (!it.isDummy) {
+        tileElementsByNum.set(it.val, tile);
+      }
     }
+  }
 
+  function shuffleRemainingBoardTiles() {
+    const tiles = Array.from(gridEl.querySelectorAll('.num-tile'));
+    const activeIndices = [];
+    const activeContents = [];
+    tiles.forEach((t, idx) => {
+      if (!t.classList.contains('done')) {
+        activeIndices.push(idx);
+        activeContents.push(t);
+      }
+    });
+    if (activeContents.length <= 1) return;
+    for (let i = activeContents.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [activeContents[i], activeContents[j]] = [activeContents[j], activeContents[i]];
+    }
+    const newOrder = tiles.slice();
+    activeIndices.forEach((slotIdx, k) => {
+      newOrder[slotIdx] = activeContents[k];
+    });
+    newOrder.forEach(el => gridEl.appendChild(el));
+  }
+
+  function computeStageTimeLimit(st, missionNum, activeTileCount, rule) {
+    const boss = isBossStage(st);
+    const mCfg = MISSION_CONFIG[missionNum] || MISSION_CONFIG[1];
+    // Tighter, thrilling time budget that demands rapid eye movement!
+    let factor = mCfg.secPerTile - (st - 1) * 0.012;
+    if (rule.mode !== 'asc') factor += 0.08; // slight allowance for mental comparison on stepping/reverse
+    if (rule.shuffleOnTap) factor += 0.14;   // slight allowance for re-scanning on shuffle
+    if (boss) factor *= 0.88;
+    return Math.max(mCfg.minSec, Math.round(activeTileCount * factor * 10) / 10);
+  }
+
+  function startQuestion() {
+    clearInterval(timerId);
+    clearTimeout(transitionTimeoutId);
+    transitionTimeoutId = null;
+    settingsPausedRemaining = null;
+    modalEl.classList.remove('show');
+    isQuestionActive = true;
+
+    const { cols, rows, font } = getGridSpec(state.stage, state.mission);
+    const totalCells = cols * rows;
+    const built = buildStageRuleAndNumbers(state.stage, state.mission, totalCells);
+    targetSequence = built.seq;
+    currentRule = built.rule;
+    maxNumber = targetSequence.length;
+    targetIdx = 0;
+    currentTarget = targetSequence[0];
+
+    if (ruleBadgeEl) ruleBadgeEl.textContent = currentRule.badge;
+    if (nextPreLabelEl) nextPreLabelEl.textContent = currentRule.preLabel || '次は';
+    nextNumEl.textContent = String(currentTarget);
+
+    const items = built.boardItems.slice();
+    let attempts = 0;
+    let key = '';
+    do {
+      for (let i = items.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [items[i], items[j]] = [items[j], items[i]];
+      }
+      key = items.map(x => x.val).join(',');
+      attempts++;
+    } while (key === lastNumsKey && attempts < 10);
+    lastNumsKey = key;
+    initialBoardValues = items.map(x => ({ val: x.val, isDummy: x.isDummy }));
+
+    timeLimit = computeStageTimeLimit(state.stage, state.mission, maxNumber, currentRule);
+    timeRemaining = timeLimit;
+
+    bannerEl.className = '';
+    bannerEl.textContent = `⏱️ 残り ${timeRemaining.toFixed(1)} 秒！（あと ${maxNumber} 枚）`;
+    progBarEl.style.width = '100%';
+
+    renderBoardFromItems(initialBoardValues, cols, rows, font);
     runQuestionTimer(timeRemaining);
   }
 
-  function onTileTap(num, tileEl) {
-    if (!isQuestionActive || num < currentTarget) return;
+  function onTileTap(item, tileEl) {
+    if (!isQuestionActive || tileEl.classList.contains('done')) return;
     initAudio();
 
+    if (item.isDummy) {
+      tileEl.classList.add('wrong-tile');
+      onFail('wrong');
+      return;
+    }
+
+    const num = item.val;
     if (num === currentTarget) {
       tileEl.classList.remove('highlight-next');
       tileEl.classList.add('done');
-      playNumberHitSound(num);
-      currentTarget++;
+      playNumberHitSound(targetIdx + 1);
+      targetIdx++;
 
-      if (currentTarget <= maxNumber) {
+      if (targetIdx < targetSequence.length) {
+        currentTarget = targetSequence[targetIdx];
         nextNumEl.textContent = String(currentTarget);
+        if (currentRule.shuffleOnTap && targetSequence.length - targetIdx >= 2) {
+          shuffleRemainingBoardTiles();
+        }
       } else {
         isQuestionActive = false;
         clearInterval(timerId);
         const clearSec = Math.max(0.3, timeLimit - timeRemaining).toFixed(1);
         state.iq += 2;
+        questionsSinceLastAd++;
         bannerEl.className = 'correct';
         bannerEl.textContent = `🎉 完走！ ${clearSec}秒で全タップ！`;
         updateHUD();
@@ -1192,11 +1335,12 @@
         const totalQuestions = boss ? 1 : NORMAL_QUESTIONS_PER_STAGE;
 
         if (stepInStage < totalQuestions) {
-          setTimeout(() => { stepInStage++; startQuestion(); }, 800);
+          clearTimeout(transitionTimeoutId);
+          transitionTimeoutId = setTimeout(() => { transitionTimeoutId = null; stepInStage++; startQuestion(); }, 800);
         } else {
           const clearedStage = state.stage;
           const clearedMission = state.mission;
-          pendingInterstitialAfterModal = (clearedStage % 3 === 0);
+          pendingInterstitialAfterModal = shouldTriggerInterstitial(clearedStage);
 
           if (clearedStage >= STAGES_PER_MISSION) {
             playStageClearFanfare();
@@ -1212,7 +1356,9 @@
             }
             saveProgress();
             updateHUD();
-            setTimeout(() => {
+            clearTimeout(transitionTimeoutId);
+            transitionTimeoutId = setTimeout(() => {
+              transitionTimeoutId = null;
               showModal({
                 isBossAlert: false,
                 showRevive: false,
@@ -1232,21 +1378,28 @@
             const nextIsBoss = isBossStage(state.stage);
             if (nextIsBoss) {
               playStageClearFanfare();
-              setTimeout(() => {
+              clearTimeout(transitionTimeoutId);
+              transitionTimeoutId = setTimeout(() => {
+                transitionTimeoutId = null;
                 playBossApproachingSound();
+                const bossDesc = state.stage === 10
+                  ? '次は【最大値から逆順】＋【タップごとに残りマスがシャッフル】される最終ボス戦です！'
+                  : '次は【最大値から逆順（大きい順）】にタップする中ボス戦です！';
                 showModal({
                   isBossAlert: true,
                   showRevive: false,
                   badge: '⚠️ WARNING：BOSS STAGE 出現！',
                   title: `次はBOSS STAGE ${state.stage}！`,
                   iqText: '1問一発勝負！',
-                  comment: `STAGE ${clearedStage} クリア！（💡ヒント+1回復）<br>次は制限時間がタイトなボスステージです！`,
+                  comment: `STAGE ${clearedStage} クリア！（💡ヒント+1回復）<br>${bossDesc}`,
                   btnText: `🔥 BOSS STAGE ${state.stage} に挑む！`
                 });
               }, 950);
             } else {
               playStageClearFanfare();
-              setTimeout(() => {
+              clearTimeout(transitionTimeoutId);
+              transitionTimeoutId = setTimeout(() => {
+                transitionTimeoutId = null;
                 showModal({
                   isBossAlert: false,
                   showRevive: false,
@@ -1281,7 +1434,9 @@
     const boss = isBossStage(state.stage);
     const retryBtnText = stepInStage === 1 ? '🔄 別の問題でやり直す' : '🔄 1問目からやり直す';
 
-    setTimeout(() => {
+    clearTimeout(transitionTimeoutId);
+    transitionTimeoutId = setTimeout(() => {
+      transitionTimeoutId = null;
       showModal({
         isBossAlert: boss,
         showRevive: true,
@@ -1313,18 +1468,17 @@
     initAudio();
     modalEl.classList.remove('show');
     showAdModal('rewarded_revive', () => {
-      // Retry the exact same number arrangement from 1!
-      const boss = isBossStage(state.stage);
-      const mCfg = MISSION_CONFIG[state.mission] || MISSION_CONFIG[1];
-      const tiles = gridEl.querySelectorAll('.num-tile');
-      tiles.forEach(t => t.classList.remove('wrong-tile', 'done', 'highlight-next'));
+      // Retry the exact same number arrangement from the first target!
+      const { cols, rows, font } = getGridSpec(state.stage, state.mission);
+      renderBoardFromItems(initialBoardValues, cols, rows, font);
 
-      currentTarget = 1;
-      nextNumEl.textContent = '1';
-      timeLimit = Math.max(mCfg.minSec, maxNumber * mCfg.secPerTile * (boss ? 0.85 : 1.0));
+      targetIdx = 0;
+      currentTarget = targetSequence[0];
+      nextNumEl.textContent = String(currentTarget);
+      timeLimit = computeStageTimeLimit(state.stage, state.mission, maxNumber, currentRule);
       timeRemaining = timeLimit;
       bannerEl.className = '';
-      bannerEl.textContent = `⏱️ 残り ${timeRemaining.toFixed(1)} 秒！（残り ${maxNumber} 枚）`;
+      bannerEl.textContent = `🔥 同じ問題に再挑戦！残り ${timeRemaining.toFixed(1)} 秒！（あと ${maxNumber} 枚）`;
       progBarEl.style.width = '100%';
       runQuestionTimer(timeRemaining);
     });
@@ -1454,6 +1608,7 @@
           state.mission = m;
           state.stage = 1;
           stepInStage = 1;
+          settingsPausedRemaining = null;
           saveProgress();
           if (state.devMode) {
             renderSettingsModal();
@@ -1483,6 +1638,7 @@
         btn.addEventListener('click', () => {
           state.stage = Number(btn.getAttribute('data-stage'));
           stepInStage = 1;
+          settingsPausedRemaining = null;
           if (state.hints < 5) state.hints = 5;
           saveProgress();
           settingsModalEl.classList.remove('show');
@@ -1495,12 +1651,45 @@
     }
   }
 
-  document.getElementById('settingsBtn').addEventListener('click', () => {
+  function openSettingsModal() {
+    if (settingsModalEl.classList.contains('show')) return;
+    if (adOverlayModalEl.classList.contains('show')) return;
+    clearTimeout(transitionTimeoutId);
+    transitionTimeoutId = null;
+    if (isQuestionActive && timeRemaining > 0) {
+      settingsPausedRemaining = timeRemaining;
+    } else {
+      settingsPausedRemaining = null;
+    }
     isQuestionActive = false;
     clearInterval(timerId);
     renderSettingsModal();
     settingsModalEl.classList.add('show');
     initAudio();
+  }
+
+  function closeSettingsAndResume() {
+    if (!settingsModalEl.classList.contains('show')) return;
+    settingsModalEl.classList.remove('show');
+    if (modalEl.classList.contains('show') || adOverlayModalEl.classList.contains('show')) {
+      return;
+    }
+    if (settingsPausedRemaining !== null && settingsPausedRemaining > 0.05 && gridEl.children.length > 0) {
+      const rem = settingsPausedRemaining;
+      settingsPausedRemaining = null;
+      runQuestionTimer(rem);
+    } else {
+      settingsPausedRemaining = null;
+      startQuestion();
+    }
+  }
+
+  document.getElementById('settingsBtn').addEventListener('click', openSettingsModal);
+
+  settingsModalEl.addEventListener('click', (e) => {
+    if (e.target === settingsModalEl) {
+      closeSettingsAndResume();
+    }
   });
 
   toggleBgmBtn.addEventListener('click', () => {
@@ -1558,8 +1747,7 @@
   });
 
   document.getElementById('closeSettingsBtn').addEventListener('click', () => {
-    settingsModalEl.classList.remove('show');
-    startQuestion();
+    closeSettingsAndResume();
   });
 
   startQuestion();

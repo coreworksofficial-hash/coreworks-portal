@@ -1478,7 +1478,12 @@
   // ==========================================================================
   // 9. Master Animation Frame
   // ==========================================================================
+  let isModalPaused = false;
   function tick() {
+    if (isModalPaused) {
+      requestAnimationFrame(tick);
+      return;
+    }
     ctx.save();
     if (screenShake > 0) {
       const sx = (Math.random() - 0.5) * screenShake;
@@ -1683,11 +1688,20 @@
   }
 
   document.getElementById('btn-dex').addEventListener('click', () => {
+    isModalPaused = true;
+    isPointerDown = false;
     renderDexModal();
     document.getElementById('dex-modal').classList.add('show');
   });
   document.getElementById('close-dex').addEventListener('click', () => {
+    isModalPaused = false;
     document.getElementById('dex-modal').classList.remove('show');
+  });
+  document.getElementById('dex-modal').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('dex-modal')) {
+      isModalPaused = false;
+      document.getElementById('dex-modal').classList.remove('show');
+    }
   });
 
   document.getElementById('btn-gacha').addEventListener('click', () => {
