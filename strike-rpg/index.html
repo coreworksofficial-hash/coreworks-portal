@@ -2501,7 +2501,21 @@
     return c;
   }
 
+  function resolveAssetUrl(url) {
+    return (window.__APK_ASSET_DATA_URLS && window.__APK_ASSET_DATA_URLS[url]) || url;
+  }
+
   function preloadAssets() {
+    if (window.__APK_ASSET_DATA_URLS) {
+      document.querySelectorAll('img[src^="assets/"]').forEach(el => {
+        const raw = el.getAttribute('src');
+        if (window.__APK_ASSET_DATA_URLS[raw]) el.src = window.__APK_ASSET_DATA_URLS[raw];
+      });
+      const sBg = document.querySelector('.studio-bg-frame');
+      if (sBg && window.__APK_ASSET_DATA_URLS['assets/arena_bg.jpg']) {
+        sBg.style.backgroundImage = `url('${window.__APK_ASSET_DATA_URLS['assets/arena_bg.jpg']}')`;
+      }
+    }
     const urls = [
       'assets/arena_bg.jpg',
       'assets/boss_crysalis.jpg',
@@ -2526,7 +2540,7 @@
           });
         }
       };
-      img.src = url;
+      img.src = resolveAssetUrl(url);
     });
   }
   preloadAssets();
@@ -3809,9 +3823,9 @@
     document.getElementById('card-title').textContent = card.cardTitle;
     document.getElementById('card-hp').textContent = card.hpStat + (card.level - 1) * 10;
     document.getElementById('card-elem-badge').innerHTML = SVG_ICONS[card.element === 'light' ? 'bolt' : card.element];
-    cardArtImg.src = card.img;
+    cardArtImg.src = resolveAssetUrl(card.img);
     if (cardArtWindow) {
-      cardArtWindow.style.backgroundImage = `url('${card.img}')`;
+      cardArtWindow.style.backgroundImage = `url('${resolveAssetUrl(card.img)}')`;
     }
 
     const bonusPct = getCardAtkBonusPct(card);
@@ -3855,7 +3869,7 @@
       const cardEl = document.getElementById(`deck-back-card-${offset}`);
       if (titleEl) titleEl.textContent = stackCard.cardTitle;
       if (hpEl) hpEl.textContent = `LV.${stackCard.level} (+${getCardAtkBonusPct(stackCard)}%)`;
-      if (artEl) artEl.style.backgroundImage = `url('${stackCard.img}')`;
+      if (artEl) artEl.style.backgroundImage = `url('${resolveAssetUrl(stackCard.img)}')`;
       if (cardEl) cardEl.setAttribute('data-card-id', stackCard.id);
     }
   }
@@ -3893,7 +3907,7 @@
       const pill = document.createElement('div');
       pill.className = `card-thumb-pill ${c.id === selectedStudioCardId ? 'selected' : ''}`;
       pill.innerHTML = `
-        <img src="${c.img}" alt="${c.unitName}">
+        <img src="${resolveAssetUrl(c.img)}" alt="${c.unitName}">
         <div class="card-thumb-lv">LV.${c.level}</div>
       `;
       pill.addEventListener('click', () => {
@@ -4027,7 +4041,7 @@
   function showModal(badge, title, imgUrl, desc) {
     document.getElementById('modal-badge').textContent = badge;
     document.getElementById('modal-title').textContent = title;
-    document.getElementById('modal-img').src = imgUrl;
+    document.getElementById('modal-img').src = resolveAssetUrl(imgUrl);
     document.getElementById('modal-desc').textContent = desc;
     modalOverlay.classList.add('visible');
   }
