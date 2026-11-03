@@ -568,22 +568,156 @@
     z-index: 1;
   }
 
-  /* Multi-layered 3D Hologram Card (Exact Mockup A Fidelity) */
-  .holo-card-wrap {
+  /* 3D Deck Stack Container (Active Card + 3 Physical Stacked Cards Behind) */
+  .holo-deck-stack {
     position: relative;
     z-index: 3;
-    width: 286px;
-    height: 404px;
+    width: 276px;
+    height: 382px;
     transform-style: preserve-3d;
-    transform: rotateY(-11deg) rotateX(5deg);
-    transition: transform 0.12s ease-out;
+    transform: rotateY(-9deg) rotateX(4deg);
+    transition: transform 0.14s ease-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: pan-y;
+    user-select: none;
+  }
+
+  /* Physical Stacked Cards Peeking Out Behind in 3D Space */
+  .holo-stack-card {
+    position: absolute;
+    inset: 0;
+    border-radius: 22px;
+    padding: 11px;
+    background:
+      linear-gradient(135deg,
+        #e5cf9c 0%,
+        #b89348 35%,
+        #f0d89c 70%,
+        #9e7932 100%);
+    border: 2px solid rgba(255, 246, 214, 0.92);
+    box-shadow:
+      0 18px 34px rgba(18, 22, 36, 0.28),
+      inset 0 0 0 1.5px rgba(120, 88, 28, 0.65);
+    transform-style: preserve-3d;
+    cursor: pointer;
+    transition:
+      transform 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.42s ease,
+      opacity 0.42s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .holo-stack-card .stack-inner {
+    flex: 1;
+    border-radius: 13px;
+    padding: 8px 9px;
+    background: linear-gradient(160deg, #dfc382 0%, #b38b3d 50%, #e2c88b 100%);
+    border: 1.5px solid #78581c;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .holo-stack-card .stack-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 9.5px;
+    font-weight: 900;
+    color: #261b07;
+    padding-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .holo-stack-card .stack-art {
+    flex: 1;
+    border-radius: 9px;
+    border: 2px solid #694b16;
+    background-size: 122%;
+    background-position: center 48%;
+    background-repeat: no-repeat;
+    box-shadow: inset 0 3px 10px rgba(0,0,0,0.8);
+  }
+  .holo-stack-card.stack-pos-1 {
+    z-index: 2;
+    transform: translateZ(-18px) translateX(20px) translateY(10px) rotateZ(3.8deg) scale(0.965);
+    filter: brightness(0.88) saturate(0.92);
+  }
+  .holo-stack-card.stack-pos-1:hover {
+    transform: translateZ(-14px) translateX(25px) translateY(8px) rotateZ(4.6deg) scale(0.975);
+    filter: brightness(0.95);
+  }
+  .holo-stack-card.stack-pos-2 {
+    z-index: 1;
+    transform: translateZ(-36px) translateX(-20px) translateY(18px) rotateZ(-4.0deg) scale(0.935);
+    filter: brightness(0.76) saturate(0.85);
+  }
+  .holo-stack-card.stack-pos-2:hover {
+    transform: translateZ(-30px) translateX(-25px) translateY(16px) rotateZ(-4.8deg) scale(0.945);
+    filter: brightness(0.86);
+  }
+  .holo-stack-card.stack-pos-3 {
+    z-index: 0;
+    transform: translateZ(-54px) translateX(9px) translateY(26px) rotateZ(2.0deg) scale(0.90);
+    filter: brightness(0.65) saturate(0.78);
+  }
+
+  /* Single Thick Metallic 3D Hologram Card (Active Front Card) */
+  .holo-card-wrap,
+  .holo-card {
+    position: relative;
+    z-index: 5;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transform: translateZ(4px);
+    transition: transform 0.14s ease-out;
     cursor: grab;
   }
   .holo-card-wrap:active {
     cursor: grabbing;
   }
 
-  /* Stacked metallic edge layers for real 3D slab thickness */
+  /* 3D Card Deck Flip Keyframe Animations */
+  @keyframes cardFlipOutNext {
+    0% {
+      transform: translateZ(0px) translateX(0px) rotateY(0deg) rotateZ(0deg) scale(1);
+      opacity: 1;
+    }
+    45% {
+      transform: translateZ(45px) translateX(135px) translateY(-14px) rotateY(32deg) rotateZ(11deg) scale(0.96);
+      opacity: 0.92;
+    }
+    100% {
+      transform: translateZ(-18px) translateX(0px) translateY(6px) rotateY(-8deg) rotateZ(0deg) scale(1);
+      opacity: 1;
+    }
+  }
+  @keyframes cardFlipOutPrev {
+    0% {
+      transform: translateZ(0px) translateX(0px) rotateY(0deg) rotateZ(0deg) scale(1);
+      opacity: 1;
+    }
+    45% {
+      transform: translateZ(45px) translateX(-135px) translateY(-14px) rotateY(-32deg) rotateZ(-11deg) scale(0.96);
+      opacity: 0.92;
+    }
+    100% {
+      transform: translateZ(-18px) translateX(0px) translateY(6px) rotateY(-8deg) rotateZ(0deg) scale(1);
+      opacity: 1;
+    }
+  }
+  .holo-card-wrap.flipping-next {
+    animation: cardFlipOutNext 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .holo-card-wrap.flipping-prev {
+    animation: cardFlipOutPrev 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* Unified Single-Card Metallic Slab Rim (No duplicate offset card borders!) */
   .holo-card-edge-1,
   .holo-card-edge-2,
   .holo-card-edge-3 {
@@ -593,27 +727,25 @@
     pointer-events: none;
   }
   .holo-card-edge-1 {
-    transform: translateZ(-4px) translateX(4px) translateY(2px);
-    background: linear-gradient(135deg, #b89a54 0%, #635026 50%, #d4b872 100%);
-    border: 1px solid rgba(255, 235, 175, 0.8);
+    transform: translateZ(-2px) translateX(1.5px) translateY(1px);
+    background: linear-gradient(135deg, #dfbe74 0%, #876829 50%, #f3d993 100%);
   }
   .holo-card-edge-2 {
-    transform: translateZ(-8px) translateX(8px) translateY(4px);
-    background: linear-gradient(135deg, #7c6738 0%, #3a2e16 50%, #a88c4a 100%);
-    border: 1px solid rgba(212, 184, 114, 0.6);
+    transform: translateZ(-4px) translateX(3px) translateY(2px);
+    background: linear-gradient(135deg, #9e7e3b 0%, #4e3b14 50%, #ba984e 100%);
   }
   .holo-card-edge-3 {
-    transform: translateZ(-12px) translateX(11px) translateY(6px);
-    background: #2b2210;
-    box-shadow: 0 28px 38px rgba(30, 35, 50, 0.28);
+    transform: translateZ(-6px) translateX(4.5px) translateY(3px);
+    background: #33250b;
+    box-shadow: 0 22px 34px rgba(22, 26, 42, 0.32);
   }
 
-  /* Main Front Bezel of the 3D Card */
+  /* Main Front Bezel of the Single 3D Card */
   .holo-card-face {
     position: absolute;
     inset: 0;
     border-radius: 22px;
-    padding: 13px;
+    padding: 12px;
     background:
       linear-gradient(135deg,
         #f7e7c4 0%,
@@ -623,9 +755,9 @@
         #c5e8ff 72%,
         #f3d58d 90%,
         #d1b166 100%);
-    border: 2px solid #fff7e0;
+    border: 2.5px solid #fff9e6;
     box-shadow:
-      inset 0 0 0 2px rgba(176, 138, 62, 0.55),
+      inset 0 0 0 2px rgba(168, 128, 48, 0.72),
       inset 0 2px 8px rgba(255, 255, 255, 0.95);
     display: flex;
     flex-direction: column;
@@ -709,7 +841,7 @@
     height: 13px;
   }
 
-  /* Recessed 3D Artwork Window */
+  /* Recessed 3D Artwork Window — Cropped/Zoomed (122% @ center 48%) so zero outer duplicate border appears */
   .holo-art-window {
     position: relative;
     flex: 1;
@@ -717,17 +849,55 @@
     overflow: hidden;
     border: 2.5px solid #75561e;
     box-shadow:
-      inset 0 4px 12px rgba(0,0,0,0.85),
+      inset 0 0 0 2px rgba(255, 228, 150, 0.32),
+      inset 0 4px 14px rgba(0,0,0,0.88),
       0 1px 0 rgba(255,255,255,0.75);
-    background: #080b18;
+    background-color: #080b18;
+    background-size: 122%;
+    background-position: center 48%;
+    background-repeat: no-repeat;
   }
   .holo-art-img {
-    width: 108%;
-    height: 108%;
+    width: 122%;
+    height: 122%;
     object-fit: cover;
-    margin-left: -4%;
-    margin-top: -4%;
+    object-position: center 48%;
+    margin-left: -11%;
+    margin-top: -11%;
     transition: transform 0.12s ease-out;
+  }
+
+  /* Deck Flip Pill Button ("🔄 次のカードをめくる (1/5)") */
+  .deck-flip-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+  }
+  .btn-deck-flip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 7px 16px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #252a3a 0%, #3a425c 100%);
+    border: 1.5px solid rgba(255, 232, 165, 0.72);
+    color: #fff6d6;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    box-shadow: 0 5px 14px rgba(25, 30, 45, 0.22), inset 0 1px 1px rgba(255,255,255,0.25);
+    transition: transform 0.12s ease, box-shadow 0.15s ease;
+  }
+  .btn-deck-flip:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 7px 18px rgba(25, 30, 45, 0.3);
+  }
+  .btn-deck-flip:active {
+    transform: scale(0.95);
   }
 
   /* Frosted Glass Attack Plate inside Card (Exact Mockup A Style) */
@@ -1149,42 +1319,65 @@
       </div>
     </header>
 
-    <!-- Center 3D Interactive Hologram Card -->
+    <!-- Center 3D Interactive Hologram Card Stack (Deck) -->
     <main class="studio-stage">
-      <div class="holo-card-wrap" id="holo-card-3d">
-        <div class="holo-card-edge-3"></div>
-        <div class="holo-card-edge-2"></div>
-        <div class="holo-card-edge-1"></div>
+      <div class="holo-deck-stack" id="holo-deck-stack">
+        <!-- 3 Physical Stacked Cards visibly peeking out behind in 3D space -->
+        <div class="holo-stack-card stack-pos-3" id="deck-back-card-3" title="Tap to flip to this card">
+          <div class="stack-inner">
+            <div class="stack-head"><span id="stack-title-3">LIAM — EMERALD STAG</span><span>HP 190</span></div>
+            <div class="stack-art" id="stack-art-3" style="background-image:url('assets/card_liam.jpg')"></div>
+          </div>
+        </div>
+        <div class="holo-stack-card stack-pos-2" id="deck-back-card-2" title="Tap to flip to this card">
+          <div class="stack-inner">
+            <div class="stack-head"><span id="stack-title-2">AURORA — ABYSS LEVIATHAN</span><span>HP 175</span></div>
+            <div class="stack-art" id="stack-art-2" style="background-image:url('assets/card_aurora.jpg')"></div>
+          </div>
+        </div>
+        <div class="holo-stack-card stack-pos-1" id="deck-back-card-1" title="Tap to flip to next card">
+          <div class="stack-inner">
+            <div class="stack-head"><span id="stack-title-1">ORION — SOLAR PHOENIX</span><span>HP 170</span></div>
+            <div class="stack-art" id="stack-art-1" style="background-image:url('assets/card_orion.jpg')"></div>
+          </div>
+        </div>
 
-        <div class="holo-card-face">
-          <div class="holo-foil-glare" id="holo-glare"></div>
-          <div class="holo-inner-frame">
-            <div class="holo-header">
-              <span class="holo-title" id="card-title">CELESTIAL LIGHTNING DRAGON</span>
-              <div class="holo-hp-group">
-                <span class="holo-hp-label">HP</span>
-                <span class="holo-hp-val" id="card-hp">150</span>
-                <div class="holo-elem-badge" id="card-elem-badge"></div>
-              </div>
-            </div>
+        <!-- Active Single Thick Metallic 3D Card in Front -->
+        <div class="holo-card-wrap holo-card" id="holo-card-3d">
+          <div class="holo-card-edge-3"></div>
+          <div class="holo-card-edge-2"></div>
+          <div class="holo-card-edge-1"></div>
 
-            <div class="holo-art-window">
-              <img class="holo-art-img" id="card-art-img" src="assets/card_dragon.jpg" alt="3D Hologram Card Art">
-
-              <div class="holo-moves-plate">
-                <div class="holo-move-row">
-                  <div class="move-left">
-                    <div class="move-orb" id="move-orb-1"></div>
-                    <span id="move-name-1">STORM BOLT</span>
-                  </div>
-                  <span class="move-dmg" id="move-dmg-1">- 110</span>
+          <div class="holo-card-face">
+            <div class="holo-foil-glare" id="holo-glare"></div>
+            <div class="holo-inner-frame">
+              <div class="holo-header">
+                <span class="holo-title" id="card-title">CELESTIAL LIGHTNING DRAGON</span>
+                <div class="holo-hp-group">
+                  <span class="holo-hp-label">HP</span>
+                  <span class="holo-hp-val" id="card-hp">150</span>
+                  <div class="holo-elem-badge" id="card-elem-badge"></div>
                 </div>
-                <div class="holo-move-row">
-                  <div class="move-left">
-                    <div class="move-orb" id="move-orb-2"></div>
-                    <span id="move-name-2">Cosmic Surge</span>
+              </div>
+
+              <div class="holo-art-window" id="card-art-window" style="background-image:url('assets/card_dragon.jpg')">
+                <img class="holo-art-img" id="card-art-img" src="assets/card_dragon.jpg" alt="3D Hologram Card Art">
+
+                <div class="holo-moves-plate">
+                  <div class="holo-move-row">
+                    <div class="move-left">
+                      <div class="move-orb" id="move-orb-1"></div>
+                      <span id="move-name-1">STORM BOLT</span>
+                    </div>
+                    <span class="move-dmg" id="move-dmg-1">- 110</span>
                   </div>
-                  <span class="move-dmg" id="move-dmg-2">- 70</span>
+                  <div class="holo-move-row">
+                    <div class="move-left">
+                      <div class="move-orb" id="move-orb-2"></div>
+                      <span id="move-name-2">Cosmic Surge</span>
+                    </div>
+                    <span class="move-dmg" id="move-dmg-2">- 70</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1194,8 +1387,18 @@
 
       <div class="studio-floor-shadow"></div>
 
-      <!-- Card Selector & Pack Opening Buttons -->
+      <!-- Card Stack Flip & Pack Opening Controls -->
       <div class="studio-controls">
+        <div class="deck-flip-bar">
+          <button class="btn-deck-flip" id="btn-flip-next-card">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#ffe074" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="23 4 23 10 17 10"/>
+              <polyline points="1 20 1 14 7 14"/>
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+            </svg>
+            <span id="txt-flip-card-btn">次のカードをめくる (1/5)</span>
+          </button>
+        </div>
         <div class="card-thumbs-row" id="card-thumbs-row"></div>
         <div class="studio-action-row">
           <button class="studio-btn primary" id="btn-equip-card">
@@ -1423,74 +1626,462 @@
   };
 
   /* =========================================================
-     3. WEB AUDIO SYNTHESIZER (CRISP CRYSTAL CHIMES & IMPACTS)
+     3. HIGH-END IMPULSE-RESPONSE + PHYSICAL MODELING AUDIO ENGINE
      ========================================================= */
   let audioCtx = null;
-  function playCrystalSound(type, pitchMult = 1) {
-    try {
-      if (!audioCtx) {
-        const AC = window.AudioContext || window.webkitAudioContext;
-        if (!AC) return;
-        audioCtx = new AC();
-      }
-      if (audioCtx.state === 'suspended') audioCtx.resume();
-      const now = audioCtx.currentTime;
+  let masterBus = null;
+  let dryBus = null;
+  let reverbBus = null;
+  let convolverNode = null;
+  let audioSamples = {};
+  let lastPullSoundDist = 0;
+  let lastPullSoundTime = 0;
 
-      if (type === 'wall') {
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(520 * pitchMult, now);
-        osc.frequency.exponentialRampToValueAtTime(880 * pitchMult, now + 0.08);
-        gain.gain.setValueAtTime(0.12, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.09);
-        osc.connect(gain).connect(audioCtx.destination);
-        osc.start(now);
-        osc.stop(now + 0.09);
-      } else if (type === 'boss') {
-        const osc = audioCtx.createOscillator();
-        const osc2 = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'triangle';
-        osc2.type = 'sine';
-        osc.frequency.setValueAtTime(240 * pitchMult, now);
-        osc.frequency.exponentialRampToValueAtTime(95, now + 0.16);
-        osc2.frequency.setValueAtTime(1180 * pitchMult, now);
-        osc2.frequency.exponentialRampToValueAtTime(560, now + 0.14);
-        gain.gain.setValueAtTime(0.22, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.17);
-        osc.connect(gain);
-        osc2.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start(now);
-        osc2.start(now);
-        osc.stop(now + 0.17);
-        osc2.stop(now + 0.17);
-      } else if (type === 'combo') {
-        [660, 880, 1320].forEach((freq, idx) => {
-          const osc = audioCtx.createOscillator();
-          const gain = audioCtx.createGain();
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(freq, now + idx * 0.03);
-          gain.gain.setValueAtTime(0.14, now + idx * 0.03);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.03 + 0.22);
-          osc.connect(gain).connect(audioCtx.destination);
-          osc.start(now + idx * 0.03);
-          osc.stop(now + idx * 0.03 + 0.22);
-        });
-      } else if (type === 'launch') {
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(260, now);
-        osc.frequency.exponentialRampToValueAtTime(740, now + 0.15);
-        gain.gain.setValueAtTime(0.16, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.16);
-        osc.connect(gain).connect(audioCtx.destination);
-        osc.start(now);
-        osc.stop(now + 0.16);
+  function initAudio() {
+    if (audioCtx) {
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      return audioCtx;
+    }
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return null;
+    audioCtx = new AC();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+
+    const sr = audioCtx.sampleRate;
+
+    // Master Dynamics Compressor for studio-grade punch & zero clipping
+    const compressor = audioCtx.createDynamicsCompressor();
+    compressor.threshold.setValueAtTime(-14, audioCtx.currentTime);
+    compressor.knee.setValueAtTime(18, audioCtx.currentTime);
+    compressor.ratio.setValueAtTime(4.0, audioCtx.currentTime);
+    compressor.attack.setValueAtTime(0.003, audioCtx.currentTime);
+    compressor.release.setValueAtTime(0.18, audioCtx.currentTime);
+
+    const masterGain = audioCtx.createGain();
+    masterGain.gain.setValueAtTime(0.92, audioCtx.currentTime);
+    compressor.connect(masterGain).connect(audioCtx.destination);
+    masterBus = compressor;
+
+    // Dry & Wet (Stereo Crystal Cavern Reverb) Buses
+    dryBus = audioCtx.createGain();
+    dryBus.gain.setValueAtTime(0.88, audioCtx.currentTime);
+    dryBus.connect(masterBus);
+
+    reverbBus = audioCtx.createGain();
+    reverbBus.gain.setValueAtTime(0.36, audioCtx.currentTime);
+
+    // Procedurally generate Stereo Hall / Crystal Cavern Impulse Response (1.4s)
+    const irLength = Math.floor(sr * 1.4);
+    const irBuffer = audioCtx.createBuffer(2, irLength, sr);
+    const earlyTapTimes = [0.007, 0.013, 0.019, 0.027, 0.034, 0.043, 0.055];
+    for (let chIdx = 0; chIdx < 2; chIdx++) {
+      const chData = irBuffer.getChannelData(chIdx);
+      // Discrete early reflections of a marble/crystal cathedral
+      earlyTapTimes.forEach((tapSec, idx) => {
+        const sampleIdx = Math.min(irLength - 1, Math.floor((tapSec + chIdx * 0.0018) * sr));
+        chData[sampleIdx] += (idx % 2 === 0 ? 1 : -1) * Math.pow(0.76, idx) * 0.55;
+      });
+      // Exponentially decaying stereo diffuse tail with high-frequency crystal shimmer
+      let lp = 0;
+      for (let i = 0; i < irLength; i++) {
+        const t = i / sr;
+        const env = Math.exp(-t * 3.8) * (1 - 0.18 * Math.cos(t * 28));
+        const white = Math.random() * 2 - 1;
+        lp = lp * 0.62 + white * 0.38;
+        const sparkle = Math.sin(i * (chIdx === 0 ? 0.19 : 0.23)) * Math.exp(-t * 6.5) * 0.15;
+        chData[i] += (lp + sparkle) * env * 0.38;
       }
+    }
+    convolverNode = audioCtx.createConvolver();
+    convolverNode.buffer = irBuffer;
+    convolverNode.connect(reverbBus);
+    reverbBus.connect(masterBus);
+
+    // Pre-compute physical modeling transient buffers
+    // 1) 12ms Marble Clack Noise Impulse Buffer
+    const clackLen = Math.floor(sr * 0.014);
+    const clackBuf = audioCtx.createBuffer(1, clackLen, sr);
+    const clackData = clackBuf.getChannelData(0);
+    for (let i = 0; i < clackLen; i++) {
+      const t = i / clackLen;
+      const env = Math.exp(-t * 5.2);
+      clackData[i] = (Math.random() * 2 - 1) * env;
+    }
+    audioSamples.clack = clackBuf;
+
+    // 2) Stereo Aerodynamic Whoosh Noise Buffer (0.28s)
+    const whooshLen = Math.floor(sr * 0.28);
+    const whooshBuf = audioCtx.createBuffer(2, whooshLen, sr);
+    for (let c = 0; c < 2; c++) {
+      const d = whooshBuf.getChannelData(c);
+      let pink = 0;
+      for (let i = 0; i < whooshLen; i++) {
+        const t = i / whooshLen;
+        const env = Math.sin(Math.pow(t, 0.65) * Math.PI) * Math.exp(-t * 1.9);
+        const w = Math.random() * 2 - 1;
+        pink = 0.82 * pink + 0.18 * w;
+        d[i] = (pink * 0.7 + w * 0.3) * env;
+      }
+    }
+    audioSamples.whoosh = whooshBuf;
+
+    // 3) Crystal Shatter Burst Buffer (0.16s)
+    const shatLen = Math.floor(sr * 0.16);
+    const shatBuf = audioCtx.createBuffer(2, shatLen, sr);
+    for (let c = 0; c < 2; c++) {
+      const d = shatBuf.getChannelData(c);
+      for (let i = 0; i < shatLen; i++) {
+        const t = i / shatLen;
+        const grain = Math.sin(i * 0.45) * (Math.random() > 0.15 ? 1 : 2.2);
+        d[i] = (Math.random() * 2 - 1) * grain * Math.exp(-t * 4.5);
+      }
+    }
+    audioSamples.shatter = shatBuf;
+
+    // 4) Cardstock Foil Slide Buffer (0.12s)
+    const flipLen = Math.floor(sr * 0.12);
+    const flipBuf = audioCtx.createBuffer(2, flipLen, sr);
+    for (let c = 0; c < 2; c++) {
+      const d = flipBuf.getChannelData(c);
+      for (let i = 0; i < flipLen; i++) {
+        const t = i / flipLen;
+        const env = Math.sin(t * Math.PI) * Math.exp(-t * 1.4);
+        d[i] = (Math.random() * 2 - 1) * env * 0.55;
+      }
+    }
+    audioSamples.cardFlip = flipBuf;
+
+    return audioCtx;
+  }
+
+  // Wall / Bumper / Marble Collision Sound (Physical Modeling Glass Marble + Crystal Partials)
+  function playBounce(pitchMult = 1.0, intensity = 1.0) {
+    try {
+      const ac = initAudio();
+      if (!ac) return;
+      const now = ac.currentTime;
+      const vol = Math.min(1.2, Math.max(0.25, intensity));
+
+      // Layer A: Crisp 12ms Bandpass-Filtered Glass Marble Clack Transient at 2800Hz
+      const noiseSrc = ac.createBufferSource();
+      noiseSrc.buffer = audioSamples.clack;
+      const bp = ac.createBiquadFilter();
+      bp.type = 'bandpass';
+      bp.frequency.setValueAtTime(2800 * pitchMult, now);
+      bp.Q.setValueAtTime(5.5, now);
+      const clackGain = ac.createGain();
+      clackGain.gain.setValueAtTime(0.48 * vol, now);
+      clackGain.gain.exponentialRampToValueAtTime(0.001, now + 0.014);
+      noiseSrc.connect(bp).connect(clackGain);
+      clackGain.connect(dryBus);
+      clackGain.connect(convolverNode);
+      noiseSrc.start(now);
+
+      // Layer B: Inharmonic Crystal/Glass Bell Modal Partials [1, 2.756, 5.404]
+      const baseFreq = 640 * pitchMult;
+      const partials = [1.0, 2.756, 5.404];
+      const partialGains = [0.16, 0.095, 0.048];
+      const partialDecays = [0.22, 0.14, 0.08];
+      partials.forEach((ratio, idx) => {
+        const osc = ac.createOscillator();
+        const g = ac.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(baseFreq * ratio, now);
+        osc.frequency.exponentialRampToValueAtTime(baseFreq * ratio * 0.992, now + partialDecays[idx]);
+        g.gain.setValueAtTime(partialGains[idx] * vol, now);
+        g.gain.exponentialRampToValueAtTime(0.0008, now + partialDecays[idx]);
+        osc.connect(g);
+        g.connect(dryBus);
+        g.connect(convolverNode);
+        osc.start(now);
+        osc.stop(now + partialDecays[idx] + 0.01);
+      });
+
+      // Layer C: Subtle Warm Marble/Wood Table Thud (140Hz -> 55Hz)
+      const thudOsc = ac.createOscillator();
+      const thudGain = ac.createGain();
+      thudOsc.type = 'sine';
+      thudOsc.frequency.setValueAtTime(140 * Math.sqrt(pitchMult), now);
+      thudOsc.frequency.exponentialRampToValueAtTime(55, now + 0.055);
+      thudGain.gain.setValueAtTime(0.24 * vol, now);
+      thudGain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+      thudOsc.connect(thudGain).connect(dryBus);
+      thudOsc.start(now);
+      thudOsc.stop(now + 0.065);
     } catch (e) {}
+  }
+
+  // Heavy Cinematic Boss Hit & Weakpoint Critical Hit
+  function playBossHit(pitchMult = 1.0, isCrit = false) {
+    try {
+      const ac = initAudio();
+      if (!ac) return;
+      const now = ac.currentTime;
+
+      // Layer 1: Deep Sub-Bass Cinema Boom (110Hz -> 38Hz)
+      const subOsc = ac.createOscillator();
+      const subGain = ac.createGain();
+      subOsc.type = 'sine';
+      subOsc.frequency.setValueAtTime(isCrit ? 125 : 110, now);
+      subOsc.frequency.exponentialRampToValueAtTime(38, now + (isCrit ? 0.28 : 0.21));
+      subGain.gain.setValueAtTime(isCrit ? 0.52 : 0.38, now);
+      subGain.gain.exponentialRampToValueAtTime(0.001, now + (isCrit ? 0.3 : 0.22));
+      subOsc.connect(subGain).connect(dryBus);
+      subOsc.start(now);
+      subOsc.stop(now + 0.31);
+
+      // Layer 2: Shattering Crystal Noise Transient
+      const shatSrc = ac.createBufferSource();
+      shatSrc.buffer = audioSamples.shatter;
+      const hp = ac.createBiquadFilter();
+      hp.type = 'bandpass';
+      hp.frequency.setValueAtTime(3400 * pitchMult, now);
+      hp.Q.setValueAtTime(2.2, now);
+      const shatGain = ac.createGain();
+      shatGain.gain.setValueAtTime(isCrit ? 0.36 : 0.22, now);
+      shatGain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+      shatSrc.connect(hp).connect(shatGain);
+      shatGain.connect(dryBus);
+      shatGain.connect(convolverNode);
+      shatSrc.start(now);
+
+      // Layer 3: Orchestral Brass / Choir Detuned Sawtooth Swell with Lowpass Filter Envelope
+      const chordNotes = isCrit ? [220, 329.63, 440, 659.25] : [196, 293.66, 392];
+      const lpFilter = ac.createBiquadFilter();
+      lpFilter.type = 'lowpass';
+      lpFilter.frequency.setValueAtTime(320, now);
+      lpFilter.frequency.exponentialRampToValueAtTime(isCrit ? 2800 : 1800, now + 0.045);
+      lpFilter.frequency.exponentialRampToValueAtTime(420, now + 0.28);
+      lpFilter.Q.setValueAtTime(3.2, now);
+
+      const swellGain = ac.createGain();
+      swellGain.gain.setValueAtTime(0.001, now);
+      swellGain.gain.linearRampToValueAtTime(isCrit ? 0.14 : 0.09, now + 0.025);
+      swellGain.gain.exponentialRampToValueAtTime(0.0008, now + 0.30);
+      lpFilter.connect(swellGain);
+      swellGain.connect(dryBus);
+      swellGain.connect(convolverNode);
+
+      chordNotes.forEach((freq, idx) => {
+        const osc = ac.createOscillator();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(freq * pitchMult, now);
+        osc.detune.setValueAtTime((idx - 1.5) * 9, now);
+        osc.connect(lpFilter);
+        osc.start(now);
+        osc.stop(now + 0.31);
+      });
+
+      // Layer 4: Sparkling High-Frequency Crystal Cascade (Inharmonic Bell Chimes)
+      const sparkleNotes = isCrit
+        ? [1046.5, 1318.5, 1567.98, 2093.0, 2637.02]
+        : [880, 1318.5, 1760];
+      sparkleNotes.forEach((freq, idx) => {
+        const t0 = now + idx * 0.022;
+        [1, 2.756].forEach((partial, pIdx) => {
+          const osc = ac.createOscillator();
+          const g = ac.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq * partial * pitchMult, t0);
+          g.gain.setValueAtTime((pIdx === 0 ? 0.11 : 0.045) * (isCrit ? 1.25 : 0.85), t0);
+          g.gain.exponentialRampToValueAtTime(0.0008, t0 + 0.26);
+          osc.connect(g);
+          g.connect(dryBus);
+          g.connect(convolverNode);
+          osc.start(t0);
+          osc.stop(t0 + 0.27);
+        });
+      });
+    } catch (e) {}
+  }
+
+  function playCrit(pitchMult = 1.15) {
+    playBossHit(pitchMult, true);
+  }
+
+  // Taut Bowstring / Crystal Tension Hum on Slingshot Pull
+  function playPull(pullRatio = 0.5) {
+    try {
+      const ac = initAudio();
+      if (!ac) return;
+      const now = ac.currentTime;
+      const r = Math.max(0, Math.min(1, pullRatio));
+
+      // Resonant crystal ratchet click + taut string harmonic
+      const osc = ac.createOscillator();
+      const osc2 = ac.createOscillator();
+      const bp = ac.createBiquadFilter();
+      const g = ac.createGain();
+
+      const baseF = 190 + r * 420;
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(baseF, now);
+      osc.frequency.exponentialRampToValueAtTime(baseF * 1.18, now + 0.045);
+
+      osc2.type = 'sine';
+      osc2.frequency.setValueAtTime(baseF * 2.756, now);
+
+      bp.type = 'bandpass';
+      bp.frequency.setValueAtTime(baseF * 2.0, now);
+      bp.Q.setValueAtTime(4.0, now);
+
+      g.gain.setValueAtTime(0.09 + r * 0.07, now);
+      g.gain.exponentialRampToValueAtTime(0.0008, now + 0.055);
+
+      osc.connect(bp);
+      osc2.connect(bp);
+      bp.connect(g);
+      g.connect(dryBus);
+      g.connect(convolverNode);
+
+      osc.start(now);
+      osc2.start(now);
+      osc.stop(now + 0.06);
+      osc2.stop(now + 0.06);
+    } catch (e) {}
+  }
+
+  // Powerful Aerodynamic Whoosh + Crystal Release Chime on Launch
+  function playLaunch(powerRatio = 1.0) {
+    try {
+      const ac = initAudio();
+      if (!ac) return;
+      const now = ac.currentTime;
+
+      // 1) Stereo Aerodynamic Whoosh (Filtered Noise Sweep)
+      const whooshSrc = ac.createBufferSource();
+      whooshSrc.buffer = audioSamples.whoosh;
+      const bp = ac.createBiquadFilter();
+      bp.type = 'bandpass';
+      bp.frequency.setValueAtTime(220, now);
+      bp.frequency.exponentialRampToValueAtTime(1650, now + 0.09);
+      bp.frequency.exponentialRampToValueAtTime(340, now + 0.26);
+      bp.Q.setValueAtTime(2.4, now);
+
+      const whooshGain = ac.createGain();
+      whooshGain.gain.setValueAtTime(0.38 * Math.max(0.6, powerRatio), now);
+      whooshGain.gain.exponentialRampToValueAtTime(0.001, now + 0.27);
+      whooshSrc.connect(bp).connect(whooshGain);
+      whooshGain.connect(dryBus);
+      whooshGain.connect(convolverNode);
+      whooshSrc.start(now);
+
+      // 2) Taut Bowstring Release Snap (110Hz -> 320Hz)
+      const snapOsc = ac.createOscillator();
+      const snapGain = ac.createGain();
+      snapOsc.type = 'triangle';
+      snapOsc.frequency.setValueAtTime(115, now);
+      snapOsc.frequency.exponentialRampToValueAtTime(340, now + 0.07);
+      snapGain.gain.setValueAtTime(0.24, now);
+      snapGain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+      snapOsc.connect(snapGain).connect(dryBus);
+      snapOsc.start(now);
+      snapOsc.stop(now + 0.085);
+
+      // 3) Crystal Release Harmonic Chime
+      [587.33, 880.0, 1318.5].forEach((freq, i) => {
+        const osc = ac.createOscillator();
+        const g = ac.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now + i * 0.012);
+        g.gain.setValueAtTime(0.09, now + i * 0.012);
+        g.gain.exponentialRampToValueAtTime(0.0008, now + 0.22);
+        osc.connect(g);
+        g.connect(dryBus);
+        g.connect(convolverNode);
+        osc.start(now + i * 0.012);
+        osc.stop(now + 0.23);
+      });
+    } catch (e) {}
+  }
+
+  // Crisp Physical Cardstock Slide & Foil Shimmer on 3D Card Stack Flip
+  function playCardFlip() {
+    try {
+      const ac = initAudio();
+      if (!ac) return;
+      const now = ac.currentTime;
+
+      const src = ac.createBufferSource();
+      src.buffer = audioSamples.cardFlip;
+      const bp = ac.createBiquadFilter();
+      bp.type = 'bandpass';
+      bp.frequency.setValueAtTime(950, now);
+      bp.frequency.exponentialRampToValueAtTime(3200, now + 0.09);
+      bp.Q.setValueAtTime(3.0, now);
+
+      const g = ac.createGain();
+      g.gain.setValueAtTime(0.32, now);
+      g.gain.exponentialRampToValueAtTime(0.001, now + 0.11);
+      src.connect(bp).connect(g);
+      g.connect(dryBus);
+      g.connect(convolverNode);
+      src.start(now);
+
+      // Subtle holographic foil chime
+      [1174.66, 1760.0].forEach((f, idx) => {
+        const osc = ac.createOscillator();
+        const cg = ac.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(f, now + idx * 0.025);
+        cg.gain.setValueAtTime(0.07, now + idx * 0.025);
+        cg.gain.exponentialRampToValueAtTime(0.0008, now + 0.18);
+        osc.connect(cg);
+        cg.connect(dryBus);
+        cg.connect(convolverNode);
+        osc.start(now + idx * 0.025);
+        osc.stop(now + 0.19);
+      });
+    } catch (e) {}
+  }
+
+  // Lush Harp / Celesta Arpeggio with Stereo Reverb Tail on Victory / Pack Reveal
+  function playWin(pitchMult = 1.0) {
+    try {
+      const ac = initAudio();
+      if (!ac) return;
+      const now = ac.currentTime;
+      const notes = [523.25, 659.25, 783.99, 987.77, 1174.66, 1318.51, 1567.98, 2093.0];
+      notes.forEach((freq, idx) => {
+        const t0 = now + idx * 0.048;
+        // Celesta fundamental + bell overtone partial (2.756x)
+        [1.0, 2.756].forEach((ratio, pIdx) => {
+          const osc = ac.createOscillator();
+          const g = ac.createGain();
+          osc.type = pIdx === 0 ? 'triangle' : 'sine';
+          osc.frequency.setValueAtTime(freq * ratio * pitchMult, t0);
+          const peak = pIdx === 0 ? 0.15 : 0.055;
+          g.gain.setValueAtTime(0.001, t0);
+          g.gain.linearRampToValueAtTime(peak, t0 + 0.008);
+          g.gain.exponentialRampToValueAtTime(0.0006, t0 + (pIdx === 0 ? 0.55 : 0.25));
+          osc.connect(g);
+          g.connect(dryBus);
+          g.connect(convolverNode);
+          osc.start(t0);
+          osc.stop(t0 + 0.58);
+        });
+      });
+    } catch (e) {}
+  }
+
+  function playCrystalSound(type, pitchMult = 1) {
+    if (type === 'wall') {
+      playBounce(pitchMult, 1.0);
+    } else if (type === 'boss') {
+      playBossHit(pitchMult, pitchMult > 1.15);
+    } else if (type === 'combo') {
+      if (pitchMult >= 1.2) {
+        playWin(pitchMult * 0.85);
+      } else {
+        playCrit(pitchMult);
+      }
+    } else if (type === 'launch') {
+      playLaunch(pitchMult);
+    } else if (type === 'pull') {
+      playPull(pitchMult);
+    } else if (type === 'flip') {
+      playCardFlip();
+    }
   }
 
   /* =========================================================
@@ -1505,10 +2096,10 @@
     const h = img.naturalHeight || 512;
     c.width = w;
     c.height = h;
-    const ctx = c.getContext('2d');
-    ctx.drawImage(img, 0, 0, w, h);
+    const bCtx = c.getContext('2d');
+    bCtx.drawImage(img, 0, 0, w, h);
     try {
-      const imgData = ctx.getImageData(0, 0, w, h);
+      const imgData = bCtx.getImageData(0, 0, w, h);
       const d = imgData.data;
       for (let i = 0; i < d.length; i += 4) {
         const r = d[i], g = d[i + 1], b = d[i + 2];
@@ -1520,8 +2111,19 @@
           d[i + 3] = Math.min(255, Math.floor(((maxC - 14) / 34) * 255));
         }
       }
-      ctx.putImageData(imgData, 0, 0);
-    } catch (err) {}
+      bCtx.putImageData(imgData, 0, 0);
+      c._isAlphaKeyed = true;
+    } catch (err) {
+      // Fallback for file:// origin where getImageData is blocked by CORS: radial soft edge + screen blend
+      bCtx.globalCompositeOperation = 'destination-in';
+      const mask = bCtx.createRadialGradient(w * 0.5, h * 0.5, w * 0.28, w * 0.5, h * 0.5, w * 0.49);
+      mask.addColorStop(0, 'rgba(255,255,255,1)');
+      mask.addColorStop(0.82, 'rgba(255,255,255,0.92)');
+      mask.addColorStop(1, 'rgba(255,255,255,0)');
+      bCtx.fillStyle = mask;
+      bCtx.fillRect(0, 0, w, h);
+      c._isAlphaKeyed = false;
+    }
     return c;
   }
 
@@ -1668,10 +2270,14 @@
     };
   }
 
+  // Helper to smoothly interpolate angles in radians
+  function lerpAngle(a, b, t) {
+    let diff = ((b - a + Math.PI * 3) % (Math.PI * 2)) - Math.PI;
+    return a + diff * t;
+  }
+
   function initOrbs() {
     const b = getPlayfieldBounds();
-    // Initial positions inspired by Mockup B:
-    // Active unit centered near bottom-middle ready to sling, other 3 orbs positioned around the arena
     const presetCoords = [
       { x: cw * 0.22, y: ch * 0.30 },
       { x: cw * 0.48, y: ch * 0.65 }, // Bottom center active orb!
@@ -1684,11 +2290,14 @@
       return {
         idx: i,
         id: card.id,
-        x: Math.max(b.left + 24, Math.min(b.right - 24, pt.x)),
-        y: Math.max(b.top + 24, Math.min(b.bottom - 24, pt.y)),
+        x: Math.max(b.left + 26, Math.min(b.right - 26, pt.x)),
+        y: Math.max(b.top + 26, Math.min(b.bottom - 26, pt.y)),
         vx: 0,
         vy: 0,
-        r: 22,
+        r: 24,
+        rollPhase: i * 1.15,
+        moveHeading: -Math.PI * 0.5,
+        spinSpeed: 0,
         trail: [],
         comboTriggered: false
       };
@@ -1741,7 +2350,7 @@
   }
 
   function handleWaveCleared() {
-    playCrystalSound('combo', 1.25);
+    playWin(1.0);
     spawnCrystalSparks(bossAnim.x, bossAnim.y, '#38f2ff', 42);
     spawnCrystalSparks(bossAnim.x, bossAnim.y, '#ffe066', 32);
 
@@ -1786,14 +2395,15 @@
   }
 
   canvas.addEventListener('pointerdown', (e) => {
+    initAudio();
     if (state.phase !== 'AIMING') return;
     const pt = getCanvasPos(e);
-    // Allow tapping directly on another orb to select it before slinging
     for (let i = 0; i < orbs.length; i++) {
       const dist = Math.hypot(pt.x - orbs[i].x, pt.y - orbs[i].y);
       if (dist < orbs[i].r * 1.45) {
         state.activeUnitIdx = i;
         renderBattleUnitDeck();
+        playBounce(1.25, 0.45);
         break;
       }
     }
@@ -1802,6 +2412,7 @@
     dragState.startY = pt.y;
     dragState.currX = pt.x;
     dragState.currY = pt.y;
+    lastPullSoundDist = 0;
   });
 
   window.addEventListener('pointermove', (e) => {
@@ -1809,6 +2420,22 @@
     const pt = getCanvasPos(e);
     dragState.currX = pt.x;
     dragState.currY = pt.y;
+
+    const dx = dragState.startX - dragState.currX;
+    const dy = dragState.startY - dragState.currY;
+    const pullDist = Math.hypot(dx, dy);
+    if (pullDist > 16 && state.phase === 'AIMING' && orbs[state.activeUnitIdx]) {
+      const activeOrb = orbs[state.activeUnitIdx];
+      const aimAng = Math.atan2(dy, dx);
+      activeOrb.moveHeading = lerpAngle(activeOrb.moveHeading, aimAng, 0.35);
+      // Play physical bowstring / crystal tension clicks as pull distance changes
+      const nowMs = performance.now();
+      if (Math.abs(pullDist - lastPullSoundDist) >= 14 && nowMs - lastPullSoundTime > 55) {
+        lastPullSoundDist = pullDist;
+        lastPullSoundTime = nowMs;
+        playPull(Math.min(1, pullDist / 150));
+      }
+    }
   });
 
   window.addEventListener('pointerup', () => {
@@ -1828,21 +2455,34 @@
 
       activeOrb.vx = Math.cos(ang) * launchSpeed;
       activeOrb.vy = Math.sin(ang) * launchSpeed;
+      activeOrb.moveHeading = ang;
       orbs.forEach(o => { o.comboTriggered = false; });
 
       state.phase = 'MOVING';
-      playCrystalSound('launch');
+      playLaunch(ratio);
     }
   });
 
   /* =========================================================
-     8. PHYSICS & RENDER LOOP FOR BATTLE ARENA
+     8. PHYSICS & TRUE 3D ROLLING SPHERE RENDERER
      ========================================================= */
   function updateBattlePhysics() {
     bossAnim.pulse += 0.04;
     bossAnim.weakAngle += 0.012;
     if (bossAnim.hitFlash > 0) bossAnim.hitFlash = Math.max(0, bossAnim.hitFlash - 0.08);
     if (state.shakeTime > 0) state.shakeTime--;
+
+    // Gentle idle crystal core slow roll when aiming
+    if (state.phase === 'AIMING') {
+      orbs.forEach((orb, idx) => {
+        if (idx === state.activeUnitIdx && dragState.active) {
+          const pullD = Math.hypot(dragState.startX - dragState.currX, dragState.startY - dragState.currY);
+          orb.rollPhase -= Math.min(0.06, pullD * 0.00035);
+        } else {
+          orb.rollPhase += 0.008;
+        }
+      });
+    }
 
     if (state.hitStopFrames > 0) {
       state.hitStopFrames--;
@@ -1860,8 +2500,14 @@
           const spd = Math.hypot(orb.vx, orb.vy);
           if (spd > 0.15) {
             movingCount++;
+            const stepMove = spd * 0.5 * speedMult;
             orb.x += orb.vx * 0.5 * speedMult;
             orb.y += orb.vy * 0.5 * speedMult;
+
+            // Advance 3D physical forward roll phase proportional to distance traveled (v / R)
+            orb.rollPhase += stepMove * 0.08;
+            const targetHeading = Math.atan2(orb.vy, orb.vx);
+            orb.moveHeading = lerpAngle(orb.moveHeading, targetHeading, 0.38);
 
             // Friction
             const friction = Math.pow(0.986, speedMult * 0.5);
@@ -1869,33 +2515,38 @@
             orb.vy *= friction;
 
             if (step === 0) {
-              orb.trail.unshift({ x: orb.x, y: orb.y });
-              if (orb.trail.length > 14) orb.trail.pop();
+              orb.trail.unshift({ x: orb.x, y: orb.y, vx: orb.vx, vy: orb.vy });
+              if (orb.trail.length > 15) orb.trail.pop();
             }
 
             // Wall Collisions (Crystal Hex Arena Walls)
+            const hitIntensity = Math.min(1.2, Math.max(0.35, spd / 16));
             if (orb.x - orb.r < b.left) {
               orb.x = b.left + orb.r;
               orb.vx = Math.abs(orb.vx) * 0.92;
-              spawnCrystalSparks(orb.x, orb.y, '#b845ff', 8);
-              playCrystalSound('wall', 1.05);
+              orb.moveHeading = Math.atan2(orb.vy, orb.vx);
+              spawnCrystalSparks(orb.x - orb.r * 0.8, orb.y, '#b845ff', 9);
+              playBounce(1.04, hitIntensity);
             } else if (orb.x + orb.r > b.right) {
               orb.x = b.right - orb.r;
               orb.vx = -Math.abs(orb.vx) * 0.92;
-              spawnCrystalSparks(orb.x, orb.y, '#b845ff', 8);
-              playCrystalSound('wall', 1.05);
+              orb.moveHeading = Math.atan2(orb.vy, orb.vx);
+              spawnCrystalSparks(orb.x + orb.r * 0.8, orb.y, '#b845ff', 9);
+              playBounce(1.08, hitIntensity);
             }
 
             if (orb.y - orb.r < b.top) {
               orb.y = b.top + orb.r;
               orb.vy = Math.abs(orb.vy) * 0.92;
-              spawnCrystalSparks(orb.x, orb.y, '#38f2ff', 8);
-              playCrystalSound('wall', 1.15);
+              orb.moveHeading = Math.atan2(orb.vy, orb.vx);
+              spawnCrystalSparks(orb.x, orb.y - orb.r * 0.8, '#38f2ff', 9);
+              playBounce(1.16, hitIntensity);
             } else if (orb.y + orb.r > b.bottom) {
               orb.y = b.bottom - orb.r;
               orb.vy = -Math.abs(orb.vy) * 0.92;
-              spawnCrystalSparks(orb.x, orb.y, '#b845ff', 8);
-              playCrystalSound('wall', 0.95);
+              orb.moveHeading = Math.atan2(orb.vy, orb.vx);
+              spawnCrystalSparks(orb.x, orb.y + orb.r * 0.8, '#b845ff', 9);
+              playBounce(0.96, hitIntensity);
             }
 
             // Boss Collision
@@ -1913,6 +2564,7 @@
               const dot = orb.vx * nx + orb.vy * ny;
               orb.vx = (orb.vx - 2 * dot * nx) * 0.94;
               orb.vy = (orb.vy - 2 * dot * ny) * 0.94;
+              orb.moveHeading = Math.atan2(orb.vy, orb.vx);
 
               // Check weak-point crystal hit
               const weakX = bossAnim.x + Math.cos(bossAnim.weakAngle) * (bossAnim.radius * 0.58);
@@ -1934,7 +2586,7 @@
               });
               state.hitStopFrames = isWeakHit ? 4 : 2;
               state.mana = Math.min(state.maxMana, state.mana + 1);
-              playCrystalSound('boss', isWeakHit ? 1.3 : 1.0);
+              playBossHit(isWeakHit ? 1.25 : 1.0, isWeakHit);
             }
 
             // Ally Orb Bump Combo (Laser Link + Shockwave!)
@@ -1962,6 +2614,10 @@
                 orb.vy -= p * ny * 0.85;
                 other.vx += p * nx * 0.75;
                 other.vy += p * ny * 0.75;
+                orb.moveHeading = Math.atan2(orb.vy, orb.vx);
+                other.moveHeading = Math.atan2(other.vy, other.vx);
+
+                playBounce(1.32, 0.9);
 
                 if (!other.comboTriggered) {
                   other.comboTriggered = true;
@@ -1987,7 +2643,7 @@
                   const comboDmg = allyCard.atk * 1.65;
                   dealBossDamage(comboDmg, bossAnim.x, bossAnim.y, true);
                   spawnCrystalSparks(bossAnim.x, bossAnim.y, allyCard.orbColor, 18);
-                  playCrystalSound('combo');
+                  playCrit(1.18);
                 }
               }
             });
@@ -2041,22 +2697,44 @@
     }
   }
 
-  function draw3DGlassOrb(orb, isCurrentTurn) {
+  /* =========================================================
+     TRUE 3D VOLUMETRIC ROLLING SPHERE SHADER ON 2D CANVAS
+     ========================================================= */
+  // Pre-computed 3D polyhedral crystal facet vertices on a unit sphere
+  const SPHERE_FACET_VERTS = [
+    { lat: 0.0, lon: 0.0 },
+    { lat: 0.0, lon: Math.PI * 0.5 },
+    { lat: 0.0, lon: Math.PI },
+    { lat: 0.0, lon: Math.PI * 1.5 },
+    { lat: 0.68, lon: Math.PI * 0.25 },
+    { lat: 0.68, lon: Math.PI * 0.75 },
+    { lat: 0.68, lon: Math.PI * 1.25 },
+    { lat: 0.68, lon: Math.PI * 1.75 },
+    { lat: -0.68, lon: Math.PI * 0.25 },
+    { lat: -0.68, lon: Math.PI * 0.75 },
+    { lat: -0.68, lon: Math.PI * 1.25 },
+    { lat: -0.68, lon: Math.PI * 1.75 }
+  ];
+
+  function drawOrb(orb, isCurrentTurn) {
     const card = getCardById(orb.id);
     const { x, y, r } = orb;
+    const spd = Math.hypot(orb.vx, orb.vy);
+    const heading = orb.moveHeading || 0;
+    const roll = orb.rollPhase || 0;
 
-    // 1. Golden / Elemental Comet Ribbon Trail (like Mockup B!)
+    // 1. Comet Ribbon & Rolling Energy Wake Trail
     if (orb.trail.length > 1) {
       for (let i = 0; i < orb.trail.length - 1; i++) {
         const pt = orb.trail[i];
         const ratio = 1 - i / orb.trail.length;
         ctx.save();
         ctx.beginPath();
-        ctx.arc(pt.x, pt.y, r * 0.85 * ratio, 0, Math.PI * 2);
-        ctx.fillStyle = card.orbColor;
-        ctx.globalAlpha = ratio * 0.36;
+        ctx.arc(pt.x, pt.y, r * 0.82 * ratio, 0, Math.PI * 2);
+        ctx.fillStyle = i % 2 === 0 ? card.orbColor : card.orbCore;
+        ctx.globalAlpha = ratio * 0.34;
         ctx.shadowColor = card.orbColor;
-        ctx.shadowBlur = 12;
+        ctx.shadowBlur = 14;
         ctx.fill();
         ctx.restore();
       }
@@ -2064,69 +2742,271 @@
 
     ctx.save();
 
-    // Active Turn Cyan/Gold Floor Aura
+    // 2. Deep 3D Drop Shadow on the Marble Floor (offset at x + 4, y + r * 0.45, elliptical r * 0.95 x r * 0.55)
+    const shX = x + 4;
+    const shY = y + r * 0.45;
+    ctx.save();
+    ctx.translate(shX, shY);
+    ctx.scale(0.95, 0.55);
+    const floorShadowGrad = ctx.createRadialGradient(0, 0, r * 0.1, 0, 0, r * 1.22);
+    floorShadowGrad.addColorStop(0, 'rgba(0, 0, 0, 0.85)');
+    floorShadowGrad.addColorStop(0.55, 'rgba(4, 2, 14, 0.58)');
+    floorShadowGrad.addColorStop(0.82, card.orbColor + '28'); // Subtle refracted floor caustic glow
+    floorShadowGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    ctx.beginPath();
+    ctx.arc(0, 0, r * 1.22, 0, Math.PI * 2);
+    ctx.fillStyle = floorShadowGrad;
+    ctx.fill();
+    ctx.restore();
+
+    // Active Turn Pulsing Floor Halo (drawn beneath the sphere so the 3D ball sits on top of it)
     if (isCurrentTurn && state.phase === 'AIMING') {
-      const pulseR = r + 6 + Math.sin(bossAnim.pulse * 2.2) * 3;
+      const pulseR = r + 6 + Math.sin(bossAnim.pulse * 2.4) * 3;
+      ctx.save();
       ctx.beginPath();
       ctx.arc(x, y, pulseR, 0, Math.PI * 2);
       ctx.strokeStyle = '#38f2ff';
-      ctx.lineWidth = 2.5;
+      ctx.lineWidth = 2.6;
       ctx.shadowColor = '#38f2ff';
-      ctx.shadowBlur = 14;
+      ctx.shadowBlur = 16;
       ctx.stroke();
+      ctx.restore();
     }
 
-    // Drop Shadow on Obsidian Floor
-    ctx.beginPath();
-    ctx.ellipse(x, y + r * 0.85, r * 0.85, r * 0.35, 0, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.65)';
-    ctx.fill();
-
-    // Inner Clipped Character Art + Elemental Glass Tint
+    // 3. Clipped 3D Sphere Interior (Base Shading + 3D Rolling Surface Projection)
     ctx.save();
     ctx.beginPath();
-    ctx.arc(x, y, r - 2, 0, Math.PI * 2);
+    ctx.arc(x, y, r, 0, Math.PI * 2);
     ctx.clip();
 
+    // 3A. Base Volumetric Sphere Shading (Fixed top-left light source -> deep dark core -> bottom-right subsurface glow)
+    const baseSphereGrad = ctx.createRadialGradient(
+      x - r * 0.35,
+      y - r * 0.35,
+      r * 0.08,
+      x + r * 0.12,
+      y + r * 0.15,
+      r * 1.12
+    );
+    baseSphereGrad.addColorStop(0, card.orbCore);
+    baseSphereGrad.addColorStop(0.28, card.orbColor);
+    baseSphereGrad.addColorStop(0.68, '#120d26');
+    baseSphereGrad.addColorStop(0.92, '#060410');
+    baseSphereGrad.addColorStop(1, card.orbColor);
+    ctx.fillStyle = baseSphereGrad;
+    ctx.fillRect(x - r, y - r, r * 2, r * 2);
+
+    // 3B. Spherical-Projected Internal Texture / Character Core rolling along `moveHeading`
     const artImg = loadedImages[card.img];
     if (artImg) {
-      ctx.drawImage(artImg, x - r, y - r, r * 2, r * 2);
-    } else {
-      ctx.fillStyle = card.orbColor;
-      ctx.fillRect(x - r, y - r, r * 2, r * 2);
+      // Map rollPhase onto two wrapping hemispheres so the texture continuously rolls forward without popping
+      for (let wrap = 0; wrap < 2; wrap++) {
+        const p = ((roll + wrap * Math.PI) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
+        // p in [0, PI] is on the front visible hemisphere rolling from back (-r) to front (+r)
+        const hemiSin = Math.sin(p); // > 0 on front hemisphere
+        if (hemiSin > -0.15) {
+          const forwardCos = -Math.cos(p); // goes from -1 (rear limb) -> 0 (center) -> +1 (front limb)
+          const foreshorten = Math.max(0.22, Math.abs(hemiSin)); // compresses near the sphere edges!
+          const alpha = Math.max(0, Math.min(1, hemiSin * 0.92));
+
+          ctx.save();
+          ctx.translate(x, y);
+          ctx.rotate(heading);
+          ctx.translate(forwardCos * r * 0.72, 0);
+          ctx.scale(foreshorten * 0.88, 0.94);
+          ctx.rotate(-heading);
+          ctx.globalAlpha = alpha * 0.78;
+          ctx.drawImage(artImg, -r * 0.95, -r * 0.95, r * 1.9, r * 1.9);
+          ctx.restore();
+        }
+      }
     }
 
-    // Inner Spherical Glass Refraction Overlay
-    const innerGrad = ctx.createRadialGradient(x - r * 0.35, y - r * 0.35, r * 0.1, x, y, r);
-    innerGrad.addColorStop(0, 'rgba(255, 255, 255, 0.55)');
-    innerGrad.addColorStop(0.45, 'rgba(255, 255, 255, 0.0)');
-    innerGrad.addColorStop(0.82, card.orbColor + '66');
-    innerGrad.addColorStop(1, 'rgba(5, 8, 20, 0.78)');
-    ctx.fillStyle = innerGrad;
+    // 3C. 3D Rolling Latitude / Longitude Crystal Bands & Equatorial Rings (Rotated along `moveHeading`)
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(heading); // Now +X is the exact direction `(vx, vy)` the sphere is rolling!
+
+    // Render 4 rolling longitudinal crystal meridian bands wrapping from back (-X) over the crown (0) to front (+X)
+    const numBands = 4;
+    for (let bIdx = 0; bIdx < numBands; bIdx++) {
+      const bandPhase = roll + (bIdx * Math.PI * 2) / numBands;
+      const zFront = Math.sin(bandPhase); // > 0 means front hemisphere facing the camera
+      const xProj = -Math.cos(bandPhase) * r * 0.88; // moves from -r (back) to +r (front) as roll increases
+      const arcCurveX = Math.cos(bandPhase) * r * 0.42;
+
+      if (zFront > -0.25) {
+        const frontFactor = Math.max(0.12, (zFront + 0.25) / 1.25);
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(xProj * 0.35, -r * 0.98);
+        ctx.bezierCurveTo(
+          xProj - arcCurveX * 0.45,
+          -r * 0.48,
+          xProj - arcCurveX * 0.45,
+          r * 0.48,
+          xProj * 0.35,
+          r * 0.98
+        );
+        ctx.strokeStyle = bIdx % 2 === 0 ? '#fff5c0' : card.orbCore;
+        ctx.lineWidth = (bIdx % 2 === 0 ? 2.4 : 1.7) * frontFactor;
+        ctx.globalAlpha = 0.22 + frontFactor * 0.58;
+        ctx.shadowColor = card.orbCore;
+        ctx.shadowBlur = 6 * frontFactor;
+        ctx.stroke();
+        ctx.restore();
+      }
+    }
+
+    // Render 3D Tumbling Crystal Facet Nodes & Runes on the Sphere Surface
+    const projectedVerts = SPHERE_FACET_VERTS.map(v => {
+      const lonRolled = v.lon + roll;
+      const cosLat = Math.cos(v.lat);
+      const sinLat = Math.sin(v.lat);
+      // 3D sphere coordinates where X = roll forward axis, Y = lateral axis, Z = camera depth
+      const px = -Math.cos(lonRolled) * cosLat;
+      const py = sinLat;
+      const pz = Math.sin(lonRolled) * cosLat;
+      return {
+        sx: px * r * 0.88,
+        sy: py * r * 0.88,
+        pz
+      };
+    });
+
+    // Connect front-hemisphere crystal facets to form a rolling 3D geodesic crystal lattice
+    ctx.save();
+    for (let i = 0; i < projectedVerts.length; i++) {
+      const v1 = projectedVerts[i];
+      if (v1.pz < -0.1) continue;
+      // Draw glowing facet vertex diamond
+      const vis = Math.max(0.15, (v1.pz + 0.1) / 1.1);
+      ctx.fillStyle = '#ffffff';
+      ctx.globalAlpha = vis * 0.75;
+      ctx.beginPath();
+      ctx.arc(v1.sx, v1.sy, 1.4 + vis * 1.3, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Connect to neighboring vertices
+      for (let j = i + 1; j < projectedVerts.length; j++) {
+        const v2 = projectedVerts[j];
+        if (v2.pz < -0.1) continue;
+        const d2 = Math.hypot(v1.sx - v2.sx, v1.sy - v2.sy);
+        if (d2 < r * 0.95) {
+          ctx.beginPath();
+          ctx.moveTo(v1.sx, v1.sy);
+          ctx.lineTo(v2.sx, v2.sy);
+          ctx.strokeStyle = card.orbCore;
+          ctx.lineWidth = 1.05 * vis;
+          ctx.globalAlpha = vis * 0.34;
+          ctx.stroke();
+        }
+      }
+    }
+    ctx.restore();
+
+    // Motion Blur Speed Streaks across the sphere crown when rolling fast
+    if (spd > 2.5) {
+      const streakAlpha = Math.min(0.55, (spd - 2.5) / 18);
+      ctx.save();
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 1.6;
+      ctx.globalAlpha = streakAlpha;
+      for (let s = -1; s <= 1; s++) {
+        const sy = s * r * 0.42;
+        const phaseShift = ((roll * 1.6 + s * 1.1) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
+        const sx = Math.sin(phaseShift) * r * 0.55;
+        ctx.beginPath();
+        ctx.moveTo(sx - r * 0.32, sy);
+        ctx.quadraticCurveTo(sx, sy * 0.75, sx + r * 0.32, sy);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    ctx.restore(); // End heading-rotated rolling layer
+
+    // 3D. Fixed Light-Source Shading & Subsurface Scattering (Strictly fixed to room light, NOT rotating!)
+    // Deep spherical ambient occlusion around the outer edge + bright top-left illumination
+    const fixedLightGrad = ctx.createRadialGradient(
+      x - r * 0.35,
+      y - r * 0.35,
+      r * 0.05,
+      x,
+      y,
+      r
+    );
+    fixedLightGrad.addColorStop(0, 'rgba(255, 255, 255, 0.38)');
+    fixedLightGrad.addColorStop(0.38, 'rgba(255, 255, 255, 0.0)');
+    fixedLightGrad.addColorStop(0.74, 'rgba(6, 4, 18, 0.42)');
+    fixedLightGrad.addColorStop(0.92, 'rgba(2, 1, 8, 0.78)');
+    fixedLightGrad.addColorStop(1, 'rgba(0, 0, 0, 0.9)');
+    ctx.fillStyle = fixedLightGrad;
+    ctx.fillRect(x - r, y - r, r * 2, r * 2);
+
+    // Bottom-right subsurface scattering / caustic rim glow (fixed relative to top-left light source)
+    const rimGlowGrad = ctx.createRadialGradient(
+      x + r * 0.34,
+      y + r * 0.36,
+      r * 0.04,
+      x + r * 0.24,
+      y + r * 0.26,
+      r * 0.68
+    );
+    rimGlowGrad.addColorStop(0, card.orbCore);
+    rimGlowGrad.addColorStop(0.45, card.orbColor + '88');
+    rimGlowGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.globalAlpha = 0.62;
+    ctx.fillStyle = rimGlowGrad;
     ctx.fillRect(x - r, y - r, r * 2, r * 2);
     ctx.restore();
 
-    // Ornate Metallic Gold Filigree Rim (matching Mockup B's 3D marble spheres!)
+    ctx.restore(); // End clipped sphere circle
+
+    // 4. Outer Fresnel Glass Rim & Fixed Top-Left Specular Highlights (Strictly stationary relative to light source!)
     const rimGrad = ctx.createLinearGradient(x - r, y - r, x + r, y + r);
-    rimGrad.addColorStop(0, '#fff2b2');
-    rimGrad.addColorStop(0.35, '#d49b1f');
-    rimGrad.addColorStop(0.7, '#7a5208');
-    rimGrad.addColorStop(1, '#fae18c');
+    rimGrad.addColorStop(0, 'rgba(255, 250, 220, 0.92)');
+    rimGrad.addColorStop(0.35, card.orbColor);
+    rimGrad.addColorStop(0.72, '#1f1638');
+    rimGrad.addColorStop(1, card.orbCore);
 
     ctx.beginPath();
-    ctx.arc(x, y, r - 1, 0, Math.PI * 2);
+    ctx.arc(x, y, r - 0.8, 0, Math.PI * 2);
     ctx.strokeStyle = rimGrad;
-    ctx.lineWidth = 3.2;
+    ctx.lineWidth = 2.2;
     ctx.stroke();
 
-    // Specular Glass Highlight Arc
+    // Primary Curved Glass Specular Crescent Highlight at Top-Left (-0.35*r, -0.35*r)
+    ctx.save();
+    ctx.translate(x - r * 0.32, y - r * 0.34);
+    ctx.rotate(-Math.PI * 0.23);
+    const specGrad = ctx.createLinearGradient(0, -r * 0.22, 0, r * 0.22);
+    specGrad.addColorStop(0, 'rgba(255, 255, 255, 0.95)');
+    specGrad.addColorStop(0.55, 'rgba(255, 255, 255, 0.42)');
+    specGrad.addColorStop(1, 'rgba(255, 255, 255, 0.0)');
     ctx.beginPath();
-    ctx.ellipse(x - r * 0.28, y - r * 0.34, r * 0.38, r * 0.2, -Math.PI / 6, 0, Math.PI * 2);
+    ctx.ellipse(0, 0, r * 0.42, r * 0.21, 0, 0, Math.PI * 2);
+    ctx.fillStyle = specGrad;
+    ctx.fill();
+
+    // Secondary crisp pinpoint lens glint
+    ctx.beginPath();
+    ctx.arc(-r * 0.14, -r * 0.04, r * 0.09, 0, Math.PI * 2);
+    ctx.fillStyle = '#ffffff';
+    ctx.fill();
+    ctx.restore();
+
+    // Subtle secondary pinpoint reflection near left rim
+    ctx.beginPath();
+    ctx.arc(x - r * 0.52, y - r * 0.04, r * 0.055, 0, Math.PI * 2);
     ctx.fillStyle = 'rgba(255, 255, 255, 0.72)';
     ctx.fill();
 
     ctx.restore();
   }
+  const draw3DGlassOrb = drawOrb;
 
   function drawCyanTrajectoryLaser(activeOrb) {
     if (!dragState.active || state.phase !== 'AIMING') return;
@@ -2222,6 +3102,9 @@
     const bossSize = bossAnim.radius * 2.55 * pulseScale;
     if (bossCanvas) {
       ctx.save();
+      if (!bossCanvas._isAlphaKeyed) {
+        ctx.globalCompositeOperation = 'screen';
+      }
       ctx.shadowColor = bossAnim.hitFlash > 0.1 ? '#ffffff' : boss.auraColor;
       ctx.shadowBlur = bossAnim.hitFlash > 0.1 ? 36 : 22;
       ctx.drawImage(
@@ -2336,22 +3219,28 @@
   }
 
   /* =========================================================
-     9. VIEW 2: PEARL-SILVER 3D HOLOGRAM CARD STUDIO (Mockup A)
+     9. VIEW 2: PEARL-SILVER 3D HOLOGRAM CARD STUDIO & 3D DECK STACK
      ========================================================= */
   const viewBattle = document.getElementById('view-battle');
   const viewStudio = document.getElementById('view-studio');
+  const holoDeckStack = document.getElementById('holo-deck-stack');
   const holoCard3D = document.getElementById('holo-card-3d');
   const holoGlare = document.getElementById('holo-glare');
   const cardArtImg = document.getElementById('card-art-img');
+  const cardArtWindow = document.getElementById('card-art-window');
+  let isCardFlipping = false;
 
   function openStudioView() {
+    initAudio();
     viewBattle.classList.add('hidden');
     viewStudio.classList.remove('hidden');
     renderStudioCard(selectedStudioCardId);
     renderStudioThumbs();
+    playCardFlip();
   }
 
   function openBattleView() {
+    initAudio();
     viewStudio.classList.add('hidden');
     viewBattle.classList.remove('hidden');
     resizeBattleCanvas();
@@ -2359,11 +3248,16 @@
 
   function renderStudioCard(cardId) {
     selectedStudioCardId = cardId;
-    const card = getCardById(cardId);
+    const currIdx = Math.max(0, CARDS_DB.findIndex(c => c.id === cardId));
+    const card = CARDS_DB[currIdx] || CARDS_DB[0];
+
     document.getElementById('card-title').textContent = card.cardTitle;
     document.getElementById('card-hp').textContent = card.hpStat + (card.level - 1) * 10;
     document.getElementById('card-elem-badge').innerHTML = SVG_ICONS[card.element === 'light' ? 'bolt' : card.element];
     cardArtImg.src = card.img;
+    if (cardArtWindow) {
+      cardArtWindow.style.backgroundImage = `url('${card.img}')`;
+    }
 
     const orb1 = document.getElementById('move-orb-1');
     orb1.style.background = card.move1.bg;
@@ -2379,6 +3273,49 @@
 
     const inSquad = activeSquadIds.includes(card.id);
     document.getElementById('txt-equip-btn').textContent = inSquad ? 'IN ACTIVE SQUAD' : 'DEPLOY IN SQUAD';
+
+    // Update the "次のカードをめくる (X/5)" button label
+    const flipBtnTxt = document.getElementById('txt-flip-card-btn');
+    if (flipBtnTxt) {
+      flipBtnTxt.textContent = `次のカードをめくる (${currIdx + 1}/${CARDS_DB.length})`;
+    }
+
+    // Update the 3 physical stacked cards visibly peeking out behind the active card in 3D space
+    for (let offset = 1; offset <= 3; offset++) {
+      const stackCard = CARDS_DB[(currIdx + offset) % CARDS_DB.length];
+      const titleEl = document.getElementById(`stack-title-${offset}`);
+      const artEl = document.getElementById(`stack-art-${offset}`);
+      const cardEl = document.getElementById(`deck-back-card-${offset}`);
+      if (titleEl) titleEl.textContent = stackCard.cardTitle;
+      if (artEl) artEl.style.backgroundImage = `url('${stackCard.img}')`;
+      if (cardEl) cardEl.setAttribute('data-card-id', stackCard.id);
+    }
+  }
+
+  function flipCardDeck(step = 1, targetCardId = null) {
+    if (isCardFlipping) return;
+    isCardFlipping = true;
+    playCardFlip();
+
+    const currIdx = Math.max(0, CARDS_DB.findIndex(c => c.id === selectedStudioCardId));
+    const nextCard = targetCardId
+      ? getCardById(targetCardId)
+      : CARDS_DB[(currIdx + step + CARDS_DB.length) % CARDS_DB.length];
+
+    const animClass = step >= 0 ? 'flipping-next' : 'flipping-prev';
+    holoCard3D.classList.remove('flipping-next', 'flipping-prev');
+    void holoCard3D.offsetWidth; // trigger reflow
+    holoCard3D.classList.add(animClass);
+
+    setTimeout(() => {
+      renderStudioCard(nextCard.id);
+      renderStudioThumbs();
+    }, 175);
+
+    setTimeout(() => {
+      holoCard3D.classList.remove('flipping-next', 'flipping-prev');
+      isCardFlipping = false;
+    }, 420);
   }
 
   function renderStudioThumbs() {
@@ -2392,18 +3329,68 @@
         <div class="card-thumb-lv">LV.${c.level}</div>
       `;
       pill.addEventListener('click', () => {
-        playCrystalSound('wall', 1.2);
-        renderStudioCard(c.id);
-        renderStudioThumbs();
+        if (c.id !== selectedStudioCardId) {
+          flipCardDeck(1, c.id);
+        } else {
+          playCardFlip();
+        }
       });
       row.appendChild(pill);
     });
   }
 
-  // Interactive 3D Parallax & Rainbow Foil Tilt on Card
+  // Tap on any of the 3 peeking stacked cards behind to flip it to the front
+  [1, 2, 3].forEach(offset => {
+    const backCardEl = document.getElementById(`deck-back-card-${offset}`);
+    if (backCardEl) {
+      backCardEl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const cid = backCardEl.getAttribute('data-card-id');
+        flipCardDeck(1, cid);
+      });
+    }
+  });
+
+  // Tap "🔄 次のカードをめくる (1/5)" button
+  const btnFlipNext = document.getElementById('btn-flip-next-card');
+  if (btnFlipNext) {
+    btnFlipNext.addEventListener('click', () => {
+      flipCardDeck(1);
+    });
+  }
+
+  // Interactive 3D Parallax Tilt + Left/Right Swipe on 3D Card Stack
   const studioStage = document.querySelector('.studio-stage');
+  let deckSwipeStartX = null;
+  let deckSwipeStartY = null;
+
+  if (holoDeckStack) {
+    holoDeckStack.addEventListener('pointerdown', (e) => {
+      initAudio();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      deckSwipeStartX = clientX;
+      deckSwipeStartY = clientY;
+    });
+
+    window.addEventListener('pointerup', (e) => {
+      if (deckSwipeStartX === null) return;
+      const clientX = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+      const clientY = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
+      const dx = clientX - deckSwipeStartX;
+      const dy = clientY - deckSwipeStartY;
+      deckSwipeStartX = null;
+      deckSwipeStartY = null;
+
+      if (Math.abs(dx) > 36 && Math.abs(dx) > Math.abs(dy) * 1.2 && !viewStudio.classList.contains('hidden')) {
+        flipCardDeck(dx < 0 ? 1 : -1);
+      }
+    });
+  }
+
   studioStage.addEventListener('pointermove', (e) => {
-    const rect = holoCard3D.getBoundingClientRect();
+    if (isCardFlipping) return;
+    const rect = holoDeckStack.getBoundingClientRect();
     const cx = rect.left + rect.width * 0.5;
     const cy = rect.top + rect.height * 0.5;
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
@@ -2414,7 +3401,7 @@
 
     const rotY = dx * 20;
     const rotX = -dy * 16;
-    holoCard3D.style.transform = `rotateY(${rotY}deg) rotateX(${rotX}deg)`;
+    holoDeckStack.style.transform = `rotateY(${rotY}deg) rotateX(${rotX}deg)`;
     cardArtImg.style.transform = `translate(${-dx * 7}px, ${-dy * 7}px) scale(1.04)`;
 
     const glarePos = 50 + dx * 40;
@@ -2422,7 +3409,8 @@
   });
 
   studioStage.addEventListener('pointerleave', () => {
-    holoCard3D.style.transform = 'rotateY(-11deg) rotateX(5deg)';
+    if (isCardFlipping) return;
+    holoDeckStack.style.transform = 'rotateY(-9deg) rotateX(4deg)';
     cardArtImg.style.transform = 'translate(0px, 0px) scale(1)';
   });
 
