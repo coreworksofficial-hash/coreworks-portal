@@ -110,9 +110,15 @@
 
   .t-float-card {
     position: absolute;
-    transform-origin: center center;
+    width: calc(240px * var(--sc, 0.40));
+    height: calc(335px * var(--sc, 0.40));
     border-radius: 8px;
     box-shadow: 0 10px 24px rgba(15, 23, 42, 0.16);
+  }
+
+  .t-float-card .pk-card {
+    transform: scale(var(--sc, 0.40));
+    transform-origin: top left;
   }
 
   .t-float-card.bg-depth {
@@ -121,7 +127,7 @@
   }
 
   .t-float-card.mid-depth {
-    opacity: 0.55;
+    opacity: 0.52;
   }
 
   .t-float-card.fg-depth {
@@ -131,15 +137,18 @@
   }
 
   @keyframes gentleFloat {
-    from { transform: translateY(0px) scale(var(--sc, 0.92)); }
-    to { transform: translateY(-7px) scale(var(--sc, 0.92)); }
+    from { transform: translateY(0px); }
+    to { transform: translateY(-6px); }
   }
 
-  /* Center Logo (Image 1) */
+  /* Center Logo (Image 1 - Clean White Halo with Zero Card Overlap) */
   .title-center-logo {
     position: relative;
     z-index: 12;
-    margin-top: -16px;
+    margin-top: -12px;
+    padding: 14px 26px;
+    border-radius: 32px;
+    background: radial-gradient(ellipse at center, rgba(248, 251, 255, 0.94) 0%, rgba(240, 248, 255, 0.78) 58%, rgba(240, 248, 255, 0) 85%);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -417,19 +426,20 @@
     cursor: pointer;
   }
 
-  /* Featured 5-Card Showcase Window with Bottom Triangle Pointer */
+  /* Featured 5-Card Showcase Window with Bottom Triangle Pointer (Full-Color Mini Cards Tilted -6deg!) */
   .featured-cards-bubble {
     position: relative;
     z-index: 10;
     align-self: center;
-    width: 284px;
-    height: 76px;
+    width: 294px;
+    height: 82px;
     background: #E2E8F0;
     border-radius: 16px;
     border: 4px solid #FFFFFF;
     box-shadow: 0 8px 22px rgba(15, 23, 42, 0.14);
     margin-top: 6px;
     overflow: visible;
+    cursor: pointer;
   }
 
   .featured-cards-bubble::after {
@@ -449,28 +459,27 @@
     border-radius: 12px;
     overflow: hidden;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
-    gap: 4px;
-    background: linear-gradient(180deg, #F1F5F9, #E2E8F0);
-    padding: 4px 6px;
+    gap: 3px;
+    background: linear-gradient(180deg, #E2E8F0 0%, #CBD5E1 100%);
+    padding: 4px 6px 0;
   }
 
   .feat-mini-slice {
-    width: 56px;
-    height: 76px;
-    border-radius: 5px;
+    position: relative;
+    width: 53px;
+    height: 82px;
+    border-radius: 4px;
     overflow: hidden;
     transform: rotate(-6deg);
     flex-shrink: 0;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.22);
-    border: 1.5px solid #FDE047;
+    box-shadow: 0 3px 8px rgba(15, 23, 42, 0.25);
   }
 
-  .feat-mini-slice img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  .feat-mini-slice .pk-card {
+    transform: scale(0.222);
+    transform-origin: top left;
   }
 
   /* Giant Center Pack + Secondary Right Pack + Floor Reflection */
@@ -1190,7 +1199,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     background: #ECF3FA;
     overflow: hidden;
   }
@@ -1198,17 +1207,31 @@
   .skew-hero-banner {
     position: relative;
     width: 100%;
-    height: 380px;
+    height: 528px;
+    flex-shrink: 0;
     overflow: hidden;
-    clip-path: polygon(0 0, 100% 0, 100% 86%, 0 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 87%, 0 98%);
+  }
+
+  .skew-hero-banner::after {
+    content: "";
+    position: absolute;
+    left: -5%;
+    right: -5%;
+    bottom: 60px;
+    height: 110px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(255,255,255,0.32) 0%, rgba(255,255,255,0.08) 55%, transparent 75%);
+    border: 2px solid rgba(255,255,255,0.28);
+    pointer-events: none;
   }
 
   .skew-hero-banner.social-theme {
-    background: radial-gradient(circle at 50% 60%, #4ADE80 0%, #16A34A 65%, #14532D 100%);
+    background: radial-gradient(circle at 50% 55%, #4ADE80 0%, #16A34A 62%, #15803D 100%);
   }
 
   .skew-hero-banner.battle-theme {
-    background: radial-gradient(circle at 50% 60%, #FB7185 0%, #E11D48 65%, #881337 100%);
+    background: radial-gradient(circle at 50% 55%, #FB7185 0%, #E11D48 62%, #9F1239 100%);
   }
 
   .skew-ribbon-bar {
@@ -1248,21 +1271,27 @@
 
   .skew-stage-characters {
     position: absolute;
-    inset: 70px 0 0 0;
+    inset: 68px 0 40px 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    padding: 0 14px;
+    gap: 8px;
+    padding: 0 12px;
+    z-index: 5;
   }
 
   .stage-char-card {
-    width: 106px;
-    height: 146px;
-    border-radius: 12px;
+    position: relative;
+    width: 112px;
+    height: 156px;
+    border-radius: 10px;
     overflow: hidden;
-    border: 2.5px solid #FFFFFF;
-    box-shadow: 0 12px 26px rgba(0,0,0,0.35);
+    box-shadow: 0 14px 28px rgba(0,0,0,0.38);
+  }
+
+  .stage-char-card .pk-card {
+    transform: scale(0.466);
+    transform-origin: top left;
   }
 
   .stage-char-card img {
@@ -1271,16 +1300,16 @@
     object-fit: cover;
   }
 
-  /* White 3D Card Buttons with Protruding Top-Edge Icons (Image 4 Exact Match!) */
+  /* White 3D Card Buttons with Protruding Top-Edge Icons Straddling the Diagonal Boundary (Image 4 Exact Match!) */
   .protrude-menu-area {
     position: relative;
     z-index: 15;
-    margin-top: -54px;
-    padding: 0 16px 16px;
+    margin-top: -86px;
+    padding: 0 16px 12px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 24px;
+    gap: 22px;
   }
 
   .protrude-btn-card {
@@ -1955,11 +1984,7 @@
           <div class="skew-ribbon-bar">
             <span class="skew-ribbon-title">ソーシャル</span>
           </div>
-          <div class="skew-stage-characters">
-            <div class="stage-char-card" style="transform:rotate(-8deg) translateY(10px);"><img src="assets/card_aurora.jpg" alt=""></div>
-            <div class="stage-char-card" style="transform:scale(1.08);border-color:#FDE047;"><img src="assets/card_dragon.jpg" alt=""></div>
-            <div class="stage-char-card" style="transform:rotate(8deg) translateY(10px);"><img src="assets/card_elara.jpg" alt=""></div>
-          </div>
+          <div class="skew-stage-characters" id="social-stage-cards"></div>
         </div>
 
         <div class="protrude-menu-area">
@@ -2019,11 +2044,7 @@
           <div class="skew-ribbon-bar">
             <span class="skew-ribbon-title">バトル</span>
           </div>
-          <div class="skew-stage-characters">
-            <div class="stage-char-card" style="transform:rotate(-8deg);"><img src="assets/boss_ignis.jpg" alt=""></div>
-            <div class="stage-char-card" style="transform:scale(1.08);border-color:#FDE047;"><img src="assets/card_orion.jpg" alt=""></div>
-            <div class="stage-char-card" style="transform:rotate(8deg);"><img src="assets/boss_leviathan.jpg" alt=""></div>
-          </div>
+          <div class="skew-stage-characters" id="battle-stage-cards"></div>
         </div>
 
         <div class="protrude-menu-area">
@@ -2362,27 +2383,67 @@ function renderTitleFloatingCards() {
   if (!field) return;
 
   const placements = [
-    // Background small cards spread across upper, middle, lower sky
-    { id: 1,  cls: 'bg-depth',  style: 'top:2%; right:12%; transform:scale(0.24);' },
-    { id: 6,  cls: 'bg-depth',  style: 'top:7%; left:22%; transform:scale(0.25);' },
-    { id: 2,  cls: 'bg-depth',  style: 'top:28%; left:-14%; transform:scale(0.32);' },
-    { id: 10, cls: 'bg-depth',  style: 'top:34%; right:-14%; transform:scale(0.27);' },
-    { id: 3,  cls: 'bg-depth',  style: 'bottom:16%; left:6%; transform:scale(0.25);' },
-    { id: 8,  cls: 'bg-depth',  style: 'bottom:17%; right:6%; transform:scale(0.27);' },
+    // Background small cards (upper sky, outer edges, lower sky - completely clear of center logo!)
+    { id: 1,  cls: 'bg-depth',  style: 'top:5%; right:20%; --sc:0.24;' },
+    { id: 6,  cls: 'bg-depth',  style: 'top:8%; left:27%; --sc:0.25;' },
+    { id: 2,  cls: 'bg-depth',  style: 'top:28%; left:-9%; --sc:0.29;' },
+    { id: 10, cls: 'bg-depth',  style: 'top:31%; right:-9%; --sc:0.27;' },
+    { id: 3,  cls: 'bg-depth',  style: 'top:71%; left:24%; --sc:0.24;' },
+    { id: 8,  cls: 'bg-depth',  style: 'top:72%; right:22%; --sc:0.25;' },
     // Midground cards
-    { id: 4,  cls: 'mid-depth', style: 'top:13%; left:6%; transform:scale(0.33);' },
-    { id: 5,  cls: 'mid-depth', style: 'bottom:27%; left:-6%; transform:scale(0.34);' },
-    // 4 Main Foreground Cards (Exact 4 quadrants around the Center Logo like Image 1!)
-    { id: 7,  cls: 'fg-depth',  style: 'top:16%; left:9%; --sc:0.46; transform:scale(0.46);' },
-    { id: 12, cls: 'fg-depth',  style: 'top:19%; right:6%; --sc:0.43; transform:scale(0.43);' },
-    { id: 1,  cls: 'fg-depth',  style: 'bottom:19%; left:8%; --sc:0.46; transform:scale(0.46);' },
-    { id: 13, cls: 'fg-depth',  style: 'bottom:21%; right:5%; --sc:0.44; transform:scale(0.44);' }
+    { id: 4,  cls: 'mid-depth', style: 'top:11%; left:4%; --sc:0.31;' },
+    { id: 5,  cls: 'mid-depth', style: 'top:57%; left:-6%; --sc:0.31;' },
+    // 4 Main Foreground Cards (Positioned cleanly above & below the Center Logo with zero overlap!)
+    { id: 7,  cls: 'fg-depth',  style: 'top:16%; left:13%; --sc:0.40;' },
+    { id: 12, cls: 'fg-depth',  style: 'top:19%; right:10%; --sc:0.39;' },
+    { id: 1,  cls: 'fg-depth',  style: 'top:59.5%; left:11%; --sc:0.40;' },
+    { id: 13, cls: 'fg-depth',  style: 'top:61.5%; right:10%; --sc:0.39;' }
   ];
 
   field.innerHTML = placements.map(p => {
     const c = MASTER_CARDS.find(m => m.id === p.id) || MASTER_CARDS[0];
-    return `<div class="t-float-card ${p.cls}" style="${p.style};transform-origin:center center;">${renderCardHTML(c)}</div>`;
+    return `<div class="t-float-card ${p.cls}" style="${p.style}">${renderCardHTML(c)}</div>`;
   }).join('');
+}
+
+function renderFeaturedAndStageCards() {
+  // 1. Home Screen Top 5-Card Showcase Window (5 Tilted Full-Color PokéPock Cards: Fire, Lightning, Psychic, Water, Grass)
+  const strip = document.getElementById('featured-cards-strip');
+  if (strip) {
+    const featIds = currentPackTheme === 1 ? [7, 12, 4, 9, 13] : [9, 7, 13, 12, 4];
+    strip.innerHTML = featIds.map(id => {
+      const c = MASTER_CARDS.find(m => m.id === id) || MASTER_CARDS[0];
+      return `<div class="feat-mini-slice">${renderCardHTML(c)}</div>`;
+    }).join('');
+  }
+
+  // 2. Social Screen 3D Stage Showcase Cards
+  const socStage = document.getElementById('social-stage-cards');
+  if (socStage) {
+    const socCards = [
+      { id: 12, style: 'transform:rotate(-8deg) translateY(12px);' },
+      { id: 9,  style: 'transform:scale(1.08);z-index:3;' },
+      { id: 4,  style: 'transform:rotate(8deg) translateY(12px);' }
+    ];
+    socStage.innerHTML = socCards.map(s => {
+      const c = MASTER_CARDS.find(m => m.id === s.id) || MASTER_CARDS[0];
+      return `<div class="stage-char-card" style="${s.style}">${renderCardHTML(c)}</div>`;
+    }).join('');
+  }
+
+  // 3. Battle Screen 3D Stage Showcase Cards
+  const batStage = document.getElementById('battle-stage-cards');
+  if (batStage) {
+    const batCards = [
+      { id: 10, style: 'transform:rotate(-8deg) translateY(12px);' },
+      { id: 7,  style: 'transform:scale(1.08);z-index:3;' },
+      { id: 11, style: 'transform:rotate(8deg) translateY(12px);' }
+    ];
+    batStage.innerHTML = batCards.map(s => {
+      const c = MASTER_CARDS.find(m => m.id === s.id) || MASTER_CARDS[0];
+      return `<div class="stage-char-card" style="${s.style}">${renderCardHTML(c)}</div>`;
+    }).join('');
+  }
 }
 
 function dismissTitleScreen() {
@@ -2422,6 +2483,7 @@ function swapExpansionPack() {
     subArt.style.backgroundImage  = `url('${getArtUrl('assets/card_orion.jpg')}')`;
     subSub.textContent = '太陽神オリオン';
   }
+  renderFeaturedAndStageCards();
 }
 
 function flipMainPack3D() {
@@ -2983,6 +3045,7 @@ window.addEventListener('DOMContentLoaded', () => {
     if (pb) pb.style.backgroundImage = `url('${getArtUrl('assets/card_pack.jpg')}')`;
   }
   renderTitleFloatingCards();
+  renderFeaturedAndStageCards();
   renderDexGrid();
   initBattleGame();
 });
