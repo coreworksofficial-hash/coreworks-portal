@@ -572,7 +572,7 @@
 
   <div class="footer">
     <div class="rank-box" id="rankText">⚡ 記憶IQ 100 ｜ 記憶ルーキー</div>
-    <button class="hint-btn" id="hintBtn">💡 ヒント (3)</button>
+    <button class="hint-btn" id="hintBtn">💡 ヒント (2)</button>
   </div>
 
   <!-- Stage Clear / Fail / Boss Alert Modal -->
@@ -637,12 +637,12 @@
       </div>
 
       <div style="width:100%; text-align:left; font-size:14px; font-weight:900; color:#cbd5e1; margin-top:2px;">
-        ① ミッション選択（1〜5）
+        ① レベル選択（全5レベル）
       </div>
       <div class="mission-list" id="missionList"></div>
 
       <div id="stageSelectTitle" style="width:100%; text-align:left; font-size:14px; font-weight:900; color:#cbd5e1; margin-top:2px;">
-        ② ステージ直接ジャンプ（STAGE 1〜10）
+        ② ステージ直接移動（開発テスト用）
       </div>
       <div id="stageJumpGrid" style="width:100%; display:grid; grid-template-columns:repeat(5, 1fr); gap:6px;"></div>
 
@@ -686,11 +686,11 @@
   }
 
   const MISSION_CONFIG = {
-    1: { name: 'MISSION 1（初級）',     flashMs: 1250, answerSec: 12.0 },
-    2: { name: 'MISSION 2（中級）',     flashMs: 1100, answerSec: 11.0 },
-    3: { name: 'MISSION 3（上級）',     flashMs: 950,  answerSec: 10.0 },
-    4: { name: 'MISSION 4（達人）',     flashMs: 820,  answerSec: 9.0 },
-    5: { name: 'MISSION 5（最高難度）', flashMs: 700,  answerSec: 8.0 }
+    1: { name: 'レベル 1/5（初級）',     flashMs: 1250, answerSec: 12.0 },
+    2: { name: 'レベル 2/5（中級）',     flashMs: 1100, answerSec: 11.0 },
+    3: { name: 'レベル 3/5（上級）',     flashMs: 950,  answerSec: 10.0 },
+    4: { name: 'レベル 4/5（達人）',     flashMs: 820,  answerSec: 9.0 },
+    5: { name: 'レベル 5/5（最高難度）', flashMs: 700,  answerSec: 8.0 }
   };
 
   function getTitleForIQ(iqVal) {
@@ -709,7 +709,7 @@
     maxUnlockedMission: 1,
     clearedMissions: [],
     iq: 100,
-    hints: 3,
+    hints: 2,
     bgmOn: true,
     bgmEnabled: true,
     bgmVolume: 0.7,
@@ -759,6 +759,23 @@
 
   loadProgress();
 
+  function adjustIQ(delta) {
+    const levelCaps = [130, 150, 170, 185, 200];
+    const maxLv = Math.min(5, Math.max(1, state.maxUnlockedMission || state.mission || 1));
+    const unlockedCap = levelCaps[maxLv - 1] || 200;
+    const effectiveCap = Math.min(200, Math.max(state.iq || 100, unlockedCap));
+    if (delta > 0) {
+      const scaled = state.iq >= 175 ? 1 : (state.iq >= 150 ? Math.min(2, delta) : delta);
+      state.iq = Math.min(effectiveCap, (state.iq || 100) + scaled);
+    } else if (delta < 0) {
+      state.iq = Math.max(70, (state.iq || 100) + delta);
+    }
+    state.iq = Math.max(70, Math.min(200, Math.round(state.iq || 100)));
+  }
+  state.iq = Math.max(70, Math.min(200, Math.round(state.iq || 100)));
+  state.hints = Math.max(0, Math.min(3, typeof state.hints === 'number' ? state.hints : 2));
+
+
   let audioCtx = null;
   let bgmMasterGain = null;
   let bgmTimer = null;
@@ -774,7 +791,7 @@
         bgmMasterGain.connect(audioCtx.destination);
       }
     }
-    if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    if (audioCtx && audioCtx.state === 'suspended' && !document.hidden) { try { audioCtx.resume(); } catch (e) {} }
     updateBgmMasterGain();
     syncBgmLoop();
   }
@@ -787,12 +804,12 @@
 
   function syncBgmLoop() {
     if (bgmTimer) { clearInterval(bgmTimer); bgmTimer = null; }
-    if (!state.bgmOn || state.bgmVolume <= 0 || !audioCtx) return;
+    if (document.hidden || !state.bgmOn || state.bgmVolume <= 0 || !audioCtx) return;
     const notes = [330, 392, 493.88, 392, 349.23, 440, 523.25, 440];
     bgmTimer = setInterval(() => {
-      if (!state.bgmOn || state.bgmVolume <= 0 || !audioCtx) return;
+      if (document.hidden || !state.bgmOn || state.bgmVolume <= 0 || !audioCtx) return;
       const settingsOpen = document.getElementById('settingsModal')?.classList.contains('show');
-      if (!canTap && !settingsOpen) return;
+      if (!canTap && !isMemorizing && !settingsOpen) return;
       try {
         const now = audioCtx.currentTime;
         const osc = audioCtx.createOscillator();
@@ -956,8 +973,7 @@
     if (currentAdType === 'interstitial') {
       lastInterstitialAt = performance.now();
       questionsSinceLastAd = 0;
-      state.hints = Math.min(5, (state.hints || 0) + 1);
-      saveProgress();
+            saveProgress();
       updateHUD();
     }
     const cb = adRewardCallback;
@@ -1099,9 +1115,7 @@
     const boss = isBossStage(state.stage);
     document.body.classList.toggle('boss-mode', boss);
     stageBadgeEl.classList.toggle('boss', boss);
-    stageBadgeEl.textContent = boss
-      ? `🔥 MISSION ${state.mission} - BOSS ${state.stage}`
-      : `⚡ MISSION ${state.mission} - STAGE ${state.stage}`;
+    stageBadgeEl.textContent = boss ? `🔥 レベル ${state.mission}/5 ｜ ボス ${state.stage}/10` : `⚡ レベル ${state.mission}/5 ｜ ステージ ${state.stage}/10`;
     stepPillEl.textContent = boss ? '⚡ 1問一発勝負！' : `第 ${stepInStage} / ${NORMAL_QUESTIONS_PER_STAGE} 問`;
     rankTextEl.textContent = `⚡ 記憶IQ ${state.iq} ｜ ${getTitleForIQ(state.iq)}`;
     if (state.hints > 0) {
@@ -1177,6 +1191,7 @@
   }
 
   function startQuestion() {
+    if (!document.hidden) initAudio();
     clearInterval(timerId);
     clearTimeout(flashTimeoutId);
     clearTimeout(hintFlashTimeoutId);
@@ -1235,7 +1250,7 @@
         canTap = false;
         isMemorizing = false;
         clearInterval(timerId);
-        state.iq += 2;
+        adjustIQ(2);
         questionsSinceLastAd++;
         bannerEl.className = 'correct';
         bannerEl.textContent = `🎉 パーフェクト記憶！`;
@@ -1254,8 +1269,8 @@
 
           if (clearedStage >= STAGES_PER_MISSION) {
             playStageClearFanfare();
-            state.iq += 5;
-            state.hints = Math.min(5, state.hints + 2);
+            adjustIQ(5);
+            state.hints = Math.min(3, (state.hints || 0) + 1);
             if (!state.clearedMissions.includes(clearedMission)) state.clearedMissions.push(clearedMission);
             if (clearedMission < 5) {
               state.maxUnlockedMission = Math.max(state.maxUnlockedMission, clearedMission + 1);
@@ -1272,17 +1287,17 @@
               showModal({
                 isBossAlert: false,
                 showRevive: false,
-                badge: `🏆 MISSION ${clearedMission} 完全制覇！`,
-                title: clearedMission < 5 ? `MISSION ${clearedMission + 1} 解放！` : `全5ミッション制覇！`,
+                badge: `🏆 レベル ${clearedMission}/5 完全制覇！`,
+                title: clearedMission < 5 ? `レベル ${clearedMission + 1}/5 解放！` : `全5レベル完全制覇！`,
                 iqText: `記憶IQ ${state.iq}`,
                 comment: `${getTitleForIQ(state.iq)}<br>（⚙️設定からいつでも再挑戦できます）`,
-                btnText: clearedMission < 5 ? `🚀 MISSION ${state.mission} へ進む` : `👑 もう一度挑戦する`
+                btnText: clearedMission < 5 ? `🚀 レベル ${state.mission}/5（ステージ 1/10）へ進む` : `👑 もう一度挑戦する`
               });
             }, 900);
           } else {
             state.stage++;
-            state.iq += boss ? 4 : 2;
-            state.hints = Math.min(5, state.hints + 1);
+            adjustIQ(boss ? 4 : 2);
+            /* hint recovery only on stage 10 */
             saveProgress();
             updateHUD();
             const nextIsBoss = isBossStage(state.stage);
@@ -1295,11 +1310,11 @@
                 showModal({
                   isBossAlert: true,
                   showRevive: false,
-                  badge: '⚠️ WARNING：BOSS STAGE 出現！',
-                  title: `次はBOSS STAGE ${state.stage}！`,
+                  badge: '⚠️ ボスステージ出現！',
+                  title: `次はボスステージ ${state.stage}/10！`,
                   iqText: '1問一発勝負！',
-                  comment: `STAGE ${clearedStage} クリア！（💡ヒント+1回復）<br>次はパネル数が増えるボスステージです！`,
-                  btnText: `🔥 BOSS STAGE ${state.stage} に挑む！`
+                  comment: `ステージ ${clearedStage}/10 クリア！<br>次はパネル数が増えるボスステージです！`,
+                  btnText: `🔥 ボスステージ ${state.stage}/10 に挑む！`
                 });
               }, 900);
             } else {
@@ -1310,11 +1325,11 @@
                 showModal({
                   isBossAlert: false,
                   showRevive: false,
-                  badge: '🎉 STAGE CLEAR!',
-                  title: `STAGE ${clearedStage} クリア！`,
+                  badge: '🎉 ステージクリア！',
+                  title: `ステージ ${clearedStage}/10 クリア！`,
                   iqText: `記憶IQ ${state.iq}`,
-                  comment: `${getTitleForIQ(state.iq)}（💡ヒント+1回復）`,
-                  btnText: `▶️ STAGE ${state.stage} へ進む`
+                  comment: `${getTitleForIQ(state.iq)}`,
+                  btnText: `▶️ ステージ ${state.stage}/10 へ進む`
                 });
               }, 900);
             }
@@ -1329,6 +1344,8 @@
   }
 
   function onFail(reason) {
+    adjustIQ(-2);
+    saveProgress();
     canTap = false;
     isMemorizing = false;
     clearInterval(timerId);
@@ -1352,8 +1369,8 @@
         isBossAlert: boss,
         showRevive: true,
         reviveText: '🎬 動画を見て【同じ問題】に再挑戦',
-        badge: reason === 'wrong' ? '❌ お手つき！' : '⏱️ TIME UP!',
-        title: boss ? `BOSS STAGE ${state.stage} 失敗` : `STAGE ${state.stage}（第${stepInStage}問でミス）`,
+        badge: reason === 'wrong' ? '❌ お手つき！' : '⏰ 時間切れ！',
+        title: boss ? `ボスステージ ${state.stage}/10 失敗` : `ステージ ${state.stage}/10（第${stepInStage}問でミス）`,
         iqText: `記憶IQ ${state.iq}`,
         comment: '動画を見ると、同じパネル配置をもう一度フラッシュして<b>【同じ問題】</b>に再挑戦できます！',
         btnText: retryBtnText
@@ -1504,12 +1521,12 @@
     toggleDevBtn.className = 'toggle-btn ' + (state.devMode ? 'on' : 'off');
 
     missionListEl.innerHTML = [1, 2, 3, 4, 5].map(m => {
-      const unlocked = true;
+      const unlocked = state.devMode || m <= (state.maxUnlockedMission || 1);
       const cleared = state.clearedMissions.includes(m);
       const isCurrent = (m === state.mission);
       const statusText = state.devMode
-        ? (isCurrent ? `▶️ 選択中 (STAGE ${state.stage})` : '🛠️ テスト解放中')
-        : (cleared ? '🏆 制覇済（再挑戦OK）' : (unlocked ? (isCurrent ? `▶️ 挑戦中 (STAGE ${state.stage})` : '挑戦可能') : '🔒 未解放'));
+        ? (isCurrent ? `▶️ 選択中 (ステージ ${state.stage}/10)` : '🛠️ テスト解放中')
+        : (cleared ? '🏆 制覇済（再挑戦OK）' : (unlocked ? (isCurrent ? `▶️ 挑戦中 (ステージ ${state.stage}/10)` : '挑戦可能') : '🔒 未解放'));
       return `<button class="mission-btn ${isCurrent ? 'active' : ''}" data-mission="${m}" ${unlocked ? '' : 'disabled'}>
         <span>${MISSION_CONFIG[m].name}</span>
         <span style="font-size:13px;">${statusText}</span>
@@ -1518,6 +1535,7 @@
 
     missionListEl.querySelectorAll('.mission-btn[data-mission]').forEach(btn => {
       btn.addEventListener('click', () => {
+        if (btn.disabled) return;
         const m = Number(btn.getAttribute('data-mission'));
         state.mission = m;
         state.stage = 1;
@@ -1530,7 +1548,8 @@
       });
     });
 
-    stageSelectTitleEl.style.display = 'block';
+    if (state.devMode) {
+      stageSelectTitleEl.style.display = 'block';
       stageJumpGridEl.style.display = 'grid';
       stageJumpGridEl.innerHTML = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(st => {
         const isBoss = (st === 5 || st === 10);
@@ -1555,6 +1574,11 @@
           startQuestion();
         });
       });
+    } else {
+      stageSelectTitleEl.style.display = 'none';
+      stageJumpGridEl.style.display = 'none';
+      stageJumpGridEl.innerHTML = '';
+    }
     
   }
 
@@ -1591,7 +1615,7 @@
     }
     renderSettingsModal();
     settingsModalEl.classList.add('show');
-    initAudio();
+    if (!document.hidden) initAudio();
   }
 
   function closeSettingsAndResume() {
@@ -1679,6 +1703,45 @@
   document.getElementById('closeSettingsBtn').addEventListener('click', () => {
     closeSettingsAndResume();
   });
+
+  // Immediate BGM unlock on any first touch/click anywhere
+  ['pointerdown', 'touchstart', 'click'].forEach(ev => {
+    document.addEventListener(ev, () => {
+      if (!document.hidden && (!audioCtx || audioCtx.state === 'suspended')) {
+        initAudio();
+      }
+    }, { passive: true });
+  });
+
+  // Complete Pause (Timer & BGM) when app goes to background or loses focus
+  function handleAppBackground() {
+    if (bgmTimer) {
+      clearInterval(bgmTimer);
+      bgmTimer = null;
+    }
+    if (audioCtx && audioCtx.state === 'running') {
+      try { audioCtx.suspend(); } catch (e) {}
+    }
+    if (!settingsModalEl.classList.contains('show') && !modalEl.classList.contains('show') && !adOverlayModalEl.classList.contains('show')) {
+      openSettingsModal();
+    }
+  }
+
+  function handleAppForeground() {
+    if (!document.hidden && state.bgmOn && state.bgmVolume > 0 && audioCtx) {
+      try { audioCtx.resume(); } catch (e) {}
+      syncBgmLoop();
+    }
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) handleAppBackground();
+    else handleAppForeground();
+  });
+  window.addEventListener('blur', handleAppBackground);
+  window.addEventListener('pagehide', handleAppBackground);
+  window.addEventListener('focus', handleAppForeground);
+
 
   startQuestion();
 })();
