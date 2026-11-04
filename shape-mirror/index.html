@@ -653,7 +653,7 @@
     padding: 16px 18px;
     text-align: center;
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75), 0 0 28px rgba(16, 185, 129, 0.45);
-    animation: cwSeamlessPop 1.08s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation: cwSeamlessPop 1.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
   @keyframes cwSeamlessPop {
     0%   { opacity: 0; transform: translate(-50%, -42%) scale(0.78); }
@@ -1124,15 +1124,14 @@
     const b = document.createElement('div');
     b.className = 'cw-seamless-banner';
     b.innerHTML = `
-      <div style="font-size:13px; font-weight:900; color:#fde047; margin-bottom:4px;">${CW_SVGS.sparkle} ステージクリア！</div>
-      <div style="font-size:22px; font-weight:900; color:#ffffff; margin-bottom:4px;">ステージ ${clearedStage}/10 突破！</div>
-      <div style="font-size:14px; font-weight:800; color:#6ee7b7;">現在IQ ${iqVal} ｜ 次は ステージ ${nextStage}/10</div>
+      <div style="font-size:23px; font-weight:900; color:#ffffff; margin-bottom:5px; letter-spacing:0.02em;">${CW_SVGS.sparkle} ステージ ${clearedStage} クリア！</div>
+      <div style="font-size:15px; font-weight:900; color:#fde047;">IQ +2 UP！（現在IQ ${iqVal}）</div>
     `;
     document.body.appendChild(b);
     setTimeout(() => {
       b.remove();
       if (typeof onDone === 'function') onDone();
-    }, 1080);
+    }, 1350);
   };
 
 
