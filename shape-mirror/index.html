@@ -1388,21 +1388,23 @@
 
   
   
-  /* === v8.1 Settings Modal No-Scroll & Web Navigation Polish === */
+  
+  /* === v8.2 Pixel-Perfect Header, Target Box Safe Zone, No-Scroll Settings & Footer Gap === */
   .web-back-pill {
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    padding: 5px 8px !important;
+    padding: 5px 7px !important;
     border-radius: 999px !important;
     background: linear-gradient(180deg, #334155 0%, #1e293b 100%) !important;
     border: 1.5px solid #64748b !important;
     border-top-color: #94a3b8 !important;
     color: #f8fafc !important;
     text-decoration: none !important;
-    font-size: 11.5px !important;
+    font-size: 10.8px !important;
     font-weight: 900 !important;
     line-height: 1.2 !important;
+    letter-spacing: -0.02em !important;
     white-space: nowrap !important;
     flex-shrink: 0 !important;
     box-shadow: 0 3px 0 #090d16, inset 0 1px 1px rgba(255, 255, 255, 0.28) !important;
@@ -1420,11 +1422,6 @@
   html:not(.android-apk) .header-row,
   html:not(.android-apk) .top-row {
     gap: 3px !important;
-  }
-  html:not(.android-apk) .web-back-pill {
-    font-size: 10.8px !important;
-    padding: 5px 7px !important;
-    letter-spacing: -0.02em !important;
   }
   html:not(.android-apk) #stageBadge,
   html:not(.android-apk) .stage-badge,
@@ -1455,6 +1452,45 @@
     letter-spacing: -0.02em !important;
     flex-shrink: 0 !important;
   }
+
+  /* Target Card / Next Card Safe Zone (>= 16px inner padding on left & right) */
+  .target-card,
+  .next-card {
+    padding: 10px 18px !important;
+    gap: 7px !important;
+    box-sizing: border-box !important;
+  }
+  .target-card .target-label {
+    font-size: 16.5px !important;
+    white-space: nowrap !important;
+  }
+  .target-card .target-num {
+    font-size: 24px !important;
+    padding: 2px 13px !important;
+    white-space: nowrap !important;
+  }
+
+  /* Footer Bar Collision Prevention (flex: 0 1 auto on #rankText + >= 12px gap to #hintBtn) */
+  #footer-bar,
+  .footer {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    padding: 8px 14px !important;
+  }
+  #rankText,
+  .rank-info,
+  .rank-box {
+    flex: 0 1 auto !important;
+    width: auto !important;
+    font-size: 13px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: clip !important;
+  }
+
+  /* Settings Modal 1-Screen Fit (Zero Scrollbars) */
   #settingsModal .modal-card {
     padding: 13px 15px !important;
     max-height: 96vh !important;
@@ -1532,7 +1568,7 @@
 
   <div class="header">
     <div class="top-row">
-      <a href="/?tab=games&v=8.1" class="web-back-pill web-portal-link" id="webBackPill">← 一覧</a>
+      <a href="/?tab=games&v=8.2" class="web-back-pill web-portal-link" id="webBackPill">← 一覧</a>
       <div class="stage-badge" id="stageBadge">🔷 レベル 1/5 ｜ ステージ 1/10</div>
       <div class="step-pill" id="stepPill">第 1 / 3 問</div>
       <button class="icon-btn" id="settingsBtn">⚙️ 設定</button>
@@ -1546,7 +1582,7 @@
   <div id="grid"></div>
 
   <div class="footer">
-    <div class="rank-box" id="rankText">🔷 空間IQ 100 ｜ 図形ルーキー</div>
+    <div class="rank-box" id="rankText">🏅 IQ 100 ｜ 図形ルーキー</div>
     <button class="hint-btn" id="hintBtn">💡 ヒント (2)</button>
   </div>
 
@@ -1559,14 +1595,14 @@
       <div class="modal-comment" id="modalComment">抜群の空間認識力です！</div>
       <button class="primary-btn" id="modalReviveBtn" style="display:none;">🎬 動画を見て【同じ問題】に再挑戦</button>
       <button class="primary-btn" id="modalActionBtn">次のステージへ</button>
-      <a href="/?tab=games&v=8.1" class="web-portal-link" id="modalPortalBtn">🏠 他の脳トレゲームを選ぶ（一覧へ）</a>
+      <a href="/?tab=games&v=8.2" class="web-portal-link" id="modalPortalBtn">🏠 他の脳トレゲームを選ぶ（一覧へ）</a>
 <!-- Coreworks In-Game Monetization & Nav -->
       <div style="width:100%; margin-top:12px; padding-top:12px; border-top:1px solid rgba(148,163,184,0.2); display:flex; flex-direction:column; gap:8px;">
         <div style="display:flex; gap:8px; width:100%;">
-          <a href="/payback-calc/?v=8.1" style="flex:1; padding:10px 6px; border-radius:8px; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); color:#34d399; font-size:13px; font-weight:700; text-decoration:none; text-align:center;">
+          <a href="/payback-calc/?v=8.2" style="flex:1; padding:10px 6px; border-radius:8px; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); color:#34d399; font-size:13px; font-weight:700; text-decoration:none; text-align:center;">
             元取り1秒計算
           </a>
-          <a href="/?tab=games&v=8.1" style="flex:1; padding:10px 6px; border-radius:8px; background:rgba(99,102,241,0.16); border:1px solid rgba(99,102,241,0.4); color:#818cf8; font-size:13px; font-weight:700; text-decoration:none; text-align:center;">
+          <a href="/?tab=games&v=8.2" style="flex:1; padding:10px 6px; border-radius:8px; background:rgba(99,102,241,0.16); border:1px solid rgba(99,102,241,0.4); color:#818cf8; font-size:13px; font-weight:700; text-decoration:none; text-align:center;">
             脳トレ一覧へ
           </a>
         </div>
@@ -1623,7 +1659,7 @@
       <div id="stageJumpGrid" style="width:100%; display:grid; grid-template-columns:repeat(5, 1fr); gap:6px;"></div>
 
       <button class="primary-btn" id="closeSettingsBtn">✅ 閉じてゲームに戻る</button>
-      <a href="/?tab=games&v=8.1" class="web-portal-link" id="settingsPortalBtn" style="display:block; width:100%; margin-top:4px; padding:10px; border-radius:12px; background:rgba(99,102,241,0.18); border:1px solid rgba(99,102,241,0.45); color:#a5b4fc; font-size:13px; font-weight:800; text-decoration:none; text-align:center;">🏠 ゲーム一覧（ポータル）へ戻る</a>
+      <a href="/?tab=games&v=8.2" class="web-portal-link" id="settingsPortalBtn" style="display:block; width:100%; margin-top:4px; padding:10px; border-radius:12px; background:rgba(99,102,241,0.18); border:1px solid rgba(99,102,241,0.45); color:#a5b4fc; font-size:13px; font-weight:800; text-decoration:none; text-align:center;">🏠 ゲーム一覧（ポータル）へ戻る</a>
     </div>
   </div>
 
@@ -1709,7 +1745,7 @@
   }
 
   function getTitleForIQ(iqVal) {
-    if (iqVal >= 140) return '🪐 次元超越マスター';
+    if (iqVal >= 140) return '🪐 次元の超越者';
     if (iqVal >= 130) return '👑 空間の天才';
     if (iqVal >= 120) return '🔷 空間の達人';
     if (iqVal >= 112) return '💎 図形の達人';
@@ -2642,7 +2678,7 @@
     stageBadgeEl.classList.toggle('boss', boss);
     stageBadgeEl.innerHTML = window.__cwIconify(boss ? (state.stage === 10 ? `👑 レベル ${state.mission}/5 ｜ 認定試験 10/10` : `🏅 レベル ${state.mission}/5 ｜ 中間テスト 5/10`) : `🔷 レベル ${state.mission}/5 ｜ ステージ ${state.stage}/10`);
     stepPillEl.innerHTML = window.__cwIconify(`第 ${stepInStage} / ${NORMAL_QUESTIONS_PER_STAGE} 問`);
-    rankTextEl.innerHTML = window.__cwIconify(`🔷 空間IQ ${state.iq} ｜ ${getTitleForIQ(state.iq)}`);
+    rankTextEl.innerHTML = window.__cwIconify(`🏅 IQ ${state.iq} ｜ ${getTitleForIQ(state.iq)}`);
     if (state.hints > 0) {
       hintBtnEl.innerHTML = window.__cwIconify(`💡 ヒント (${state.hints})`);
       hintBtnEl.classList.remove('ad-reward');
