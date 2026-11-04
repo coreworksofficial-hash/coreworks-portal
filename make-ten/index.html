@@ -765,164 +765,519 @@
   }
 
 
-  /* === v7.2 3D Glossy Settings Button, Header Pills & 3D Capsule Timer Gauge === */
-  #top-progress-wrap {
-    display: none !important;
+  /* === v7.3 Complete 3D Glossy Tactile UI Unification + Subtractive 3-Element Modals === */
+  .svg-ic {
+    width: 1.15em;
+    height: 1.15em;
+    vertical-align: -0.18em;
+    display: inline-block;
+    flex-shrink: 0;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.45));
   }
-  #stageBadge, .top-badge, .stage-badge {
-    background: linear-gradient(180deg, #fef08a 0%, #facc15 52%, #d97706 100%) !important;
-    border: 1.5px solid #ffffff !important;
-    color: #0f172a !important;
-    border-radius: 999px !important;
-    box-shadow:
-      0 4px 0 #92400e,
-      0 6px 14px rgba(250, 204, 21, 0.42),
-      inset 0 1.5px 1px rgba(255, 255, 255, 0.8) !important;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) !important;
-  }
-  #stageBadge.boss, .top-badge.boss, .stage-badge.boss {
-    background: linear-gradient(180deg, #f472b6 0%, #db2777 52%, #831843 100%) !important;
-    border-color: #fde047 !important;
-    color: #ffffff !important;
-    box-shadow:
-      0 4px 0 #500724,
-      0 6px 16px rgba(244, 114, 182, 0.55),
-      inset 0 1.5px 1px rgba(255, 255, 255, 0.55) !important;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.65) !important;
+
+  /* 1. Top Header Bar: 3D Metallic Pill Badges & 3D Glossy Settings Button */
+  #stageBadge, .stage-badge {
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
+    border: 1.5px solid #475569 !important;
+    border-top-color: #94a3b8 !important;
+    box-shadow: 0 3px 0 #020617, inset 0 1px 1px rgba(255, 255, 255, 0.28) !important;
+    color: #f8fafc !important;
   }
   #stepPill, .step-pill {
-    background: linear-gradient(180deg, #334155 0%, #1e293b 55%, #0f172a 100%) !important;
-    border: 1.5px solid #fbbf24 !important;
-    border-radius: 999px !important;
-    color: #fde047 !important;
-    box-shadow:
-      0 3.5px 0 #090d16,
-      0 5px 12px rgba(0, 0, 0, 0.45),
-      inset 0 1.5px 1px rgba(255, 255, 255, 0.32) !important;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7) !important;
+    background: linear-gradient(180deg, #059669 0%, #065f46 100%) !important;
+    border: 1.5px solid #34d399 !important;
+    border-top-color: #a7f3d0 !important;
+    box-shadow: 0 3px 0 #022c22, inset 0 1px 1px rgba(255, 255, 255, 0.4) !important;
+    color: #ecfdf5 !important;
   }
-  #settingsBtn, .settings-btn, .icon-btn {
-    border-radius: 999px !important;
-    background: linear-gradient(180deg, #475569 0%, #1e293b 54%, #0f172a 100%) !important;
+  #settingsBtn {
+    background: linear-gradient(180deg, #475569 0%, #1e293b 100%) !important;
     border: 1.5px solid #94a3b8 !important;
     border-top-color: #e2e8f0 !important;
     color: #f8fafc !important;
     box-shadow:
       0 4px 0 #090d16,
-      0 6px 14px rgba(0, 0, 0, 0.5),
-      inset 0 1.5px 1px rgba(255, 255, 255, 0.45),
-      inset 0 -2px 3px rgba(2, 6, 23, 0.65) !important;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.75) !important;
+      0 6px 12px rgba(0, 0, 0, 0.5),
+      inset 0 1.5px 1px rgba(255, 255, 255, 0.4) !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.65) !important;
     transition: transform 0.08s ease, box-shadow 0.08s ease !important;
   }
-  #settingsBtn:active, .settings-btn:active, .icon-btn:active {
+  #settingsBtn:active {
     transform: translateY(3px) scale(0.96) !important;
     box-shadow:
       0 1px 0 #090d16,
-      0 2px 6px rgba(0, 0, 0, 0.45),
-      inset 0 1px 2px rgba(255, 255, 255, 0.25) !important;
+      0 2px 4px rgba(0, 0, 0, 0.4),
+      inset 0 1px 2px rgba(0, 0, 0, 0.35) !important;
   }
 
-  /* 3D Capsule Timer Gauge inside #status-banner */
+  /* 2. 3D Dark Glass Board Frames & 3D Glossy Tiles Across All 6 Apps */
+  #grid-frame, #board-area, .board-frame, .mirror-arena {
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.96) 0%, rgba(2, 6, 23, 0.99) 100%) !important;
+    border: 2.5px solid #334155 !important;
+    border-top-color: #64748b !important;
+    border-radius: 22px !important;
+    box-shadow:
+      0 7px 0 #020617,
+      0 12px 26px rgba(0, 0, 0, 0.65),
+      inset 0 2px 3px rgba(255, 255, 255, 0.16),
+      inset 0 -3px 6px rgba(0, 0, 0, 0.55) !important;
+  }
+  body.boss-mode #grid-frame,
+  body.boss-mode #board-area,
+  body.boss-mode .board-frame {
+    border-color: #f43f5e !important;
+    border-top-color: #fda4af !important;
+    box-shadow:
+      0 7px 0 #4c0519,
+      0 12px 28px rgba(244, 63, 94, 0.35),
+      inset 0 2px 3px rgba(255, 255, 255, 0.22) !important;
+  }
+
+  /* 3D Tactile Beveled Game Tiles (Kanji, Make-10, Flash Memory, Shape Mirror, Speed Number) */
+  .cell:not(.color-tile), .num-card, .mem-cell, .choice-btn, .shape-card, .num-tile {
+    background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 82%, #dbeafe 100%) !important;
+    border: 2px solid #cbd5e1 !important;
+    border-top-color: #ffffff !important;
+    box-shadow:
+      0 5px 0 #475569,
+      0 7px 14px rgba(0, 0, 0, 0.38),
+      inset 0 2px 1px rgba(255, 255, 255, 0.95) !important;
+    transition: transform 0.07s cubic-bezier(0.2, 0.9, 0.3, 1.2), box-shadow 0.07s ease !important;
+  }
+  .cell:not(.color-tile):active, .num-card:active, .mem-cell:active, .choice-btn:active, .shape-card:active, .num-tile:active {
+    transform: translateY(3px) scale(0.95) !important;
+    box-shadow:
+      0 1px 0 #334155,
+      0 2px 5px rgba(0, 0, 0, 0.3),
+      inset 0 1px 2px rgba(0, 0, 0, 0.15) !important;
+  }
+  .target-card, .next-card {
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
+    border: 2px solid #facc15 !important;
+    border-top-color: #fef08a !important;
+    border-radius: 18px !important;
+    box-shadow:
+      0 5px 0 #020617,
+      0 8px 18px rgba(0, 0, 0, 0.48),
+      inset 0 1.5px 1px rgba(255, 255, 255, 0.28) !important;
+  }
+  .target-num, .next-num {
+    background: linear-gradient(180deg, #fef047 0%, #f59e0b 100%) !important;
+    color: #052e16 !important;
+    border: 1.5px solid #ffffff !important;
+    box-shadow: 0 3px 0 #92400e, inset 0 1.5px 1px rgba(255, 255, 255, 0.75) !important;
+  }
+
+  /* 3. Bottom 3D Dark Glass Capsule Dock & 3D Sapphire/Gold Hint Button */
+  #footer-bar, .footer {
+    background: linear-gradient(180deg, rgba(30, 41, 59, 0.96) 0%, rgba(15, 23, 42, 0.98) 100%) !important;
+    border: 2px solid #facc15 !important;
+    border-top-color: #fef08a !important;
+    border-radius: 20px !important;
+    padding: 8px 12px !important;
+    box-shadow:
+      0 5px 0 #020617,
+      0 8px 20px rgba(0, 0, 0, 0.58),
+      inset 0 1.5px 1px rgba(255, 255, 255, 0.28) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+  }
+  #rankText, .rank-info, .rank-box {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    height: auto !important;
+    padding: 2px 4px !important;
+    color: #fef08a !important;
+    font-size: 13.5px !important;
+    font-weight: 900 !important;
+    justify-content: flex-start !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.85), 0 0 10px rgba(250, 204, 21, 0.35) !important;
+  }
+  #hintBtn, .hint-btn {
+    height: 42px !important;
+    padding: 0 14px !important;
+    border-radius: 13px !important;
+    background: linear-gradient(180deg, #38bdf8 0%, #0284c7 58%, #0369a1 100%) !important;
+    border: 1.5px solid #bae6fd !important;
+    border-top-color: #ffffff !important;
+    color: #ffffff !important;
+    font-size: 13.5px !important;
+    font-weight: 900 !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7) !important;
+    box-shadow:
+      0 4px 0 #075985,
+      0 6px 14px rgba(2, 132, 199, 0.48),
+      inset 0 2px 1px rgba(255, 255, 255, 0.58) !important;
+    transition: transform 0.08s ease, box-shadow 0.08s ease !important;
+  }
+  #hintBtn:active, .hint-btn:active {
+    transform: translateY(3px) scale(0.96) !important;
+    box-shadow:
+      0 1px 0 #075985,
+      0 2px 6px rgba(0, 0, 0, 0.4),
+      inset 0 1px 2px rgba(255, 255, 255, 0.3) !important;
+  }
+  #hintBtn.ad-reward, .hint-btn.ad-reward {
+    background: linear-gradient(180deg, #fde047 0%, #f59e0b 58%, #d97706 100%) !important;
+    border: 1.5px solid #fef08a !important;
+    border-top-color: #ffffff !important;
+    color: #052e16 !important;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55) !important;
+    box-shadow:
+      0 4px 0 #92400e,
+      0 6px 16px rgba(245, 158, 11, 0.55),
+      inset 0 2px 1px rgba(255, 255, 255, 0.75) !important;
+  }
+  #hintBtn.ad-reward:active, .hint-btn.ad-reward:active {
+    transform: translateY(3px) scale(0.96) !important;
+    box-shadow: 0 1px 0 #92400e !important;
+  }
+
+  /* 4. 3D Capsule Recessed Timer Gauge (#status-banner) */
   #status-banner {
     position: relative !important;
     overflow: hidden !important;
-    isolation: isolate !important;
-    height: 52px !important;
-    border-radius: 999px !important;
-    background: linear-gradient(180deg, #090d16 0%, #1e293b 100%) !important;
-    border: 2.5px solid #34d399 !important;
-    color: #ffffff !important;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.92), 0 0 8px rgba(0, 0, 0, 0.75) !important;
-    box-shadow:
-      0 5px 0 rgba(2, 6, 23, 0.85),
-      0 8px 18px rgba(0, 0, 0, 0.48),
-      inset 0 3px 6px rgba(0, 0, 0, 0.82) !important;
     z-index: 1 !important;
-    --cw-timer-pct: 1;
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%) !important;
+    border: 2px solid rgba(148, 163, 184, 0.45) !important;
+    border-radius: 999px !important;
+    box-shadow:
+      inset 0 3px 6px rgba(0, 0, 0, 0.78),
+      0 3px 0 #020617,
+      0 4px 12px rgba(0, 0, 0, 0.38) !important;
+    color: #ffffff !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85) !important;
   }
   #status-banner::before {
-    content: "";
+    content: '';
     position: absolute;
-    left: 3px;
-    top: 3px;
-    bottom: 3px;
-    width: calc((100% - 6px) * var(--cw-timer-pct, 1));
+    top: 2px;
+    left: 2px;
+    bottom: 2px;
+    width: calc(var(--cw-timer-pct, 1) * (100% - 4px));
     border-radius: 999px;
-    background: linear-gradient(180deg, #6ee7b7 0%, #10b981 48%, #047857 100%);
-    box-shadow:
-      0 0 14px rgba(16, 185, 129, 0.65),
-      inset 0 2px 1px rgba(255, 255, 255, 0.55),
-      inset 0 -2px 3px rgba(0, 0, 0, 0.35);
-    transition: width 0.05s linear, background 0.2s ease, box-shadow 0.2s ease;
+    background: linear-gradient(180deg, #34d399 0%, #10b981 55%, #059669 100%);
+    box-shadow: inset 0 2px 2px rgba(255, 255, 255, 0.55), 0 0 12px rgba(16, 185, 129, 0.45);
     z-index: -1;
-  }
-  #status-banner::after {
-    content: "";
-    position: absolute;
-    left: 10px;
-    right: 10px;
-    top: 3px;
-    height: 44%;
-    border-radius: 999px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.42) 0%, rgba(255, 255, 255, 0.0) 100%);
-    pointer-events: none;
-    z-index: -1;
-  }
-  #status-banner.cw-timer-mid {
-    border-color: #fbbf24 !important;
+    transition: width 0.06s linear, background 0.25s ease;
   }
   #status-banner.cw-timer-mid::before {
-    background: linear-gradient(180deg, #fef08a 0%, #f59e0b 48%, #b45309 100%) !important;
-    box-shadow:
-      0 0 16px rgba(245, 158, 11, 0.7),
-      inset 0 2px 1px rgba(255, 255, 255, 0.6),
-      inset 0 -2px 3px rgba(0, 0, 0, 0.35) !important;
+    background: linear-gradient(180deg, #fde047 0%, #f59e0b 55%, #d97706 100%);
+    box-shadow: inset 0 2px 2px rgba(255, 255, 255, 0.6), 0 0 12px rgba(245, 158, 11, 0.5);
+  }
+  #status-banner.cw-timer-low::before {
+    background: linear-gradient(180deg, #fb7185 0%, #ef4444 55%, #b91c1c 100%);
+    box-shadow: inset 0 2px 2px rgba(255, 255, 255, 0.65), 0 0 16px rgba(239, 68, 68, 0.7);
   }
   #status-banner.cw-timer-low {
     border-color: #f87171 !important;
-    animation: cwDangerPulse 0.55s infinite ease-in-out !important;
+    animation: cwUrgentPulse 0.45s ease-in-out infinite alternate !important;
   }
-  #status-banner.cw-timer-low::before {
-    background: linear-gradient(180deg, #fca5a5 0%, #ef4444 48%, #991b1b 100%) !important;
-    box-shadow:
-      0 0 18px rgba(239, 68, 68, 0.85),
-      inset 0 2px 1px rgba(255, 255, 255, 0.55),
-      inset 0 -2px 3px rgba(0, 0, 0, 0.4) !important;
-  }
-  #status-banner.correct {
-    border-color: #fde047 !important;
-    color: #fef08a !important;
-    animation: none !important;
-  }
-  #status-banner.correct::before {
-    width: calc(100% - 6px) !important;
-    background: linear-gradient(90deg, #059669 0%, #10b981 50%, #d97706 100%) !important;
-    box-shadow: 0 0 20px rgba(250, 204, 21, 0.75), inset 0 2px 1px rgba(255, 255, 255, 0.6) !important;
-  }
-  #status-banner.reveal {
-    border-color: #fca5a5 !important;
-    color: #fef2f2 !important;
-    animation: none !important;
-  }
-  #status-banner.reveal::before {
-    width: calc(100% - 6px) !important;
-    background: linear-gradient(180deg, #ef4444 0%, #991b1b 100%) !important;
-  }
-  #status-banner.memorize {
-    border-color: #fde047 !important;
-    color: #fef08a !important;
-    animation: none !important;
-  }
-  #status-banner.memorize::before {
-    width: calc(100% - 6px) !important;
-    background: linear-gradient(180deg, #f59e0b 0%, #b45309 100%) !important;
-  }
-  @keyframes cwDangerPulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.022); }
+  @keyframes cwUrgentPulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.028); }
   }
 
+  /* 5. Settings Modal (#settingsModal) Full 3D Tactile Overhaul */
+  #settingsModal .modal-card {
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
+    border: 2.5px solid #475569 !important;
+    border-top-color: #94a3b8 !important;
+    border-radius: 26px !important;
+    box-shadow:
+      0 10px 0 #020617,
+      0 22px 48px rgba(0, 0, 0, 0.85),
+      inset 0 2px 1px rgba(255, 255, 255, 0.22) !important;
+    color: #f8fafc !important;
+  }
+  #settingsBadge {
+    background: linear-gradient(180deg, #334155 0%, #0f172a 100%) !important;
+    border: 1.5px solid #64748b !important;
+    border-top-color: #cbd5e1 !important;
+    color: #f8fafc !important;
+    box-shadow: 0 3px 0 #020617, inset 0 1px 1px rgba(255, 255, 255, 0.25) !important;
+  }
+  .setting-group {
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.85) 0%, rgba(2, 6, 23, 0.92) 100%) !important;
+    border: 1.5px solid #334155 !important;
+    border-radius: 16px !important;
+    padding: 12px 14px !important;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.65), 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  }
+  .setting-label {
+    color: #f8fafc !important;
+  }
+  .toggle-btn {
+    border-radius: 12px !important;
+    padding: 7px 16px !important;
+    font-size: 13px !important;
+    font-weight: 900 !important;
+    transition: transform 0.08s ease, box-shadow 0.08s ease !important;
+  }
+  .toggle-btn.on {
+    background: linear-gradient(180deg, #34d399 0%, #10b981 58%, #059669 100%) !important;
+    border: 1.5px solid #a7f3d0 !important;
+    border-top-color: #ffffff !important;
+    color: #052e16 !important;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.45) !important;
+    box-shadow:
+      0 4px 0 #064e3b,
+      0 5px 12px rgba(16, 185, 129, 0.4),
+      inset 0 1.5px 1px rgba(255, 255, 255, 0.65) !important;
+  }
+  .toggle-btn.off {
+    background: linear-gradient(180deg, #475569 0%, #1e293b 100%) !important;
+    border: 1.5px solid #64748b !important;
+    border-top-color: #94a3b8 !important;
+    color: #cbd5e1 !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6) !important;
+    box-shadow:
+      0 4px 0 #090d16,
+      inset 0 1px 1px rgba(255, 255, 255, 0.22) !important;
+  }
+  .toggle-btn:active {
+    transform: translateY(3px) !important;
+    box-shadow: 0 1px 0 #020617 !important;
+  }
+  .vol-slider {
+    height: 11px !important;
+    border-radius: 999px !important;
+    border: 1px solid #475569 !important;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.8), 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+  }
+  .vol-slider::-webkit-slider-thumb {
+    width: 24px !important;
+    height: 24px !important;
+    border-radius: 50% !important;
+    background: radial-gradient(circle at 35% 30%, #ffffff 0%, #e2e8f0 45%, #94a3b8 100%) !important;
+    border: 2px solid #059669 !important;
+    box-shadow: 0 3px 0 #022c22, 0 4px 8px rgba(0, 0, 0, 0.6), inset 0 1px 1px #ffffff !important;
+  }
+  .mission-btn {
+    padding: 11px 14px !important;
+    border-radius: 14px !important;
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
+    border: 1.5px solid #475569 !important;
+    border-top-color: #64748b !important;
+    color: #f8fafc !important;
+    box-shadow:
+      0 4px 0 #020617,
+      0 5px 10px rgba(0, 0, 0, 0.4),
+      inset 0 1px 1px rgba(255, 255, 255, 0.18) !important;
+    transition: transform 0.08s ease, box-shadow 0.08s ease !important;
+  }
+  .mission-btn.active {
+    background: linear-gradient(180deg, #065f46 0%, #064e3b 100%) !important;
+    border: 2px solid #34d399 !important;
+    border-top-color: #a7f3d0 !important;
+    color: #ecfdf5 !important;
+    box-shadow:
+      0 4px 0 #022c22,
+      0 6px 14px rgba(16, 185, 129, 0.35),
+      inset 0 1.5px 1px rgba(255, 255, 255, 0.38) !important;
+  }
+  .mission-btn:disabled {
+    background: linear-gradient(180deg, #0f172a 0%, #090d16 100%) !important;
+    border: 1.5px solid #1e293b !important;
+    color: #64748b !important;
+    opacity: 0.72 !important;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6) !important;
+  }
+  .mission-btn:not(:disabled):active {
+    transform: translateY(3px) !important;
+    box-shadow: 0 1px 0 #020617 !important;
+  }
+  #closeSettingsBtn {
+    background: linear-gradient(180deg, #34d399 0%, #10b981 55%, #059669 100%) !important;
+    border: 2px solid #a7f3d0 !important;
+    border-top-color: #ffffff !important;
+    color: #052e16 !important;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+    border-radius: 16px !important;
+    box-shadow:
+      0 5px 0 #064e3b,
+      0 8px 18px rgba(16, 185, 129, 0.45),
+      inset 0 2px 1px rgba(255, 255, 255, 0.65) !important;
+  }
+  #closeSettingsBtn:active {
+    transform: translateY(4px) !important;
+    box-shadow: 0 1px 0 #064e3b !important;
+  }
+  #settingsPortalBtn {
+    background: linear-gradient(180deg, #334155 0%, #1e293b 100%) !important;
+    border: 1.5px solid #64748b !important;
+    border-top-color: #94a3b8 !important;
+    color: #e2e8f0 !important;
+    border-radius: 14px !important;
+    box-shadow:
+      0 4px 0 #090d16,
+      0 6px 12px rgba(0, 0, 0, 0.45),
+      inset 0 1.5px 1px rgba(255, 255, 255, 0.25) !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.65) !important;
+  }
+  #settingsPortalBtn:active {
+    transform: translateY(3px) !important;
+    box-shadow: 0 1px 0 #090d16 !important;
+  }
+
+  /* 6. Pop-Up Modal (#modalCard) Subtractive 3-Element Layout & 3D Gloss Buttons */
+  #modalCard {
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
+    border: 2.5px solid #facc15 !important;
+    border-top-color: #fef08a !important;
+    border-radius: 26px !important;
+    padding: 22px 18px !important;
+    box-shadow:
+      0 10px 0 #020617,
+      0 22px 50px rgba(0, 0, 0, 0.85),
+      inset 0 2px 2px rgba(255, 255, 255, 0.25) !important;
+    color: #f8fafc !important;
+  }
+  /* Hide cross-promo link clutter inside Fail/Clear modalCard so only the 3 core elements appear! */
+  #modalCard > div[style*="border-top"] {
+    display: none !important;
+  }
+  #modalTitle {
+    color: #ffffff !important;
+    font-size: 24px !important;
+    font-weight: 900 !important;
+    margin-bottom: 10px !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7) !important;
+  }
+  #modalIQ {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.92) 0%, rgba(2, 6, 23, 0.96) 100%) !important;
+    border: 1.5px solid rgba(250, 204, 21, 0.55) !important;
+    border-radius: 999px !important;
+    padding: 7px 18px !important;
+    font-size: 16px !important;
+    font-weight: 900 !important;
+    color: #fde047 !important;
+    margin-bottom: 16px !important;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.7), 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+  }
+  /* Main 3D Gold Reward Button (#modalReviveBtn) */
+  #modalReviveBtn {
+    width: 100% !important;
+    padding: 15px 14px !important;
+    border-radius: 16px !important;
+    background: linear-gradient(180deg, #fde047 0%, #f59e0b 55%, #d97706 100%) !important;
+    border: 2px solid #fef08a !important;
+    border-top-color: #ffffff !important;
+    color: #052e16 !important;
+    font-size: 17px !important;
+    font-weight: 900 !important;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) !important;
+    box-shadow:
+      0 5px 0 #92400e,
+      0 8px 20px rgba(245, 158, 11, 0.5),
+      inset 0 2px 1px rgba(255, 255, 255, 0.8) !important;
+    margin-bottom: 10px !important;
+    cursor: pointer !important;
+    transition: transform 0.08s ease, box-shadow 0.08s ease !important;
+  }
+  #modalReviveBtn:active {
+    transform: translateY(4px) !important;
+    box-shadow: 0 1px 0 #92400e !important;
+  }
+  /* Primary 3D Emerald Button (#modalActionBtn default) & Sub 3D Dark Slate Button (.cw-sub-btn) */
+  #modalActionBtn {
+    width: 100% !important;
+    padding: 15px 14px !important;
+    border-radius: 16px !important;
+    background: linear-gradient(180deg, #34d399 0%, #10b981 55%, #059669 100%) !important;
+    border: 2px solid #a7f3d0 !important;
+    border-top-color: #ffffff !important;
+    color: #052e16 !important;
+    font-size: 17px !important;
+    font-weight: 900 !important;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+    box-shadow:
+      0 5px 0 #064e3b,
+      0 8px 18px rgba(16, 185, 129, 0.45),
+      inset 0 2px 1px rgba(255, 255, 255, 0.65) !important;
+    cursor: pointer !important;
+    transition: transform 0.08s ease, box-shadow 0.08s ease !important;
+  }
+  #modalActionBtn.cw-sub-btn {
+    padding: 12px 14px !important;
+    background: linear-gradient(180deg, #475569 0%, #1e293b 100%) !important;
+    border: 1.5px solid #64748b !important;
+    border-top-color: #94a3b8 !important;
+    color: #cbd5e1 !important;
+    font-size: 14px !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.65) !important;
+    box-shadow:
+      0 4px 0 #090d16,
+      0 5px 12px rgba(0, 0, 0, 0.4),
+      inset 0 1.5px 1px rgba(255, 255, 255, 0.22) !important;
+  }
+  #modalActionBtn:active {
+    transform: translateY(3px) !important;
+    box-shadow: 0 1px 0 #020617 !important;
+  }
+
+  /* Particle Burst & Floating Combo Badge + Seamless Stage Clear Banner */
+  .cw-particle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    border-radius: 50%;
+    will-change: transform, opacity;
+  }
+  .cw-combo-popup {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    font-size: 17px;
+    font-weight: 900;
+    color: #fef08a;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.85), 0 0 12px rgba(250,204,21,0.65);
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.92);
+    border: 1.5px solid #facc15;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    animation: cwComboFloat 0.78s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes cwComboFloat {
+    0%   { transform: translate(-50%, 6px) scale(0.75); opacity: 0; }
+    22%  { transform: translate(-50%, -8px) scale(1.08); opacity: 1; }
+    100% { transform: translate(-50%, -32px) scale(0.96); opacity: 0; }
+  }
+  .cw-seamless-banner {
+    position: fixed;
+    left: 50%;
+    top: 46%;
+    transform: translate(-50%, -50%);
+    z-index: 9500;
+    pointer-events: none;
+    width: min(88vw, 355px);
+    padding: 18px 20px;
+    border-radius: 24px;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.98), rgba(6, 78, 59, 0.98));
+    border: 2.5px solid #34d399;
+    border-top-color: #a7f3d0;
+    box-shadow:
+      0 8px 0 #022c22,
+      0 18px 42px rgba(0, 0, 0, 0.8),
+      inset 0 2px 1px rgba(255, 255, 255, 0.35);
+    text-align: center;
+    animation: cwBannerPop 1.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes cwBannerPop {
+    0%   { transform: translate(-50%, -40%) scale(0.82); opacity: 0; }
+    16%  { transform: translate(-50%, -50%) scale(1.03); opacity: 1; }
+    82%  { transform: translate(-50%, -50%) scale(1.0); opacity: 1; }
+    100% { transform: translate(-50%, -58%) scale(0.94); opacity: 0; }
+  }
 </style>
 </head>
 <body>
@@ -960,7 +1315,7 @@
       <div class="modal-title" id="modalTitle">ステージクリア！</div>
       <div class="modal-iq" id="modalIQ">計算IQ 110</div>
       <div class="modal-comment" id="modalComment">超高速の閃きです！</div>
-      <button class="primary-btn" id="modalReviveBtn" style="display:none; margin-bottom:4px; font-size:16px; background:linear-gradient(180deg, #f59e0b 0%, #d97706 100%); color:#052e16; box-shadow:0 4px 15px rgba(245,158,11,0.4);">🎬 動画を見て【同じ問題】に再挑戦</button>
+      <button class="primary-btn" id="modalReviveBtn" style="display:none;">🎬 動画を見て【同じ問題】に再挑戦</button>
       <button class="primary-btn" id="modalActionBtn">次のステージへ</button>
       <!-- Coreworks In-Game Monetization & Nav -->
       <div style="width:100%; margin-top:12px; padding-top:12px; border-top:1px solid rgba(148,163,184,0.2); display:flex; flex-direction:column; gap:8px;">
@@ -1073,12 +1428,13 @@
   };
 
   function getTitleForIQ(iqVal) {
-    if (iqVal >= 170) return '🪐 人間スパコン';
-    if (iqVal >= 150) return '👑 瞬間暗算の天才';
-    if (iqVal >= 135) return '⚡ 数学マスター';
-    if (iqVal >= 120) return '💎 高速頭脳派';
-    if (iqVal >= 108) return '✨ ナンバーハンター';
-    return '🌱 暗算ルーキー';
+    if (iqVal >= 140) return '🪐 人間スパコン';
+    if (iqVal >= 130) return '👑 瞬間暗算の天才';
+    if (iqVal >= 120) return '⚡ 数学マスター';
+    if (iqVal >= 112) return '💎 高速頭脳派';
+    if (iqVal >= 105) return '✨ ナンバーハンター';
+    if (iqVal >= 98) return '🌱 暗算ルーキー';
+    return '🌱 観察ルーキー';
   }
 
   const SAVE_KEY = 'cw_maketen_save_v1';
@@ -1165,7 +1521,7 @@
     warn: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M12 3L2 20h20L12 3Z" fill="#f59e0b" stroke="#fef08a" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 9v5M12 17h.01" stroke="#0f172a" stroke-width="2.4" stroke-linecap="round"/></svg>',
     cross: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" fill="#ef4444" stroke="#fecaca" stroke-width="1.5"/><path d="M15 9l-6 6M9 9l6 6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg>',
     check: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" fill="#10b981" stroke="#a7f3d0" stroke-width="1.5"/><path d="M8 12.5l2.8 2.8L16.5 9.5" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-    lock: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2.5" fill="#64748b" stroke="#cbd5e1" stroke-width="1.5"/><path d="M8 11V7a4 4 0 1 1 8 0v4" stroke="#cbd5e1" stroke-width="1.8"/></svg>',
+    lock: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="3" fill="#f59e0b" stroke="#fef08a" stroke-width="1.5"/><path d="M8 11V7a4 4 0 1 1 8 0v4" stroke="#fde047" stroke-width="2"/><circle cx="12" cy="16" r="1.6" fill="#451a03"/></svg>',
     music: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M9 18V5l12-2v13" stroke="#a855f7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="18" r="3" fill="#c084fc"/><circle cx="18" cy="16" r="3" fill="#c084fc"/></svg>',
     speaker: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M11 5L6 9H2v6h4l5 4V5Z" fill="#38bdf8"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14" stroke="#7dd3fc" stroke-width="2" stroke-linecap="round"/></svg>',
     home: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5Z" fill="#818cf8" stroke="#e0e7ff" stroke-width="1.5"/></svg>',
@@ -1200,6 +1556,8 @@
     ['👉', CW_SVGS.play],
     ['👆', CW_SVGS.sparkle],
     ['👑', CW_SVGS.crown],
+    ['①', CW_SVGS.crown],
+    ['②', CW_SVGS.gear],
     ['🏆', CW_SVGS.crown],
     ['🎁', CW_SVGS.sparkle],
     ['⚠️', CW_SVGS.warn],
@@ -1287,6 +1645,7 @@
   };
 
   window.__cwStageRatios = [];
+  window.__cwStageElapsedSecs = [];
   window.__cwStageHintUsed = false;
   window.__cwLastSpeedEval = null;
 
@@ -1300,41 +1659,121 @@
   };
 
   window.__cwRecordQuestionSpeed = function(remSec, limSec) {
-    const r = (typeof limSec === 'number' && limSec > 0) ? Math.max(0, Math.min(1, remSec / limSec)) : 0.65;
+    const lim = (typeof limSec === 'number' && limSec > 0) ? limSec : 10.0;
+    const rem = (typeof remSec === 'number' && remSec >= 0) ? remSec : lim * 0.65;
+    const r = Math.max(0, Math.min(1, rem / lim));
+    const elap = Math.max(0.1, lim - rem);
     if (!Array.isArray(window.__cwStageRatios)) window.__cwStageRatios = [];
+    if (!Array.isArray(window.__cwStageElapsedSecs)) window.__cwStageElapsedSecs = [];
     window.__cwStageRatios.push(r);
+    window.__cwStageElapsedSecs.push(elap);
+  };
+
+  // Automatic normalization of legacy inflated save data (130..200) to the max targetIQ of the unlocked stage
+  window.__cwNormalizeIQ = function() {
+    const maxM = Math.max(1, Math.min(5, state.maxUnlockedMission || state.mission || 1));
+    const curM = Math.max(1, Math.min(5, state.mission || 1));
+    const curSt = Math.max(1, Math.min(10, state.stage || 1));
+    const highestGlobal = (maxM > curM)
+      ? ((maxM - 1) * 10 + 1)
+      : ((curM - 1) * 10 + curSt);
+    const maxAllowedTarget = Math.min(148, Math.round(98 + highestGlobal * 0.7 + 14));
+    if (state.iqVersion !== 75 || typeof state.iq !== 'number' || isNaN(state.iq) || state.iq > maxAllowedTarget || state.iq < 88) {
+      if (highestGlobal <= 1) {
+        state.iq = 100;
+        state.iqSamples = 0;
+      } else {
+        state.iq = Math.min(maxAllowedTarget, Math.max(100, Math.round(98 + (highestGlobal - 1) * 0.7 + 10)));
+      }
+      state.iqLastDiff = 0;
+      state.iqVersion = 75;
+      saveProgress();
+    }
+    state.iq = Math.max(88, Math.min(148, Math.round(state.iq || 100)));
   };
 
   window.__cwEvaluateStageSpeed = function(isBoss) {
     const ratios = (Array.isArray(window.__cwStageRatios) && window.__cwStageRatios.length > 0)
       ? window.__cwStageRatios
-      : [0.65];
-    const avgRatio = ratios.reduce((a, b) => a + b, 0) / ratios.length;
+      : [0.72];
+    const elapsedArr = (Array.isArray(window.__cwStageElapsedSecs) && window.__cwStageElapsedSecs.length > 0)
+      ? window.__cwStageElapsedSecs
+      : [1.4];
+    const avgRatio = Math.max(0, Math.min(1, ratios.reduce((a, b) => a + b, 0) / ratios.length));
+    const avgElapsed = Math.max(0.1, elapsedArr.reduce((a, b) => a + b, 0) / elapsedArr.length);
+    const elapsedStr = avgElapsed.toFixed(1);
     const hintUsed = !!window.__cwStageHintUsed;
     window.__cwStageRatios = [];
+    window.__cwStageElapsedSecs = [];
     window.__cwStageHintUsed = false;
 
-    let rank = 'A';
-    let gain = isBoss ? 4 : 2;
-    let prefix = '✨ A判定';
+    const mission = Math.max(1, Math.min(5, state.mission || 1));
+    // On Stage 1..9 clear, state.stage was just incremented by 1; on Stage 10 clear, state.stage is still 10
+    const clearedSt = (isBoss && state.stage === 10) ? 10 : Math.max(1, (state.stage || 2) - 1);
+    const globalStage = Math.max(1, Math.min(50, (mission - 1) * 10 + clearedSt));
+
+    // 1. Difficulty Base IQ (baseIQ = 98 + globalStage * 0.7)
+    const baseIQ = 98 + globalStage * 0.7;
+
+    // 2. Speed Bonus (S: +12/+14, A: +6/+8, B: +0)
+    let speedBonus = 0;
+    let rank = 'B';
+    let badgeHead = '👍 B判定';
+
     if (!hintUsed && avgRatio >= 0.60) {
+      speedBonus = isBoss ? 14 : 12;
       rank = 'S';
-      gain = isBoss ? 5 : 3;
-      prefix = '⚡ S判定';
+      badgeHead = '⚡ S判定';
     } else if (!hintUsed && avgRatio >= 0.30) {
+      speedBonus = isBoss ? 8 : 6;
       rank = 'A';
-      gain = isBoss ? 4 : 2;
-      prefix = '✨ A判定';
+      badgeHead = '✨ A判定';
     } else {
+      speedBonus = 0;
       rank = 'B';
-      gain = isBoss ? 3 : 1;
-      prefix = '👍 B判定';
+      badgeHead = '👍 B判定';
     }
+
+    // 3. Stage Target IQ (Stage 1 S-rank -> 111, B-rank -> 99; Stage 10 S-rank -> 119; Stage 30 S-rank -> 133; Stage 50 S-rank -> 147)
+    const targetIQ = Math.min(148, Math.max(88, Math.round(baseIQ + speedBonus)));
+    const maxStageCap = Math.min(148, Math.round(baseIQ + (isBoss ? 14 : 12)));
+
+    // 4. Smooth Growth & Anti-Farming Update
+    const prevIQ = (typeof state.iq === 'number' && !isNaN(state.iq)) ? state.iq : 100;
+    const samples = state.iqSamples || 0;
+    let newIQ = prevIQ;
+    if (samples < 1 && globalStage === 1) {
+      // First stage clear immediately reflects Stage 1 targetIQ (e.g. 111 on S-rank, 105 on A-rank, 99 on B-rank)
+      newIQ = targetIQ;
+    } else if (prevIQ < targetIQ) {
+      newIQ = Math.min(targetIQ, Math.max(prevIQ + 1, Math.round(prevIQ * 0.35 + targetIQ * 0.65)));
+    } else {
+      // Already at or above targetIQ (e.g. replaying an early stage or slower clear on a later stage): cap at maxStageCap if replaying early stage, or hold steady
+      const maxUnlockedM = Math.max(mission, state.maxUnlockedMission || 1);
+      if (mission < maxUnlockedM) {
+        newIQ = prevIQ;
+      } else {
+        newIQ = Math.min(maxStageCap, prevIQ);
+      }
+    }
+    newIQ = Math.max(88, Math.min(148, newIQ));
+    const diff = newIQ - prevIQ;
+
+    state.iq = newIQ;
+    state.iqSamples = samples + 1;
+    state.iqLastDiff = diff;
+    state.iqVersion = 75;
+
+    const diffLabel = diff > 0 ? ` ▲+${diff}` : '';
     const ev = {
       rank,
-      gain,
-      avgRatio,
-      prefix: `${prefix}（IQ +${gain}）`
+      gain: 0, // already applied to state.iq above
+      targetIQ,
+      diff,
+      elapsedStr,
+      badgeHead,
+      prefix: `${badgeHead}`,
+      diffLabel
     };
     window.__cwLastSpeedEval = ev;
     return ev;
@@ -1343,12 +1782,13 @@
   window.__cwShowSeamlessBanner = function(clearedStage, nextStage, iqVal, onDone, customEval) {
     const existing = document.querySelector('.cw-seamless-banner');
     if (existing) existing.remove();
-    const ev = customEval || window.__cwLastSpeedEval || { rank: 'S', gain: 3, prefix: '⚡ S判定（IQ +3）' };
-    const line2Text = window.__cwIconify(`${ev.prefix} ｜ 推定IQ ${iqVal}`);
+    const ev = customEval || window.__cwLastSpeedEval || { badgeHead: '⚡ S判定', elapsedStr: '1.2', diffLabel: '' };
+    const line1Text = window.__cwIconify(`✨ ステージ ${clearedStage} クリア！（${ev.elapsedStr || '1.2'}秒）`);
+    const line2Text = window.__cwIconify(`${ev.badgeHead || '⚡ S判定'} ｜ 推定IQ ${iqVal}${ev.diffLabel || ''}`);
     const b = document.createElement('div');
     b.className = 'cw-seamless-banner';
     b.innerHTML = `
-      <div style="font-size:23px; font-weight:900; color:#ffffff; margin-bottom:5px; letter-spacing:0.02em;">${CW_SVGS.sparkle} ステージ ${clearedStage} クリア！</div>
+      <div style="font-size:21px; font-weight:900; color:#ffffff; margin-bottom:5px; letter-spacing:0.01em;">${line1Text}</div>
       <div style="font-size:15px; font-weight:900; color:#fde047;">${line2Text}</div>
     `;
     document.body.appendChild(b);
@@ -1358,21 +1798,17 @@
     }, 1350);
   };
 
-
   function adjustIQ(delta) {
-    const levelCaps = [130, 150, 170, 185, 200];
-    const maxLv = Math.min(5, Math.max(1, state.maxUnlockedMission || state.mission || 1));
-    const unlockedCap = levelCaps[maxLv - 1] || 200;
-    const effectiveCap = Math.min(200, Math.max(state.iq || 100, unlockedCap));
-    if (delta > 0) {
-      const scaled = state.iq >= 175 ? 1 : (state.iq >= 150 ? Math.min(2, delta) : delta);
-      state.iq = Math.min(effectiveCap, (state.iq || 100) + scaled);
-    } else if (delta < 0) {
-      state.iq = Math.max(70, (state.iq || 100) + delta);
+    if (delta < 0) {
+      const prevIQ = (typeof state.iq === 'number' && !isNaN(state.iq)) ? state.iq : 100;
+      const newIQ = Math.max(88, prevIQ - 2);
+      state.iqLastDiff = newIQ - prevIQ;
+      state.iq = newIQ;
+      state.iqVersion = 75;
     }
-    state.iq = Math.max(70, Math.min(200, Math.round(state.iq || 100)));
+    state.iq = Math.max(88, Math.min(148, Math.round(state.iq || 100)));
   }
-  state.iq = Math.max(70, Math.min(200, Math.round(state.iq || 100)));
+  window.__cwNormalizeIQ();
   state.hints = Math.max(0, Math.min(3, typeof state.hints === 'number' ? state.hints : 2));
 
 
@@ -1994,8 +2430,7 @@
     } else {
       hintBtnEl.innerHTML = window.__cwIconify('🎬 ヒント+3');
       hintBtnEl.classList.add('ad-reward');
-      hintBtnEl.style.background = '#f59e0b';
-      hintBtnEl.style.color = '#052e16';
+      
       hintBtnEl.disabled = !isQuestionActive;
     }
   }
@@ -2058,7 +2493,8 @@
 
   function startQuestion() {
     if (!document.hidden) initAudio();
-    if (stepInStage === 1) { window.__cwStageRatios = []; window.__cwStageHintUsed = false; }
+    if (window.__cwNormalizeIQ) window.__cwNormalizeIQ();
+    if (stepInStage === 1) { window.__cwStageRatios = []; window.__cwStageElapsedSecs = []; window.__cwStageHintUsed = false; }
     clearInterval(timerId);
     clearTimeout(transitionTimeoutId);
     transitionTimeoutId = null;
@@ -2280,19 +2716,91 @@
     }, 900);
   }
 
-  function showModal({ isBossAlert, showRevive, reviveText, badge, title, iqText, comment, btnText }) {
-    if (modalCardEl) modalCardEl.classList.toggle('boss-alert', !!isBossAlert);
-    document.getElementById('modalBadge').innerHTML = window.__cwIconify(badge);
-    document.getElementById('modalTitle').innerHTML = window.__cwIconify(title);
-    document.getElementById('modalIQ').textContent = iqText;
-    document.getElementById('modalComment').innerHTML = window.__cwIconify(comment);
-    document.getElementById('modalActionBtn').innerHTML = window.__cwIconify(btnText);
+    window.__cwModalMode = 'normal';
+  window.__cwHintPausedRem = null;
+  window.__cwHintRewardCb = null;
+
+  window.__cwOpenHintEmptyModal = function(pausedRem, onRewardDone) {
+    window.__cwModalMode = 'hint_empty';
+    window.__cwHintPausedRem = pausedRem;
+    window.__cwHintRewardCb = onRewardDone;
+    modalCardEl.classList.remove('boss-alert');
+    const bEl = document.getElementById('modalBadge');
+    const tEl = document.getElementById('modalTitle');
+    const iqEl = document.getElementById('modalIQ');
+    const cEl = document.getElementById('modalComment');
+    const actBtn = document.getElementById('modalActionBtn');
+    if (bEl) bEl.style.display = 'none';
+    if (cEl) cEl.style.display = 'none';
+    if (iqEl) iqEl.style.display = 'none';
+    if (tEl) tEl.innerHTML = window.__cwIconify('💡 ヒントがありません');
     if (modalReviveBtnEl) {
-      if (showRevive) {
+      modalReviveBtnEl.style.display = 'block';
+      modalReviveBtnEl.innerHTML = window.__cwIconify('▶️ 5秒動画でヒント +2 回復');
+    }
+    if (actBtn) {
+      actBtn.classList.add('cw-sub-btn');
+      actBtn.innerHTML = window.__cwIconify('閉じる');
+    }
+    modalEl.classList.add('show');
+  };
+
+  function showModal({ isBossAlert, showRevive, reviveText, reviveBtnText, badge, title, iqText, comment, btnText }) {
+    window.__cwModalMode = showRevive ? 'fail' : 'normal';
+    modalCardEl.classList.toggle('boss-alert', !!isBossAlert);
+    const bEl = document.getElementById('modalBadge');
+    const tEl = document.getElementById('modalTitle');
+    const iqEl = document.getElementById('modalIQ');
+    const cEl = document.getElementById('modalComment');
+    const actBtn = document.getElementById('modalActionBtn');
+
+    // Subtractive 3-Element Layout: Hide redundant top badge and long paragraph comments!
+    if (bEl) bEl.style.display = 'none';
+    if (cEl) cEl.style.display = 'none';
+    if (iqEl) iqEl.style.display = 'inline-flex';
+
+    if (showRevive) {
+      // 1. Fail Modal (Time-up / Wrong Tap): 3 Elements Only!
+      const isTimeUp = String(badge || '').includes('時間切れ') || String(badge || '').includes('TIME');
+      const diff = (typeof state.iqLastDiff === 'number' && state.iqLastDiff < 0) ? ` (${state.iqLastDiff})` : ' (-2)';
+      tEl.innerHTML = window.__cwIconify(isTimeUp ? '⏰ タイムアップ！' : '❌ お手つきミス！');
+      iqEl.innerHTML = window.__cwIconify(`ステージ ${state.stage}/10 ｜ 推定IQ ${state.iq}${diff}`);
+      if (modalReviveBtnEl) {
         modalReviveBtnEl.style.display = 'block';
-        if (reviveText) modalReviveBtnEl.innerHTML = window.__cwIconify(reviveText);
-      } else {
-        modalReviveBtnEl.style.display = 'none';
+        modalReviveBtnEl.innerHTML = window.__cwIconify('▶️ 5秒動画でここから復活');
+      }
+      if (actBtn) {
+        actBtn.classList.add('cw-sub-btn');
+        actBtn.innerHTML = window.__cwIconify('ステージ1からやり直す');
+      }
+    } else if (String(badge || '').includes('完全制覇')) {
+      // 2A. Stage 10 Level Certification Exam Clear: 3 Elements Only!
+      const sp = window.__cwLastSpeedEval || { badgeHead: '⚡ S判定', elapsedStr: '1.2', diffLabel: '' };
+      tEl.innerHTML = window.__cwIconify(`👑 レベル${Math.max(1, (state.mission || 1))} 認定合格！`);
+      iqEl.innerHTML = window.__cwIconify(`${sp.badgeHead || '⚡ S判定'}（${sp.elapsedStr || '1.2'}秒）｜ 推定IQ ${state.iq}${sp.diffLabel || ''}`);
+      if (modalReviveBtnEl) modalReviveBtnEl.style.display = 'none';
+      if (actBtn) {
+        actBtn.classList.remove('cw-sub-btn');
+        actBtn.innerHTML = window.__cwIconify('▶️ 次のレベルへ進む');
+      }
+    } else if (!isBossAlert) {
+      // 2B. Stage 5 Mid-Boss Exam Clear: 3 Elements Only!
+      const sp = window.__cwLastSpeedEval || { badgeHead: '⚡ S判定', elapsedStr: '1.2', diffLabel: '' };
+      tEl.innerHTML = window.__cwIconify('🏆 中間テスト突破！');
+      iqEl.innerHTML = window.__cwIconify(`${sp.badgeHead || '⚡ S判定'}（${sp.elapsedStr || '1.2'}秒）｜ 推定IQ ${state.iq}${sp.diffLabel || ''}`);
+      if (modalReviveBtnEl) modalReviveBtnEl.style.display = 'none';
+      if (actBtn) {
+        actBtn.classList.remove('cw-sub-btn');
+        actBtn.innerHTML = window.__cwIconify('▶️ 次のステージへ進む');
+      }
+    } else {
+      // 2C. Pre-Exam Alert (Stage 5 or Stage 10 Approaching): 3 Elements Only!
+      tEl.innerHTML = window.__cwIconify(state.stage === 10 ? '👑 レベル認定試験（10/10）' : '🏅 中間テスト（5/10）');
+      iqEl.innerHTML = window.__cwIconify('全3問・特別試験ステージ');
+      if (modalReviveBtnEl) modalReviveBtnEl.style.display = 'none';
+      if (actBtn) {
+        actBtn.classList.remove('cw-sub-btn');
+        actBtn.innerHTML = window.__cwIconify('▶️ 特別試験に挑む！');
       }
     }
     modalEl.classList.add('show');
@@ -2302,6 +2810,11 @@
   modalReviveBtnEl.addEventListener('click', () => {
     initAudio();
     modalEl.classList.remove('show');
+    if (window.__cwModalMode === 'hint_empty') {
+      window.__cwModalMode = 'normal';
+      if (typeof window.__cwHintRewardCb === 'function') window.__cwHintRewardCb();
+      return;
+    }
     showAdModal('rewarded_revive', () => {
       const boss = isBossStage(state.stage);
       const mCfg = MISSION_CONFIG[state.mission] || MISSION_CONFIG[1];
@@ -2326,6 +2839,15 @@
 
   document.getElementById('modalActionBtn').addEventListener('click', () => {
     initAudio();
+    if (window.__cwModalMode === 'hint_empty') {
+      window.__cwModalMode = 'normal';
+      modalEl.classList.remove('show');
+      const rem = window.__cwHintPausedRem;
+      if (typeof runQuestionTimer === 'function' && rem > 0) runQuestionTimer(rem);
+      else if (typeof runAnswerTimer === 'function' && rem > 0) runAnswerTimer(rem);
+      else startQuestion();
+      return;
+    }
     if (pendingInterstitialAfterModal) {
       pendingInterstitialAfterModal = false;
       modalEl.classList.remove('show');
@@ -2348,7 +2870,8 @@
       const pausedRemaining = timeRemaining;
       isQuestionActive = false;
       clearInterval(timerId);
-      showAdModal('rewarded_hint', () => {
+      window.__cwOpenHintEmptyModal(pausedRemaining, () => {
+        showAdModal('rewarded_hint', () => {
         state.hints = (state.hints || 0) + 3;
         saveProgress();
         playHintSound();
@@ -2359,6 +2882,7 @@
         bannerEl.innerHTML = window.__cwIconify(`💡 ヒント+3回！残り ${timeRemaining.toFixed(1)} 秒！`);
         syncBgmLoop();
         runQuestionTimer(timeRemaining);
+      });
       });
       return;
     }
@@ -2658,7 +3182,7 @@
   
   // Replace all static emojis in buttons/badges with inline SVGs on startup
   (function cwIconifyStaticDom() {
-    const selectors = ['#stageBadge', '#settingsBtn', '#status-banner', '#rankText', '#hintBtn', '#modalBadge', '#modalReviveBtn', '#modalActionBtn', '#settingsBadge', '.setting-label', '#closeSettingsBtn', '#settingsPortalBtn', '#adModalBadge', '.ad-pr-title', '.ad-pr-cta', '#adCompleteBtn', '#app a'];
+    const selectors = ['#stageBadge', '#settingsBtn', '#status-banner', '#rankText', '#hintBtn', '#modalBadge', '#modalTitle', '#modalReviveBtn', '#modalActionBtn', '#settingsBadge', '.setting-label', '#settingsModal .modal-title', '#settingsModal div[style*="font-weight:900"]', '#closeSettingsBtn', '#settingsPortalBtn', '#adModalBadge', '.ad-pr-title', '.ad-pr-cta', '#adCompleteBtn', '#app a'];
     selectors.forEach(sel => {
       document.querySelectorAll(sel).forEach(el => {
         if (el.children.length === 0) {
