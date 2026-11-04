@@ -1413,6 +1413,143 @@
     82%  { transform: translate(-50%, -50%) scale(1.0); opacity: 1; }
     100% { transform: translate(-50%, -58%) scale(0.94); opacity: 0; }
   }
+
+  
+  
+  /* === v8.1 Settings Modal No-Scroll & Web Navigation Polish === */
+  .web-back-pill {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 5px 8px !important;
+    border-radius: 999px !important;
+    background: linear-gradient(180deg, #334155 0%, #1e293b 100%) !important;
+    border: 1.5px solid #64748b !important;
+    border-top-color: #94a3b8 !important;
+    color: #f8fafc !important;
+    text-decoration: none !important;
+    font-size: 11.5px !important;
+    font-weight: 900 !important;
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    box-shadow: 0 3px 0 #090d16, inset 0 1px 1px rgba(255, 255, 255, 0.28) !important;
+    transition: transform 0.08s ease, box-shadow 0.08s ease !important;
+  }
+  .web-back-pill:active {
+    transform: translateY(2px) !important;
+    box-shadow: 0 1px 0 #090d16 !important;
+  }
+  html.android-apk .web-portal-link,
+  html.android-apk .web-back-pill,
+  html.android-apk #modalPortalBtn {
+    display: none !important;
+  }
+  html:not(.android-apk) .header-row,
+  html:not(.android-apk) .top-row {
+    gap: 3px !important;
+  }
+  html:not(.android-apk) .web-back-pill {
+    font-size: 10.8px !important;
+    padding: 5px 7px !important;
+    letter-spacing: -0.02em !important;
+  }
+  html:not(.android-apk) #stageBadge,
+  html:not(.android-apk) .stage-badge,
+  html:not(.android-apk) .top-badge {
+    font-size: 10.8px !important;
+    padding: 5px 7px !important;
+    letter-spacing: -0.02em !important;
+    flex-shrink: 0 !important;
+  }
+  html:not(.android-apk) #stepPill,
+  html:not(.android-apk) .step-pill {
+    font-size: 10.8px !important;
+    padding: 5px 6px !important;
+    letter-spacing: -0.02em !important;
+    flex-shrink: 0 !important;
+  }
+  #settingsBtn,
+  .settings-btn,
+  .icon-btn {
+    height: auto !important;
+    border-radius: 999px !important;
+  }
+  html:not(.android-apk) #settingsBtn,
+  html:not(.android-apk) .settings-btn,
+  html:not(.android-apk) .icon-btn {
+    font-size: 10.8px !important;
+    padding: 5px 7px !important;
+    letter-spacing: -0.02em !important;
+    flex-shrink: 0 !important;
+  }
+  #settingsModal .modal-card {
+    padding: 13px 15px !important;
+    max-height: 96vh !important;
+    overflow-y: auto !important;
+    gap: 5px !important;
+  }
+  #settingsBadge {
+    margin-bottom: 2px !important;
+    padding: 4px 12px !important;
+    font-size: 12.5px !important;
+  }
+  .setting-card {
+    padding: 7px 11px !important;
+    margin-bottom: 3px !important;
+    border-radius: 12px !important;
+    gap: 3px !important;
+  }
+  .mission-list {
+    max-height: none !important;
+    overflow-y: visible !important;
+    gap: 5px !important;
+    margin: 3px 0 6px !important;
+  }
+  .mission-btn {
+    padding: 7px 12px !important;
+    border-radius: 10px !important;
+    font-size: 13px !important;
+  }
+  #closeSettingsBtn {
+    padding: 10px 12px !important;
+    font-size: 14.5px !important;
+    margin-top: 2px !important;
+  }
+  #settingsPortalBtn {
+    padding: 8px 10px !important;
+    font-size: 12.5px !important;
+    margin-top: 3px !important;
+  }
+  #modalPortalBtn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
+    width: 100% !important;
+    margin-top: 8px !important;
+    padding: 10px 12px !important;
+    border-radius: 14px !important;
+    background: linear-gradient(180deg, #334155 0%, #1e293b 100%) !important;
+    border: 1.5px solid #64748b !important;
+    border-top-color: #94a3b8 !important;
+    color: #e2e8f0 !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    text-decoration: none !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    box-shadow: 0 3px 0 #090d16, inset 0 1px 1px rgba(255, 255, 255, 0.22) !important;
+  }
+  #modalPortalBtn:active {
+    transform: translateY(2px) !important;
+    box-shadow: 0 1px 0 #090d16 !important;
+  }
+  .modal-card.boss-alert #modalPortalBtn,
+  .modal-card.hint-empty-mode #modalPortalBtn {
+    display: none !important;
+  }
+
 </style>
 </head>
 <body>
@@ -1423,6 +1560,7 @@
 
   <div class="header">
     <div class="top-row">
+      <a href="/?tab=games&v=8.1" class="web-back-pill web-portal-link" id="webBackPill">← 一覧</a>
       <div class="stage-badge" id="stageBadge">➕ レベル 1/5 ｜ ステージ 1/10</div>
       <div class="step-pill" id="stepPill">第 1 / 3 問</div>
       <button class="icon-btn" id="settingsBtn">⚙️ 設定</button>
@@ -1452,13 +1590,14 @@
       <div class="modal-comment" id="modalComment">超高速の閃きです！</div>
       <button class="primary-btn" id="modalReviveBtn" style="display:none;">🎬 動画を見て【同じ問題】に再挑戦</button>
       <button class="primary-btn" id="modalActionBtn">次のステージへ</button>
+      <a href="/?tab=games&v=8.1" class="web-portal-link" id="modalPortalBtn">🏠 他の脳トレゲームを選ぶ（一覧へ）</a>
       <!-- Coreworks In-Game Monetization & Nav -->
       <div style="width:100%; margin-top:12px; padding-top:12px; border-top:1px solid rgba(148,163,184,0.2); display:flex; flex-direction:column; gap:8px;">
         <div style="display:flex; gap:8px; width:100%;">
-          <a href="/payback-calc/?v=8.0" style="flex:1; padding:10px 6px; border-radius:8px; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); color:#34d399; font-size:13px; font-weight:700; text-decoration:none; text-align:center;">
+          <a href="/payback-calc/?v=8.1" style="flex:1; padding:10px 6px; border-radius:8px; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); color:#34d399; font-size:13px; font-weight:700; text-decoration:none; text-align:center;">
             元取り1秒計算
           </a>
-          <a href="/?tab=games&v=8.0" style="flex:1; padding:10px 6px; border-radius:8px; background:rgba(99,102,241,0.16); border:1px solid rgba(99,102,241,0.4); color:#818cf8; font-size:13px; font-weight:700; text-decoration:none; text-align:center;">
+          <a href="/?tab=games&v=8.1" style="flex:1; padding:10px 6px; border-radius:8px; background:rgba(99,102,241,0.16); border:1px solid rgba(99,102,241,0.4); color:#818cf8; font-size:13px; font-weight:700; text-decoration:none; text-align:center;">
             脳トレ一覧へ
           </a>
         </div>
@@ -1515,7 +1654,7 @@
       <div id="stageJumpGrid" style="width:100%; display:grid; grid-template-columns:repeat(5, 1fr); gap:6px;"></div>
 
       <button class="primary-btn" id="closeSettingsBtn">✅ 閉じてゲームに戻る</button>
-      <a href="/?tab=games&v=8.0" class="web-portal-link" id="settingsPortalBtn" style="display:block; width:100%; margin-top:4px; padding:10px; border-radius:12px; background:rgba(99,102,241,0.18); border:1px solid rgba(99,102,241,0.45); color:#a5b4fc; font-size:13px; font-weight:800; text-decoration:none; text-align:center;">🏠 ゲーム一覧（ポータル）へ戻る</a>
+      <a href="/?tab=games&v=8.1" class="web-portal-link" id="settingsPortalBtn" style="display:block; width:100%; margin-top:4px; padding:10px; border-radius:12px; background:rgba(99,102,241,0.18); border:1px solid rgba(99,102,241,0.45); color:#a5b4fc; font-size:13px; font-weight:800; text-decoration:none; text-align:center;">🏠 ゲーム一覧（ポータル）へ戻る</a>
     </div>
   </div>
 
@@ -1537,6 +1676,11 @@
           <span class="ad-pr-title">🔥 脳トレ後の糖分補給＆アイケア特選ランキング</span>
           <span class="ad-pr-desc">目の疲れや集中後のリフレッシュに！話題のホットアイマスク・休息リラックスグッズ人気一覧</span>
           <span class="ad-pr-cta">👉 楽天市場でアイケア・休息グッズを見る ↗</span>
+        </a>
+        <a class="ad-pr-card" data-pr-idx="2" href="https://af.moshimo.com/af/c/click?a_id=5880341&p_id=7838&pc_id=22734&pl_id=97605" target="_blank" rel="nofollow sponsored">
+          <span class="ad-pr-tag">PR・0円LINEキャリア診断 #3</span>
+          <span class="ad-pr-title">✨ 0円LINE診断：あなたの適職・適正年収＆キャリア無料診断</span>
+          <span class="ad-pr-cta">👉 0円LINE無料診断を試してみる（PR） ↗</span>
         </a>
       </div>
 
@@ -2880,6 +3024,9 @@
     window.__cwHintPausedRem = pausedRem;
     window.__cwHintRewardCb = onRewardDone;
     modalCardEl.classList.remove('boss-alert');
+    modalCardEl.classList.add('hint-empty-mode');
+    modalCardEl.classList.add('hint-empty-mode');
+    modalCardEl.classList.add('hint-empty-mode');
     const bEl = document.getElementById('modalBadge');
     const tEl = document.getElementById('modalTitle');
     const iqEl = document.getElementById('modalIQ');
@@ -2902,6 +3049,9 @@
 
   function showModal({ isBossAlert, showRevive, reviveText, reviveBtnText, badge, title, iqText, comment, btnText }) {
     window.__cwModalMode = showRevive ? 'fail' : 'normal';
+    modalCardEl.classList.remove('hint-empty-mode');
+    modalCardEl.classList.remove('hint-empty-mode');
+    modalCardEl.classList.remove('hint-empty-mode');
     modalCardEl.classList.toggle('boss-alert', !!isBossAlert);
     const bEl = document.getElementById('modalBadge');
     const tEl = document.getElementById('modalTitle');
@@ -3338,7 +3488,7 @@
   
   // Replace all static emojis in buttons/badges with inline SVGs on startup
   (function cwIconifyStaticDom() {
-    const selectors = ['#stageBadge', '#settingsBtn', '#status-banner', '#rankText', '#hintBtn', '#modalBadge', '#modalTitle', '#modalReviveBtn', '#modalActionBtn', '#settingsBadge', '.setting-label', '#settingsModal .modal-title', '#settingsModal div[style*="font-weight:900"]', '#closeSettingsBtn', '#settingsPortalBtn', '#adModalBadge', '.ad-pr-title', '.ad-pr-cta', '#adCompleteBtn', '#app a'];
+    const selectors = ['#stageBadge', '#settingsBtn', '#status-banner', '#rankText', '#hintBtn', '#modalBadge', '#modalTitle', '#modalReviveBtn', '#modalActionBtn', '#settingsBadge', '.setting-label', '#settingsModal .modal-title', '#settingsModal div[style*="font-weight:900"]', '#closeSettingsBtn', '#settingsPortalBtn', '#modalPortalBtn', '#modalPortalBtn', '#modalPortalBtn', '#adModalBadge', '.ad-pr-title', '.ad-pr-cta', '#adCompleteBtn', '#app a'];
     selectors.forEach(sel => {
       document.querySelectorAll(sel).forEach(el => {
         if (el.children.length === 0) {
