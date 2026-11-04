@@ -548,6 +548,185 @@
     color: #052e16;
     box-shadow: 0 4px 18px rgba(16, 185, 129, 0.5);
   }
+
+  /* === v7 Premium Visual Polish: 3D Bevel Tiles, Royal Exam Theme, Custom SVG Icons, Particle Burst & Seamless Stage Banner === */
+  .svg-ic {
+    width: 1.14em;
+    height: 1.14em;
+    vertical-align: -0.19em;
+    display: inline-block;
+    margin-right: 3px;
+    flex-shrink: 0;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.45));
+  }
+  body.boss-mode {
+    background: radial-gradient(circle at 50% 18%, #3b0764 0%, #1e1b4b 55%, #090d16 100%) !important;
+  }
+  .top-badge.boss, .step-pill.boss {
+    background: linear-gradient(135deg, rgba(250, 204, 21, 0.28) 0%, rgba(168, 85, 247, 0.32) 100%) !important;
+    border-color: #facc15 !important;
+    color: #fef08a !important;
+    box-shadow: 0 0 14px rgba(250, 204, 21, 0.35) !important;
+  }
+  .modal-card.boss-alert {
+    background: linear-gradient(180deg, #1e1b4b 0%, #3b0764 100%) !important;
+    border: 3px solid #facc15 !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 28px rgba(250, 204, 21, 0.45) !important;
+  }
+  .modal-card.boss-alert .modal-badge {
+    background: linear-gradient(90deg, #facc15 0%, #f59e0b 100%) !important;
+    color: #052e16 !important;
+    border: 1px solid #fef08a !important;
+  }
+  .modal-card.boss-alert .modal-iq {
+    color: #fde047 !important;
+  }
+  .modal-card.boss-alert .primary-btn {
+    background: linear-gradient(180deg, #fde047 0%, #f59e0b 100%) !important;
+    color: #052e16 !important;
+    box-shadow: 0 4px 18px rgba(250, 204, 21, 0.5) !important;
+  }
+  .cell, .color-tile, .num-card, .panel, .choice-card {
+    box-shadow:
+      0 5px 0 rgba(2, 6, 23, 0.78),
+      0 8px 16px rgba(0, 0, 0, 0.38),
+      inset 0 2px 1px rgba(255, 255, 255, 0.26),
+      inset 0 -2px 3px rgba(0, 0, 0, 0.35) !important;
+    border-top-color: rgba(255, 255, 255, 0.28) !important;
+  }
+  .cell:active, .color-tile:active, .num-card:active, .panel:active, .choice-card:active {
+    transform: translateY(3px) scale(0.95) !important;
+    box-shadow:
+      0 2px 0 rgba(2, 6, 23, 0.78),
+      0 3px 6px rgba(0, 0, 0, 0.35),
+      inset 0 1px 2px rgba(255, 255, 255, 0.18) !important;
+  }
+  .cw-particle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    border-radius: 50%;
+    will-change: transform, opacity;
+  }
+  .cw-combo-popup {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, #fde047 0%, #f59e0b 100%);
+    color: #052e16;
+    border: 2px solid #ffffff;
+    border-radius: 999px;
+    padding: 5px 14px;
+    font-size: 15px;
+    font-weight: 900;
+    white-space: nowrap;
+    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.65);
+    animation: cwComboFloat 0.78s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+  }
+  @keyframes cwComboFloat {
+    0%   { opacity: 0; transform: translate(-50%, -20%) scale(0.5); }
+    25%  { opacity: 1; transform: translate(-50%, -70%) scale(1.12); }
+    55%  { opacity: 1; transform: translate(-50%, -95%) scale(1.0); }
+    100% { opacity: 0; transform: translate(-50%, -140%) scale(0.92); }
+  }
+  .cw-seamless-banner {
+    position: fixed;
+    left: 50%;
+    top: 48%;
+    transform: translate(-50%, -50%);
+    z-index: 9500;
+    pointer-events: none;
+    width: min(88vw, 350px);
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.97) 0%, rgba(6, 78, 59, 0.97) 100%);
+    border: 2.5px solid #34d399;
+    border-radius: 22px;
+    padding: 16px 18px;
+    text-align: center;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75), 0 0 28px rgba(16, 185, 129, 0.45);
+    animation: cwSeamlessPop 1.08s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  @keyframes cwSeamlessPop {
+    0%   { opacity: 0; transform: translate(-50%, -42%) scale(0.78); }
+    18%  { opacity: 1; transform: translate(-50%, -50%) scale(1.04); }
+    32%  { opacity: 1; transform: translate(-50%, -50%) scale(1.0); }
+    82%  { opacity: 1; transform: translate(-50%, -50%) scale(1.0); }
+    100% { opacity: 0; transform: translate(-50%, -58%) scale(0.94); }
+  }
+
+
+  /* === v7.1 Single-Line Header/Footer & No-Wrap Polish === */
+  .header-row, .top-bar {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    flex-wrap: nowrap !important;
+    gap: 6px !important;
+  }
+  #stageBadge, .top-badge {
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 3px !important;
+    font-size: 12.5px !important;
+    padding: 6px 10px !important;
+    line-height: 1.2 !important;
+    flex-shrink: 1 !important;
+    min-width: 0 !important;
+  }
+  #stepPill, .step-pill {
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 2px !important;
+    font-size: 12.5px !important;
+    padding: 6px 10px !important;
+    line-height: 1.2 !important;
+    flex-shrink: 0 !important;
+  }
+  #settingsBtn, .settings-btn, .icon-btn {
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 3px !important;
+    font-size: 12.5px !important;
+    padding: 6px 10px !important;
+    line-height: 1.2 !important;
+    flex-shrink: 0 !important;
+  }
+  #rankText, .rank-info, .rank-box {
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 3px !important;
+    font-size: 13px !important;
+    line-height: 1.2 !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  #hintBtn, .hint-btn {
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 3px !important;
+    font-size: 13.5px !important;
+    padding: 8px 12px !important;
+    flex-shrink: 0 !important;
+  }
+  .target-card {
+    white-space: nowrap !important;
+    font-size: 15px !important;
+    padding: 8px 12px !important;
+  }
+  /* Color-sense high-contrast timer icon on white banner */
+  #status-banner .svg-ic path, #status-banner .svg-ic circle {
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.35));
+  }
+
 </style>
 </head>
 <body>
@@ -759,6 +938,161 @@
 
   loadProgress();
 
+  // === v7 Custom Inline SVG Icon Engine + Particle Burst + Seamless Stage Banner ===
+  const CW_SVGS = {
+    brain: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M9.5 3A4.5 4.5 0 0 0 5 7.5c0 .6.12 1.18.34 1.7A4.5 4.5 0 0 0 3 13.2c0 2.13 1.48 3.92 3.47 4.38A4 4 0 0 0 10.5 21H11V3H9.5Zm5 0H13v18h.5a4 4 0 0 0 4.03-3.42A4.5 4.5 0 0 0 21 13.2a4.5 4.5 0 0 0-2.34-4c.22-.52.34-1.1.34-1.7A4.5 4.5 0 0 0 14.5 3Z" fill="#f472b6" stroke="#fbcfe8" stroke-width="1.2"/></svg>',
+    palette: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 0 0 0 20c1.66 0 3-1.34 3-3 0-.78-.3-1.48-.78-2.01-.47-.52-.72-1.2-.47-1.86.26-.68.96-1.13 1.69-1.13H17a5 5 0 0 0 5-5c0-3.87-4.48-7-10-7Z" fill="#c084fc" stroke="#f5d0fe" stroke-width="1.3"/><circle cx="7.5" cy="10.5" r="1.6" fill="#fde047"/><circle cx="12" cy="7.5" r="1.6" fill="#38bdf8"/><circle cx="16.5" cy="10.5" r="1.6" fill="#34d399"/></svg>',
+    plus: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" fill="#10b981" stroke="#a7f3d0" stroke-width="1.5"/><path d="M12 7v10M7 12h10" stroke="#fff" stroke-width="2.8" stroke-linecap="round"/></svg>',
+    bolt: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8Z" fill="#facc15" stroke="#fef08a" stroke-width="1.2" stroke-linejoin="round"/></svg>',
+    refresh: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M20 11a8 8 0 1 0 2 5.3M20 4v7h-7" stroke="#38bdf8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    gear: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3.5" fill="#38bdf8"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.6.77 1.02 1.41 1.09H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z" stroke="#cbd5e1" stroke-width="1.7"/></svg>',
+    timer: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="13" r="8" fill="rgba(248,113,113,0.2)" stroke="#fca5a5" stroke-width="2"/><path d="M12 9v4l2.5 2.5M9 2h6" stroke="#fef08a" stroke-width="2.2" stroke-linecap="round"/></svg>',
+    medal: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M7 2h10l-2 6H9L7 2Z" fill="#38bdf8"/><circle cx="12" cy="15" r="6" fill="#facc15" stroke="#fef08a" stroke-width="1.5"/><path d="M12 11.8l1 2.1 2.3.3-1.7 1.6.4 2.3-2-1.1-2 1.1.4-2.3-1.7-1.6 2.3-.3 1-2.1Z" fill="#7c2d12"/></svg>',
+    bulb: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M9 18h6M10 21h4M12 2a7 7 0 0 0-4 12.74V16a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-1.26A7 7 0 0 0 12 2Z" fill="#fde047" stroke="#b45309" stroke-width="1.6" stroke-linecap="round"/></svg>',
+    sparkle: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8L12 2Z" fill="#fde047" stroke="#fff" stroke-width="1.2"/></svg>',
+    fire: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M12 2c1.5 3.5 4.5 5.5 4.5 9.5a4.5 4.5 0 0 1-9 0c0-1.8.8-3.4 2-4.5-.2 1.8 1.2 2.8 2 2.5C11 7 11 4.2 12 2Z" fill="#f97316" stroke="#fde047" stroke-width="1.4"/></svg>',
+    play: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" fill="#38bdf8" stroke="#e0f2fe" stroke-width="1.5"/><path d="M10 8.5l6 3.5-6 3.5v-7Z" fill="#0f172a"/></svg>',
+    crown: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M3 18h18l-2-11-5 4-2-6-2 6-5-4-2 11Z" fill="#facc15" stroke="#fef08a" stroke-width="1.5" stroke-linejoin="round"/></svg>',
+    warn: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M12 3L2 20h20L12 3Z" fill="#f59e0b" stroke="#fef08a" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 9v5M12 17h.01" stroke="#0f172a" stroke-width="2.4" stroke-linecap="round"/></svg>',
+    cross: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" fill="#ef4444" stroke="#fecaca" stroke-width="1.5"/><path d="M15 9l-6 6M9 9l6 6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg>',
+    check: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" fill="#10b981" stroke="#a7f3d0" stroke-width="1.5"/><path d="M8 12.5l2.8 2.8L16.5 9.5" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    lock: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2.5" fill="#64748b" stroke="#cbd5e1" stroke-width="1.5"/><path d="M8 11V7a4 4 0 1 1 8 0v4" stroke="#cbd5e1" stroke-width="1.8"/></svg>',
+    music: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M9 18V5l12-2v13" stroke="#a855f7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="18" r="3" fill="#c084fc"/><circle cx="18" cy="16" r="3" fill="#c084fc"/></svg>',
+    speaker: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M11 5L6 9H2v6h4l5 4V5Z" fill="#38bdf8"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14" stroke="#7dd3fc" stroke-width="2" stroke-linecap="round"/></svg>',
+    home: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5Z" fill="#818cf8" stroke="#e0e7ff" stroke-width="1.5"/></svg>',
+    skull: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M12 2a8 8 0 0 0-8 8c0 3.1 1.8 5.8 4.4 7v3h7.2v-3c2.6-1.2 4.4-3.9 4.4-7a8 8 0 0 0-8-8Z" fill="#94a3b8" stroke="#e2e8f0" stroke-width="1.5"/><circle cx="9" cy="10" r="1.8" fill="#0f172a"/><circle cx="15" cy="10" r="1.8" fill="#0f172a"/></svg>'
+  };
+
+  const EMOJI_TO_SVG_MAP = [
+    ['🧠', CW_SVGS.brain],
+    ['🎨', CW_SVGS.palette],
+    ['➕', CW_SVGS.plus],
+    ['🔷', CW_SVGS.sparkle],
+    ['🔢', CW_SVGS.bolt],
+    ['⚡', CW_SVGS.bolt],
+    ['🔄', CW_SVGS.refresh],
+    ['⚙️', CW_SVGS.gear],
+    ['⚙',  CW_SVGS.gear],
+    ['⏱️', CW_SVGS.timer],
+    ['⏱',  CW_SVGS.timer],
+    ['⏰', CW_SVGS.timer],
+    ['⏳', CW_SVGS.timer],
+    ['🏅', CW_SVGS.medal],
+    ['💡', CW_SVGS.bulb],
+    ['🎉', CW_SVGS.sparkle],
+    ['✨', CW_SVGS.sparkle],
+    ['🔥', CW_SVGS.fire],
+    ['🎬', CW_SVGS.play],
+    ['📺', CW_SVGS.play],
+    ['▶️', CW_SVGS.play],
+    ['▶',  CW_SVGS.play],
+    ['🚀', CW_SVGS.play],
+    ['👉', CW_SVGS.play],
+    ['👆', CW_SVGS.sparkle],
+    ['👑', CW_SVGS.crown],
+    ['🏆', CW_SVGS.crown],
+    ['🎁', CW_SVGS.sparkle],
+    ['⚠️', CW_SVGS.warn],
+    ['⚠',  CW_SVGS.warn],
+    ['❌', CW_SVGS.cross],
+    ['✅', CW_SVGS.check],
+    ['🔒', CW_SVGS.lock],
+    ['🎵', CW_SVGS.music],
+    ['🔊', CW_SVGS.speaker],
+    ['🛠️', CW_SVGS.gear],
+    ['🛠',  CW_SVGS.gear],
+    ['🏠', CW_SVGS.home],
+    ['🚿', CW_SVGS.sparkle],
+    ['💬', CW_SVGS.sparkle],
+    ['🌱', CW_SVGS.sparkle],
+    ['🔍', CW_SVGS.sparkle],
+    ['🦅', CW_SVGS.crown],
+    ['🦉', CW_SVGS.crown],
+    ['🌈', CW_SVGS.palette],
+    ['👁️', CW_SVGS.sparkle],
+    ['🧮', CW_SVGS.plus],
+    ['📸', CW_SVGS.bolt],
+    ['📐', CW_SVGS.sparkle],
+    ['🐆', CW_SVGS.bolt],
+    ['💀', CW_SVGS.skull]
+  ];
+
+  window.__cwIconify = function(str) {
+    let out = String(str ?? '');
+    for (const [emo, svg] of EMOJI_TO_SVG_MAP) {
+      if (out.includes(emo)) out = out.split(emo).join(svg);
+    }
+    return out;
+  };
+
+  window.__cwComboCount = 0;
+  window.__cwTriggerBurst = function(targetEl) {
+    window.__cwComboCount = (window.__cwComboCount || 0) + 1;
+    const rect = (targetEl && targetEl.getBoundingClientRect)
+      ? targetEl.getBoundingClientRect()
+      : { left: window.innerWidth / 2 - 20, top: window.innerHeight / 2 - 20, width: 40, height: 40 };
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const colors = ['#facc15', '#34d399', '#38bdf8', '#f472b6', '#ffffff'];
+
+    for (let i = 0; i < 14; i++) {
+      const p = document.createElement('div');
+      p.className = 'cw-particle';
+      const size = 6 + (i % 4) * 2;
+      p.style.width = size + 'px';
+      p.style.height = size + 'px';
+      p.style.left = (cx - size / 2) + 'px';
+      p.style.top = (cy - size / 2) + 'px';
+      const col = colors[i % colors.length];
+      p.style.background = col;
+      p.style.boxShadow = '0 0 8px ' + col;
+      document.body.appendChild(p);
+
+      const angle = (Math.PI * 2 * i) / 14 + (Math.random() * 0.25 - 0.12);
+      const dist = 42 + Math.random() * 48;
+      const dx = Math.cos(angle) * dist;
+      const dy = Math.sin(angle) * dist - 14;
+
+      if (p.animate) {
+        const anim = p.animate([
+          { transform: 'translate(0, 0) scale(1.15)', opacity: 1 },
+          { transform: `translate(${dx.toFixed(1)}px, ${dy.toFixed(1)}px) scale(0.1)`, opacity: 0 }
+        ], { duration: 520, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
+        anim.onfinish = () => p.remove();
+      } else {
+        setTimeout(() => p.remove(), 520);
+      }
+    }
+
+    if (window.__cwComboCount >= 2) {
+      const badge = document.createElement('div');
+      badge.className = 'cw-combo-popup';
+      badge.style.left = Math.min(window.innerWidth - 90, Math.max(90, cx)) + 'px';
+      badge.style.top = Math.max(70, cy - 18) + 'px';
+      badge.innerHTML = window.__cwIconify(`🔥 ${window.__cwComboCount}連続コンボ！`);
+      document.body.appendChild(badge);
+      setTimeout(() => badge.remove(), 800);
+    }
+  };
+
+  window.__cwShowSeamlessBanner = function(clearedStage, nextStage, iqVal, onDone) {
+    const existing = document.querySelector('.cw-seamless-banner');
+    if (existing) existing.remove();
+    const b = document.createElement('div');
+    b.className = 'cw-seamless-banner';
+    b.innerHTML = `
+      <div style="font-size:13px; font-weight:900; color:#fde047; margin-bottom:4px;">${CW_SVGS.sparkle} ステージクリア！</div>
+      <div style="font-size:22px; font-weight:900; color:#ffffff; margin-bottom:4px;">ステージ ${clearedStage}/10 突破！</div>
+      <div style="font-size:14px; font-weight:800; color:#6ee7b7;">現在IQ ${iqVal} ｜ 次は ステージ ${nextStage}/10</div>
+    `;
+    document.body.appendChild(b);
+    setTimeout(() => {
+      b.remove();
+      if (typeof onDone === 'function') onDone();
+    }, 1080);
+  };
+
+
   function adjustIQ(delta) {
     const levelCaps = [130, 150, 170, 185, 200];
     const maxLv = Math.min(5, Math.max(1, state.maxUnlockedMission || state.mission || 1));
@@ -803,28 +1137,93 @@
   }
 
   function syncBgmLoop() {
-    if (bgmTimer) { clearInterval(bgmTimer); bgmTimer = null; }
+    if (bgmTimer) {
+      clearInterval(bgmTimer);
+      bgmTimer = null;
+    }
     if (document.hidden || !state.bgmOn || state.bgmVolume <= 0 || !audioCtx) return;
-    const notes = [330, 392, 493.88, 392, 349.23, 440, 523.25, 440];
+
+    const boss = isBossStage(state.stage);
+    const intervalMs = boss ? 220 : 280;
+    // Warm Electric-Piano Chords + Pleasant Bell Melody (Uplifting Royal Progression on Special Exams!)
+    const normalChords = [
+      [261.63, 329.63, 392.00], // Cmaj
+      [293.66, 369.99, 440.00], // Dmaj/G
+      [246.94, 329.63, 392.00], // Em
+      [220.00, 261.63, 329.63]  // Am
+    ];
+    const normalMelody = [
+      523.25, 0, 659.25, 587.33,
+      493.88, 0, 587.33, 659.25,
+      523.25, 0, 392.00, 440.00,
+      523.25, 587.33, 523.25, 0
+    ];
+    const bossChords = [
+      [349.23, 440.00, 523.25], // Fmaj
+      [392.00, 493.88, 587.33], // Gmaj
+      [329.63, 392.00, 493.88], // Em7
+      [349.23, 440.00, 523.25]  // Fmaj
+    ];
+    const bossMelody = [
+      587.33, 659.25, 783.99, 659.25,
+      587.33, 0, 783.99, 880.00,
+      783.99, 659.25, 587.33, 659.25,
+      783.99, 880.00, 1046.50, 0
+    ];
+
     bgmTimer = setInterval(() => {
       if (document.hidden || !state.bgmOn || state.bgmVolume <= 0 || !audioCtx) return;
       const settingsOpen = document.getElementById('settingsModal')?.classList.contains('show');
-      if (!canTap && !isMemorizing && !settingsOpen) return;
-      try {
-        const now = audioCtx.currentTime;
+      if (!isQuestionActive && !settingsOpen) return;
+
+      const now = audioCtx.currentTime;
+      const isBoss = isBossStage(state.stage);
+      const step = bgmStep % 16;
+      bgmStep++;
+
+      const dest = bgmMasterGain || audioCtx.destination;
+
+      // 1. Warm Low-Pass Filtered Electric Piano Chord on beats 0, 4, 8, 12
+      if (step % 4 === 0) {
+        const chordList = isBoss ? bossChords : normalChords;
+        const chord = chordList[Math.floor(step / 4) % chordList.length];
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(1150, now);
+        filter.connect(dest);
+
+        chord.forEach((cFreq) => {
+          const osc = audioCtx.createOscillator();
+          const g = audioCtx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(cFreq, now);
+          g.gain.setValueAtTime(0.001, now);
+          g.gain.linearRampToValueAtTime(0.032, now + 0.025);
+          g.gain.exponentialRampToValueAtTime(0.0008, now + (intervalMs / 1000) * 3.6);
+          osc.connect(g);
+          g.connect(filter);
+          osc.start(now);
+          osc.stop(now + (intervalMs / 1000) * 3.7);
+        });
+      }
+
+      // 2. Soft Bell Melody
+      const melList = isBoss ? bossMelody : normalMelody;
+      const mFreq = melList[step];
+      if (mFreq > 0) {
         const osc = audioCtx.createOscillator();
         const g = audioCtx.createGain();
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(notes[bgmStep % notes.length], now);
-        g.gain.setValueAtTime(0.06, now);
-        g.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+        osc.frequency.setValueAtTime(mFreq, now);
+        g.gain.setValueAtTime(0.001, now);
+        g.gain.linearRampToValueAtTime(isBoss ? 0.06 : 0.065, now + 0.015);
+        g.gain.exponentialRampToValueAtTime(0.0008, now + (intervalMs / 1000) * 1.45);
         osc.connect(g);
-        g.connect(bgmMasterGain || audioCtx.destination);
+        g.connect(dest);
         osc.start(now);
-        osc.stop(now + 0.26);
-        bgmStep++;
-      } catch (e) {}
-    }, 350);
+        osc.stop(now + (intervalMs / 1000) * 1.5);
+      }
+    }, intervalMs);
   }
 
   function getSeGain(baseGain) {
@@ -1018,12 +1417,12 @@
     selectPrCard(currentPrIdx + 1);
     const AD_DURATION = 5.0;
     const initCopy = getAdCopyForType(currentAdType, 5);
-    adModalBadgeEl.textContent = initCopy.badgeWait;
+    adModalBadgeEl.innerHTML = window.__cwIconify(initCopy.badgeWait);
     adModalTitleEl.textContent = initCopy.subText;
     adProgressBarEl.style.width = '0%';
     adCompleteBtnEl.disabled = true;
     adCompleteBtnEl.classList.remove('ready');
-    adCompleteBtnEl.textContent = initCopy.btnWait;
+    adCompleteBtnEl.innerHTML = window.__cwIconify(initCopy.btnWait);
     adOverlayModalEl.classList.add('show');
 
     const startMs = performance.now();
@@ -1036,18 +1435,18 @@
       if (rem > 0) {
         const remaining = Math.ceil(rem);
         const copy = getAdCopyForType(currentAdType, remaining);
-        adModalBadgeEl.textContent = copy.badgeWait;
+        adModalBadgeEl.innerHTML = window.__cwIconify(copy.badgeWait);
         adModalTitleEl.textContent = copy.subText;
-        adCompleteBtnEl.textContent = copy.btnWait;
+        adCompleteBtnEl.innerHTML = window.__cwIconify(copy.btnWait);
       } else {
         clearInterval(adTimerId);
         const copy = getAdCopyForType(currentAdType, 0);
         adProgressBarEl.style.width = '100%';
-        adModalBadgeEl.textContent = copy.badgeDone;
+        adModalBadgeEl.innerHTML = window.__cwIconify(copy.badgeDone);
         adModalTitleEl.textContent = copy.subText;
         adCompleteBtnEl.disabled = false;
         adCompleteBtnEl.classList.add('ready');
-        adCompleteBtnEl.textContent = copy.btnDone;
+        adCompleteBtnEl.innerHTML = window.__cwIconify(copy.btnDone);
       }
     }, 80);
   }
@@ -1115,14 +1514,14 @@
     const boss = isBossStage(state.stage);
     document.body.classList.toggle('boss-mode', boss);
     stageBadgeEl.classList.toggle('boss', boss);
-    stageBadgeEl.textContent = boss ? `🔥 レベル ${state.mission}/5 ｜ ボス ${state.stage}/10` : `⚡ レベル ${state.mission}/5 ｜ ステージ ${state.stage}/10`;
-    stepPillEl.textContent = boss ? '⚡ 1問一発勝負！' : `第 ${stepInStage} / ${NORMAL_QUESTIONS_PER_STAGE} 問`;
-    rankTextEl.textContent = `⚡ 記憶IQ ${state.iq} ｜ ${getTitleForIQ(state.iq)}`;
+    stageBadgeEl.innerHTML = window.__cwIconify(boss ? (state.stage === 10 ? `👑 レベル ${state.mission}/5 ｜ 認定試験 10/10` : `🏅 レベル ${state.mission}/5 ｜ 中間テスト 5/10`) : `⚡ レベル ${state.mission}/5 ｜ ステージ ${state.stage}/10`);
+    stepPillEl.innerHTML = window.__cwIconify(`第 ${stepInStage} / ${NORMAL_QUESTIONS_PER_STAGE} 問`);
+    rankTextEl.innerHTML = window.__cwIconify(`⚡ 記憶IQ ${state.iq} ｜ ${getTitleForIQ(state.iq)}`);
     if (state.hints > 0) {
-      hintBtnEl.textContent = `💡 再フラッシュ (${state.hints})`;
+      hintBtnEl.innerHTML = window.__cwIconify(`💡 再フラッシュ (${state.hints})`);
       hintBtnEl.classList.remove('ad-reward');
     } else {
-      hintBtnEl.textContent = '🎬 ヒント+3';
+      hintBtnEl.innerHTML = window.__cwIconify('🎬 ヒント+3');
       hintBtnEl.classList.add('ad-reward');
     }
     hintBtnEl.disabled = !canTap;
@@ -1138,7 +1537,7 @@
 
     const rem = targetSet.size - foundSet.size;
     bannerEl.className = '';
-    bannerEl.textContent = `👆 光ったパネルをタップ！（残り ${rem} 枚）`;
+    bannerEl.innerHTML = window.__cwIconify(`👆 光ったパネルをタップ！（残り ${rem} 枚）`);
 
     const startTime = performance.now();
     timerId = setInterval(() => {
@@ -1171,7 +1570,7 @@
     });
 
     bannerEl.className = 'memorize';
-    bannerEl.textContent = `👀 光っている ${targetSet.size} 枚を記憶中…`;
+    bannerEl.innerHTML = window.__cwIconify(`👀 光っている ${targetSet.size} 枚を記憶中…`);
     progBarEl.style.width = '100%';
     progBarEl.style.backgroundColor = '#f59e0b';
     updateHUD();
@@ -1245,19 +1644,20 @@
 
       const rem = targetSet.size - foundSet.size;
       if (rem > 0) {
-        bannerEl.textContent = `👆 光ったパネルをタップ！（残り ${rem} 枚）`;
+        bannerEl.innerHTML = window.__cwIconify(`👆 光ったパネルをタップ！（残り ${rem} 枚）`);
       } else {
         canTap = false;
         isMemorizing = false;
         clearInterval(timerId);
         adjustIQ(2);
         questionsSinceLastAd++;
+      if (window.__cwTriggerBurst) window.__cwTriggerBurst(el);
         bannerEl.className = 'correct';
-        bannerEl.textContent = `🎉 パーフェクト記憶！`;
+        bannerEl.innerHTML = window.__cwIconify(`🎉 パーフェクト記憶！`);
         updateHUD();
 
         const boss = isBossStage(state.stage);
-        const totalQuestions = boss ? 1 : NORMAL_QUESTIONS_PER_STAGE;
+        const totalQuestions = NORMAL_QUESTIONS_PER_STAGE;
 
         if (stepInStage < totalQuestions) {
           clearTimeout(transitionTimeoutId);
@@ -1310,11 +1710,11 @@
                 showModal({
                   isBossAlert: true,
                   showRevive: false,
-                  badge: '⚠️ ボスステージ出現！',
-                  title: `次はボスステージ ${state.stage}/10！`,
-                  iqText: '1問一発勝負！',
-                  comment: `ステージ ${clearedStage}/10 クリア！<br>次はパネル数が増えるボスステージです！`,
-                  btnText: `🔥 ボスステージ ${state.stage}/10 に挑む！`
+                  badge: state.stage === 10 ? '👑 レベル認定試験（最終ステージ）！' : '🏅 中間テスト（特別ステージ）！',
+                  title: state.stage === 10 ? '次はレベル認定試験（ステージ 10/10）！' : '次は中間テスト（ステージ 5/10）！',
+                  iqText: '全3問・高密度グリッド特別試験',
+                  comment: `ステージ ${clearedStage}/10 クリア！<br>次はパネル数が増える全3問の特別テストです！`,
+                  btnText: state.stage === 10 ? '👑 レベル認定試験（10/10）に挑む！' : '🏅 中間テスト（5/10）に挑む！'
                 });
               }, 900);
             } else {
@@ -1322,7 +1722,8 @@
               clearTimeout(transitionTimeoutId);
               transitionTimeoutId = setTimeout(() => {
                 transitionTimeoutId = null;
-                showModal({
+                if (boss) {
+              showModal({
                   isBossAlert: false,
                   showRevive: false,
                   badge: '🎉 ステージクリア！',
@@ -1331,6 +1732,12 @@
                   comment: `${getTitleForIQ(state.iq)}`,
                   btnText: `▶️ ステージ ${state.stage}/10 へ進む`
                 });
+            } else {
+              window.__cwShowSeamlessBanner(clearedStage, state.stage, state.iq, () => {
+                stepInStage = 1;
+                startQuestion();
+              });
+            }
               }, 900);
             }
           }
@@ -1356,7 +1763,7 @@
 
     // Do NOT reveal un-found target panels on the board so the player can retry the exact same puzzle!
     bannerEl.className = 'reveal';
-    bannerEl.textContent = reason === 'wrong' ? '❌ お手つき！' : '⏰ 時間切れ！';
+    bannerEl.innerHTML = window.__cwIconify(reason === 'wrong' ? '❌ お手つき！' : '⏰ 時間切れ！');
     updateHUD();
 
     const boss = isBossStage(state.stage);
@@ -1370,7 +1777,7 @@
         showRevive: true,
         reviveText: '🎬 動画を見て【同じ問題】に再挑戦',
         badge: reason === 'wrong' ? '❌ お手つき！' : '⏰ 時間切れ！',
-        title: boss ? `ボスステージ ${state.stage}/10 失敗` : `ステージ ${state.stage}/10（第${stepInStage}問でミス）`,
+        title: boss ? `${state.stage === 10 ? 'レベル認定試験' : '中間テスト'}（第${stepInStage}問でミス）` : `ステージ ${state.stage}/10（第${stepInStage}問でミス）`,
         iqText: `記憶IQ ${state.iq}`,
         comment: '動画を見ると、同じパネル配置をもう一度フラッシュして<b>【同じ問題】</b>に再挑戦できます！',
         btnText: retryBtnText
@@ -1380,14 +1787,14 @@
 
   function showModal({ isBossAlert, showRevive, reviveText, badge, title, iqText, comment, btnText }) {
     modalCardEl.classList.toggle('boss-alert', !!isBossAlert);
-    document.getElementById('modalBadge').textContent = badge;
-    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalBadge').innerHTML = window.__cwIconify(badge);
+    document.getElementById('modalTitle').innerHTML = window.__cwIconify(title);
     document.getElementById('modalIQ').textContent = iqText;
-    document.getElementById('modalComment').innerHTML = comment;
-    document.getElementById('modalActionBtn').textContent = btnText;
+    document.getElementById('modalComment').innerHTML = window.__cwIconify(comment);
+    document.getElementById('modalActionBtn').innerHTML = window.__cwIconify(btnText);
     if (modalReviveBtnEl) {
       modalReviveBtnEl.style.display = showRevive ? 'block' : 'none';
-      if (reviveText) modalReviveBtnEl.textContent = reviveText;
+      if (reviveText) modalReviveBtnEl.innerHTML = window.__cwIconify(reviveText);
     }
     modalEl.classList.add('show');
   }
@@ -1558,7 +1965,7 @@
         const col = active ? '#1c1917' : (isBoss ? '#fbcfe8' : '#e2e8f0');
         const bdr = active ? '#fbbf24' : (isBoss ? '#f472b6' : '#2e407d');
         return `<button data-stage="${st}" style="padding:10px 4px; border-radius:10px; border:2px solid ${bdr}; background:${bg}; color:${col}; font-size:14px; font-weight:900; cursor:pointer;">
-          ${isBoss ? '🔥B' + st : 'S' + st}
+          ${window.__cwIconify(isBoss ? '🏅T' + st : 'S' + st)}
         </button>`;
       }).join('');
 
@@ -1742,6 +2149,19 @@
   window.addEventListener('pagehide', handleAppBackground);
   window.addEventListener('focus', handleAppForeground);
 
+
+  
+  // Replace all static emojis in buttons/badges with inline SVGs on startup
+  (function cwIconifyStaticDom() {
+    const selectors = ['#stageBadge', '#settingsBtn', '#status-banner', '#rankText', '#hintBtn', '#modalBadge', '#modalReviveBtn', '#modalActionBtn', '#settingsBadge', '.setting-label', '#closeSettingsBtn', '#settingsPortalBtn', '#adModalBadge', '.ad-pr-title', '.ad-pr-cta', '#adCompleteBtn', '#app a'];
+    selectors.forEach(sel => {
+      document.querySelectorAll(sel).forEach(el => {
+        if (el.children.length === 0) {
+          el.innerHTML = window.__cwIconify(el.innerHTML);
+        }
+      });
+    });
+  })();
 
   startQuestion();
 })();
