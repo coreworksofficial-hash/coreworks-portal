@@ -743,6 +743,7 @@
   }
 
   /* 1. Top Header Bar: 3D Metallic Pill Badges & 3D Glossy Settings Button */
+  #top-progress-wrap { display: none !important; }
   #stageBadge, .stage-badge {
     background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
     border: 1.5px solid #475569 !important;
@@ -1114,8 +1115,9 @@
     margin-bottom: 10px !important;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7) !important;
   }
+  #modalIQ[style*="display: none"], #modalIQ[style*="display:none"] { display: none !important; }
   #modalIQ {
-    display: inline-flex !important;
+    display: inline-flex;
     align-items: center !important;
     justify-content: center !important;
     gap: 6px !important;
