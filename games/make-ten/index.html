@@ -1455,10 +1455,10 @@
       <!-- Coreworks In-Game Monetization & Nav -->
       <div style="width:100%; margin-top:12px; padding-top:12px; border-top:1px solid rgba(148,163,184,0.2); display:flex; flex-direction:column; gap:8px;">
         <div style="display:flex; gap:8px; width:100%;">
-          <a href="/payback-calc/?v=7.8" style="flex:1; padding:10px 6px; border-radius:8px; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); color:#34d399; font-size:13px; font-weight:700; text-decoration:none; text-align:center;">
+          <a href="/payback-calc/?v=7.9" style="flex:1; padding:10px 6px; border-radius:8px; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); color:#34d399; font-size:13px; font-weight:700; text-decoration:none; text-align:center;">
             元取り1秒計算
           </a>
-          <a href="/?tab=games&v=7.8" style="flex:1; padding:10px 6px; border-radius:8px; background:rgba(99,102,241,0.16); border:1px solid rgba(99,102,241,0.4); color:#818cf8; font-size:13px; font-weight:700; text-decoration:none; text-align:center;">
+          <a href="/?tab=games&v=7.9" style="flex:1; padding:10px 6px; border-radius:8px; background:rgba(99,102,241,0.16); border:1px solid rgba(99,102,241,0.4); color:#818cf8; font-size:13px; font-weight:700; text-decoration:none; text-align:center;">
             脳トレ一覧へ
           </a>
         </div>
@@ -1515,7 +1515,7 @@
       <div id="stageJumpGrid" style="width:100%; display:grid; grid-template-columns:repeat(5, 1fr); gap:6px;"></div>
 
       <button class="primary-btn" id="closeSettingsBtn">✅ 閉じてゲームに戻る</button>
-      <a href="/?tab=games&v=7.8" class="web-portal-link" id="settingsPortalBtn" style="display:block; width:100%; margin-top:4px; padding:10px; border-radius:12px; background:rgba(99,102,241,0.18); border:1px solid rgba(99,102,241,0.45); color:#a5b4fc; font-size:13px; font-weight:800; text-decoration:none; text-align:center;">🏠 ゲーム一覧（ポータル）へ戻る</a>
+      <a href="/?tab=games&v=7.9" class="web-portal-link" id="settingsPortalBtn" style="display:block; width:100%; margin-top:4px; padding:10px; border-radius:12px; background:rgba(99,102,241,0.18); border:1px solid rgba(99,102,241,0.45); color:#a5b4fc; font-size:13px; font-weight:800; text-decoration:none; text-align:center;">🏠 ゲーム一覧（ポータル）へ戻る</a>
     </div>
   </div>
 
@@ -1732,7 +1732,12 @@
   };
 
   window.__cwComboCount = 0;
+  window.__cwResetCombo = function() {
+    window.__cwComboCount = 0;
+    document.querySelectorAll('.cw-combo-popup').forEach(el => el.remove());
+  };
   window.__cwTriggerBurst = function(targetEl) {
+    document.querySelectorAll('.cw-combo-popup').forEach(el => el.remove());
     window.__cwComboCount = (window.__cwComboCount || 0) + 1;
     const rect = (targetEl && targetEl.getBoundingClientRect)
       ? targetEl.getBoundingClientRect()
@@ -2098,7 +2103,10 @@
     initAudio();
     if (!audioCtx) return;
     const now = audioCtx.currentTime;
-    [587.33, 739.99, 880.00, 1174.66].forEach((freq, idx) => {
+    const comboStep = Math.min(8, Math.max(0, (window.__cwComboCount || 1) - 1));
+    const pitchMul = Math.pow(2, comboStep / 12);
+    [587.33, 739.99, 880.00, 1174.66].forEach((baseFreq, idx) => {
+      const freq = baseFreq * pitchMul;
       const t0 = now + idx * 0.045;
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
@@ -2234,6 +2242,7 @@
   }
 
   function playWrongSound() {
+    if (window.__cwResetCombo) window.__cwResetCombo();
     if (!state.seOn || state.seVolume <= 0) return;
     initAudio();
     if (!audioCtx) return;
@@ -2816,6 +2825,7 @@
   }
 
   function onFail(reason, wrongExpr = '') {
+    if (window.__cwResetCombo) window.__cwResetCombo();
     adjustIQ(-2);
     saveProgress();
     isQuestionActive = false;
@@ -3125,6 +3135,7 @@
       btn.addEventListener('click', () => {
         if (btn.disabled) return;
         const m = Number(btn.getAttribute('data-mission'));
+        if (window.__cwResetCombo) window.__cwResetCombo();
         state.mission = m;
         state.stage = 1;
         stepInStage = 1;
@@ -3151,6 +3162,7 @@
 
       stageJumpGridEl.querySelectorAll('button[data-stage]').forEach(btn => {
         btn.addEventListener('click', () => {
+          if (window.__cwResetCombo) window.__cwResetCombo();
           state.stage = Number(btn.getAttribute('data-stage'));
           stepInStage = 1;
           settingsPausedRemaining = null;
