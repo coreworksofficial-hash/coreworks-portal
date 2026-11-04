@@ -25,36 +25,33 @@
       font-size: 16px;
       line-height: 1.5;
     }
-    .wrap { max-width: 680px; margin: 0 auto; padding: 20px 16px 48px; }
+    .wrap { max-width: 680px; margin: 0 auto; padding: 20px 16px 40px; }
 
-    /* 1. ヒーローヘッダー（落ち着きと信頼感のあるタイポグラフィ） */
+    /* 1. ヒーローヘッダー */
     .hero { text-align: center; margin-bottom: 18px; }
-    .hero h1 { font-size: 1.375rem; font-weight: 800; color: var(--text); letter-spacing: -0.01em; margin-bottom: 4px; }
-    .hero p { font-size: 0.9375rem; color: var(--muted); }
+    .hero h1 { font-size: 1.35rem; font-weight: 800; color: var(--text); letter-spacing: -0.01em; margin-bottom: 4px; }
+    .hero p { font-size: 0.9rem; color: var(--muted); }
 
-    /* 2. カテゴリ切り替えタブ（15px） */
+    /* 2. カテゴリ切り替えタブ（2タブ構成・横溢れゼロ） */
     .tab-bar {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px;
       background: #131c31; padding: 6px; border-radius: 12px;
       border: 1px solid var(--border); margin-bottom: 18px;
     }
     .tab-btn {
       border: none; background: transparent; color: var(--muted);
-      padding: 11px 6px; border-radius: 8px; font-size: 0.9375rem; /* 15px */
+      padding: 11px 8px; border-radius: 8px; font-size: 0.9375rem;
       font-weight: 700; cursor: pointer; transition: background 0.15s ease, color 0.15s ease;
-      white-space: nowrap;
-    }
-    .tab-btn.active {
-      background: var(--accent); color: #ffffff; font-weight: 800;
+      white-space: nowrap; display: inline-flex; align-items: center; justify-content: center;
     }
     .tab-btn[data-tab="calc"].active {
-      background: #059669; color: #ffffff;
+      background: #059669; color: #ffffff; font-weight: 800;
     }
     .tab-btn[data-tab="game"].active {
-      background: #4f46e5; color: #ffffff;
+      background: #4f46e5; color: #ffffff; font-weight: 800;
     }
 
-    /* 3. 主役カードリスト（スマホ1列・PC最大2列、上品な2色カテゴリ分け） */
+    /* 3. 主役カードリスト */
     .tab-pane { display: none; }
     .tab-pane.active { display: block; }
     .app-grid {
@@ -69,18 +66,13 @@
       text-decoration: none; color: inherit; min-width: 0;
       transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
     }
-    .app-card.card-calc {
-      border-left: 4px solid var(--calc-color);
-    }
-    .app-card.card-game {
-      border-left: 4px solid var(--game-color);
-    }
+    .app-card.card-calc { border-left: 4px solid var(--calc-color); }
+    .app-card.card-game { border-left: 4px solid var(--game-color); }
     .app-card.card-calc:hover { background: var(--card-hover); border-color: var(--calc-color); }
     .app-card.card-game:hover { background: var(--card-hover); border-color: var(--game-color); }
     .app-card:active { transform: scale(0.99); }
 
     .app-icon {
-      font-size: 1.875rem; /* 30px */
       flex-shrink: 0; width: 48px; height: 48px;
       display: flex; align-items: center; justify-content: center;
       border-radius: 12px;
@@ -96,19 +88,18 @@
 
     .app-info { min-width: 0; flex: 1; }
     .app-title {
-      font-size: 1.125rem; /* 18px */
+      font-size: 1.08rem;
       font-weight: 700; color: var(--text);
       line-height: 1.35; margin-bottom: 3px;
     }
     .app-sub {
-      font-size: 0.875rem; /* 14px */
+      font-size: 0.85rem;
       color: var(--muted); font-weight: 400;
       line-height: 1.4;
     }
 
-    /* 右端の小さなピル型アクションバッジ */
     .app-badge {
-      flex-shrink: 0; font-size: 0.8125rem; /* 13px */
+      flex-shrink: 0; font-size: 0.8125rem;
       font-weight: 700; padding: 6px 10px; border-radius: 999px;
       white-space: nowrap; letter-spacing: 0.01em;
     }
@@ -123,14 +114,14 @@
       color: #818cf8;
     }
 
-    /* 4. 控えめな1行スリムPRセクション（温かみのあるアンバー小ボタン＋エメラルドメリット文） */
+    /* 4. タブ連動・厳選2枠のみのスリムPRセクション */
     .pr-sec {
-      margin-top: 32px; padding-top: 20px;
+      margin-top: 24px; padding-top: 18px;
       border-top: 1px solid var(--border);
     }
     .pr-sec-title {
-      font-size: 0.875rem; font-weight: 700; color: var(--muted);
-      margin-bottom: 10px;
+      font-size: 0.84rem; font-weight: 700; color: var(--muted);
+      margin-bottom: 10px; display: flex; align-items: center;
     }
     .pr-list { display: flex; flex-direction: column; gap: 8px; }
     .pr-row {
@@ -139,41 +130,40 @@
       border-radius: 10px; padding: 11px 13px;
     }
     .pr-info { min-width: 0; flex: 1; }
-    .pr-name { font-size: 0.9375rem; font-weight: 700; color: var(--text); line-height: 1.3; }
-    .pr-benefit { font-size: 0.8125rem; color: #34d399; font-weight: 600; margin-top: 3px; }
+    .pr-name { font-size: 0.92rem; font-weight: 700; color: var(--text); line-height: 1.3; }
+    .pr-benefit { font-size: 0.78rem; color: #34d399; font-weight: 600; margin-top: 3px; }
     .pr-btn {
       flex-shrink: 0;
       background: rgba(245, 158, 11, 0.16);
       border: 1px solid #f59e0b;
       color: #fde047;
-      text-decoration: none; font-size: 0.8125rem; font-weight: 700;
+      text-decoration: none; font-size: 0.8rem; font-weight: 700;
       padding: 7px 12px; border-radius: 8px; white-space: nowrap;
       transition: background 0.15s ease, color 0.15s ease;
     }
     .pr-btn:hover { background: rgba(245, 158, 11, 0.28); color: #ffffff; }
 
     footer {
-      margin-top: 20px; text-align: center; color: var(--subtle);
-      font-size: 0.8125rem; padding-top: 12px;
+      margin-top: 24px; text-align: center; color: var(--subtle);
+      font-size: 0.78rem; padding-top: 14px; border-top: 1px solid rgba(51, 65, 85, 0.5);
     }
     footer a { color: var(--muted); text-decoration: underline; }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <!-- ヒーローヘッダー -->
     <div class="hero">
       <h1>Coreworks｜1秒損得計算 ＆ 瞬間脳トレIQラボ</h1>
       <p>タップして今すぐ使える無料ツール＆瞬間脳トレゲーム</p>
     </div>
 
     <!-- 2つの切り替えタブ（デフォルト：暮らしの損得計算、?tab=gamesで脳トレ初期表示） -->
-    <div class="tab-bar" role="tablist" style="grid-template-columns: repeat(2, 1fr);">
-      <button type="button" class="tab-btn active" data-tab="calc" onclick="switchTab('calc')">💰 暮らしの損得計算 (7)</button>
-      <button type="button" class="tab-btn" data-tab="game" onclick="switchTab('game')">🧠 脳トレゲーム (6)</button>
+    <div class="tab-bar" role="tablist">
+      <button type="button" class="tab-btn active" data-tab="calc" onclick="switchTab('calc')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:5px;"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="11" x2="10" y2="11"/><line x1="14" y1="11" x2="16" y2="11"/><line x1="8" y1="16" x2="10" y2="16"/><line x1="14" y1="16" x2="16" y2="16"/></svg>暮らしの損得計算 (7)</button>
+      <button type="button" class="tab-btn" data-tab="game" onclick="switchTab('game')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:5px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>脳トレゲーム (6)</button>
     </div>
 
-    <!-- タブ1: 暮らしの損得計算 (7個・デフォルト表示) -->
+    <!-- タブ1: 暮らしの損得計算 (7個 ＋ 関連する無料診断2枠のみ) -->
     <div id="pane-calc" class="tab-pane active">
       <div class="app-grid">
       <a href="/furusato-tax/" class="app-card card-calc">
@@ -233,9 +223,30 @@
         <div class="app-badge badge-calc" aria-hidden="true">計算 ›</div>
       </a>
       </div>
+      <div class="pr-sec">
+        <div class="pr-sec-title"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:5px;"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>固定費・光熱費削減で人気の無料診断サービス（PR）</div>
+        <div class="pr-list">
+
+          <div class="pr-row">
+            <div class="pr-info">
+              <div class="pr-name">保険マンモス｜家計＆保険の0円見直し無料相談</div>
+              <div class="pr-benefit">✓ 相談完全無料・固定費削減シミュレーション＆相談特典プレゼント付</div>
+            </div>
+            <a href="https://af.moshimo.com/af/c/click?a_id=5880339&p_id=7778&pc_id=22539&pl_id=97004" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">無料相談 ↗</a>
+          </div>
+
+          <div class="pr-row">
+            <div class="pr-info">
+              <div class="pr-name">暮らしの節約×再エネ補助金ナビ｜電気代削減の無料診断</div>
+              <div class="pr-benefit">✓ 0円で国・自治体の省エネ補助金＆電気代カット額をオンライン診断</div>
+            </div>
+            <a href="https://af.moshimo.com/af/c/click?a_id=5880340&p_id=7507&pc_id=21688&pl_id=94219" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">無料診断 ↗</a>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- タブ2: 脳トレゲーム (6個・?tab=games初期表示対応) -->
+    <!-- タブ2: 脳トレゲーム (6個 ＋ 関連する人気特集2枠のみ) -->
     <div id="pane-game" class="tab-pane">
       <div class="app-grid">
       <a href="/kanji-iq/" class="app-card card-game">
@@ -287,110 +298,33 @@
         <div class="app-badge badge-game" aria-hidden="true">遊ぶ ›</div>
       </a>
       </div>
-    </div>
+      <div class="pr-sec">
+        <div class="pr-sec-title"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:5px;"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>脳トレ・ポイント消化で人気の公式特集（PR）</div>
+        <div class="pr-list">
 
-    <!-- 控えめな1行スリムPRセクション -->
-    <div class="pr-sec">
-      <div class="pr-sec-title">💡 計算ツールで人気の節約アイテム（PR）</div>
-      <div class="pr-list">
-
-        <div class="pr-row">
-          <div class="pr-info">
-            <div class="pr-name">🏠 保険マンモス｜家計＆保険の0円見直し無料相談</div>
-            <div class="pr-benefit">✓ 相談完全無料・固定費削減シミュレーション＆相談特典プレゼント付</div>
+          <div class="pr-row">
+            <div class="pr-info">
+              <div class="pr-name">楽天ブックス｜脳トレパズル本・人気ゲーム特集</div>
+              <div class="pr-benefit">✓ 全品送料無料＆高還元ポイント・人気の脳トレ書籍やゲームを探す</div>
+            </div>
+            <a href="https://af.moshimo.com/af/c/click?a_id=5880337&p_id=56&pc_id=56&pl_id=637" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">ブックス ↗</a>
           </div>
-          <a href="https://af.moshimo.com/af/c/click?a_id=5880339&p_id=7778&pc_id=22539&pl_id=97004" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">無料相談 ↗</a>
-        </div>
 
-        <div class="pr-row">
-          <div class="pr-info">
-            <div class="pr-name">☀️ 暮らしの節約×再エネ補助金ナビ｜電気代削減の無料診断</div>
-            <div class="pr-benefit">✓ 0円で国・自治体の省エネ補助金＆電気代カット額をオンライン診断</div>
+          <div class="pr-row">
+            <div class="pr-info">
+              <div class="pr-name">楽天市場｜今日のポイント高還元・人気ランキング</div>
+              <div class="pr-benefit">✓ 1,000円ポッキリ送料無料＆還元率が高いふるさと納税・人気名品まとめ</div>
+            </div>
+            <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F1000%25E5%2586%2586%25E3%2583%259D%25E3%2583%2583%25E3%2582%25AD%25E3%2583%25AA%2520%25E9%2580%2581%25E6%2596%2599%25E7%2584%25A1%25E6%2596%2599%2520%25E3%2581%25B5%25E3%2582%258B%25E3%2581%2595%25E3%2581%25A8%25E7%25B4%258D%25E7%25A8%258E%2520%25E4%25BA%25BA%25E6%25B0%2597%25E3%2583%25A9%25E3%2583%25B3%25E3%2582%25AD%25E3%2583%25B3%25E3%2582%25B0%2F" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">楽天で見る ↗</a>
           </div>
-          <a href="https://af.moshimo.com/af/c/click?a_id=5880340&p_id=7507&pc_id=21688&pl_id=94219" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">無料診断 ↗</a>
-        </div>
-
-        <div class="pr-row">
-          <div class="pr-info">
-            <div class="pr-name">💬 出会えるエージェント診断｜10秒LINE追加で適職診断</div>
-            <div class="pr-benefit">✓ 完全無料・LINE友だち追加だけであなたに合うキャリア＆年収診断</div>
-          </div>
-          <a href="https://af.moshimo.com/af/c/click?a_id=5880341&p_id=7838&pc_id=22734&pl_id=97605" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">LINE診断 ↗</a>
-        </div>
-
-        <div class="pr-row">
-          <div class="pr-info">
-            <div class="pr-name">📊 マネーフォワード クラウド｜確定申告・家計管理の無料登録</div>
-            <div class="pr-benefit">✓ 個人事業主・副業の帳簿＆家計管理を自動化する無料トライアル</div>
-          </div>
-          <a href="https://af.moshimo.com/af/c/click?a_id=5880342&p_id=888&pc_id=1087&pl_id=64839" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">無料登録 ↗</a>
-        </div>
-
-        <div class="pr-row">
-          <div class="pr-info">
-            <div class="pr-name">🔥 今日の楽天ポイント高還元・人気ランキングを見る</div>
-            <div class="pr-benefit">✓ 買い回り1,000円ポッキリ送料無料＆還元率最強のふるさと納税まとめ</div>
-          </div>
-          <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F1000%25E5%2586%2586%25E3%2583%259D%25E3%2583%2583%25E3%2582%25AD%25E3%2583%25AA%2520%25E9%2580%2581%25E6%2596%2599%25E7%2584%25A1%25E6%2596%2599%2520%25E3%2581%25B5%25E3%2582%258B%25E3%2581%2595%25E3%2581%25A8%25E7%25B4%258D%25E7%25A8%258E%2520%25E4%25BA%25BA%25E6%25B0%2597%25E3%2583%25A9%25E3%2583%25B3%25E3%2582%25AD%25E3%2583%25B3%25E3%2582%25B0%2F" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">楽天で見る ↗</a>
-        </div>
-
-        <div class="pr-row">
-          <div class="pr-info">
-            <div class="pr-name">📚 楽天ブックス｜脳トレパズル本・人気ゲーム＆トレカ特集</div>
-            <div class="pr-benefit">✓ 全品送料無料＆高還元ポイント・人気の脳トレ書籍やトレカを探す</div>
-          </div>
-          <a href="https://af.moshimo.com/af/c/click?a_id=5880337&p_id=56&pc_id=56&pl_id=637" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">ブックス ↗</a>
-        </div>
-
-        <div class="pr-row">
-          <div class="pr-info">
-            <div class="pr-name">🛍️ Yahoo!ショッピング｜PayPay高還元＆日用品セール</div>
-            <div class="pr-benefit">✓ PayPayポイント高還元・日用品や家電のまとめ買いもお得</div>
-          </div>
-          <a href="https://af.moshimo.com/af/c/click?a_id=5880336&p_id=1225&pc_id=1925&pl_id=19142" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">Yahoo! ↗</a>
-        </div>
-
-        <div class="pr-row">
-          <div class="pr-info">
-            <div class="pr-name">象印 シームレスせん水筒 ／ 丸洗いOK 電気毛布</div>
-            <div class="pr-benefit">✓ パッキン一体型水筒＆1時間約0.9円の節電暖房名品</div>
-          </div>
-          <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E8%25B1%25A1%25E5%258D%25B0%2520%25E3%2582%25B7%25E3%2583%25BC%25E3%2583%25A0%25E3%2583%25AC%25E3%2582%25B9%25E3%2581%259B%25E3%2582%2593%2520%25E6%25B0%25B4%25E7%25AD%2592%2520%25E9%259B%25BB%25E6%25B0%2597%25E6%25AF%259B%25E5%25B8%2583%2520%25E4%25B8%25B8%25E6%25B4%2597%25E3%2581%2584%2F" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">楽天で見る ↗</a>
         </div>
       </div>
     </div>
 
-<!-- Moshimo Official Rakuten Sponsor -->
-<div style="max-width: 600px; margin: 24px auto 12px; padding: 0 16px;">
-  <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F1000%25E5%2586%2586%25E3%2583%259D%25E3%2583%2583%25E3%2582%25AD%25E3%2583%25AA%2520%25E9%2580%2581%25E6%2596%2599%25E7%2584%25A1%25E6%2596%2599%2520%25E3%2581%25B5%25E3%2582%258B%25E3%2581%2595%25E3%2581%25A8%25E7%25B4%258D%25E7%25A8%258E%2520%25E4%25BA%25BA%25E6%25B0%2597%25E3%2583%25A9%25E3%2583%25B3%25E3%2582%25AD%25E3%2583%25B3%25E3%2582%25B0%2F" target="_blank" rel="nofollow sponsored noopener" style="display:flex; align-items:center; justify-content:space-between; gap:10px; background:linear-gradient(135deg, rgba(245,158,11,0.24), rgba(30,41,59,0.95)); border:1.5px solid #f59e0b; box-shadow:0 4px 16px rgba(245,158,11,0.18); border-radius:12px; padding:12px 14px; text-decoration:none; color:#f8fafc; margin-bottom:8px;">
-    <div style="min-width:0; flex:1; text-align:left;">
-      <div style="font-size:0.9rem; font-weight:800; color:#fde047; line-height:1.35;">🔥 今日の楽天ポイント高還元・人気ランキングを見る</div>
-      <div style="font-size:0.75rem; color:#34d399; font-weight:700; margin-top:3px;">✓ 1,000円ポッキリ送料無料・ふるさと納税＆時短名品をワンタップ確認（PR）</div>
-    </div>
-    <span style="flex-shrink:0; background:linear-gradient(180deg, #fbbf24, #d97706); border:1px solid #fef08a; color:#090d16; font-size:0.75rem; font-weight:900; padding:7px 11px; border-radius:8px; white-space:nowrap;">楽天で見る ↗</span>
-  </a>
-  <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
-    <a href="https://af.moshimo.com/af/c/click?a_id=5880339&p_id=7778&pc_id=22539&pl_id=97004" target="_blank" rel="nofollow sponsored noopener" style="display:flex; flex-direction:column; justify-content:space-between; background:rgba(16,185,129,0.14); border:1px solid rgba(16,185,129,0.45); border-radius:10px; padding:9px 11px; text-decoration:none; color:#f8fafc;">
-      <div style="font-size:0.78rem; font-weight:800; color:#34d399; line-height:1.3;">🏠 保険マンモス｜無料家計・保険相談</div>
-      <div style="font-size:0.7rem; color:#cbd5e1; margin-top:3px;">0円で固定費削減＆相談特典付（PR） ↗</div>
-    </a>
-    <a href="https://af.moshimo.com/af/c/click?a_id=5880340&p_id=7507&pc_id=21688&pl_id=94219" target="_blank" rel="nofollow sponsored noopener" style="display:flex; flex-direction:column; justify-content:space-between; background:rgba(56,189,248,0.14); border:1px solid rgba(56,189,248,0.45); border-radius:10px; padding:9px 11px; text-decoration:none; color:#f8fafc;">
-      <div style="font-size:0.78rem; font-weight:800; color:#38bdf8; line-height:1.3;">☀️ 電気代削減・再エネ補助金ナビ</div>
-      <div style="font-size:0.7rem; color:#cbd5e1; margin-top:3px;">0円オンライン省エネ補助金診断（PR） ↗</div>
-    </a>
-  </div>
-  <div style="text-align: center; font-size: 0.75rem; color: #64748b;">
-    <span>PR：</span><a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=618&url=https%3A%2F%2Fwww.rakuten.co.jp%2F" rel="nofollow sponsored" target="_blank" style="color: #94a3b8; text-decoration: none; border-bottom: 1px solid #475569;">楽天市場</a>
-    <span>・</span><a href="https://af.moshimo.com/af/c/click?a_id=5880336&p_id=1225&pc_id=1925&pl_id=19142" rel="nofollow sponsored" target="_blank" style="color: #94a3b8; text-decoration: none; border-bottom: 1px solid #475569;">Yahoo!ショッピング</a>
-    <span>・</span><a href="https://af.moshimo.com/af/c/click?a_id=5880338&p_id=55&pc_id=55&pl_id=97780" rel="nofollow sponsored" target="_blank" style="color: #94a3b8; text-decoration: none; border-bottom: 1px solid #475569;">楽天トラベル</a>
-    <img src="https://i.moshimo.com/af/i/impression?a_id=5876771&p_id=54&pc_id=54&pl_id=618" width="1" height="1" style="border:none;" loading="lazy" alt="">
-    <div style="margin-top:4px; font-size:0.7rem; color:#64748b;">Amazonのアソシエイトとして、Coreworks Studioは適格販売により収入を得ています。</div>
-  </div>
-</div>
-
     <footer>
       <p>© 2026 Coreworks Studio ｜ <a href="/about/">運営者情報・ポリシー</a> ｜ <a href="/apk/">Androidアプリ版(APK)</a></p>
-      <p style="margin-top:6px; font-size:0.75rem; color:var(--subtle);">Amazonのアソシエイトとして、Coreworksは適格販売により収入を得ています。</p>
+      <p style="margin-top:5px; font-size:0.72rem; color:var(--subtle);">適格販売により収入を得ています。</p>
+      <img src="https://i.moshimo.com/af/i/impression?a_id=5876771&p_id=54&pc_id=54&pl_id=618" width="1" height="1" style="border:none;" loading="lazy" alt="">
     </footer>
   </div>
 
@@ -399,8 +333,6 @@
       if (!raw) return 'calc';
       var t = String(raw).toLowerCase().trim();
       if (t === 'games' || t === 'game') return 'game';
-      if (t === 'tools' || t === 'tool' || t === 'calc') return 'calc';
-      if (t === 'pop' || t === 'popular') return 'pop';
       return 'calc';
     }
     function switchTab(tab) {

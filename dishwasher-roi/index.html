@@ -115,7 +115,7 @@
 </head>
 <body>
   <div class="container">
-    <a href="/?tab=calc" class="back-link">← 損得計算一覧へ戻る</a>
+    <a href="/?tab=tools" class="back-link">← 暮らしの損得計算一覧へ戻る</a>
     <h1>🍽️ 食洗機「何ヶ月で元が取れる？」1秒計算機</h1>
     <p class="lead">手洗いとの水道・給湯ガス代差額と、皿洗いゼロの時短価値を1秒判定！</p>
 
@@ -202,23 +202,17 @@
       {
         badge: '✨ 一人暮らし・省スペース王道',
         pb: 'A4サイズ設置・約3ヶ月で回収',
-        name: 'Panasonic パーソナル食洗機 SOLOTA / スリム食洗機',
-        desc: '狭いキッチンにも置ける業界最小クラス設計。高温除菌＆温風乾燥でグラスまでピカピカに。',
+        name: 'Panasonic パーソナル食洗機 SOLOTA / スリム卓上型',
+        desc: '狭いキッチンにも置ける省スペース設計。高温除菌＆温風乾燥でグラスまでピカピカに。',
         q: 'パナソニック 食洗機 SOLOTA タンク式 工事不要'
       },
       {
-        badge: '🏆 ファミリー決定版・大容量',
-        pb: '5年で900時間の皿洗い消滅',
-        name: 'Panasonic 卓上型食器洗い乾燥機（ファミリー・スリム型）',
-        desc: '大皿やフライパンまで一括丸洗い。冬場の冷たい水や手荒れから完全に解放される一生モノ投資。',
-        q: 'パナソニック 食器洗い乾燥機 卓上'
-      },
-      {
-        badge: '🧴 一緒に買うと洗浄力2倍',
-        pb: '油汚れ・茶渋まで1発分解',
-        name: 'フィニッシュ パワーキューブ / クリスタ 食洗機専用洗剤大容量',
-        desc: '予洗い不要でカレー皿までキュッキュッと洗い上がる食洗機ユーザーの必需品。楽天まとめ買いが最安！',
-        q: '食洗機 洗剤 フィニッシュ クリスタ 大容量'
+        badge: '💬 浮いた時間で時給・年収アップ（PR）',
+        pb: '完全無料・10秒LINE診断',
+        name: '出会えるエージェント診断｜あなたの適職＆市場価値診断',
+        desc: '時短家電で生まれたゆとりをキャリアアップに！LINE友だち追加だけであなたに合う高年収求人や適職を無料診断。',
+        url: 'https://af.moshimo.com/af/c/click?a_id=5880341&p_id=7838&pc_id=22734&pl_id=97605',
+        btn: '💬 0円でLINE適職・年収診断を試す ↗'
       }
     ];
 
@@ -256,7 +250,7 @@
           </div>
           <div class="rec-name">${r.name}</div>
           <div class="rec-desc">${r.desc}</div>
-          <a href="${rakutenUrl(r.q)}" target="_blank" rel="nofollow sponsored noopener" class="btn-rakuten">🛍️ 楽天市場で最安値・レビューを見る ↗</a>
+          <a href="${r.url || rakutenUrl(r.q)}" target="_blank" rel="nofollow sponsored noopener" class="btn-rakuten">${r.btn || '🛍️ 楽天市場で最安値・レビューを見る ↗'}</a>
         </div>
       `).join('');
     }
@@ -295,32 +289,17 @@
     calc();
   </script>
 <!-- Moshimo Official Rakuten Sponsor -->
-<div style="max-width: 600px; margin: 24px auto 12px; padding: 0 16px;">
-  <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F1000%25E5%2586%2586%25E3%2583%259D%25E3%2583%2583%25E3%2582%25AD%25E3%2583%25AA%2520%25E9%2580%2581%25E6%2596%2599%25E7%2584%25A1%25E6%2596%2599%2520%25E3%2581%25B5%25E3%2582%258B%25E3%2581%2595%25E3%2581%25A8%25E7%25B4%258D%25E7%25A8%258E%2520%25E4%25BA%25BA%25E6%25B0%2597%25E3%2583%25A9%25E3%2583%25B3%25E3%2582%25AD%25E3%2583%25B3%25E3%2582%25B0%2F" target="_blank" rel="nofollow sponsored noopener" style="display:flex; align-items:center; justify-content:space-between; gap:10px; background:linear-gradient(135deg, rgba(245,158,11,0.24), rgba(30,41,59,0.95)); border:1.5px solid #f59e0b; box-shadow:0 4px 16px rgba(245,158,11,0.18); border-radius:12px; padding:12px 14px; text-decoration:none; color:#f8fafc; margin-bottom:8px;">
-    <div style="min-width:0; flex:1; text-align:left;">
-      <div style="font-size:0.9rem; font-weight:800; color:#fde047; line-height:1.35;">🔥 今日の楽天ポイント高還元・人気ランキングを見る</div>
-      <div style="font-size:0.75rem; color:#34d399; font-weight:700; margin-top:3px;">✓ 1,000円ポッキリ送料無料・ふるさと納税＆時短名品をワンタップ確認（PR）</div>
-    </div>
-    <span style="flex-shrink:0; background:linear-gradient(180deg, #fbbf24, #d97706); border:1px solid #fef08a; color:#090d16; font-size:0.75rem; font-weight:900; padding:7px 11px; border-radius:8px; white-space:nowrap;">楽天で見る ↗</span>
-  </a>
-  <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
-    <a href="https://af.moshimo.com/af/c/click?a_id=5880339&p_id=7778&pc_id=22539&pl_id=97004" target="_blank" rel="nofollow sponsored noopener" style="display:flex; flex-direction:column; justify-content:space-between; background:rgba(16,185,129,0.14); border:1px solid rgba(16,185,129,0.45); border-radius:10px; padding:9px 11px; text-decoration:none; color:#f8fafc;">
-      <div style="font-size:0.78rem; font-weight:800; color:#34d399; line-height:1.3;">🏠 保険マンモス｜無料家計・保険相談</div>
-      <div style="font-size:0.7rem; color:#cbd5e1; margin-top:3px;">0円で固定費削減＆相談特典付（PR） ↗</div>
-    </a>
-    <a href="https://af.moshimo.com/af/c/click?a_id=5880340&p_id=7507&pc_id=21688&pl_id=94219" target="_blank" rel="nofollow sponsored noopener" style="display:flex; flex-direction:column; justify-content:space-between; background:rgba(56,189,248,0.14); border:1px solid rgba(56,189,248,0.45); border-radius:10px; padding:9px 11px; text-decoration:none; color:#f8fafc;">
-      <div style="font-size:0.78rem; font-weight:800; color:#38bdf8; line-height:1.3;">☀️ 電気代削減・再エネ補助金ナビ</div>
-      <div style="font-size:0.7rem; color:#cbd5e1; margin-top:3px;">0円オンライン省エネ補助金診断（PR） ↗</div>
-    </a>
+<footer style="max-width: 600px; margin: 28px auto 16px; padding: 14px 16px 0; border-top: 1px solid rgba(148,163,184,0.18); text-align: center; font-size: 0.75rem; color: #64748b;">
+  <div style="margin-bottom: 6px;">
+    <a href="/?tab=tools" style="color: #94a3b8; text-decoration: none; font-weight: 700;">← 暮らしの損得計算一覧へ戻る</a>
+    <span style="margin: 0 8px; color: #475569;">｜</span>
+    <a href="/?tab=games" style="color: #94a3b8; text-decoration: none;">脳トレゲーム一覧</a>
+    <span style="margin: 0 8px; color: #475569;">｜</span>
+    <a href="/about/" style="color: #94a3b8; text-decoration: none;">運営者情報・ポリシー</a>
   </div>
-  <div style="text-align: center; font-size: 0.75rem; color: #64748b;">
-    <span>PR：</span><a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=618&url=https%3A%2F%2Fwww.rakuten.co.jp%2F" rel="nofollow sponsored" target="_blank" style="color: #94a3b8; text-decoration: none; border-bottom: 1px solid #475569;">楽天市場</a>
-    <span>・</span><a href="https://af.moshimo.com/af/c/click?a_id=5880336&p_id=1225&pc_id=1925&pl_id=19142" rel="nofollow sponsored" target="_blank" style="color: #94a3b8; text-decoration: none; border-bottom: 1px solid #475569;">Yahoo!ショッピング</a>
-    <span>・</span><a href="https://af.moshimo.com/af/c/click?a_id=5880338&p_id=55&pc_id=55&pl_id=97780" rel="nofollow sponsored" target="_blank" style="color: #94a3b8; text-decoration: none; border-bottom: 1px solid #475569;">楽天トラベル</a>
-    <img src="https://i.moshimo.com/af/i/impression?a_id=5876771&p_id=54&pc_id=54&pl_id=618" width="1" height="1" style="border:none;" loading="lazy" alt="">
-    <div style="margin-top:4px; font-size:0.7rem; color:#64748b;">Amazonのアソシエイトとして、Coreworks Studioは適格販売により収入を得ています。</div>
-  </div>
-</div>
+  <div>© 2026 Coreworks Studio（適格販売により収入を得ています）</div>
+  <img src="https://i.moshimo.com/af/i/impression?a_id=5876771&p_id=54&pc_id=54&pl_id=618" width="1" height="1" style="border:none;" loading="lazy" alt="">
+</footer>
 </body>
 </html>
 

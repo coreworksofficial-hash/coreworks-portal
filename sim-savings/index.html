@@ -114,7 +114,7 @@
 </head>
 <body>
   <div class="container">
-    <a href="/?tab=calc" class="back-link">← 損得計算一覧へ戻る</a>
+    <a href="/?tab=tools" class="back-link">← 暮らしの損得計算一覧へ戻る</a>
     <h1>📱 大手キャリア vs 格安SIM 10年損得シミュレーター</h1>
     <p class="lead">毎月のスマホ代を見直すだけで、10年間でいくら現金が浮くかを1秒算出！</p>
 
@@ -187,12 +187,10 @@
     ];
 
     const TILES = [
-      { tag: '📱 乗り換え前に最安入手', name: 'SIMフリー iPhone / 人気Android本体（高還元）', q: 'SIMフリー スマートフォン 本体 ランキング' },
-      { tag: '🔋 外出先のギガ・電池対策', name: 'Anker モバイルバッテリー＆急速充電器', q: 'Anker モバイルバッテリー 急速充電器' },
-      { tag: '🤖 浮いた3ヶ月分で自動化', name: 'Anker Eufy / SwitchBot ロボット掃除機', q: 'ロボット掃除機 自動ゴミ収集 水拭き Anker SwitchBot' },
-      { tag: '🍽️ 浮いた3ヶ月分で皿洗い0', name: '工事不要タンク式食洗機（シロカ・ラクア）', q: '食洗機 工事不要 タンク式 ランキング' },
-      { tag: '🎧 通勤時間が極上カフェに', name: 'ワイヤレスイヤホン ノイズキャンセリング', q: 'ワイヤレスイヤホン ノイズキャンセリング ランキング' },
-      { tag: '🎁 浮いたお金をさらに増やす', name: '楽天ふるさと納税 総合人気ランキング', q: 'ふるさと納税 人気ランキング 総合' }
+      { tag: '🏠 固定費削減の王道（PR）', name: '保険マンモス｜スマホと一緒に家計・保険も0円見直し相談', url: 'https://af.moshimo.com/af/c/click?a_id=5880339&p_id=7778&pc_id=22539&pl_id=97004', btn: '✨ 無料相談を見る ↗' },
+      { tag: '📊 浮いたお金を自動管理（PR）', name: 'マネーフォワード クラウド｜家計・確定申告の無料登録', url: 'https://af.moshimo.com/af/c/click?a_id=5880342&p_id=888&pc_id=1087&pl_id=64839', btn: '✨ 無料で試す ↗' },
+      { tag: '📱 乗り換え前に最安入手', name: 'SIMフリー iPhone / 人気Android本体（楽天高還元）', q: 'SIMフリー スマートフォン 本体 ランキング' },
+      { tag: '🔋 外出先のギガ・電池対策', name: 'Anker モバイルバッテリー＆急速充電器', q: 'Anker モバイルバッテリー 急速充電器' }
     ];
 
     let curPreset = PRESETS[1];
@@ -223,12 +221,12 @@
     function renderTiles() {
       document.getElementById('heroRankLink').href = rakutenUrl('SIMフリー スマートフォン Anker ランキング');
       document.getElementById('giftTiles').innerHTML = TILES.map(t => `
-        <a href="${rakutenUrl(t.q)}" target="_blank" rel="nofollow sponsored noopener" class="tile">
+        <a href="${t.url || rakutenUrl(t.q)}" target="_blank" rel="nofollow sponsored noopener" class="tile">
           <div>
             <div class="t-tag">${t.tag}</div>
             <div class="t-name">${t.name}</div>
           </div>
-          <div class="t-btn">🛍️ 楽天で見る ↗</div>
+          <div class="t-btn">${t.btn || '🛍️ 楽天で見る ↗'}</div>
         </a>
       `).join('');
     }
@@ -259,32 +257,17 @@
     calc();
   </script>
 <!-- Moshimo Official Rakuten Sponsor -->
-<div style="max-width: 600px; margin: 24px auto 12px; padding: 0 16px;">
-  <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F1000%25E5%2586%2586%25E3%2583%259D%25E3%2583%2583%25E3%2582%25AD%25E3%2583%25AA%2520%25E9%2580%2581%25E6%2596%2599%25E7%2584%25A1%25E6%2596%2599%2520%25E3%2581%25B5%25E3%2582%258B%25E3%2581%2595%25E3%2581%25A8%25E7%25B4%258D%25E7%25A8%258E%2520%25E4%25BA%25BA%25E6%25B0%2597%25E3%2583%25A9%25E3%2583%25B3%25E3%2582%25AD%25E3%2583%25B3%25E3%2582%25B0%2F" target="_blank" rel="nofollow sponsored noopener" style="display:flex; align-items:center; justify-content:space-between; gap:10px; background:linear-gradient(135deg, rgba(245,158,11,0.24), rgba(30,41,59,0.95)); border:1.5px solid #f59e0b; box-shadow:0 4px 16px rgba(245,158,11,0.18); border-radius:12px; padding:12px 14px; text-decoration:none; color:#f8fafc; margin-bottom:8px;">
-    <div style="min-width:0; flex:1; text-align:left;">
-      <div style="font-size:0.9rem; font-weight:800; color:#fde047; line-height:1.35;">🔥 今日の楽天ポイント高還元・人気ランキングを見る</div>
-      <div style="font-size:0.75rem; color:#34d399; font-weight:700; margin-top:3px;">✓ 1,000円ポッキリ送料無料・ふるさと納税＆時短名品をワンタップ確認（PR）</div>
-    </div>
-    <span style="flex-shrink:0; background:linear-gradient(180deg, #fbbf24, #d97706); border:1px solid #fef08a; color:#090d16; font-size:0.75rem; font-weight:900; padding:7px 11px; border-radius:8px; white-space:nowrap;">楽天で見る ↗</span>
-  </a>
-  <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
-    <a href="https://af.moshimo.com/af/c/click?a_id=5880339&p_id=7778&pc_id=22539&pl_id=97004" target="_blank" rel="nofollow sponsored noopener" style="display:flex; flex-direction:column; justify-content:space-between; background:rgba(16,185,129,0.14); border:1px solid rgba(16,185,129,0.45); border-radius:10px; padding:9px 11px; text-decoration:none; color:#f8fafc;">
-      <div style="font-size:0.78rem; font-weight:800; color:#34d399; line-height:1.3;">🏠 保険マンモス｜無料家計・保険相談</div>
-      <div style="font-size:0.7rem; color:#cbd5e1; margin-top:3px;">0円で固定費削減＆相談特典付（PR） ↗</div>
-    </a>
-    <a href="https://af.moshimo.com/af/c/click?a_id=5880340&p_id=7507&pc_id=21688&pl_id=94219" target="_blank" rel="nofollow sponsored noopener" style="display:flex; flex-direction:column; justify-content:space-between; background:rgba(56,189,248,0.14); border:1px solid rgba(56,189,248,0.45); border-radius:10px; padding:9px 11px; text-decoration:none; color:#f8fafc;">
-      <div style="font-size:0.78rem; font-weight:800; color:#38bdf8; line-height:1.3;">☀️ 電気代削減・再エネ補助金ナビ</div>
-      <div style="font-size:0.7rem; color:#cbd5e1; margin-top:3px;">0円オンライン省エネ補助金診断（PR） ↗</div>
-    </a>
+<footer style="max-width: 600px; margin: 28px auto 16px; padding: 14px 16px 0; border-top: 1px solid rgba(148,163,184,0.18); text-align: center; font-size: 0.75rem; color: #64748b;">
+  <div style="margin-bottom: 6px;">
+    <a href="/?tab=tools" style="color: #94a3b8; text-decoration: none; font-weight: 700;">← 暮らしの損得計算一覧へ戻る</a>
+    <span style="margin: 0 8px; color: #475569;">｜</span>
+    <a href="/?tab=games" style="color: #94a3b8; text-decoration: none;">脳トレゲーム一覧</a>
+    <span style="margin: 0 8px; color: #475569;">｜</span>
+    <a href="/about/" style="color: #94a3b8; text-decoration: none;">運営者情報・ポリシー</a>
   </div>
-  <div style="text-align: center; font-size: 0.75rem; color: #64748b;">
-    <span>PR：</span><a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=618&url=https%3A%2F%2Fwww.rakuten.co.jp%2F" rel="nofollow sponsored" target="_blank" style="color: #94a3b8; text-decoration: none; border-bottom: 1px solid #475569;">楽天市場</a>
-    <span>・</span><a href="https://af.moshimo.com/af/c/click?a_id=5880336&p_id=1225&pc_id=1925&pl_id=19142" rel="nofollow sponsored" target="_blank" style="color: #94a3b8; text-decoration: none; border-bottom: 1px solid #475569;">Yahoo!ショッピング</a>
-    <span>・</span><a href="https://af.moshimo.com/af/c/click?a_id=5880338&p_id=55&pc_id=55&pl_id=97780" rel="nofollow sponsored" target="_blank" style="color: #94a3b8; text-decoration: none; border-bottom: 1px solid #475569;">楽天トラベル</a>
-    <img src="https://i.moshimo.com/af/i/impression?a_id=5876771&p_id=54&pc_id=54&pl_id=618" width="1" height="1" style="border:none;" loading="lazy" alt="">
-    <div style="margin-top:4px; font-size:0.7rem; color:#64748b;">Amazonのアソシエイトとして、Coreworks Studioは適格販売により収入を得ています。</div>
-  </div>
-</div>
+  <div>© 2026 Coreworks Studio（適格販売により収入を得ています）</div>
+  <img src="https://i.moshimo.com/af/i/impression?a_id=5876771&p_id=54&pc_id=54&pl_id=618" width="1" height="1" style="border:none;" loading="lazy" alt="">
+</footer>
 </body>
 </html>
 
