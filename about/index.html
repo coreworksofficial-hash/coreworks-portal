@@ -3,57 +3,135 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coreworks Studio について ｜ 運営者情報・プライバシーポリシー</title>
-  <meta name="description" content="Coreworks Studioの運営者情報、開発理念、プライバシーポリシー（広告配信・アクセス解析について）およびお問い合わせ窓口をご案内します。">
+  <title>運営者情報・プライバシーポリシー｜Coreworks Studio</title>
+  <meta name="description" content="Coreworks Studioの運営者情報、プライバシーポリシー、広告配信および免責事項のご案内です。">
   <style>
-    body { background: #0b0f19; color: #f1f5f9; font-family: sans-serif; padding: 30px 20px; max-width: 760px; margin: 0 auto; line-height: 1.7; }
-    h1 { font-size: 1.8rem; margin-bottom: 16px; color: #38bdf8; }
-    h2 { font-size: 1.25rem; margin-top: 28px; margin-bottom: 10px; color: #e2e8f0; border-bottom: 1px solid #334155; padding-bottom: 6px; }
-    p, li { color: #94a3b8; font-size: 0.92rem; margin-bottom: 12px; }
-    ul { padding-left: 20px; }
-    .card { background: #151d30; border: 1px solid #23314e; border-radius: 12px; padding: 20px; margin: 20px 0; }
-    .back-link { display: inline-block; margin-bottom: 20px; color: #38bdf8; text-decoration: none; font-size: 0.88rem; }
-  </style>
+  :root {
+    --bg: #070b14;
+    --card: #11192c;
+    --text: #f8fafc;
+    --muted: #cbd5e1;
+    --subtle: #94a3b8;
+    --accent: #38bdf8;
+    --emerald: #10b981;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic UI", "Meiryo", sans-serif;
+    background-color: var(--bg);
+    background-image: radial-gradient(circle at 50% 0%, rgba(56,189,248,0.18), transparent 55%);
+    color: var(--text);
+    line-height: 1.65;
+    padding: 12px 12px 32px;
+    min-height: 100vh;
+  }
+  .container { max-width: 640px; margin: 0 auto; }
+  .top-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .back-pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 7px 13px; border-radius: 999px;
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+    border: 1px solid rgba(148,163,184,0.35);
+    box-shadow: 0 3px 0 #020617, inset 0 1px 0 rgba(255,255,255,0.12);
+    color: #e2e8f0; text-decoration: none; font-size: 0.78rem; font-weight: 800;
+  }
+  .top-tag {
+    font-size: 0.7rem; font-weight: 900; color: #67e8f9;
+    background: rgba(6,182,212,0.16); border: 1px solid rgba(34,211,238,0.45);
+    padding: 3px 10px; border-radius: 999px;
+  }
+  .hero-card {
+    background: linear-gradient(180deg, #17223b 0%, #0f172a 100%);
+    border: 1.5px solid rgba(56,189,248,0.4);
+    border-radius: 16px; padding: 16px 16px; margin-bottom: 14px;
+    box-shadow: 0 5px 0 #020617, 0 8px 20px rgba(0,0,0,0.45), inset 0 1px 1px rgba(255,255,255,0.12);
+  }
+  h1 {
+    font-size: 1.18rem; font-weight: 900; color: #ffffff;
+    line-height: 1.3; margin-bottom: 6px;
+  }
+  .hero-sub { font-size: 0.78rem; color: var(--muted); }
+  .card {
+    background: linear-gradient(180deg, #151f36 0%, #0f172a 100%);
+    border: 1.5px solid rgba(148,163,184,0.24);
+    border-radius: 16px; padding: 16px 16px; margin-bottom: 14px;
+    box-shadow: 0 5px 0 #020617, 0 8px 18px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.08);
+  }
+  h2 {
+    font-size: 0.95rem; font-weight: 900; color: #38bdf8;
+    border-bottom: 1px solid rgba(148,163,184,0.2);
+    padding-bottom: 6px; margin: 18px 0 8px;
+  }
+  h2:first-of-type { margin-top: 0; }
+  p, li { font-size: 0.82rem; color: var(--muted); margin-bottom: 8px; }
+  ul { padding-left: 18px; margin-bottom: 10px; }
+  strong { color: #ffffff; }
+  code {
+    background: #090e1a; color: #67e8f9; padding: 1px 5px;
+    border-radius: 5px; font-size: 0.75rem; border: 1px solid rgba(56,189,248,0.25);
+  }
+  .app-box {
+    background: rgba(2,6,23,0.55); border: 1px solid rgba(148,163,184,0.22);
+    border-radius: 12px; padding: 10px 12px; margin: 8px 0 12px;
+  }
+  a { color: #38bdf8; }
+  footer {
+    text-align: center; margin-top: 18px; padding-top: 12px;
+    border-top: 1px solid rgba(148,163,184,0.18);
+    font-size: 0.7rem; color: var(--subtle);
+  }
+</style>
 </head>
 <body>
-  <a href="/" class="back-link">← Coreworks Studio トップへ戻る</a>
-  <h1>Coreworks Studio 運営者情報 ＆ サイトポリシー</h1>
+  <div class="container">
+    <div class="top-bar">
+      <a href="/?v=8.0" class="back-pill">← ポータルへ戻る</a>
+      <span class="top-tag">公式ポリシー</span>
+    </div>
 
-  <div class="card">
-    <h2>1. 運営者情報</h2>
-    <p>
-      <strong>運営メディア名</strong>：Coreworks Studio（コアワークス・スタジオ）<br>
-      <strong>運営責任者</strong>：Coreworks 開発プロジェクトチーム<br>
-      <strong>サイトURL</strong>：https://coreworks-portal.pages.dev/<br>
-      <strong>連絡先メールアドレス</strong>：coreworks.official@gmail.com
-    </p>
+    <div class="hero-card">
+      <h1>運営者情報 ＆ サイトポリシー</h1>
+      <p class="hero-sub">Coreworks Studio（1秒損得計算 ＆ 瞬間脳トレIQラボ）の運営情報およびプライバシー保護方針</p>
+    </div>
 
-    <h2>2. 開発理念と提供価値</h2>
-    <p>
-      Coreworks Studioは、「生活の無駄な迷いを減らし、意思決定と時間をハックする」をテーマに、最新のWebテクノロジーを活用した実用的な計算シミュレーターや、ブラウザ・スマートフォンで手軽に遊べるカジュアルコンテンツを自律開発・提供しています。<br>
-      すべてのツールはユーザーのプライバシーに配慮し、入力データを外部サーバーに送信しない安全な設計を徹底しています。
-    </p>
+    <div class="card">
+      <h2>1. 運営者情報</h2>
+      <p>
+        <strong>運営メディア名</strong>：Coreworks Studio（コアワークス・スタジオ）<br>
+        <strong>運営責任者</strong>：Coreworks 開発プロジェクトチーム<br>
+        <strong>公式URL</strong>：<a href="https://coreworks-portal.pages.dev/">https://coreworks-portal.pages.dev/</a><br>
+        <strong>連絡先メール</strong>：coreworks.official@gmail.com
+      </p>
 
-    <h2>3. 広告の配信について</h2>
-    <p>
-      当サイトでは、第三者配信の広告サービス（Google AdSense、もしもアフィリエイト、楽天アフィリエイト、Amazonアソシエイト・プログラム等）を利用しています。Amazonのアソシエイトとして、Coreworks Studioは適格販売により収入を得ています。<br>
-      広告配信事業者は、利用者の興味に応じた商品やサービスの広告を表示するため、当サイトや他サイトへのアクセスに関する情報 Cookie（氏名、住所、メール アドレス、電話番号は含まれません）を使用することがあります。
-    </p>
+      <h2>2. 個人情報保護・端末内保存の原則</h2>
+      <p>
+        当サイトのすべての損得計算シミュレーターおよび脳トレゲームは、氏名・住所・電話番号・メールアドレス等の個人情報を一切取得いたしません。入力された数値やゲームのIQスコア・音量設定はご利用端末内（ブラウザのローカルストレージ）にのみ保存され、外部サーバーへ送信されることはありません。
+      </p>
 
-    <h2>4. アクセス解析ツールについて</h2>
-    <p>
-      当サイトでは、サイトの利用状況を把握しコンテンツ改善に役立てるため、アクセス解析ツールを利用する場合があります。これらはトラフィックデータの収集のためにCookieを使用しますが、個人を特定する情報は収集されません。
-    </p>
+      <h2>3. 広告配信・アフィリエイトプログラムについて</h2>
+      <p>
+        当サイトおよび提供アプリでは、無料提供を維持するため第三者配信の広告サービス（Google AdMob、Google AdSense、もしもアフィリエイト、楽天アフィリエイト、Amazonアソシエイト・プログラム等）を利用しています。<br>
+        <strong>Amazonのアソシエイトとして、Coreworksは適格販売により収入を得ています。</strong>
+      </p>
 
-    <h2>5. 免責事項</h2>
-    <p>
-      当サイトの各シミュレーターによる試算結果は一般的な計算式やシミュレーションに基づくものであり、将来の運用成果や取引内容を保証するものではありません。各サービスのご利用やご購入に関する最終的なご判断は、利用者ご自身で行っていただくようお願い申し上げます。
-    </p>
+      <h2>4. 免責事項</h2>
+      <p>
+        各シミュレーターの試算結果は公的基準や一般的な計算式に基づく目安であり、実際の控除額や光熱費・取引内容を保証するものではありません。最終的なご判断は各公式サイトをご確認のうえ利用者様ご自身で行っていただくようお願いいたします。
+      </p>
+    </div>
 
-    <h2>6. お問い合わせ</h2>
-    <p>
-      ツールに関するご意見・不具合のご報告・ご質問等は、上記記載のメールアドレス（coreworks.official@gmail.com）までお気軽にお寄せください。
-    </p>
+    <footer>
+      <div style="margin-bottom:5px;">
+        <a href="/?tab=tools&v=8.0" style="text-decoration:none;">← 損得計算一覧</a> ｜
+        <a href="/?tab=games&v=8.0" style="text-decoration:none;">脳トレ一覧</a> ｜
+        <a href="/privacy-policy/?v=8.0" style="text-decoration:none;">アプリ規約</a>
+      </div>
+      <div style="font-size:0.63rem; letter-spacing:-0.02em; white-space:nowrap;">Amazonのアソシエイトとして、Coreworksは適格販売により収入を得ています。</div>
+      <div style="margin-top:3px;">© 2026 Coreworks Studio</div>
+    </footer>
   </div>
 </body>
 </html>

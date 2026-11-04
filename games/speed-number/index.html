@@ -1402,7 +1402,7 @@
 
   <div class="header">
     <div class="top-row">
-      <div class="stage-badge" id="stageBadge">🔢 MISSION 1 - STAGE 1</div>
+      <div class="stage-badge" id="stageBadge">🔢 レベル 1/5 ｜ ステージ 1/10</div>
       <div class="step-pill" id="stepPill">第 1 / 3 問</div>
       <button class="icon-btn" id="settingsBtn">⚙️ 設定</button>
     </div>
@@ -1437,10 +1437,10 @@
 <!-- Coreworks In-Game Monetization & Nav -->
       <div style="width:100%; margin-top:12px; padding-top:12px; border-top:1px solid rgba(148,163,184,0.2); display:flex; flex-direction:column; gap:8px;">
         <div style="display:flex; gap:8px; width:100%;">
-          <a href="/payback-calc/?v=7.9" style="flex:1; padding:10px 6px; border-radius:8px; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); color:#34d399; font-size:13px; font-weight:700; text-decoration:none; text-align:center;">
+          <a href="/payback-calc/?v=8.0" style="flex:1; padding:10px 6px; border-radius:8px; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); color:#34d399; font-size:13px; font-weight:700; text-decoration:none; text-align:center;">
             元取り1秒計算
           </a>
-          <a href="/?tab=games&v=7.9" style="flex:1; padding:10px 6px; border-radius:8px; background:rgba(99,102,241,0.16); border:1px solid rgba(99,102,241,0.4); color:#818cf8; font-size:13px; font-weight:700; text-decoration:none; text-align:center;">
+          <a href="/?tab=games&v=8.0" style="flex:1; padding:10px 6px; border-radius:8px; background:rgba(99,102,241,0.16); border:1px solid rgba(99,102,241,0.4); color:#818cf8; font-size:13px; font-weight:700; text-decoration:none; text-align:center;">
             脳トレ一覧へ
           </a>
         </div>
@@ -1497,7 +1497,7 @@
       <div id="stageJumpGrid" style="display:grid; grid-template-columns:repeat(5, 1fr); gap:6px; width:100%;"></div>
 
       <button class="primary-btn" id="closeSettingsBtn">✅ 閉じてゲームに戻る</button>
-      <a href="/?tab=games&v=7.9" class="web-portal-link" id="settingsPortalBtn" style="display:block; width:100%; margin-top:4px; padding:10px; border-radius:12px; background:rgba(99,102,241,0.18); border:1px solid rgba(99,102,241,0.45); color:#a5b4fc; font-size:13px; font-weight:800; text-decoration:none; text-align:center;">🏠 ゲーム一覧（ポータル）へ戻る</a>
+      <a href="/?tab=games&v=8.0" class="web-portal-link" id="settingsPortalBtn" style="display:block; width:100%; margin-top:4px; padding:10px; border-radius:12px; background:rgba(99,102,241,0.18); border:1px solid rgba(99,102,241,0.45); color:#a5b4fc; font-size:13px; font-weight:800; text-decoration:none; text-align:center;">🏠 ゲーム一覧（ポータル）へ戻る</a>
     </div>
   </div>
 
@@ -1536,11 +1536,11 @@
   }
 
   const MISSION_CONFIG = {
-    1: { name: 'MISSION 1（初級：9〜16マス）',  timeScale: 1.00, minSec: 9.5 },
-    2: { name: 'MISSION 2（中級：9〜16マス）',  timeScale: 0.96, minSec: 9.5 },
-    3: { name: 'MISSION 3（上級：12〜16マス）', timeScale: 0.92, minSec: 10.0 },
-    4: { name: 'MISSION 4（達人：12〜20マス）', timeScale: 0.88, minSec: 10.5 },
-    5: { name: 'MISSION 5（神速：16〜20マス）', timeScale: 0.85, minSec: 11.0 }
+    1: { name: 'レベル 1/5（初級）',  timeScale: 1.00, minSec: 9.5 },
+    2: { name: 'レベル 2/5（中級）',  timeScale: 0.96, minSec: 9.5 },
+    3: { name: 'レベル 3/5（上級）', timeScale: 0.92, minSec: 10.0 },
+    4: { name: 'レベル 4/5（達人）', timeScale: 0.88, minSec: 10.5 },
+    5: { name: 'レベル 5/5（最高難度）', timeScale: 0.85, minSec: 11.0 }
   };
 
   function getTitleForIQ(iqVal) {
@@ -1687,6 +1687,10 @@
     ['🦉', CW_SVGS.crown],
     ['🌈', CW_SVGS.palette],
     ['👁️', CW_SVGS.sparkle],
+    ['👁',  CW_SVGS.sparkle],
+    ['👀', CW_SVGS.sparkle],
+    ['🖌️', CW_SVGS.palette],
+    ['🖌',  CW_SVGS.palette],
     ['🧮', CW_SVGS.plus],
     ['📸', CW_SVGS.bolt],
     ['📐', CW_SVGS.sparkle],
@@ -1990,7 +1994,8 @@
     bgmTimer = setInterval(() => {
       if (document.hidden || !state.bgmOn || state.bgmVolume <= 0 || !audioCtx) return;
       const settingsOpen = document.getElementById('settingsModal')?.classList.contains('show');
-      if (!isQuestionActive && !settingsOpen) return;
+      const activePlay = (typeof isQuestionActive !== 'undefined') ? isQuestionActive : (typeof canTap !== 'undefined' && (canTap || (typeof isMemorizing !== 'undefined' && isMemorizing)));
+      if (!activePlay && !settingsOpen) return;
 
       const now = audioCtx.currentTime;
       const isBoss = isBossStage(state.stage);
@@ -2854,7 +2859,7 @@
                   ? (state.mission === 1
                       ? '次は20マス＆【4タップごとに配置シャッフル】される認定試験戦です！'
                       : '次は【最大から逆順】＋【数タップごとに配置シャッフル】される認定試験戦です！')
-                  : '次は16マス＆【💀ダミーパネル】入りのスピード中間テスト戦です！1から順番に連打しよう！';
+                  : '次は12マス＆【✕ダミーパネル】入りのスピード中間テストです！1から順番に連打しよう！';
                 showModal({
                   isBossAlert: true,
                   showRevive: false,
@@ -3171,8 +3176,7 @@
         ? (isCurrent ? `▶️ 選択中 (${state.stage}/10)` : '🛠️ テスト解放中')
         : (cleared ? '🏆 制覇済' : (unlocked ? (isCurrent ? `▶️ 挑戦中 (${state.stage}/10)` : '挑戦可能') : '🔒 未解放'));
       return `<button class="mission-btn ${isCurrent ? 'active' : ''}" data-mission="${m}" ${unlocked ? '' : 'disabled'}>
-        <span>${MISSION_CONFIG[m].name}</span>
-        <span style="font-size:13px;">${statusText}</span>
+        <span style="font-size:13px;">${MISSION_CONFIG[m].name}</span><span style="font-size:12px;">${window.__cwIconify(statusText)}</span>
       </button>`;
     }).join('');
 
@@ -3202,7 +3206,7 @@
           border:2px solid ${isCur ? '#facc15' : (isBoss ? '#f43f5e' : '#52343f')};
           background:${isCur ? '#ff5a36' : (isBoss ? '#650915' : '#181216')};
           color:${isCur ? '#ffffff' : (isBoss ? '#fef08a' : '#fed7aa')};
-        ">${isBoss ? '🔥B' + s : 'S' + s}</button>`;
+        ">${window.__cwIconify(isBoss ? '🏅T' + s : 'S' + s)}</button>`;
       }).join('');
 
       stageJumpGridEl.querySelectorAll('button[data-stage]').forEach(btn => {
