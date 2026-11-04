@@ -3,21 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>クリスタル・ポケット TCG (ポケポケ完全踏襲版)</title>
+<title>クリスタル・ポケッツ TCG｜3Dホログラムカード収集＆バトル</title>
 <style>
   :root {
     --bg-main: #EEF2F8;
-    --bg-grad: linear-gradient(180deg, #F6F9FC 0%, #E8EEF6 55%, #DFE7F2 100%);
+    --bg-grad: linear-gradient(165deg, #F8FAFD 0%, #EEF2F8 52%, #E3EAF4 100%);
     --surface: #F4F7FB;
     --surface-pure: #FFFFFF;
-    --text-main: #1E293B;
-    --text-sub: #64748B;
+    --text-main: #0F172A;
+    --text-sub: #475569;
     --accent-blue: #0EA5E9;
     --accent-indigo: #4F46E5;
     --accent-gold: #F59E0B;
-    --neu-out: 6px 6px 14px rgba(163, 177, 198, 0.45), -6px -6px 14px rgba(255, 255, 255, 0.95);
-    --neu-out-sm: 3px 3px 8px rgba(163, 177, 198, 0.4), -3px -3px 8px rgba(255, 255, 255, 0.95);
-    --neu-in: inset 4px 4px 8px rgba(163, 177, 198, 0.45), inset -4px -4px 8px rgba(255, 255, 255, 0.9);
+    --neu-out: 6px 6px 14px rgba(163, 177, 198, 0.42), -6px -6px 14px rgba(255, 255, 255, 0.95);
+    --neu-out-sm: 0 4px 14px rgba(15, 23, 42, 0.06), inset 0 0 0 1px rgba(255, 255, 255, 0.95);
+    --neu-in: inset 3px 3px 7px rgba(148, 163, 184, 0.45), inset -3px -3px 7px rgba(255, 255, 255, 0.9);
   }
 
   * {
@@ -27,96 +27,94 @@
     user-select: none;
     -webkit-user-select: none;
     -webkit-tap-highlight-color: transparent;
-    font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", -apple-system, BlinkMacSystemFont, sans-serif;
   }
 
   html, body {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background: #CBD5E1;
+    background: var(--bg-grad);
     color: var(--text-main);
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
+  .ambient-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background:
+      radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0) 60%),
+      radial-gradient(circle at 85% 80%, rgba(191, 219, 254, 0.45) 0%, transparent 55%),
+      radial-gradient(circle at 15% 75%, rgba(254, 243, 199, 0.45) 0%, transparent 55%);
+  }
+
   #app-shell {
     position: relative;
+    z-index: 1;
     width: 100%;
     max-width: 430px;
     height: 100%;
     max-height: 932px;
-    background: var(--bg-grad);
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.25);
   }
 
   /* ===== Top Status Header ===== */
   .top-bar {
     height: 54px;
-    padding: 0 14px;
+    padding: 8px 16px 4px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(255, 255, 255, 0.78);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.9);
     z-index: 30;
     flex-shrink: 0;
   }
 
   .brand-pill {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 6px;
-    background: var(--surface-pure);
-    padding: 5px 11px;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(12px);
+    padding: 7px 14px;
     border-radius: 999px;
     box-shadow: var(--neu-out-sm);
     font-weight: 900;
-    font-size: 12px;
-    letter-spacing: 0.01em;
+    font-size: 13.5px;
+    letter-spacing: 0.02em;
     color: #0F172A;
     white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  .brand-orb {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: conic-gradient(from 45deg, #38BDF8, #818CF8, #F472B6, #FBBF24, #38BDF8);
-    box-shadow: 0 0 6px rgba(56, 189, 248, 0.6);
-    flex-shrink: 0;
   }
 
   .top-stats {
     display: flex;
     align-items: center;
     gap: 6px;
-    flex-shrink: 0;
   }
 
   .stat-pill {
-    background: var(--surface-pure);
-    padding: 5px 10px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(12px);
+    padding: 6px 12px;
     border-radius: 999px;
     box-shadow: var(--neu-out-sm);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 800;
     color: #334155;
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 5px;
     white-space: nowrap;
   }
 
   .stat-pill strong {
     color: var(--accent-indigo);
-    font-size: 12px;
+    font-weight: 900;
   }
 
   /* ===== Main Tab Viewport ===== */
@@ -133,60 +131,52 @@
     flex-direction: column;
     overflow-y: auto;
     overflow-x: hidden;
-    padding-bottom: 16px;
+    padding-bottom: 12px;
   }
 
   .tab-page.active {
     display: flex;
   }
 
-  /* ===== Bottom Navigation (3 Tabs) ===== */
-  .bottom-nav {
-    height: 68px;
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(16px);
-    border-top: 1px solid rgba(255, 255, 255, 0.95);
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 6px 14px;
+  /* ===== Minimal 3-Tab Bottom Pill Navigation (Matches pokepock_1_pack_cutting.png) ===== */
+  .bottom-nav-wrap {
+    padding: 4px 16px 12px;
     z-index: 40;
     flex-shrink: 0;
   }
 
-  .nav-btn {
-    flex: 1;
-    max-width: 118px;
-    height: 50px;
-    border: none;
-    background: transparent;
-    border-radius: 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2px;
-    color: #64748B;
-    font-size: 11px;
-    font-weight: 800;
-    cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  .bottom-nav {
+    height: 56px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(16px);
+    border-radius: 999px;
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.1), inset 0 0 0 1px rgba(255, 255, 255, 0.95);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 5px;
+    gap: 4px;
   }
 
-  .nav-btn .ico {
-    font-size: 19px;
-    line-height: 1;
-    transition: transform 0.2s;
+  .nav-btn {
+    border: none;
+    background: transparent;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    color: #64748B;
+    font-size: 12.5px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    white-space: nowrap;
   }
 
   .nav-btn.active {
-    background: var(--surface-pure);
-    color: #0F172A;
-    box-shadow: var(--neu-out-sm);
-  }
-
-  .nav-btn.active .ico {
-    transform: translateY(-1px) scale(1.08);
+    background: #0F172A;
+    color: #FFFFFF;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.22);
   }
 
   /* ===== Common Neumorphic Pill Button ===== */
@@ -195,8 +185,8 @@
     background: linear-gradient(180deg, #FFFFFF 0%, #F1F5F9 100%);
     color: #0F172A;
     font-weight: 900;
-    font-size: 14px;
-    padding: 12px 26px;
+    font-size: 13.5px;
+    padding: 11px 24px;
     border-radius: 999px;
     box-shadow: var(--neu-out);
     cursor: pointer;
@@ -205,6 +195,7 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
+    white-space: nowrap;
   }
 
   .neu-btn:active {
@@ -215,20 +206,154 @@
   .neu-btn.primary {
     background: linear-gradient(135deg, #0EA5E9 0%, #4F46E5 100%);
     color: #FFFFFF;
-    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.35), inset 0 1px 1px rgba(255,255,255,0.4);
+    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.32), inset 0 1px 1px rgba(255,255,255,0.4);
   }
 
   /* =========================================================================
-     POKEPOCK FAITHFUL CARD COMPONENT (.pk-card)
+     1. TAB 1: PURE SILVER FOIL BOOSTER PACK OPENING (pokepock_1_pack_cutting.png style)
+     ========================================================================= */
+  .pack-stage-wrap {
+    position: relative;
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pack-3d-container {
+    position: relative;
+    width: 246px;
+    height: 404px;
+    perspective: 1100px;
+    touch-action: none;
+    cursor: ew-resize;
+    user-select: none;
+  }
+
+  .pack-inner-card-peek {
+    position: absolute;
+    left: 4%;
+    right: 4%;
+    top: 10%;
+    height: 120px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #FDE047 0%, #38BDF8 50%, #A855F7 100%);
+    box-shadow: 0 0 32px rgba(250, 204, 21, 0.85), 0 0 60px rgba(56, 189, 248, 0.7);
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .pack-body-bottom {
+    position: absolute;
+    inset: 0;
+    border-radius: 18px;
+    background-image: url('assets/card_pack.jpg');
+    background-size: 158% 114%;
+    background-position: 50% 48%;
+    clip-path: polygon(0% 18%, 100% 18%, 100% 100%, 0% 100%);
+    box-shadow:
+      0 28px 54px -10px rgba(15, 23, 42, 0.32),
+      inset 0 0 0 2px rgba(255, 255, 255, 0.7);
+    z-index: 2;
+    transition: transform 0.52s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.42s ease;
+  }
+
+  .pack-body-top {
+    position: absolute;
+    inset: 0;
+    border-radius: 18px;
+    background-image: url('assets/card_pack.jpg');
+    background-size: 158% 114%;
+    background-position: 50% 48%;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 18.2%, 0% 18.2%);
+    transform-origin: 100% 18.2%;
+    z-index: 3;
+    transition: transform 0.06s linear, opacity 0.35s ease;
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.75);
+  }
+
+  .pack-body-top::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 18.2%;
+    background: repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0.22) 0px,
+      rgba(255,255,255,0.22) 2px,
+      rgba(15,23,42,0.12) 2px,
+      rgba(15,23,42,0.12) 4px
+    );
+    pointer-events: none;
+  }
+
+  .pack-laser-guide {
+    position: absolute;
+    left: 2%;
+    right: 2%;
+    top: 18%;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.2), rgba(255,255,255,0.95) 50%, rgba(255,255,255,0.2));
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.85);
+    z-index: 4;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .pack-laser-comet {
+    width: 35%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, #FFFFFF, #FDE047, transparent);
+    animation: cometSlide 1.6s infinite ease-in-out;
+  }
+
+  @keyframes cometSlide {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(320%); }
+  }
+
+  #pack-cut-canvas {
+    position: absolute;
+    left: -46px;
+    top: -45px;
+    width: 338px;
+    height: 220px;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .pack-hint-caption {
+    margin-top: 22px;
+    font-size: 14px;
+    font-weight: 800;
+    color: #475569;
+    letter-spacing: 0.04em;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.86);
+    padding: 9px 20px;
+    border-radius: 999px;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+    cursor: pointer;
+  }
+
+  /* =========================================================================
+     2. POKEPOCK FAITHFUL FULL CARD COMPONENT (.pk-card — ZERO TRUNCATION)
      ========================================================================= */
   .pk-card {
     position: relative;
-    width: 240px;
-    height: 336px;
-    border-radius: 16px;
-    padding: 8px;
+    width: 256px;
+    height: 358px;
+    border-radius: 18px;
+    padding: 9px;
     background: linear-gradient(145deg, #E2E8F0 0%, #FFFFFF 35%, #CBD5E1 70%, #94A3B8 100%);
-    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.22), inset 0 0 0 1.5px rgba(255, 255, 255, 0.9);
+    box-shadow: 0 16px 34px rgba(15, 23, 42, 0.22), inset 0 0 0 1.5px rgba(255, 255, 255, 0.95);
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -239,15 +364,15 @@
 
   .pk-card.is-ex {
     background: linear-gradient(145deg, #FDE68A 0%, #FFFBEB 28%, #F59E0B 62%, #D97706 100%);
-    box-shadow: 0 14px 32px rgba(245, 158, 11, 0.35), inset 0 0 0 2px #FEF3C7;
+    box-shadow: 0 18px 38px rgba(245, 158, 11, 0.35), inset 0 0 0 2px #FEF3C7;
   }
 
   .pk-card-inner {
     position: relative;
     width: 100%;
     height: 100%;
-    border-radius: 11px;
-    padding: 7px 8px 6px;
+    border-radius: 12px;
+    padding: 8px 9px 7px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -255,30 +380,14 @@
     z-index: 2;
   }
 
-  /* Element Background Themes */
-  .pk-card[data-type="fire"] .pk-card-inner {
-    background: linear-gradient(165deg, #FEE2E2 0%, #FECACA 45%, #FCA5A5 100%);
-  }
-  .pk-card[data-type="water"] .pk-card-inner {
-    background: linear-gradient(165deg, #E0F2FE 0%, #BAE6FD 45%, #7DD3FC 100%);
-  }
-  .pk-card[data-type="lightning"] .pk-card-inner {
-    background: linear-gradient(165deg, #FEF9C3 0%, #FEF08A 45%, #FDE047 100%);
-  }
-  .pk-card[data-type="grass"] .pk-card-inner {
-    background: linear-gradient(165deg, #DCFCE7 0%, #BBF7D0 45%, #86EFAC 100%);
-  }
-  .pk-card[data-type="psychic"] .pk-card-inner {
-    background: linear-gradient(165deg, #F3E8FF 0%, #E9D5FF 45%, #D8B4FE 100%);
-  }
-  .pk-card[data-type="support"] .pk-card-inner {
-    background: linear-gradient(165deg, #FFEDD5 0%, #FED7AA 50%, #FDBA74 100%);
-  }
-  .pk-card[data-type="goods"] .pk-card-inner {
-    background: linear-gradient(165deg, #E0E7FF 0%, #C7D2FE 50%, #A5B4FC 100%);
-  }
+  .pk-card[data-type="fire"] .pk-card-inner { background: linear-gradient(165deg, #FEE2E2 0%, #FECACA 45%, #FCA5A5 100%); }
+  .pk-card[data-type="water"] .pk-card-inner { background: linear-gradient(165deg, #E0F2FE 0%, #BAE6FD 45%, #7DD3FC 100%); }
+  .pk-card[data-type="lightning"] .pk-card-inner { background: linear-gradient(165deg, #FEF9C3 0%, #FEF08A 45%, #FDE047 100%); }
+  .pk-card[data-type="grass"] .pk-card-inner { background: linear-gradient(165deg, #DCFCE7 0%, #BBF7D0 45%, #86EFAC 100%); }
+  .pk-card[data-type="psychic"] .pk-card-inner { background: linear-gradient(165deg, #F3E8FF 0%, #E9D5FF 45%, #D8B4FE 100%); }
+  .pk-card[data-type="support"] .pk-card-inner { background: linear-gradient(165deg, #FFEDD5 0%, #FED7AA 50%, #FDBA74 100%); }
+  .pk-card[data-type="goods"] .pk-card-inner { background: linear-gradient(165deg, #E0E7FF 0%, #C7D2FE 50%, #A5B4FC 100%); }
 
-  /* Rainbow Holo Overlay for EX / Star Cards */
   .pk-holo-sheen {
     position: absolute;
     inset: 0;
@@ -292,20 +401,19 @@
     pointer-events: none;
     z-index: 5;
     opacity: 0;
-    transition: opacity 0.2s;
   }
 
   .pk-card.is-ex .pk-holo-sheen {
     opacity: 0.85;
   }
 
-  /* 1. Card Top Header: Stage Badge + Name + HP + Element Orb */
+  /* Header: Stage Pill + Full Unclipped Card Name + HP + SVG Element Orb */
   .pk-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 4px;
-    height: 24px;
+    height: 25px;
     flex-shrink: 0;
   }
 
@@ -324,9 +432,7 @@
     font-size: 9px;
     font-weight: 900;
     color: #334155;
-    letter-spacing: -0.02em;
     flex-shrink: 0;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
   }
 
   .pk-stage-badge.support {
@@ -342,12 +448,10 @@
   }
 
   .pk-name {
-    font-size: 12.5px;
+    font-size: 13px;
     font-weight: 900;
     color: #0F172A;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     letter-spacing: -0.03em;
   }
 
@@ -357,12 +461,11 @@
     color: #1E293B;
     font-style: italic;
     font-weight: 900;
-    font-size: 10px;
+    font-size: 9.5px;
     padding: 0 4px;
     border-radius: 4px;
     border: 1px solid #78350F;
-    margin-left: 2px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+    margin-left: 3px;
   }
 
   .pk-header-right {
@@ -380,13 +483,14 @@
   }
 
   .pk-hp-val {
-    font-size: 15px;
+    font-size: 15.5px;
     font-weight: 900;
     color: #0F172A;
     letter-spacing: -0.03em;
     line-height: 1;
   }
 
+  /* Glossy Elemental Orbs with Pure Vector SVG Icons Inside */
   .pk-type-orb {
     width: 20px;
     height: 20px;
@@ -394,10 +498,14 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 11px;
     border: 1.5px solid #FFFFFF;
     box-shadow: 0 2px 4px rgba(15,23,42,0.25);
     flex-shrink: 0;
+  }
+  .pk-type-orb svg {
+    width: 11px;
+    height: 11px;
+    display: block;
   }
   .orb-fire { background: radial-gradient(circle at 30% 30%, #FB923C, #DC2626); }
   .orb-water { background: radial-gradient(circle at 30% 30%, #38BDF8, #0284C7); }
@@ -406,12 +514,12 @@
   .orb-psychic { background: radial-gradient(circle at 30% 30%, #C084FC, #7E22CE); }
   .orb-colorless { background: radial-gradient(circle at 30% 30%, #FFFFFF, #94A3B8); }
 
-  /* 2. Center Illustration Frame (Silver Bezel) */
+  /* Center Silver/Gold Bezel Illustration */
   .pk-art-frame {
     position: relative;
     width: 100%;
-    height: 154px;
-    border-radius: 8px;
+    height: 164px;
+    border-radius: 9px;
     border: 2.5px solid #E2E8F0;
     box-shadow: 0 3px 8px rgba(15, 23, 42, 0.2), inset 0 0 8px rgba(0, 0, 0, 0.25);
     overflow: hidden;
@@ -421,7 +529,6 @@
 
   .pk-card.is-ex .pk-art-frame {
     border-color: #FDE68A;
-    box-shadow: 0 3px 10px rgba(217, 119, 6, 0.35), inset 0 0 10px rgba(251, 191, 36, 0.3);
   }
 
   .pk-art-img {
@@ -440,7 +547,7 @@
     justify-content: center;
   }
 
-  /* 3. Move Section (Energy Orbs + Move Name + Damage) */
+  /* Move Row */
   .pk-body {
     flex: 1;
     display: flex;
@@ -454,11 +561,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(255, 255, 255, 0.68);
-    border-radius: 7px;
+    background: rgba(255, 255, 255, 0.72);
+    border-radius: 8px;
     padding: 6px 8px;
-    border: 1px solid rgba(255, 255, 255, 0.85);
-    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.9);
   }
 
   .pk-move-cost {
@@ -471,24 +577,26 @@
   .pk-move-cost .pk-type-orb {
     width: 16px;
     height: 16px;
-    font-size: 9px;
+  }
+  .pk-move-cost .pk-type-orb svg {
+    width: 9px;
+    height: 9px;
   }
 
   .pk-move-name {
-    font-size: 11.5px;
+    font-size: 12px;
     font-weight: 900;
     color: #0F172A;
     flex: 1;
     text-align: left;
     padding-left: 4px;
-    letter-spacing: -0.02em;
+    white-space: nowrap;
   }
 
   .pk-move-dmg {
-    font-size: 16px;
+    font-size: 16.5px;
     font-weight: 900;
     color: #0F172A;
-    letter-spacing: -0.03em;
   }
 
   .pk-move-desc {
@@ -500,7 +608,7 @@
   }
 
   .pk-trainer-effect {
-    background: rgba(255, 255, 255, 0.82);
+    background: rgba(255, 255, 255, 0.84);
     border-radius: 8px;
     padding: 7px 9px;
     border: 1px solid rgba(255, 255, 255, 0.95);
@@ -517,7 +625,7 @@
     margin-top: 3px;
   }
 
-  /* 4. Bottom Weakness / Retreat / Rarity / Dex Bar */
+  /* Bottom Bar: Weakness + Retreat + Rarity + Dex */
   .pk-footer {
     display: flex;
     flex-direction: column;
@@ -529,13 +637,13 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(255, 255, 255, 0.75);
+    background: rgba(255, 255, 255, 0.78);
     border-radius: 999px;
-    padding: 2px 8px;
+    padding: 2px 9px;
     font-size: 9px;
     font-weight: 800;
     color: #334155;
-    border: 1px solid rgba(255,255,255,0.9);
+    border: 1px solid rgba(255,255,255,0.92);
   }
 
   .pk-stat-item {
@@ -545,10 +653,13 @@
   }
 
   .pk-stat-item .pk-type-orb {
-    width: 13px;
-    height: 13px;
-    font-size: 8px;
+    width: 14px;
+    height: 14px;
     border-width: 1px;
+  }
+  .pk-stat-item .pk-type-orb svg {
+    width: 8px;
+    height: 8px;
   }
 
   .pk-meta-bar {
@@ -572,7 +683,6 @@
   .pk-rarity-badge.star {
     background: linear-gradient(90deg, #FDE047, #F59E0B);
     color: #78350F;
-    box-shadow: 0 1px 3px rgba(245, 158, 11, 0.4);
   }
 
   .pk-dex-no {
@@ -591,300 +701,79 @@
     border: 1px solid #F59E0B;
   }
 
-  /* Compact Card Variant for Dex Grid & Summary (.pk-card.mini) */
-  .pk-card.mini {
-    width: 108px;
-    height: 152px;
-    border-radius: 10px;
-    padding: 4px;
-    box-shadow: 0 5px 12px rgba(15, 23, 42, 0.16);
-  }
-  .pk-card.mini .pk-card-inner {
-    border-radius: 7px;
-    padding: 4px;
-  }
-  .pk-card.mini .pk-header {
-    height: 14px;
-  }
-  .pk-card.mini .pk-stage-badge {
-    font-size: 6px;
-    padding: 0 3px;
-  }
-  .pk-card.mini .pk-name {
-    font-size: 7.5px;
-  }
-  .pk-card.mini .pk-ex-tag {
-    font-size: 6.5px;
-    padding: 0 2px;
-  }
-  .pk-card.mini .pk-hp-label {
-    font-size: 6px;
-  }
-  .pk-card.mini .pk-hp-val {
-    font-size: 9px;
-  }
-  .pk-card.mini .pk-type-orb {
-    width: 11px;
-    height: 11px;
-    font-size: 6.5px;
-  }
-  .pk-card.mini .pk-art-frame {
-    height: 68px;
-    border-width: 1.5px;
-    border-radius: 5px;
-  }
-  .pk-card.mini .pk-move-row {
-    padding: 2px 4px;
-    border-radius: 4px;
-  }
-  .pk-card.mini .pk-move-cost {
-    min-width: 18px;
-    gap: 1px;
-  }
-  .pk-card.mini .pk-move-cost .pk-type-orb {
-    width: 9px;
-    height: 9px;
-    font-size: 5px;
-  }
-  .pk-card.mini .pk-move-name {
-    font-size: 6.5px;
-  }
-  .pk-card.mini .pk-move-dmg {
-    font-size: 9px;
-  }
-  .pk-card.mini .pk-move-desc,
-  .pk-card.mini .pk-ex-rulebox,
-  .pk-card.mini .pk-trainer-rule {
-    display: none;
-  }
-  .pk-card.mini .pk-trainer-effect {
-    padding: 3px 4px;
-    font-size: 6.5px;
-    line-height: 1.25;
-  }
-  .pk-card.mini .pk-stats-bar {
-    padding: 1px 4px;
-    font-size: 6px;
-  }
-  .pk-card.mini .pk-stat-item .pk-type-orb {
-    width: 8px;
-    height: 8px;
-    font-size: 5px;
-  }
-  .pk-card.mini .pk-meta-bar {
-    font-size: 6.5px;
-  }
-  .pk-card.mini .pk-rarity-badge {
-    font-size: 6.5px;
-    padding: 0 4px;
-  }
-  .pk-card.mini .pk-dex-no {
-    font-size: 6px;
-  }
-
   /* =========================================================================
-     TAB 1: HOME & PACK OPENING + DEX SLOT SNAP-IN REGISTRATION
+     3. DEDICATED MINI CARD FOR 3-COLUMN DEX GRID & SUMMARY (ZERO TRUNCATION!)
      ========================================================================= */
-  .home-stage {
-    flex: 1;
+  .dex-mini-card {
+    width: 108px;
+    height: 148px;
+    border-radius: 12px;
+    padding: 5px;
+    background: linear-gradient(145deg, #FFFFFF 0%, #E2E8F0 100%);
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.14), inset 0 0 0 1.5px rgba(255, 255, 255, 0.95);
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.15s;
+  }
+
+  .dex-mini-card.is-ex {
+    background: linear-gradient(145deg, #FEF3C7 0%, #FDE68A 45%, #F59E0B 100%);
+    box-shadow: 0 8px 18px rgba(245, 158, 11, 0.28), inset 0 0 0 1.5px #FFFBEB;
+  }
+
+  .dmc-top {
+    display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 16px 14px;
-    position: relative;
-  }
-
-  .pack-header-banner {
-    text-align: center;
-  }
-
-  .pack-series-pill {
-    display: inline-block;
-    background: var(--surface-pure);
-    box-shadow: var(--neu-out-sm);
-    padding: 4px 14px;
-    border-radius: 999px;
-    font-size: 11px;
+    font-size: 8.5px;
     font-weight: 900;
-    color: var(--accent-indigo);
-    margin-bottom: 5px;
+    color: #334155;
+    padding: 0 2px;
   }
 
-  .pack-main-title {
-    font-size: 19px;
+  .dmc-rarity {
+    color: #0F172A;
+    letter-spacing: 0.5px;
+  }
+  .dex-mini-card.is-ex .dmc-rarity {
+    color: #78350F;
+  }
+
+  .dmc-art {
+    width: 100%;
+    height: 92px;
+    border-radius: 7px;
+    overflow: hidden;
+    border: 1.5px solid rgba(255, 255, 255, 0.9);
+    background: #0F172A;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.15);
+  }
+
+  .dmc-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    display: block;
+  }
+
+  .dmc-bottom {
+    text-align: center;
+    padding: 2px 0 1px;
+  }
+
+  .dmc-name {
+    font-size: 9.5px;
     font-weight: 900;
     color: #0F172A;
-    letter-spacing: -0.02em;
+    white-space: nowrap;
+    letter-spacing: -0.03em;
   }
 
-  .pack-sub-hint {
-    font-size: 11.5px;
-    font-weight: 700;
-    color: #64748B;
-    margin-top: 2px;
-  }
-
-  /* 3D Booster Pack Container */
-  .booster-wrap {
-    position: relative;
-    width: 226px;
-    height: 344px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    perspective: 900px;
-    margin: 4px 0;
-  }
-
-  .booster-pack {
-    position: relative;
-    width: 214px;
-    height: 332px;
-    border-radius: 16px;
-    box-shadow: 0 22px 44px rgba(15, 23, 42, 0.28);
-    transform-style: preserve-3d;
-    transition: transform 0.3s ease;
-  }
-
-  /* Top Foil Strip that gets sliced off */
-  .booster-top-foil {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 54px;
-    border-radius: 16px 16px 0 0;
-    background: linear-gradient(90deg, #94A3B8 0%, #F8FAFC 25%, #CBD5E1 50%, #F8FAFC 75%, #94A3B8 100%);
-    border-bottom: 2px dashed rgba(56, 189, 248, 0.85);
-    overflow: hidden;
-    z-index: 6;
-    transform-origin: top right;
-    transition: transform 0.55s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.5s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .booster-top-foil::before {
-    content: "◀  SLICE HERE TO OPEN  ▶";
-    font-size: 9.5px;
-    font-weight: 900;
-    letter-spacing: 0.12em;
-    color: #334155;
-    background: rgba(255,255,255,0.75);
-    padding: 3px 10px;
-    border-radius: 999px;
-  }
-
-  .booster-top-foil.sliced {
-    transform: translate(90px, -110px) rotate(28deg) scale(0.85);
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  .booster-body {
-    position: absolute;
-    top: 52px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 0 0 16px 16px;
-    background: url('assets/card_pack.jpg') center/cover no-repeat, linear-gradient(145deg, #1E293B, #0F172A);
-    border: 3px solid #E2E8F0;
-    border-top: none;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 14px;
-  }
-
-  .booster-body::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(125deg, rgba(255,255,255,0) 20%, rgba(255,255,255,0.38) 48%, rgba(56,189,248,0.25) 55%, rgba(255,255,255,0) 80%);
-    pointer-events: none;
-  }
-
-  .booster-badge {
-    position: relative;
-    z-index: 3;
-    background: rgba(15, 23, 42, 0.82);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(253, 224, 71, 0.7);
-    border-radius: 12px;
-    padding: 8px 10px;
-    text-align: center;
-    color: #FFFFFF;
-  }
-
-  .booster-badge .b-title {
-    font-size: 13px;
-    font-weight: 900;
-    color: #FDE047;
-  }
-
-  .booster-badge .b-sub {
-    font-size: 9.5px;
-    color: #E2E8F0;
-    margin-top: 2px;
-  }
-
-  /* Interactive Slice Track on top of the pack */
-  .slice-zone {
-    position: absolute;
-    top: 24px;
-    left: -10px;
-    right: -10px;
-    height: 56px;
-    z-index: 15;
-    cursor: ew-resize;
-    display: flex;
-    align-items: center;
-  }
-
-  .slice-guide-line {
-    width: 100%;
-    height: 6px;
-    border-radius: 999px;
-    background: rgba(14, 165, 233, 0.22);
-    position: relative;
-    overflow: hidden;
-    border: 1px solid rgba(14, 165, 233, 0.55);
-  }
-
-  .slice-laser-fill {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, #38BDF8, #818CF8, #F472B6, #FDE047);
-    box-shadow: 0 0 16px #38BDF8;
-    transition: width 0.05s linear;
-  }
-
-  .slice-knob {
-    position: absolute;
-    left: 0%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background: #FFFFFF;
-    border: 2.5px solid #0EA5E9;
-    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.55);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 15px;
-    font-weight: 900;
-    color: #0EA5E9;
-    pointer-events: none;
-  }
-
-  /* Pack Opening Stage 2: 5-Card Stack Flip */
+  /* ===== Pack Opening Sub-Views (Stack Flip, Summary, Dex Slot Snap-In) ===== */
   .pack-step-view {
     position: absolute;
     inset: 0;
@@ -894,7 +783,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    padding: 14px 16px 18px;
+    padding: 12px 16px 14px;
   }
 
   .pack-step-view.active {
@@ -913,8 +802,8 @@
 
   .card-stack-stage {
     position: relative;
-    width: 260px;
-    height: 360px;
+    width: 268px;
+    height: 372px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -928,7 +817,7 @@
     z-index: 20;
     background: linear-gradient(135deg, #F43F5E, #FB923C);
     color: #FFFFFF;
-    font-size: 12px;
+    font-size: 11.5px;
     font-weight: 900;
     padding: 4px 12px;
     border-radius: 999px;
@@ -938,12 +827,12 @@
   }
 
   @keyframes pulseNew {
-    from { transform: scale(1) rotate(6deg); }
-    to { transform: scale(1.1) rotate(6deg); }
+    from { transform: scale(1) rotate(5deg); }
+    to { transform: scale(1.08) rotate(5deg); }
   }
 
   .swipe-away {
-    animation: cardSwipeOut 0.36s cubic-bezier(0.2, 0.85, 0.3, 1) forwards;
+    animation: cardSwipeOut 0.34s cubic-bezier(0.2, 0.85, 0.3, 1) forwards;
   }
 
   @keyframes cardSwipeOut {
@@ -951,14 +840,13 @@
     100% { transform: translate(160px, -90px) rotate(18deg) scale(0.88); opacity: 0; }
   }
 
-  /* Pack Opening Stage 3: 5-Card Pull Summary */
   .summary-grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
     max-width: 370px;
-    margin: 6px 0;
+    margin: 4px 0;
   }
 
   .summary-item-wrap {
@@ -972,7 +860,7 @@
     z-index: 10;
     background: linear-gradient(135deg, #F43F5E, #FB923C);
     color: #FFF;
-    font-size: 9px;
+    font-size: 8.5px;
     font-weight: 900;
     padding: 2px 7px;
     border-radius: 999px;
@@ -980,11 +868,11 @@
     box-shadow: 0 3px 8px rgba(244, 63, 94, 0.45);
   }
 
-  /* Pack Opening Stage 4: DEX SLOT SNAP-IN REGISTRATION ANIMATION */
+  /* Pack Opening Stage 4: DEX SLOT SNAP-IN REGISTRATION BOARD */
   .dex-reg-board {
     width: 100%;
-    max-width: 390px;
-    background: rgba(255, 255, 255, 0.72);
+    max-width: 394px;
+    background: rgba(255, 255, 255, 0.76);
     border-radius: 20px;
     padding: 10px;
     box-shadow: var(--neu-in);
@@ -1005,7 +893,6 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    transition: transform 0.25s, box-shadow 0.25s;
   }
 
   .reg-slot-num {
@@ -1028,7 +915,7 @@
   }
 
   @keyframes slotSnapBounce {
-    0% { transform: scale(1.32); }
+    0% { transform: scale(1.3); }
     50% { transform: scale(0.93); }
     100% { transform: scale(1); }
   }
@@ -1044,6 +931,7 @@
     font-weight: 900;
     color: #0F172A;
     position: relative;
+    text-align: center;
   }
 
   .reg-mini-thumb img {
@@ -1051,7 +939,6 @@
     height: 54px;
     object-fit: cover;
     border-radius: 5px;
-    border: 1px solid rgba(255,255,255,0.8);
   }
 
   .pachi-pop {
@@ -1060,7 +947,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: radial-gradient(circle, rgba(56, 189, 248, 0.35), transparent 70%);
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.32), transparent 70%);
     pointer-events: none;
     z-index: 15;
   }
@@ -1068,7 +955,7 @@
   .pachi-badge {
     background: linear-gradient(135deg, #0EA5E9, #4F46E5);
     color: #FFFFFF;
-    font-size: 9px;
+    font-size: 8.5px;
     font-weight: 900;
     padding: 2px 6px;
     border-radius: 999px;
@@ -1077,17 +964,17 @@
   }
 
   /* =========================================================================
-     TAB 2: MY CARDS (NUMBERED DEX 001-015 & SINGLE 1-CARD 3D VIEWER)
+     4. TAB 2: MY CARDS (NUMBERED DEX 001-015 & SINGLE 3D VIEWER)
      ========================================================================= */
   .dex-header-box {
-    padding: 12px 16px 8px;
+    padding: 10px 16px 6px;
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
 
   .dex-title-area h2 {
-    font-size: 17px;
+    font-size: 16.5px;
     font-weight: 900;
     color: #0F172A;
   }
@@ -1101,31 +988,32 @@
   .dex-progress-pill {
     background: var(--surface-pure);
     box-shadow: var(--neu-out-sm);
-    padding: 6px 14px;
+    padding: 6px 13px;
     border-radius: 999px;
-    font-size: 12px;
+    font-size: 11.5px;
     font-weight: 900;
     color: var(--accent-indigo);
+    white-space: nowrap;
   }
 
   .dex-grid {
-    padding: 6px 14px 24px;
+    padding: 6px 14px 20px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
+    gap: 11px;
     justify-items: center;
   }
 
   .dex-cell {
     position: relative;
     width: 108px;
-    height: 152px;
+    height: 148px;
     cursor: pointer;
   }
 
   .dex-empty-slot {
     width: 108px;
-    height: 152px;
+    height: 148px;
     border-radius: 12px;
     background: #E2E8F0;
     box-shadow: var(--neu-in);
@@ -1154,31 +1042,30 @@
 
   .dex-count-badge {
     position: absolute;
-    bottom: -5px;
-    right: -4px;
+    bottom: 26px;
+    right: 8px;
     z-index: 10;
-    background: #0F172A;
+    background: rgba(15, 23, 42, 0.88);
     color: #FFFFFF;
-    font-size: 9.5px;
+    font-size: 9px;
     font-weight: 900;
-    padding: 2px 7px;
+    padding: 1px 6px;
     border-radius: 999px;
     border: 1.5px solid #FFFFFF;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
   }
 
-  /* SINGLE 1-CARD 3D HOLOGRAPHIC VIEWER MODAL (Zero background card clutter) */
   .single-viewer-modal {
     position: absolute;
     inset: 0;
-    background: rgba(241, 245, 249, 0.88);
+    background: rgba(241, 245, 249, 0.9);
     backdrop-filter: blur(18px);
     z-index: 80;
     display: none;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 18px 24px;
+    padding: 16px 18px 20px;
   }
 
   .single-viewer-modal.active {
@@ -1198,11 +1085,11 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 6px 0;
+    margin: 4px 0;
   }
 
   .viewer-stage .pk-card {
-    transform: scale(1.12);
+    transform: scale(1.08);
     box-shadow: 0 24px 48px rgba(15, 23, 42, 0.28);
   }
 
@@ -1216,7 +1103,7 @@
   }
 
   .viewer-info-card h4 {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 900;
     color: #0F172A;
     margin-bottom: 3px;
@@ -1229,25 +1116,23 @@
   }
 
   /* =========================================================================
-     TAB 3: POKEPOCK-FAITHFUL BATTLE (3 POINTS, ACTIVE 1 + BENCH 3, ENERGY ZONE)
+     5. TAB 3: POKEPOCK-FAITHFUL BATTLE (3 POINTS, ACTIVE 1 + BENCH 3, ENERGY ZONE)
      ========================================================================= */
   .battle-arena {
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 8px 10px 8px;
-    background: radial-gradient(circle at 50% 48%, #FFFFFF 0%, #E2E8F0 100%);
+    padding: 6px 10px 6px;
     position: relative;
     overflow: hidden;
   }
 
-  /* Top Battle Status Bar: Turn + Points (0/3) */
   .bt-hud {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(255, 255, 255, 0.88);
+    background: rgba(255, 255, 255, 0.9);
     border-radius: 14px;
     padding: 6px 10px;
     box-shadow: var(--neu-out-sm);
@@ -1295,7 +1180,6 @@
     font-weight: 900;
   }
 
-  /* Bench Row (3 Slots) */
   .bt-bench-row {
     display: flex;
     justify-content: center;
@@ -1304,10 +1188,10 @@
   }
 
   .bt-bench-slot {
-    width: 78px;
+    width: 84px;
     height: 76px;
     border-radius: 10px;
-    background: rgba(255, 255, 255, 0.65);
+    background: rgba(255, 255, 255, 0.68);
     border: 1.5px dashed #94A3B8;
     box-shadow: var(--neu-in);
     display: flex;
@@ -1317,18 +1201,12 @@
     padding: 4px;
     position: relative;
     cursor: pointer;
-    transition: transform 0.15s, border-color 0.15s;
   }
 
   .bt-bench-slot.occupied {
     background: #FFFFFF;
     border: 2px solid #CBD5E1;
     box-shadow: var(--neu-out-sm);
-  }
-
-  .bt-bench-slot.selectable-target {
-    border-color: #0EA5E9;
-    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.35);
   }
 
   .bench-empty-label {
@@ -1346,14 +1224,13 @@
   }
 
   .bench-name {
-    font-size: 7.5px;
+    font-size: 8px;
     font-weight: 900;
     color: #0F172A;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     width: 100%;
     text-align: center;
+    letter-spacing: -0.03em;
   }
 
   .bench-hp-bar {
@@ -1392,12 +1269,14 @@
   }
 
   .attached-en-row .pk-type-orb {
-    width: 13px;
-    height: 13px;
-    font-size: 7.5px;
+    width: 14px;
+    height: 14px;
+  }
+  .attached-en-row .pk-type-orb svg {
+    width: 8px;
+    height: 8px;
   }
 
-  /* Active Battle Spots (Enemy & Player) */
   .bt-active-zone {
     display: flex;
     align-items: center;
@@ -1408,18 +1287,17 @@
   }
 
   .bt-active-card-slot {
-    width: 162px;
-    height: 122px;
+    width: 164px;
+    height: 120px;
     border-radius: 14px;
     background: #FFFFFF;
     border: 2.5px solid #94A3B8;
-    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.16);
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.14);
     padding: 6px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     position: relative;
-    transition: transform 0.2s;
   }
 
   .bt-active-card-slot.is-ex {
@@ -1438,7 +1316,7 @@
   .bt-active-art-wrap {
     position: relative;
     width: 100%;
-    height: 60px;
+    height: 58px;
     border-radius: 8px;
     overflow: hidden;
     border: 1.5px solid #CBD5E1;
@@ -1453,7 +1331,7 @@
 
   .bt-hp-pill {
     width: 100%;
-    height: 15px;
+    height: 14px;
     background: #E2E8F0;
     border-radius: 999px;
     position: relative;
@@ -1473,12 +1351,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 9.5px;
+    font-size: 9px;
     font-weight: 900;
     color: #0F172A;
   }
 
-  /* Player Active Controls (Move Button + Retreat Button) */
   .bt-command-panel {
     flex: 1;
     display: flex;
@@ -1490,7 +1367,7 @@
     width: 100%;
     border: none;
     border-radius: 12px;
-    padding: 8px 8px;
+    padding: 8px 9px;
     background: linear-gradient(135deg, #0EA5E9 0%, #4F46E5 100%);
     color: #FFFFFF;
     font-weight: 900;
@@ -1501,7 +1378,6 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 2px;
-    transition: transform 0.15s, opacity 0.15s;
   }
 
   .bt-atk-btn.disabled {
@@ -1535,27 +1411,25 @@
     box-shadow: var(--neu-out-sm);
   }
 
-  /* Center Battle Banner */
   .bt-log-banner {
-    background: rgba(15, 23, 42, 0.84);
+    background: rgba(15, 23, 42, 0.86);
     color: #FFFFFF;
     border-radius: 999px;
     padding: 4px 12px;
-    font-size: 10.5px;
+    font-size: 10px;
     font-weight: 800;
     text-align: center;
     align-self: center;
-    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.18);
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.16);
     z-index: 10;
   }
 
-  /* Bottom Battle Dock: Hand Cards + Energy Zone */
   .bt-bottom-dock {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 8px;
-    background: rgba(255, 255, 255, 0.82);
+    background: rgba(255, 255, 255, 0.86);
     border-radius: 16px;
     padding: 6px 8px;
     box-shadow: var(--neu-out-sm);
@@ -1576,12 +1450,12 @@
   }
 
   .hand-card-chip {
-    width: 66px;
+    width: 68px;
     height: 82px;
     border-radius: 9px;
     background: #FFFFFF;
     border: 2px solid #94A3B8;
-    box-shadow: 0 3px 8px rgba(15, 23, 42, 0.15);
+    box-shadow: 0 3px 8px rgba(15, 23, 42, 0.14);
     padding: 3px;
     display: flex;
     flex-direction: column;
@@ -1589,11 +1463,6 @@
     flex-shrink: 0;
     cursor: pointer;
     position: relative;
-    transition: transform 0.15s;
-  }
-
-  .hand-card-chip:active {
-    transform: translateY(-4px) scale(1.04);
   }
 
   .hand-card-chip.support { border-color: #F97316; background: #FFF7ED; }
@@ -1617,6 +1486,8 @@
     color: #0F172A;
     text-align: center;
     line-height: 1.15;
+    white-space: nowrap;
+    letter-spacing: -0.04em;
   }
 
   .hc-thumb {
@@ -1626,10 +1497,9 @@
     object-fit: cover;
   }
 
-  /* PokéPock Authentic Energy Zone */
   .energy-zone-pod {
-    width: 82px;
-    height: 82px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     background: radial-gradient(circle at 50% 50%, #FFFFFF 0%, #E2E8F0 72%, #CBD5E1 100%);
     border: 3px solid #FFFFFF;
@@ -1651,7 +1521,7 @@
 
   @keyframes pulseEnergyZone {
     from { transform: scale(1); }
-    to { transform: scale(1.05); }
+    to { transform: scale(1.04); }
   }
 
   .ez-title {
@@ -1662,15 +1532,18 @@
   }
 
   .ez-main-orb {
-    width: 34px;
-    height: 34px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
     border: 2px solid #FFFFFF;
     box-shadow: 0 3px 10px rgba(15, 23, 42, 0.3);
+  }
+  .ez-main-orb svg {
+    width: 17px;
+    height: 17px;
   }
 
   .ez-sub {
@@ -1680,7 +1553,6 @@
     margin-top: 2px;
   }
 
-  /* Battle Result Modal */
   .bt-result-modal {
     position: absolute;
     inset: 0;
@@ -1710,17 +1582,26 @@
 </style>
 </head>
 <body>
+<div class="ambient-bg"></div>
 <div id="app-shell">
 
-  <!-- Top Header -->
+  <!-- Top Header (Zero OS Emojis: Pure Vector Gem SVG) -->
   <header class="top-bar">
     <div class="brand-pill">
-      <span class="brand-orb"></span>
-      <span>CRYSTAL POCKET</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+        <polygon points="12 2 21 7 21 17 12 22 3 17 3 7" fill="url(#gemGrad)" stroke="#0F172A" stroke-width="2"/>
+        <defs>
+          <linearGradient id="gemGrad" x1="3" y1="2" x2="21" y2="22" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#FDE047"/>
+            <stop offset="0.5" stop-color="#38BDF8"/>
+            <stop offset="1" stop-color="#A855F7"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <span>クリスタル・ポケッツ</span>
     </div>
     <div class="top-stats">
       <div class="stat-pill">図鑑 <strong id="hdr-dex-count">9 / 15</strong></div>
-      <div class="stat-pill">砂時計 <strong id="hdr-stamina">12</strong></div>
     </div>
   </header>
 
@@ -1728,40 +1609,22 @@
   <main class="tab-viewport">
 
     <!-- ===============================================================
-         TAB 1: HOME (PACK OPENING & DEX SLOT SNAP-IN REGISTRATION)
+         TAB 1: PACK OPENING & DEX SLOT SNAP-IN REGISTRATION
          =============================================================== -->
     <section id="tab-home" class="tab-page active">
-      <div class="home-stage">
-        <div class="pack-header-banner">
-          <div class="pack-series-pill">拡張パック 第1弾「最強のクリスタル」</div>
-          <h1 class="pack-main-title">ブースターパック開封</h1>
-          <p class="pack-sub-hint">パック上部のカットラインを右へなぞって開封！（1パック5枚入り）</p>
-        </div>
-
-        <!-- 3D Booster Pack + Foil Slice Zone -->
-        <div class="booster-wrap" id="booster-wrap">
-          <div class="slice-zone" id="slice-zone" title="右へスワイプして開封">
-            <div class="slice-guide-line">
-              <div class="slice-laser-fill" id="slice-laser-fill"></div>
-            </div>
-            <div class="slice-knob" id="slice-knob">✂️</div>
+      <!-- State 1: Pure Silver Foil Booster Pack with Real-Time Laser & Sparks Cutting -->
+      <div class="pack-stage-wrap" id="pack-sealed-stage">
+        <div class="pack-3d-container" id="pack-3d-box">
+          <div class="pack-inner-card-peek" id="pack-god-rays"></div>
+          <div class="pack-body-bottom" id="pack-bottom-part"></div>
+          <div class="pack-body-top" id="pack-top-foil"></div>
+          <div class="pack-laser-guide" id="pack-guide-line">
+            <div class="pack-laser-comet"></div>
           </div>
-
-          <div class="booster-pack" id="booster-pack">
-            <div class="booster-top-foil" id="booster-top-foil"></div>
-            <div class="booster-body">
-              <div class="booster-badge">
-                <div class="b-title">CRYSTAL GENESIS</div>
-                <div class="b-sub">全15種（モンスター12種＋トレーナーズ3種）</div>
-              </div>
-            </div>
-          </div>
+          <canvas id="pack-cut-canvas" width="338" height="220"></canvas>
         </div>
-
-        <div style="display:flex; flex-direction:column; align-items:center; gap:8px; width:100%;">
-          <button class="neu-btn primary" id="btn-quick-slice" onclick="triggerPackOpen()">
-            ✨ パックを開封する（5枚引く）
-          </button>
+        <div class="pack-hint-caption" onclick="triggerPackOpen()">
+          <span>横にスワイプしてパックをカット</span>
         </div>
       </div>
 
@@ -1772,42 +1635,39 @@
           <p style="font-size:11px; color:#64748B; font-weight:700; margin-top:4px;">カードをタップまたはスワイプして次のカードへ</p>
         </div>
 
-        <div class="card-stack-stage" id="card-stack-stage" onclick="nextPackCard()">
-          <!-- Active card injected here -->
-        </div>
+        <div class="card-stack-stage" id="card-stack-stage" onclick="nextPackCard()"></div>
 
         <button class="neu-btn primary" onclick="nextPackCard()">
-          👉 次のカードをめくる
+          次のカードをめくる
         </button>
       </div>
 
       <!-- STEP 3: 5-Card Pull Summary View -->
       <div class="pack-step-view" id="view-pack-summary">
         <div style="text-align:center;">
-          <div class="pack-series-pill">OPENING RESULT</div>
-          <h2 style="font-size:18px; font-weight:900; color:#0F172A;">獲得したカード一覧（5枚）</h2>
+          <div class="stack-counter-pill" style="margin-bottom:4px;">獲得したカード一覧（5枚）</div>
         </div>
 
         <div class="summary-grid" id="summary-grid"></div>
 
         <button class="neu-btn primary" id="btn-to-dex-reg" onclick="startDexRegistrationSequence()">
-          📖 次へ（図鑑へパチッ！と登録）
+          次へ（図鑑へ登録）
         </button>
       </div>
 
       <!-- STEP 4: DEX EMPTY SLOT SNAP-IN REGISTRATION ANIMATION -->
       <div class="pack-step-view" id="view-dex-reg">
         <div style="text-align:center;">
-          <div class="pack-series-pill" id="reg-status-pill">NEWカードを空きスロットへ登録中！</div>
-          <h2 style="font-size:17px; font-weight:900; color:#0F172A;">カード図鑑 登録演出（<span id="reg-counter-txt">9 / 15</span>）</h2>
-          <p style="font-size:11px; color:#475569; font-weight:700;">新しく手に入れたカードが図鑑の空き番号スロットにパチッ！とはまります</p>
+          <div class="stack-counter-pill" id="reg-status-pill" style="font-size:11.5px; margin-bottom:4px;">NEWカードを空きスロットへ登録中！</div>
+          <h2 style="font-size:16.5px; font-weight:900; color:#0F172A;">カード図鑑 登録演出（<span id="reg-counter-txt">9 / 15</span>）</h2>
+          <p style="font-size:10.5px; color:#475569; font-weight:700;">新しく手に入れたカードが図鑑の空き番号スロットにパチッ！とはまります</p>
         </div>
 
         <div class="dex-reg-board" id="dex-reg-board"></div>
 
         <div style="display:flex; gap:10px;">
-          <button class="neu-btn" onclick="closePackFlowToDex()">📖 図鑑を見る</button>
-          <button class="neu-btn primary" onclick="resetPackFlow()">✨ もう1パック開ける</button>
+          <button class="neu-btn" onclick="closePackFlowToDex()">カード図鑑を見る</button>
+          <button class="neu-btn primary" onclick="resetPackFlow()">次のパックを開ける</button>
         </div>
       </div>
     </section>
@@ -1830,7 +1690,7 @@
       <div class="single-viewer-modal" id="single-viewer-modal">
         <div class="viewer-top-bar">
           <div class="stat-pill" id="viewer-dex-badge">No.001 / 015</div>
-          <button class="neu-btn" style="padding:7px 16px; font-size:12px;" onclick="closeSingleCardViewer()">✕ 閉じる</button>
+          <button class="neu-btn" style="padding:7px 16px; font-size:12px;" onclick="closeSingleCardViewer()">閉じる</button>
         </div>
 
         <div class="viewer-stage" id="viewer-stage">
@@ -1838,7 +1698,7 @@
         </div>
 
         <div class="viewer-info-card">
-          <h4 id="viewer-card-title">イグニス・ドラコ ex</h4>
+          <h4 id="viewer-card-title">炎竜イグニス ex</h4>
           <p id="viewer-card-desc">指でカードを左右・上下に傾けると3Dホログラムが輝きます</p>
         </div>
       </div>
@@ -1878,15 +1738,15 @@
         <div class="bt-active-zone" style="justify-content:center;">
           <div id="enemy-active-mount"></div>
           <div style="display:flex; flex-direction:column; gap:5px;">
-            <div class="stat-pill" style="font-size:10px; padding:4px 9px;">👑 先に<strong>3PT先取</strong>で勝利</div>
-            <div class="stat-pill" style="font-size:9.5px; padding:4px 9px;">💡 通常=<strong>1pt</strong> / ex=<strong>2pt</strong></div>
-            <div class="stat-pill" style="font-size:9.5px; padding:4px 9px;">📚 自分の山札: <strong id="bt-deck-count">11</strong>枚</div>
+            <div class="stat-pill" style="font-size:10px; padding:4px 10px;">先に<strong>3PT先取</strong>で勝利</div>
+            <div class="stat-pill" style="font-size:9.5px; padding:4px 10px;">通常=<strong>1pt</strong> / ex=<strong>2pt</strong></div>
+            <div class="stat-pill" style="font-size:9.5px; padding:4px 10px;">自分の山札: <strong id="bt-deck-count">11</strong>枚</div>
           </div>
         </div>
 
         <!-- Center Action Log Banner -->
         <div class="bt-log-banner" id="bt-log-banner">
-          右下の「エネルギーゾーン」から場のモンスターにエネルギーをつけよう！
+          右下の「エネルギーゾーン」から場のカードにエネルギーをつけよう！
         </div>
 
         <!-- Player Active Spot + Command Panel -->
@@ -1896,15 +1756,15 @@
           <div class="bt-command-panel">
             <button class="bt-atk-btn" id="btn-bt-attack" onclick="playerExecuteAttack()">
               <div class="bt-atk-top">
-                <span id="bt-atk-name">⚔️ ワザを使う</span>
+                <span id="bt-atk-name">ワザを使う</span>
                 <span id="bt-atk-dmg">110</span>
               </div>
-              <span style="font-size:8.5px; opacity:0.9;" id="bt-atk-cost-txt">必要エネルギー: 🔥🔥</span>
+              <span style="font-size:8.5px; opacity:0.92;" id="bt-atk-cost-txt">エネルギー: 2 / 2個</span>
             </button>
 
             <div class="bt-sub-actions">
-              <button class="bt-mini-btn" id="btn-bt-retreat" onclick="playerExecuteRetreat()">🏃 にげる</button>
-              <button class="bt-mini-btn" onclick="endPlayerTurn()">⏭ ターン終了</button>
+              <button class="bt-mini-btn" id="btn-bt-retreat" onclick="playerExecuteRetreat()">にげる</button>
+              <button class="bt-mini-btn" onclick="endPlayerTurn()">ターン終了</button>
             </div>
           </div>
         </div>
@@ -1918,7 +1778,7 @@
 
           <div class="energy-zone-pod ready" id="energy-zone-pod" onclick="attachTurnEnergy()">
             <span class="ez-title">エネルギーゾーン</span>
-            <div class="ez-main-orb orb-fire" id="ez-main-orb">🔥</div>
+            <div class="ez-main-orb orb-fire" id="ez-main-orb"></div>
             <span class="ez-sub" id="ez-status-txt">タップで付与(1)</span>
           </div>
         </div>
@@ -1926,13 +1786,13 @@
         <!-- Battle Result Overlay -->
         <div class="bt-result-modal" id="bt-result-modal">
           <div class="bt-result-box">
-            <div class="pack-series-pill" id="bt-res-badge">VICTORY!</div>
-            <h2 style="font-size:22px; font-weight:900; margin:6px 0;" id="bt-res-title">3ポイント先取 勝利！</h2>
+            <div class="stack-counter-pill" id="bt-res-badge" style="display:inline-block;">VICTORY!</div>
+            <h2 style="font-size:21px; font-weight:900; margin:8px 0;" id="bt-res-title">3ポイント先取 勝利！</h2>
             <p style="font-size:12px; color:#475569; font-weight:700; margin-bottom:16px;" id="bt-res-desc">
-              見事3ポイントを先取してバトルに勝利しました！パック砂時計＋4個を獲得！
+              見事3ポイントを先取してバトルに勝利しました！
             </p>
             <button class="neu-btn primary" style="width:100%;" onclick="initBattleGame()">
-              ⚔️ もう一度バトルする
+              もう一度バトルする
             </button>
           </div>
         </div>
@@ -1942,49 +1802,52 @@
 
   </main>
 
-  <!-- Bottom 3-Tab Navigation -->
-  <nav class="bottom-nav">
-    <button class="nav-btn active" data-tab="home" onclick="switchTab('home')">
-      <span class="ico">🏠</span>
-      <span>ホーム(開封)</span>
-    </button>
-    <button class="nav-btn" data-tab="dex" onclick="switchTab('dex')">
-      <span class="ico">📖</span>
-      <span>マイカード</span>
-    </button>
-    <button class="nav-btn" data-tab="battle" onclick="switchTab('battle')">
-      <span class="ico">⚔️</span>
-      <span>バトル</span>
-    </button>
-  </nav>
+  <!-- Minimal 3-Tab Bottom Pill Navigation -->
+  <div class="bottom-nav-wrap">
+    <nav class="bottom-nav">
+      <button class="nav-btn active" data-tab="home" onclick="switchTab('home')">パック開封</button>
+      <button class="nav-btn" data-tab="dex" onclick="switchTab('dex')">カード図鑑</button>
+      <button class="nav-btn" data-tab="battle" onclick="switchTab('battle')">カードバトル</button>
+    </nav>
+  </div>
 
 </div>
 
 <script>
 /* =========================================================================
-   1. MASTER CARD DATABASE (001 - 015: 12 MONSTERS + 3 TRAINERS)
+   1. PURE VECTOR SVG ELEMENT ICONS & MASTER CARD DATABASE (ZERO EMOJIS!)
    ========================================================================= */
-const TYPE_META = {
-  fire:      { icon: '🔥', name: '炎', orbClass: 'orb-fire' },
-  water:     { icon: '💧', name: '水', orbClass: 'orb-water' },
-  lightning: { icon: '⚡', name: '雷', orbClass: 'orb-lightning' },
-  grass:     { icon: '🌿', name: '草', orbClass: 'orb-grass' },
-  psychic:   { icon: '🔮', name: '超', orbClass: 'orb-psychic' },
-  colorless: { icon: '⚪', name: '無', orbClass: 'orb-colorless' }
+const ELEMENT_SVGS = {
+  fire: `<svg viewBox="0 0 24 24" fill="#FFFFFF"><path d="M12 2C9.5 6 7 8.5 7 13a5 5 0 0 0 10 0c0-3-1.5-5.5-3-7.5-.5 1.5-1.5 2.5-2 2.5s-1-1.5 0-6z"/></svg>`,
+  water: `<svg viewBox="0 0 24 24" fill="#FFFFFF"><path d="M12 2.5C8 8 6 11.5 6 15a6 6 0 0 0 12 0c0-3.5-2-7-6-12.5z"/></svg>`,
+  lightning: `<svg viewBox="0 0 24 24" fill="#FFFFFF"><polygon points="13 2 4 14 11 14 10 22 20 10 13 10"/></svg>`,
+  grass: `<svg viewBox="0 0 24 24" fill="#FFFFFF"><path d="M19 4C10 4 5 9 5 17c0 1.5.5 2.5.5 2.5S9 14 15 12c-4 3-6 7-6 7 6 0 10-4 10-15z"/></svg>`,
+  psychic: `<svg viewBox="0 0 24 24" fill="#FFFFFF"><polygon points="12 2 14.8 9.2 22 12 14.8 14.8 12 22 9.2 14.8 2 12 9.2 9.2"/></svg>`,
+  colorless: `<svg viewBox="0 0 24 24" fill="#475569"><circle cx="12" cy="12" r="6"/></svg>`
 };
 
+const TYPE_META = {
+  fire:      { svg: ELEMENT_SVGS.fire, name: '炎', orbClass: 'orb-fire' },
+  water:     { svg: ELEMENT_SVGS.water, name: '水', orbClass: 'orb-water' },
+  lightning: { svg: ELEMENT_SVGS.lightning, name: '雷', orbClass: 'orb-lightning' },
+  grass:     { svg: ELEMENT_SVGS.grass, name: '草', orbClass: 'orb-grass' },
+  psychic:   { svg: ELEMENT_SVGS.psychic, name: '超', orbClass: 'orb-psychic' },
+  colorless: { svg: ELEMENT_SVGS.colorless, name: '無', orbClass: 'orb-colorless' }
+};
+
+/* Concise 5-6 char names so zero cards ever truncate with "..." */
 const MASTER_CARDS = [
   {
     id: 1, dex: '001', kind: 'monster', isEx: true,
-    name: 'イグニス・ドラコ', type: 'fire', hp: 150,
-    moveName: '紅蓮メテオドライブ', moveCost: 2, moveDmg: 110,
+    name: '炎竜イグニス', type: 'fire', hp: 150,
+    moveName: '紅蓮メテオ', moveCost: 2, moveDmg: 110,
     moveDesc: '圧倒的な蒼炎で相手バトル場を焼き尽くす。',
     weakness: 'water', retreat: 2, rarity: '♦♦♦♦',
     art: 'assets/card_dragon.jpg', filter: 'none'
   },
   {
     id: 2, dex: '002', kind: 'monster', isEx: false,
-    name: 'フレア・ワイバーン', type: 'fire', hp: 90,
+    name: '紅蓮ワイバーン', type: 'fire', hp: 90,
     moveName: 'フレイムクロー', moveCost: 1, moveDmg: 40,
     moveDesc: '素早い炎の爪で切り裂く速攻ワザ。',
     weakness: 'water', retreat: 1, rarity: '♦',
@@ -1992,15 +1855,15 @@ const MASTER_CARDS = [
   },
   {
     id: 3, dex: '003', kind: 'monster', isEx: false,
-    name: 'マグマ・ゴーレム', type: 'fire', hp: 110,
-    moveName: 'ボルケーノスタンプ', moveCost: 2, moveDmg: 70,
+    name: '熔岩ゴーレム', type: 'fire', hp: 110,
+    moveName: 'マグマスタンプ', moveCost: 2, moveDmg: 70,
     moveDesc: '灼熱の拳を叩きつける重撃。',
     weakness: 'water', retreat: 2, rarity: '♦♦',
     art: 'assets/boss_ignis.jpg', filter: 'hue-rotate(-18deg) contrast(1.12)'
   },
   {
     id: 4, dex: '004', kind: 'monster', isEx: true,
-    name: 'リヴァイアサン', type: 'water', hp: 160,
+    name: '海神リヴァイア', type: 'water', hp: 160,
     moveName: 'アビスタイダル', moveCost: 2, moveDmg: 120,
     moveDesc: '深海の激流で相手を飲み込む大技。',
     weakness: 'lightning', retreat: 2, rarity: '♦♦♦♦',
@@ -2008,7 +1871,7 @@ const MASTER_CARDS = [
   },
   {
     id: 5, dex: '005', kind: 'monster', isEx: false,
-    name: 'オーロラ・ヴァルキリー', type: 'water', hp: 100,
+    name: '星竜オーロラ', type: 'water', hp: 100,
     moveName: 'クリスタルランス', moveCost: 1, moveDmg: 50,
     moveDesc: '氷結の槍で急所を正確に貫く。',
     weakness: 'lightning', retreat: 1, rarity: '♦♦♦',
@@ -2016,7 +1879,7 @@ const MASTER_CARDS = [
   },
   {
     id: 6, dex: '006', kind: 'monster', isEx: false,
-    name: 'フロスト・セイレーン', type: 'water', hp: 80,
+    name: '氷姫セイレーン', type: 'water', hp: 80,
     moveName: 'アクアウェーブ', moveCost: 1, moveDmg: 40,
     moveDesc: '冷たい水流を放って攻撃する。',
     weakness: 'lightning', retreat: 1, rarity: '♦',
@@ -2024,7 +1887,7 @@ const MASTER_CARDS = [
   },
   {
     id: 7, dex: '007', kind: 'monster', isEx: true,
-    name: '聖騎士オリオン', type: 'lightning', hp: 140,
+    name: '太陽神オリオン', type: 'lightning', hp: 140,
     moveName: 'サンダーカリバー', moveCost: 2, moveDmg: 100,
     moveDesc: '雷光を纏った聖剣で一閃する。',
     weakness: 'grass', retreat: 1, rarity: '★',
@@ -2032,7 +1895,7 @@ const MASTER_CARDS = [
   },
   {
     id: 8, dex: '008', kind: 'monster', isEx: false,
-    name: 'ライトニング・リアム', type: 'lightning', hp: 90,
+    name: '雷鹿セレス', type: 'lightning', hp: 90,
     moveName: 'スパークラッシュ', moveCost: 1, moveDmg: 45,
     moveDesc: '電光石火の連撃を叩き込む。',
     weakness: 'grass', retreat: 1, rarity: '♦♦',
@@ -2040,7 +1903,7 @@ const MASTER_CARDS = [
   },
   {
     id: 9, dex: '009', kind: 'monster', isEx: false,
-    name: 'プラズマ・ストライカー', type: 'lightning', hp: 100,
+    name: '雷帝ストライク', type: 'lightning', hp: 100,
     moveName: 'ボルトスマッシュ', moveCost: 2, moveDmg: 70,
     moveDesc: '高圧電流をまとった一撃。',
     weakness: 'grass', retreat: 1, rarity: '♦♦',
@@ -2048,15 +1911,15 @@ const MASTER_CARDS = [
   },
   {
     id: 10, dex: '010', kind: 'monster', isEx: true,
-    name: '精霊姫エララ', type: 'grass', hp: 140,
-    moveName: 'エメラルドレクイエム', moveCost: 2, moveDmg: 100,
+    name: '聖女エララ', type: 'grass', hp: 140,
+    moveName: 'エメラルドノヴァ', moveCost: 2, moveDmg: 100,
     moveDesc: '世界樹の魔力を解放して攻撃する。',
     weakness: 'fire', retreat: 1, rarity: '★',
     art: 'assets/card_elara.jpg', filter: 'none'
   },
   {
     id: 11, dex: '011', kind: 'monster', isEx: false,
-    name: 'シルフィード・アーチャー', type: 'grass', hp: 80,
+    name: '風弓シルフィ', type: 'grass', hp: 80,
     moveName: 'リーフアロー', moveCost: 1, moveDmg: 40,
     moveDesc: '風の矢で素早く先制する。',
     weakness: 'fire', retreat: 1, rarity: '♦',
@@ -2064,44 +1927,39 @@ const MASTER_CARDS = [
   },
   {
     id: 12, dex: '012', kind: 'monster', isEx: true,
-    name: 'クリサリス・エンプレス', type: 'psychic', hp: 150,
-    moveName: 'ディメンションノヴァ', moveCost: 2, moveDmg: 110,
+    name: '氷晶クリサリス', type: 'psychic', hp: 150,
+    moveName: 'コズミックノヴァ', moveCost: 2, moveDmg: 110,
     moveDesc: '時空を歪める超重力で粉砕する。',
     weakness: 'lightning', retreat: 2, rarity: '★',
     art: 'assets/boss_crysalis.jpg', filter: 'none'
   },
   {
     id: 13, dex: '013', kind: 'support', isEx: false,
-    name: '博士の研究', type: 'support',
+    name: '大賢者の研究', type: 'support',
     effect: '自分の山札を2枚引く。',
     rule: 'サポートは、自分の番に1枚しか使えない。',
-    rarity: '♦♦', svgType: 'professor'
+    rarity: '♦♦', svgType: 'sage'
   },
   {
     id: 14, dex: '014', kind: 'goods', isEx: false,
-    name: 'モンスターボール', type: 'goods',
-    effect: '自分の山札から「たねモンスター」をランダムに1枚、手札に加える。',
+    name: '召喚クリスタル', type: 'goods',
+    effect: '自分の山札から「たね」をランダムに1枚、手札に加える。',
     rule: 'グッズは、自分の番に何枚でも使える。',
-    rarity: '♦', svgType: 'ball'
+    rarity: '♦', svgType: 'crystal'
   },
   {
     id: 15, dex: '015', kind: 'goods', isEx: false,
-    name: 'きずぐすり', type: 'goods',
-    effect: '自分のモンスター1体のHPを「20」回復する。',
+    name: '聖なるポーション', type: 'goods',
+    effect: '自分の場のキャラ1体のHPを「20」回復する。',
     rule: 'グッズは、自分の番に何枚でも使える。',
     rarity: '♦', svgType: 'potion'
   }
 ];
 
-/* Initial Collection State:
-   Start with 9 owned cards (1, 2, 5, 7, 8, 10, 13, 14, 15) and 6 unowned slots (3, 4, 6, 9, 11, 12)
-   so the numbered empty slots are immediately visible and Pack Opening guarantees NEW slot snap-ins! */
 let collection = {
   1: 1, 2: 2, 5: 1, 7: 1, 8: 2, 10: 1, 13: 2, 14: 2, 15: 2
 };
-let packHourglasses = 12;
 
-/* WebAudio Crisp Sound Synthesizer */
 let audioCtx = null;
 function playTone(kind) {
   try {
@@ -2145,11 +2003,14 @@ function playTone(kind) {
   } catch (e) {}
 }
 
-/* =========================================================================
-   2. POKEPOCK FAITHFUL CARD HTML BUILDER
-   ========================================================================= */
+function getArtUrl(p) {
+  if (!p) return '';
+  return (window.__APK_ASSET_DATA_URLS && window.__APK_ASSET_DATA_URLS[p]) || p;
+}
+
+/* Original Fantasy Trainer SVGs (Zero Pokémon IP overlap!) */
 function renderTrainerSVG(svgType) {
-  if (svgType === 'professor') {
+  if (svgType === 'sage') {
     return `<svg viewBox="0 0 200 130" width="100%" height="100%">
       <defs>
         <linearGradient id="pg" x1="0" y1="0" x2="1" y2="1">
@@ -2160,22 +2021,21 @@ function renderTrainerSVG(svgType) {
       <circle cx="100" cy="65" r="46" fill="none" stroke="#FDE047" stroke-width="2" stroke-dasharray="4 3"/>
       <rect x="64" y="34" width="72" height="62" rx="6" fill="#FEF3C7" stroke="#F59E0B" stroke-width="3"/>
       <line x1="100" y1="34" x2="100" y2="96" stroke="#B45309" stroke-width="3"/>
-      <circle cx="100" cy="62" r="14" fill="#38BDF8" opacity="0.85"/>
-      <text x="100" y="118" text-anchor="middle" fill="#FDE047" font-size="11" font-weight="900">ARCANE RESEARCH</text>
+      <polygon points="100 46 112 65 100 84 88 65" fill="#38BDF8"/>
     </svg>`;
   }
-  if (svgType === 'ball') {
+  if (svgType === 'crystal') {
     return `<svg viewBox="0 0 200 130" width="100%" height="100%">
       <defs>
-        <radialGradient id="bg" cx="50%" cy="50%" r="60%">
-          <stop offset="0%" stop-color="#1E3A8A"/><stop offset="100%" stop-color="#0F172A"/>
+        <radialGradient id="cg" cx="50%" cy="50%" r="60%">
+          <stop offset="0%" stop-color="#0284C7"/><stop offset="100%" stop-color="#0F172A"/>
         </radialGradient>
       </defs>
-      <rect width="200" height="130" fill="url(#bg)"/>
-      <circle cx="100" cy="64" r="40" fill="#EF4444" stroke="#F8FAFC" stroke-width="3"/>
-      <path d="M60 64 A40 40 0 0 0 140 64 Z" fill="#F8FAFC"/>
-      <line x1="60" y1="64" x2="140" y2="64" stroke="#0F172A" stroke-width="6"/>
-      <circle cx="100" cy="64" r="12" fill="#38BDF8" stroke="#0F172A" stroke-width="4"/>
+      <rect width="200" height="130" fill="url(#cg)"/>
+      <circle cx="100" cy="65" r="44" fill="none" stroke="#38BDF8" stroke-width="2" opacity="0.6"/>
+      <polygon points="100 20 134 52 120 104 80 104 66 52" fill="#38BDF8" stroke="#E0F2FE" stroke-width="3"/>
+      <polygon points="100 20 134 52 100 68 66 52" fill="#7DD3FC" opacity="0.85"/>
+      <polygon points="100 32 116 52 100 92 84 52" fill="#FFFFFF" opacity="0.55"/>
     </svg>`;
   }
   return `<svg viewBox="0 0 200 130" width="100%" height="100%">
@@ -2185,26 +2045,40 @@ function renderTrainerSVG(svgType) {
       </linearGradient>
     </defs>
     <rect width="200" height="130" fill="url(#pot)"/>
-    <rect x="86" y="22" width="28" height="14" rx="4" fill="#CBD5E1"/>
-    <path d="M75 45 L125 45 L136 96 A12 12 0 0 1 124 108 L76 108 A12 12 0 0 1 64 96 Z" fill="#10B981" stroke="#A7F3D0" stroke-width="3"/>
+    <rect x="86" y="22" width="28" height="12" rx="4" fill="#CBD5E1"/>
+    <path d="M76 42 L124 42 L136 96 A12 12 0 0 1 124 108 L76 108 A12 12 0 0 1 64 96 Z" fill="#10B981" stroke="#A7F3D0" stroke-width="3"/>
     <path d="M100 56 L100 88 M84 72 L116 72" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/>
   </svg>`;
 }
 
-function getArtUrl(p) {
-  if (!p) return '';
-  return (window.__APK_ASSET_DATA_URLS && window.__APK_ASSET_DATA_URLS[p]) || p;
-}
-
+/* =========================================================================
+   2. FULL CARD & DEDICATED MINI CARD RENDERERS (ZERO TRUNCATION!)
+   ========================================================================= */
 function renderCardHTML(card, size = 'full') {
-  const isMini = size === 'mini';
-  const sizeClass = isMini ? 'mini' : '';
-  const exClass = card.isEx ? 'is-ex' : '';
+  if (size === 'mini') {
+    const exClass = card.isEx ? 'is-ex' : '';
+    const artHtml = card.art
+      ? `<img src="${getArtUrl(card.art)}" alt="${card.name}" style="filter:${card.filter||'none'};">`
+      : renderTrainerSVG(card.svgType);
+    return `
+      <div class="dex-mini-card ${exClass}">
+        <div class="dmc-top">
+          <span>${card.dex}</span>
+          <span class="dmc-rarity">${card.rarity}</span>
+        </div>
+        <div class="dmc-art">${artHtml}</div>
+        <div class="dmc-bottom">
+          <div class="dmc-name">${card.name}${card.isEx ? ' ex' : ''}</div>
+        </div>
+      </div>
+    `;
+  }
 
+  const exClass = card.isEx ? 'is-ex' : '';
   if (card.kind === 'support' || card.kind === 'goods') {
     const badgeLabel = card.kind === 'support' ? 'サポート' : 'グッズ';
     return `
-      <div class="pk-card ${sizeClass}" data-type="${card.kind}">
+      <div class="pk-card" data-type="${card.kind}">
         <div class="pk-holo-sheen"></div>
         <div class="pk-card-inner">
           <div class="pk-header">
@@ -2213,7 +2087,7 @@ function renderCardHTML(card, size = 'full') {
               <span class="pk-name">${card.name}</span>
             </div>
             <div class="pk-header-right">
-              <span style="font-size:${isMini?'6.5px':'9px'}; font-weight:900; color:#475569;">TRAINER'S</span>
+              <span style="font-size:9px; font-weight:900; color:#475569;">TRAINER'S</span>
             </div>
           </div>
 
@@ -2239,24 +2113,22 @@ function renderCardHTML(card, size = 'full') {
     `;
   }
 
-  // Monster Card
   const tMeta = TYPE_META[card.type];
   const wMeta = TYPE_META[card.weakness];
   let costOrbs = '';
   for (let i = 0; i < card.moveCost; i++) {
-    costOrbs += `<span class="pk-type-orb ${tMeta.orbClass}">${tMeta.icon}</span>`;
+    costOrbs += `<span class="pk-type-orb ${tMeta.orbClass}">${tMeta.svg}</span>`;
   }
   let retreatOrbs = '';
   for (let i = 0; i < card.retreat; i++) {
-    retreatOrbs += `<span class="pk-type-orb orb-colorless">⚪</span>`;
+    retreatOrbs += `<span class="pk-type-orb orb-colorless">${TYPE_META.colorless.svg}</span>`;
   }
   const starClass = card.rarity.includes('★') ? 'star' : '';
 
   return `
-    <div class="pk-card ${sizeClass} ${exClass}" data-type="${card.type}">
+    <div class="pk-card ${exClass}" data-type="${card.type}">
       <div class="pk-holo-sheen"></div>
       <div class="pk-card-inner">
-        <!-- 1. Header -->
         <div class="pk-header">
           <div class="pk-header-left">
             <span class="pk-stage-badge">たね</span>
@@ -2265,16 +2137,14 @@ function renderCardHTML(card, size = 'full') {
           <div class="pk-header-right">
             <span class="pk-hp-label">HP</span>
             <span class="pk-hp-val">${card.hp}</span>
-            <span class="pk-type-orb ${tMeta.orbClass}">${tMeta.icon}</span>
+            <span class="pk-type-orb ${tMeta.orbClass}">${tMeta.svg}</span>
           </div>
         </div>
 
-        <!-- 2. Silver-Bezel Illustration -->
         <div class="pk-art-frame">
           <img class="pk-art-img" src="${getArtUrl(card.art)}" alt="${card.name}" style="filter:${card.filter};">
         </div>
 
-        <!-- 3. Move Row (Energy Orbs + Move Name + Damage) -->
         <div class="pk-body">
           <div class="pk-move-row">
             <div class="pk-move-cost">${costOrbs}</div>
@@ -2284,12 +2154,11 @@ function renderCardHTML(card, size = 'full') {
           <div class="pk-move-desc">${card.moveDesc}</div>
         </div>
 
-        <!-- 4. Bottom Weakness / Retreat / Rarity / Dex Bar -->
         <div class="pk-footer">
           <div class="pk-stats-bar">
             <div class="pk-stat-item">
               <span>弱点</span>
-              <span class="pk-type-orb ${wMeta.orbClass}">${wMeta.icon}</span>
+              <span class="pk-type-orb ${wMeta.orbClass}">${wMeta.svg}</span>
               <span>+20</span>
             </div>
             <div class="pk-stat-item">
@@ -2309,58 +2178,135 @@ function renderCardHTML(card, size = 'full') {
 }
 
 /* =========================================================================
-   3. PACK OPENING & DEX EMPTY SLOT SNAP-IN REGISTRATION FLOW
+   3. PACK FOIL LASER CUTTING (pokepock_1_pack_cutting.png style) & DEX SNAP-IN
    ========================================================================= */
-let currentPackCards = []; // Array of { card, isNew }
+let cutProgress = 0;
+let isPackOpened = false;
+let isDraggingPack = false;
+let sparks = [];
+let currentPackCards = [];
 let currentPackIndex = 0;
-let isSlicing = false;
 
 function updateHeaderStats() {
   const ownedCount = Object.keys(collection).filter(k => collection[k] > 0).length;
   document.getElementById('hdr-dex-count').textContent = `${ownedCount} / 15`;
   document.getElementById('dex-tab-progress').textContent = `${ownedCount} / 15 登録済`;
-  document.getElementById('hdr-stamina').textContent = packHourglasses;
 }
 
-// Interactive Left-to-Right Foil Slice Drag
-(function initSliceInteraction() {
-  const zone = document.getElementById('slice-zone');
-  const fill = document.getElementById('slice-laser-fill');
-  const knob = document.getElementById('slice-knob');
+function renderCutVisuals(progress) {
+  const packTopFoil = document.getElementById('pack-top-foil');
+  const packGodRays = document.getElementById('pack-god-rays');
+  const cutCanvas = document.getElementById('pack-cut-canvas');
+  if (!packTopFoil || !cutCanvas) return;
+  const cutCtx = cutCanvas.getContext('2d');
 
-  function updateSliceProgress(clientX) {
-    const rect = zone.getBoundingClientRect();
-    let pct = ((clientX - rect.left) / rect.width) * 100;
-    pct = Math.max(0, Math.min(100, pct));
-    fill.style.width = pct + '%';
-    knob.style.left = pct + '%';
-    if (pct >= 82 && !isSlicing) {
-      isSlicing = true;
-      triggerPackOpen();
+  cutProgress = Math.max(0, Math.min(1, progress));
+  const deg = cutProgress * 7.5;
+  const liftY = cutProgress * 6;
+  packTopFoil.style.transform = `translateY(-${liftY.toFixed(1)}px) rotateZ(${deg.toFixed(2)}deg)`;
+
+  packGodRays.style.opacity = (cutProgress * 0.92).toFixed(2);
+  packGodRays.style.clipPath = `polygon(0% 0%, ${(cutProgress * 100).toFixed(1)}% 0%, ${(cutProgress * 100).toFixed(1)}% 100%, 0% 100%)`;
+
+  cutCtx.clearRect(0, 0, cutCanvas.width, cutCanvas.height);
+  if (cutProgress > 0.01) {
+    const startX = 46;
+    const endX = 46 + cutProgress * 246;
+    const seamY = 118;
+
+    cutCtx.save();
+    cutCtx.strokeStyle = '#38BDF8';
+    cutCtx.shadowColor = '#FDE047';
+    cutCtx.shadowBlur = 18;
+    cutCtx.lineWidth = 5;
+    cutCtx.lineCap = 'round';
+    cutCtx.beginPath();
+    cutCtx.moveTo(startX, seamY);
+    cutCtx.lineTo(endX, seamY);
+    cutCtx.stroke();
+
+    cutCtx.strokeStyle = '#FFFFFF';
+    cutCtx.lineWidth = 2.2;
+    cutCtx.beginPath();
+    cutCtx.moveTo(startX, seamY);
+    cutCtx.lineTo(endX, seamY);
+    cutCtx.stroke();
+
+    const grad = cutCtx.createRadialGradient(endX, seamY, 1, endX, seamY, 26);
+    grad.addColorStop(0, 'rgba(255,255,255,1)');
+    grad.addColorStop(0.35, 'rgba(253,224,71,0.95)');
+    grad.addColorStop(0.7, 'rgba(56,189,248,0.55)');
+    grad.addColorStop(1, 'rgba(56,189,248,0)');
+    cutCtx.fillStyle = grad;
+    cutCtx.beginPath();
+    cutCtx.arc(endX, seamY, 26, 0, Math.PI * 2);
+    cutCtx.fill();
+
+    cutCtx.strokeStyle = 'rgba(255,255,255,0.9)';
+    cutCtx.lineWidth = 1.5;
+    cutCtx.beginPath();
+    cutCtx.moveTo(endX - 18, seamY);
+    cutCtx.lineTo(endX + 18, seamY);
+    cutCtx.moveTo(endX, seamY - 14);
+    cutCtx.lineTo(endX, seamY + 14);
+    cutCtx.stroke();
+    cutCtx.restore();
+
+    for (let i = 0; i < 6; i++) {
+      sparks.push({
+        x: endX - Math.random() * 28,
+        y: seamY + (Math.random() - 0.5) * 10,
+        r: 2 + Math.random() * 2.5,
+        color: i % 2 === 0 ? '#FDE047' : '#FFFFFF'
+      });
     }
+    sparks.slice(-14).forEach(p => {
+      cutCtx.fillStyle = p.color;
+      cutCtx.beginPath();
+      cutCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      cutCtx.fill();
+    });
   }
+}
 
-  zone.addEventListener('pointerdown', (e) => {
-    isSlicing = false;
-    zone.setPointerCapture(e.pointerId);
-    updateSliceProgress(e.clientX);
-  });
-  zone.addEventListener('pointermove', (e) => {
-    if (e.buttons > 0) updateSliceProgress(e.clientX);
+window.setPackCutProgress = renderCutVisuals;
+
+(function initPackSwipeEvents() {
+  window.addEventListener('DOMContentLoaded', () => {
+    const packBox = document.getElementById('pack-3d-box');
+    if (!packBox) return;
+    packBox.addEventListener('pointerdown', (ev) => {
+      if (isPackOpened) return;
+      isDraggingPack = true;
+      packBox.setPointerCapture(ev.pointerId);
+      const rect = packBox.getBoundingClientRect();
+      const relX = (ev.clientX - rect.left) / rect.width;
+      renderCutVisuals(Math.max(0.08, Math.min(0.95, relX)));
+    });
+    packBox.addEventListener('pointermove', (ev) => {
+      if (!isDraggingPack || isPackOpened) return;
+      const rect = packBox.getBoundingClientRect();
+      const relX = (ev.clientX - rect.left) / rect.width;
+      if (relX > cutProgress) renderCutVisuals(relX);
+      if (cutProgress >= 0.85) {
+        isDraggingPack = false;
+        triggerPackOpen();
+      }
+    });
+    packBox.addEventListener('pointerup', () => {
+      if (!isDraggingPack || isPackOpened) return;
+      isDraggingPack = false;
+      triggerPackOpen();
+    });
   });
 })();
 
 function generatePack5Cards() {
   const unownedIds = MASTER_CARDS.map(c => c.id).filter(id => !collection[id]);
-  const ownedIds = MASTER_CARDS.map(c => c.id).filter(id => collection[id] > 0);
   const pulled = [];
-
-  // Ensure at least 2 unowned cards (if available) so the player always experiences NEW slot registration!
-  const targetNew = Math.min(2, unownedIds.length);
   const shuffledUnowned = [...unownedIds].sort(() => Math.random() - 0.5);
   const shuffledAll = [...MASTER_CARDS].sort(() => Math.random() - 0.5);
 
-  // First 3 cards: mix of common/owned and 1 new
   for (let i = 0; i < 5; i++) {
     let chosenCard = null;
     if ((i === 1 || i === 4) && shuffledUnowned.length > 0) {
@@ -2376,22 +2322,28 @@ function generatePack5Cards() {
 }
 
 function triggerPackOpen() {
+  if (isPackOpened) return;
+  isPackOpened = true;
   playTone('slice');
-  const foil = document.getElementById('booster-top-foil');
-  const fill = document.getElementById('slice-laser-fill');
-  const knob = document.getElementById('slice-knob');
-  fill.style.width = '100%';
-  knob.style.left = '100%';
-  foil.classList.add('sliced');
+  renderCutVisuals(1);
 
-  if (packHourglasses > 0) packHourglasses--;
+  const packTopFoil = document.getElementById('pack-top-foil');
+  const packBottomPart = document.getElementById('pack-bottom-part');
+  const packGodRays = document.getElementById('pack-god-rays');
+  packTopFoil.style.transition = 'transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease';
+  packTopFoil.style.transform = 'translateY(-140px) translateX(40px) rotateZ(20deg)';
+  packTopFoil.style.opacity = '0';
+  packBottomPart.style.transform = 'translateY(160px) scale(0.92)';
+  packBottomPart.style.opacity = '0';
+  packGodRays.style.opacity = '0';
+
   currentPackCards = generatePack5Cards();
   currentPackIndex = 0;
 
   setTimeout(() => {
     document.getElementById('view-pack-stack').classList.add('active');
     renderCurrentPackCard();
-  }, 460);
+  }, 420);
 }
 
 function renderCurrentPackCard() {
@@ -2400,7 +2352,7 @@ function renderCurrentPackCard() {
   const stage = document.getElementById('card-stack-stage');
   stage.innerHTML = `
     <div id="active-pack-card-wrap" style="position:relative;">
-      ${entry.isNew ? '<div class="stack-new-badge">✨ NEW! 初ゲット</div>' : ''}
+      ${entry.isNew ? '<div class="stack-new-badge">NEW! 初ゲット</div>' : ''}
       ${renderCardHTML(entry.card, 'full')}
     </div>
   `;
@@ -2433,7 +2385,6 @@ function showPackSummaryView() {
   `).join('');
 }
 
-/* STEP 4: DEX EMPTY SLOT SNAP-IN REGISTRATION ANIMATION */
 function startDexRegistrationSequence() {
   document.getElementById('view-pack-summary').classList.remove('active');
   document.getElementById('view-dex-reg').classList.add('active');
@@ -2442,7 +2393,6 @@ function startDexRegistrationSequence() {
   const ownedBefore = Object.keys(collection).filter(k => collection[k] > 0).length;
   document.getElementById('reg-counter-txt').textContent = `${ownedBefore} / 15`;
 
-  // Render all 15 slots in their BEFORE-registration state
   board.innerHTML = MASTER_CARDS.map(card => {
     const alreadyOwned = collection[card.id] > 0;
     if (alreadyOwned) {
@@ -2455,14 +2405,13 @@ function startDexRegistrationSequence() {
     `;
   }).join('');
 
-  // Commit all 5 pulled cards into collection and animate NEW ones snapping into their empty slots!
   const newEntries = currentPackCards.filter(e => e.isNew);
   currentPackCards.forEach(e => {
     collection[e.card.id] = (collection[e.card.id] || 0) + 1;
   });
 
   if (newEntries.length === 0) {
-    document.getElementById('reg-status-pill').textContent = '全カード所持済み（枚数カウントアップ！）';
+    document.getElementById('reg-status-pill').textContent = '全カード所持済み（所持数カウントアップ！）';
     updateHeaderStats();
     renderDexGrid();
     return;
@@ -2482,7 +2431,7 @@ function startDexRegistrationSequence() {
         updateHeaderStats();
         renderDexGrid();
       }
-    }, 350 + idx * 550);
+    }, 320 + idx * 520);
   });
 }
 
@@ -2498,7 +2447,7 @@ function renderRegSlotInnerHTML(card, showPachi) {
         <span>${card.rarity}</span>
       </div>
       ${thumbBlock}
-      <div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:7px;">${card.name}</div>
+      <div style="white-space:nowrap;font-size:7px;letter-spacing:-0.04em;">${card.name}</div>
       ${showPachi ? '<div class="pachi-pop"><span class="pachi-badge">パチッ！NEW</span></div>' : ''}
     </div>
   `;
@@ -2513,13 +2462,18 @@ function renderRegSlotHTML(card, filled, showPachi) {
 }
 
 function resetPackFlow() {
+  isPackOpened = false;
+  sparks = [];
   document.getElementById('view-pack-stack').classList.remove('active');
   document.getElementById('view-pack-summary').classList.remove('active');
   document.getElementById('view-dex-reg').classList.remove('active');
-  document.getElementById('booster-top-foil').classList.remove('sliced');
-  document.getElementById('slice-laser-fill').style.width = '0%';
-  document.getElementById('slice-knob').style.left = '0%';
-  isSlicing = false;
+  const packTopFoil = document.getElementById('pack-top-foil');
+  const packBottomPart = document.getElementById('pack-bottom-part');
+  packTopFoil.style.transition = 'none';
+  packTopFoil.style.opacity = '1';
+  packBottomPart.style.transform = 'none';
+  packBottomPart.style.opacity = '1';
+  renderCutVisuals(0);
 }
 
 function closePackFlowToDex() {
@@ -2569,17 +2523,16 @@ function openSingleCardViewer(cardId) {
       : `【${card.kind === 'support' ? 'サポート' : 'グッズ'}】${card.effect}`;
   modal.classList.add('active');
 
-  // Interactive 3D tilt on the single card
   const pkCard = mount.querySelector('.pk-card');
   const stage = document.getElementById('viewer-stage');
   stage.onpointermove = (e) => {
     const rect = stage.getBoundingClientRect();
     const nx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
     const ny = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
-    pkCard.style.transform = `scale(1.12) rotateY(${nx * 18}deg) rotateX(${-ny * 16}deg)`;
+    pkCard.style.transform = `scale(1.08) rotateY(${nx * 18}deg) rotateX(${-ny * 16}deg)`;
   };
   stage.onpointerleave = () => {
-    pkCard.style.transform = 'scale(1.12) rotateY(0deg) rotateX(0deg)';
+    pkCard.style.transform = 'scale(1.08) rotateY(0deg) rotateX(0deg)';
   };
 }
 
@@ -2615,32 +2568,27 @@ function cloneBattleUnit(card) {
 function initBattleGame() {
   document.getElementById('bt-result-modal').classList.remove('active');
 
-  const dragon = MASTER_CARDS.find(c => c.id === 1);   // イグニス・ドラコ ex (HP150, 2エネ110)
-  const orion  = MASTER_CARDS.find(c => c.id === 7);   // 聖騎士オリオン ex (HP140, 2エネ100)
-  const aurora = MASTER_CARDS.find(c => c.id === 5);   // オーロラ・ヴァルキリー (HP100, 1エネ50)
-  const wyvern = MASTER_CARDS.find(c => c.id === 2);   // フレア・ワイバーン (HP90, 1エネ40)
-  const elara  = MASTER_CARDS.find(c => c.id === 10);  // 精霊姫エララ ex
-  const liam   = MASTER_CARDS.find(c => c.id === 8);   // ライトニング・リアム
-  const prof   = MASTER_CARDS.find(c => c.id === 13);  // 博士の研究 (山札2枚ドロー)
-  const ball   = MASTER_CARDS.find(c => c.id === 14);  // モンスターボール (たね1枚サーチ)
-  const potion = MASTER_CARDS.find(c => c.id === 15);  // きずぐすり (HP20回復)
+  const dragon  = MASTER_CARDS.find(c => c.id === 1);
+  const orion   = MASTER_CARDS.find(c => c.id === 7);
+  const aurora  = MASTER_CARDS.find(c => c.id === 5);
+  const wyvern  = MASTER_CARDS.find(c => c.id === 2);
+  const elara   = MASTER_CARDS.find(c => c.id === 10);
+  const liam    = MASTER_CARDS.find(c => c.id === 8);
+  const sage    = MASTER_CARDS.find(c => c.id === 13);
+  const crystal = MASTER_CARDS.find(c => c.id === 14);
+  const potion  = MASTER_CARDS.find(c => c.id === 15);
 
-  // Enemy Field: Active + 2 Bench
   const enemyActive = cloneBattleUnit(wyvern);
-  const enemyBench1 = cloneBattleUnit(MASTER_CARDS.find(c => c.id === 4)); // リヴァイアサン ex
+  const enemyBench1 = cloneBattleUnit(MASTER_CARDS.find(c => c.id === 4));
   const enemyBench2 = cloneBattleUnit(liam);
 
-  // Player Field: Active (イグニス・ドラコ ex with 1 energy already attached) + 2 Bench
   const playerActive = cloneBattleUnit(dragon);
   playerActive.energy = 1;
   const playerBench1 = cloneBattleUnit(aurora);
   const playerBench2 = cloneBattleUnit(orion);
 
-  // Player Hand: 博士の研究, モンスターボール, きずぐすり, 精霊姫エララ ex
-  const hand = [prof, ball, potion, elara];
-
-  // Player 20-card Deck remaining (11 cards)
-  const deck = [liam, wyvern, prof, potion, ball, aurora, orion, elara, dragon, potion, liam];
+  const hand = [sage, crystal, potion, elara];
+  const deck = [liam, wyvern, sage, potion, crystal, aurora, orion, elara, dragon, potion, liam];
 
   btState = {
     turn: 1,
@@ -2661,7 +2609,7 @@ function initBattleGame() {
   renderBattleScreen();
 }
 
-function renderActiveSlotHTML(unit, isEnemy) {
+function renderActiveSlotHTML(unit) {
   if (!unit) {
     return `<div class="bt-active-card-slot"><div class="bench-empty-label">バトル場 空き</div></div>`;
   }
@@ -2670,24 +2618,24 @@ function renderActiveSlotHTML(unit, isEnemy) {
   const hpPct = Math.max(0, Math.round((unit.hp / unit.maxHp) * 100));
   let enOrbs = '';
   for (let i = 0; i < unit.energy; i++) {
-    enOrbs += `<span class="pk-type-orb ${tMeta.orbClass}">${tMeta.icon}</span>`;
+    enOrbs += `<span class="pk-type-orb ${tMeta.orbClass}">${tMeta.svg}</span>`;
   }
 
   return `
     <div class="bt-active-card-slot ${unit.isEx ? 'is-ex' : ''}">
       <div class="attached-en-row">${enOrbs}</div>
       <div class="bt-active-top">
-        <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+        <span style="white-space:nowrap;">
           ${unit.name}${unit.isEx ? '<span class="pk-ex-tag">ex</span>' : ''}
         </span>
-        <span class="pk-type-orb ${tMeta.orbClass}" style="width:16px;height:16px;font-size:9px;">${tMeta.icon}</span>
+        <span class="pk-type-orb ${tMeta.orbClass}" style="width:16px;height:16px;">${tMeta.svg}</span>
       </div>
       <div class="bt-active-art-wrap">
         <img src="${getArtUrl(unit.art)}" alt="${unit.name}" style="filter:${unit.filter||'none'};">
       </div>
-      <div style="display:flex;justify-content:space-between;font-size:8px;font-weight:800;color:#475569;">
-        <span>⚔️${unit.moveName}(${unit.moveDmg})</span>
-        <span>弱点:${wMeta.icon}+20</span>
+      <div style="display:flex;justify-content:space-between;align-items:center;font-size:8px;font-weight:800;color:#475569;">
+        <span>${unit.moveName}(${unit.moveDmg})</span>
+        <span style="display:inline-flex;align-items:center;gap:2px;">弱点:${wMeta.name}+20</span>
       </div>
       <div class="bt-hp-pill">
         <div class="bt-hp-fill" style="width:${hpPct}%;"></div>
@@ -2710,7 +2658,7 @@ function renderBenchRowHTML(benchArr, isPlayer) {
     const hpPct = Math.max(0, Math.round((unit.hp / unit.maxHp) * 100));
     let enOrbs = '';
     for (let i = 0; i < unit.energy; i++) {
-      enOrbs += `<span class="pk-type-orb ${tMeta.orbClass}">${tMeta.icon}</span>`;
+      enOrbs += `<span class="pk-type-orb ${tMeta.orbClass}">${tMeta.svg}</span>`;
     }
     return `
       <div class="bt-bench-slot occupied" onclick="${isPlayer ? `onBenchSlotClick(${idx})` : ''}">
@@ -2729,7 +2677,6 @@ function renderBenchRowHTML(benchArr, isPlayer) {
 function renderBattleScreen() {
   if (!btState) return;
 
-  // Points
   document.getElementById('player-pt-txt').textContent = `${btState.playerPoints}/3`;
   document.getElementById('enemy-pt-txt').textContent = `${btState.enemyPoints}/3`;
   document.getElementById('player-pt-dots').innerHTML = [0, 1, 2].map(i =>
@@ -2744,23 +2691,20 @@ function renderBattleScreen() {
   document.getElementById('bt-deck-count').textContent = btState.deck.length;
   document.getElementById('bt-log-banner').textContent = btState.log;
 
-  // Benches & Actives
   document.getElementById('enemy-bench-row').innerHTML = renderBenchRowHTML(btState.enemyBench, false);
   document.getElementById('player-bench-row').innerHTML = renderBenchRowHTML(btState.playerBench, true);
-  document.getElementById('enemy-active-mount').innerHTML = renderActiveSlotHTML(btState.enemyActive, true);
-  document.getElementById('player-active-mount').innerHTML = renderActiveSlotHTML(btState.playerActive, false);
+  document.getElementById('enemy-active-mount').innerHTML = renderActiveSlotHTML(btState.enemyActive);
+  document.getElementById('player-active-mount').innerHTML = renderActiveSlotHTML(btState.playerActive);
 
-  // Attack Button state
   const pAct = btState.playerActive;
   const atkBtn = document.getElementById('btn-bt-attack');
   if (pAct) {
-    const tMeta = TYPE_META[pAct.type];
     const isWeak = btState.enemyActive && btState.enemyActive.weakness === pAct.type;
     const totalDmg = pAct.moveDmg + (isWeak ? 20 : 0);
-    document.getElementById('bt-atk-name').textContent = `⚔️ ${pAct.moveName}`;
+    document.getElementById('bt-atk-name').textContent = pAct.moveName;
     document.getElementById('bt-atk-dmg').textContent = `${totalDmg}${isWeak ? '(弱点+20!)' : ''}`;
     document.getElementById('bt-atk-cost-txt').textContent =
-      `エネルギー: ${pAct.energy} / ${pAct.moveCost}個 ${pAct.energy >= pAct.moveCost ? '【発動可能！】' : '（右下のエネルギーを付与）'}`;
+      `エネルギー: ${pAct.energy} / ${pAct.moveCost}個 ${pAct.energy >= pAct.moveCost ? '【発動可能！】' : '（エネルギーゾーンをタップ）'}`;
     if (pAct.energy >= pAct.moveCost && btState.isPlayerTurn) {
       atkBtn.classList.remove('disabled');
     } else {
@@ -2768,13 +2712,12 @@ function renderBattleScreen() {
     }
   }
 
-  // Energy Zone Pod
   const ezPod = document.getElementById('energy-zone-pod');
   const ezOrb = document.getElementById('ez-main-orb');
   const ezTxt = document.getElementById('ez-status-txt');
   const activeType = pAct ? TYPE_META[pAct.type] : TYPE_META.fire;
   ezOrb.className = `ez-main-orb ${activeType.orbClass}`;
-  ezOrb.textContent = activeType.icon;
+  ezOrb.innerHTML = activeType.svg;
 
   if (btState.energyAvailable > 0 && btState.isPlayerTurn) {
     ezPod.classList.add('ready');
@@ -2784,7 +2727,6 @@ function renderBattleScreen() {
     ezTxt.textContent = '付与済み(次ターン)';
   }
 
-  // Player Hand
   const handEl = document.getElementById('bt-hand-scroll');
   handEl.innerHTML = btState.hand.map((card, idx) => {
     const tag = card.kind === 'monster' ? 'たね' : (card.kind === 'support' ? 'サポート' : 'グッズ');
@@ -2812,7 +2754,7 @@ function attachTurnEnergy() {
   playTone('snap');
   btState.playerActive.energy += 1;
   btState.energyAvailable = 0;
-  btState.log = `⚡ エネルギーゾーンから「${btState.playerActive.name}」にエネルギーを1個付与！ワザ発動可能！`;
+  btState.log = `「${btState.playerActive.name}」にエネルギーを1個付与！ワザ発動可能！`;
   renderBattleScreen();
 }
 
@@ -2824,14 +2766,14 @@ function playHandCard(handIdx) {
   if (card.kind === 'monster') {
     const emptyIdx = btState.playerBench.findIndex(b => b === null);
     if (emptyIdx === -1) {
-      btState.log = 'ベンチが3体満員のため、これ以上たねモンスターを出せません。';
+      btState.log = 'ベンチが3体満員のため、これ以上たねカードを出せません。';
       renderBattleScreen();
       return;
     }
     playTone('snap');
     btState.playerBench[emptyIdx] = cloneBattleUnit(card);
     btState.hand.splice(handIdx, 1);
-    btState.log = `✨ 手札からたねモンスター「${card.name}」をベンチ${emptyIdx + 1}に出しました！`;
+    btState.log = `手札から「${card.name}」をベンチ${emptyIdx + 1}に出しました！`;
     renderBattleScreen();
     return;
   }
@@ -2852,22 +2794,22 @@ function playHandCard(handIdx) {
         drawn++;
       }
     }
-    btState.log = `📖 サポート『博士の研究』発動！山札からカードを${drawn}枚引きました！`;
+    btState.log = `サポート『大賢者の研究』発動！山札からカードを${drawn}枚引きました！`;
     renderBattleScreen();
     return;
   }
 
   if (card.kind === 'goods') {
     playTone('flip');
-    if (card.svgType === 'ball') {
+    if (card.svgType === 'crystal') {
       btState.hand.splice(handIdx, 1);
       const monIdx = btState.deck.findIndex(c => c.kind === 'monster');
       if (monIdx !== -1) {
         const [found] = btState.deck.splice(monIdx, 1);
         btState.hand.push(found);
-        btState.log = `🔴 グッズ『モンスターボール』発動！山札から「${found.name}」を手札に加えました！`;
+        btState.log = `グッズ『召喚クリスタル』発動！山札から「${found.name}」を手札に加えました！`;
       } else {
-        btState.log = 'モンスターボールを使用しましたが、山札にたねモンスターがいませんでした。';
+        btState.log = '召喚クリスタルを使用しましたが、山札にたねカードがいませんでした。';
       }
       renderBattleScreen();
     } else if (card.svgType === 'potion') {
@@ -2875,7 +2817,7 @@ function playHandCard(handIdx) {
       btState.hand.splice(handIdx, 1);
       const before = target.hp;
       target.hp = Math.min(target.maxHp, target.hp + 20);
-      btState.log = `🧪 グッズ『きずぐすり』発動！「${target.name}」のHPを20回復（${before}→${target.hp}）！`;
+      btState.log = `グッズ『聖なるポーション』発動！「${target.name}」のHPを20回復（${before}→${target.hp}）！`;
       renderBattleScreen();
     }
   }
@@ -2889,7 +2831,7 @@ function onBenchSlotClick(benchIdx) {
     playTone('snap');
     benchUnit.energy += 1;
     btState.energyAvailable = 0;
-    btState.log = `⚡ ベンチの「${benchUnit.name}」にエネルギーを1個付与しました！`;
+    btState.log = `ベンチの「${benchUnit.name}」にエネルギーを1個付与しました！`;
     renderBattleScreen();
   }
 }
@@ -2899,7 +2841,7 @@ function playerExecuteRetreat() {
   const act = btState.playerActive;
   const benchIdx = btState.playerBench.findIndex(b => b !== null);
   if (benchIdx === -1) {
-    btState.log = 'ベンチに控えモンスターがいないため、にげられません。';
+    btState.log = 'ベンチに控えがいないため、にげられません。';
     renderBattleScreen();
     return;
   }
@@ -2913,7 +2855,7 @@ function playerExecuteRetreat() {
   const nextActive = btState.playerBench[benchIdx];
   btState.playerBench[benchIdx] = act;
   btState.playerActive = nextActive;
-  btState.log = `🏃 「${act.name}」がベンチに下がり、「${nextActive.name}」がバトル場に出ました！`;
+  btState.log = `「${act.name}」がベンチに下がり、「${nextActive.name}」がバトル場に出ました！`;
   renderBattleScreen();
 }
 
@@ -2932,13 +2874,13 @@ function playerExecuteAttack() {
   const isWeak = eAct.weakness === pAct.type;
   const dmg = pAct.moveDmg + (isWeak ? 20 : 0);
   eAct.hp = Math.max(0, eAct.hp - dmg);
-  btState.log = `💥 ${pAct.name}の「${pAct.moveName}」！${isWeak ? '弱点+20で' : ''}${dmg}ダメージ！`;
+  btState.log = `${pAct.name}の「${pAct.moveName}」！${isWeak ? '弱点+20で' : ''}${dmg}ダメージ！`;
   renderBattleScreen();
 
   if (eAct.hp <= 0) {
     const gainedPts = eAct.isEx ? 2 : 1;
     btState.playerPoints = Math.min(3, btState.playerPoints + gainedPts);
-    btState.log = `🎉 相手の「${eAct.name}${eAct.isEx ? ' ex' : ''}」をきぜつさせた！ +${gainedPts}ポイント獲得！`;
+    btState.log = `相手の「${eAct.name}${eAct.isEx ? ' ex' : ''}」をきぜつさせた！ +${gainedPts}ポイント獲得！`;
     renderBattleScreen();
 
     if (btState.playerPoints >= 3) {
@@ -2946,7 +2888,6 @@ function playerExecuteAttack() {
       return;
     }
 
-    // Promote enemy bench
     const nextIdx = btState.enemyBench.findIndex(b => b !== null);
     if (nextIdx !== -1) {
       btState.enemyActive = btState.enemyBench[nextIdx];
@@ -2975,7 +2916,7 @@ function endPlayerTurn() {
     const isWeak = pAct.weakness === eAct.type;
     const dmg = 30 + (isWeak ? 20 : 0);
     pAct.hp = Math.max(0, pAct.hp - dmg);
-    btState.log = `⚡ 相手「${eAct.name}」の攻撃！ ${dmg}ダメージを受けた！`;
+    btState.log = `相手「${eAct.name}」の攻撃！ ${dmg}ダメージを受けた！`;
 
     if (pAct.hp <= 0) {
       const lostPts = pAct.isEx ? 2 : 1;
@@ -2992,7 +2933,6 @@ function endPlayerTurn() {
       }
     }
 
-    // Start Next Player Turn
     btState.turn += 1;
     btState.isPlayerTurn = true;
     btState.energyAvailable = 1;
@@ -3006,13 +2946,12 @@ function endPlayerTurn() {
 }
 
 function showBattleResult(isWin) {
-  if (isWin) packHourglasses += 4;
   updateHeaderStats();
   document.getElementById('bt-res-badge').textContent = isWin ? 'VICTORY! 3 POINTS' : 'DEFEAT';
-  document.getElementById('bt-res-title').textContent = isWin ? '🏆 3ポイント先取 勝利！' : 'バトル敗北...';
+  document.getElementById('bt-res-title').textContent = isWin ? '3ポイント先取 勝利！' : 'バトル敗北...';
   document.getElementById('bt-res-desc').textContent = isWin
-    ? '相手モンスターを撃破して3ポイントを先取しました！報酬としてパック砂時計＋4個を獲得！'
-    : '相手に3ポイントを先取されました。デッキやきずぐすりを活用して再挑戦しましょう！';
+    ? '相手モンスターを撃破して3ポイントを先取しました！'
+    : '相手に3ポイントを先取されました。デッキやポーションを活用して再挑戦しましょう！';
   document.getElementById('bt-result-modal').classList.add('active');
 }
 
@@ -3033,8 +2972,11 @@ function switchTab(tabId) {
 
 window.addEventListener('DOMContentLoaded', () => {
   if (window.__APK_ASSET_DATA_URLS && window.__APK_ASSET_DATA_URLS['assets/card_pack.jpg']) {
-    const bb = document.querySelector('.booster-body');
-    if (bb) bb.style.backgroundImage = `url('${window.__APK_ASSET_DATA_URLS['assets/card_pack.jpg']}')`;
+    const pUrl = `url('${window.__APK_ASSET_DATA_URLS['assets/card_pack.jpg']}')`;
+    const pt = document.getElementById('pack-top-foil');
+    const pb = document.getElementById('pack-bottom-part');
+    if (pt) pt.style.backgroundImage = pUrl;
+    if (pb) pb.style.backgroundImage = pUrl;
   }
   updateHeaderStats();
   renderDexGrid();
