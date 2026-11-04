@@ -113,6 +113,8 @@
   
     
     
+    
+    
     /* === v7.4 3D Glossy Tactile Calculator UI & Subtractive 3-Element Cards === */
     .svg-ic {
       width: 1.08em; height: 1.08em; vertical-align: -0.15em;
@@ -166,8 +168,21 @@
       white-space: nowrap !important;
       font-size: clamp(1.02rem, 4.4vw, 1.32rem) !important;
     }
-    .v-kpi-val, .v-kpi-lbl {
+    .v-sub {
       white-space: nowrap !important;
+      font-size: 0.78rem !important;
+    }
+    .v-kpi {
+      padding: 8px 4px !important;
+      min-width: 0 !important;
+    }
+    .v-kpi-val {
+      white-space: nowrap !important;
+      font-size: 0.88rem !important;
+    }
+    .v-kpi-lbl {
+      white-space: nowrap !important;
+      font-size: 0.68rem !important;
     }
     .sliders-card, .card, .custom-card, .control-card, .replace-box {
       background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
@@ -296,6 +311,10 @@
       display: flex !important; flex-direction: column-reverse !important; align-items: flex-start !important; gap: 3px !important;
       min-width: 0 !important; max-width: 100% !important; margin-bottom: 4px !important;
     }
+    .v-label, .onek-lbl {
+      white-space: nowrap !important;
+      font-size: 0.82rem !important;
+    }
     .rec-desc, .rep-desc, .rec-payback, .rec-pb, .g-roi { display: none !important; }
     .t-tag, .rec-badge, .g-tag, .rep-tag {
       display: inline-flex !important; align-items: center !important;
@@ -307,7 +326,7 @@
       margin-bottom: 4px !important; white-space: nowrap !important;
     }
     .t-name, .rec-name, .g-title, .rep-title {
-      font-size: 0.9rem !important; font-weight: 900 !important;
+      font-size: 0.85rem !important; font-weight: 900 !important;
       color: #ffffff !important; line-height: 1.35 !important;
       margin-bottom: 8px !important; width: 100% !important;
       white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
@@ -349,9 +368,9 @@
 
     <!-- 2. 結論ボックス -->
     <div class="verdict-box">
-      <div class="v-label" id="vLabel"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> 夫婦2人で格安SIMへ乗り換えると、10年間で…</div>
+      <div class="v-label" id="vLabel"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> 2回線を格安SIMへ乗り換えた10年差額</div>
       <div class="v-main" id="vMain">+1,560,000 円 浮く！</div>
-      <div class="v-sub" id="vSub">大手キャリアのまま放置すると、高級家電や海外旅行が買える大金を失います</div>
+      <div class="v-sub" id="vSub">放置すると高級家電や旅行1回分の大金を失います</div>
       <div class="v-kpis">
         <div class="v-kpi">
           <div class="v-kpi-lbl">毎月浮く固定費</div>
@@ -413,9 +432,9 @@
     ];
 
     const TILES = [
-      { tag: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> 固定費削減の王道（PR）', name: '保険マンモス｜スマホと一緒に家計・保険も0円見直し相談', url: 'https://af.moshimo.com/af/c/click?a_id=5880339&p_id=7778&pc_id=22539&pl_id=97004', btn: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 無料相談を見る ↗' },
-      { tag: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> 浮いたお金を自動管理（PR）', name: 'マネーフォワード クラウド｜家計・確定申告の無料登録', url: 'https://af.moshimo.com/af/c/click?a_id=5880342&p_id=888&pc_id=1087&pl_id=64839', btn: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 無料で試す ↗' },
-      { tag: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> 乗り換え前に最安入手', name: 'SIMフリー iPhone / 人気Android本体（楽天高還元）', q: 'SIMフリー スマートフォン 本体 ランキング' },
+      { tag: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> 固定費削減の王道（PR）', name: '保険マンモス｜家計＆保険の0円見直し相談', url: 'https://af.moshimo.com/af/c/click?a_id=5880339&p_id=7778&pc_id=22539&pl_id=97004', btn: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 無料相談を見る ↗' },
+      { tag: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> 浮いたお金を自動管理（PR）', name: 'マネーフォワード｜家計＆固定費の自動管理', url: 'https://af.moshimo.com/af/c/click?a_id=5880342&p_id=888&pc_id=1087&pl_id=64839', btn: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 無料で試す ↗' },
+      { tag: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> 乗り換え前に最安入手', name: 'SIMフリー iPhone ＆ 人気Android本体', q: 'SIMフリー スマートフォン 本体 ランキング' },
       { tag: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> 外出先のギガ・電池対策', name: 'Anker モバイルバッテリー＆急速充電器', q: 'Anker モバイルバッテリー 急速充電器' }
     ];
 
@@ -471,7 +490,7 @@
       document.getElementById('lblNew').innerHTML = `月 ${newFee.toLocaleString()} 円`;
       document.getElementById('lblLines').innerHTML = `${lines} 回線`;
 
-      document.getElementById('vLabel').innerHTML = `<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> ${lines}回線を格安SIMへ乗り換えると、10年間で…`;
+      document.getElementById('vLabel').innerHTML = `<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> ${lines}回線を格安SIMへ乗り換えた10年差額`;
       document.getElementById('vMain').innerHTML = `+${tenYearSave.toLocaleString()} 円 浮く！`;
       document.getElementById('vMonthly').innerHTML = `+${monthlySave.toLocaleString()} 円/月`;
       document.getElementById('vYearly').innerHTML = `+${yearlySave.toLocaleString()} 円/年`;

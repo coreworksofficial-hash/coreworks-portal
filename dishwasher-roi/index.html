@@ -114,6 +114,8 @@
   
     
     
+    
+    
     /* === v7.4 3D Glossy Tactile Calculator UI & Subtractive 3-Element Cards === */
     .svg-ic {
       width: 1.08em; height: 1.08em; vertical-align: -0.15em;
@@ -167,8 +169,21 @@
       white-space: nowrap !important;
       font-size: clamp(1.02rem, 4.4vw, 1.32rem) !important;
     }
-    .v-kpi-val, .v-kpi-lbl {
+    .v-sub {
       white-space: nowrap !important;
+      font-size: 0.78rem !important;
+    }
+    .v-kpi {
+      padding: 8px 4px !important;
+      min-width: 0 !important;
+    }
+    .v-kpi-val {
+      white-space: nowrap !important;
+      font-size: 0.88rem !important;
+    }
+    .v-kpi-lbl {
+      white-space: nowrap !important;
+      font-size: 0.68rem !important;
     }
     .sliders-card, .card, .custom-card, .control-card, .replace-box {
       background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
@@ -297,6 +312,10 @@
       display: flex !important; flex-direction: column-reverse !important; align-items: flex-start !important; gap: 3px !important;
       min-width: 0 !important; max-width: 100% !important; margin-bottom: 4px !important;
     }
+    .v-label, .onek-lbl {
+      white-space: nowrap !important;
+      font-size: 0.82rem !important;
+    }
     .rec-desc, .rep-desc, .rec-payback, .rec-pb, .g-roi { display: none !important; }
     .t-tag, .rec-badge, .g-tag, .rep-tag {
       display: inline-flex !important; align-items: center !important;
@@ -308,7 +327,7 @@
       margin-bottom: 4px !important; white-space: nowrap !important;
     }
     .t-name, .rec-name, .g-title, .rep-title {
-      font-size: 0.9rem !important; font-weight: 900 !important;
+      font-size: 0.85rem !important; font-weight: 900 !important;
       color: #ffffff !important; line-height: 1.35 !important;
       margin-bottom: 8px !important; width: 100% !important;
       white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
@@ -350,9 +369,9 @@
 
     <!-- 2. 結論ボックス -->
     <div class="verdict-box">
-      <div class="v-label" id="vLabel"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> 2人暮らし・工事不要タンク式（実質 34,200円）は…</div>
+      <div class="v-label" id="vLabel"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> 2〜3人タンク式（実質34,200円）の回収目安</div>
       <div class="v-main" id="vMain">約 3.2 ヶ月で元が取れる！</div>
-      <div class="v-sub" id="vSub"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 1年間で 152時間（丸6.3日分）の皿洗いから一生解放されます！</div>
+      <div class="v-sub" id="vSub"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 年間152時間（丸6.3日分）の皿洗いがゼロに！</div>
       <div class="v-kpis">
         <div class="v-kpi">
           <div class="v-kpi-lbl">水道・お湯代節約</div>
@@ -428,14 +447,14 @@
       {
         badge: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 一人暮らし・省スペース王道',
         pb: 'A4サイズ設置・約3ヶ月で回収',
-        name: 'Panasonic パーソナル食洗機 SOLOTA / スリム卓上型',
+        name: 'Panasonic 食洗機 SOLOTA（省スペース型）',
         desc: '狭いキッチンにも置ける省スペース設計。高温除菌＆温風乾燥でグラスまでピカピカに。',
         q: 'パナソニック 食洗機 SOLOTA タンク式 工事不要'
       },
       {
         badge: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 浮いた時間で時給・年収アップ（PR）',
         pb: '完全無料・10秒LINE診断',
-        name: '出会えるエージェント診断｜あなたの適職＆市場価値診断',
+        name: '出会えるエージェント｜LINE適職＆年収診断',
         desc: '時短家電で生まれたゆとりをキャリアアップに！LINE友だち追加だけであなたに合う高年収求人や適職を無料診断。',
         url: 'https://af.moshimo.com/af/c/click?a_id=5880341&p_id=7838&pc_id=22734&pl_id=97605',
         btn: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 0円でLINE適職・年収診断を試す ↗'
@@ -502,9 +521,9 @@
       document.getElementById('lblMins').innerHTML = `1日 ${mins}分`;
       document.getElementById('lblWage').innerHTML = wage === 0 ? '0 円（水道・ガス代のみで計算）' : `時給 ${wage.toLocaleString()} 円`;
 
-      document.getElementById('vLabel').innerHTML = `${cur.icon} ${cur.name}（実質 ${netCost.toLocaleString()}円）は…`;
+      document.getElementById('vLabel').innerHTML = `${cur.icon} ${cur.name}（実質${netCost.toLocaleString()}円）の回収目安`;
       document.getElementById('vMain').innerHTML = `約 ${paybackMonths.toFixed(1)} ヶ月で元が取れる！`;
-      document.getElementById('vSub').innerHTML = `<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 1年間で ${hoursPerYear}時間（丸 ${daysPerYear}日分）の皿洗いから解放されます！`;
+      document.getElementById('vSub').innerHTML = `<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 年間${hoursPerYear}時間（丸${daysPerYear}日分）の皿洗いがゼロに！`;
       document.getElementById('vWaterYear').innerHTML = `年 ${(waterMonthly * 12).toLocaleString()}円`;
       document.getElementById('vMonthlyTotal').innerHTML = `+${monthlyTotal.toLocaleString()}円/月`;
       document.getElementById('v5YearNet').innerHTML = `+${net5Year.toLocaleString()}円`;

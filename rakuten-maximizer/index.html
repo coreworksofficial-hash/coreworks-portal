@@ -102,6 +102,8 @@
   
     
     
+    
+    
     /* === v7.4 3D Glossy Tactile Calculator UI & Subtractive 3-Element Cards === */
     .svg-ic {
       width: 1.08em; height: 1.08em; vertical-align: -0.15em;
@@ -155,8 +157,21 @@
       white-space: nowrap !important;
       font-size: clamp(1.02rem, 4.4vw, 1.32rem) !important;
     }
-    .v-kpi-val, .v-kpi-lbl {
+    .v-sub {
       white-space: nowrap !important;
+      font-size: 0.78rem !important;
+    }
+    .v-kpi {
+      padding: 8px 4px !important;
+      min-width: 0 !important;
+    }
+    .v-kpi-val {
+      white-space: nowrap !important;
+      font-size: 0.88rem !important;
+    }
+    .v-kpi-lbl {
+      white-space: nowrap !important;
+      font-size: 0.68rem !important;
     }
     .sliders-card, .card, .custom-card, .control-card, .replace-box {
       background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
@@ -285,6 +300,10 @@
       display: flex !important; flex-direction: column-reverse !important; align-items: flex-start !important; gap: 3px !important;
       min-width: 0 !important; max-width: 100% !important; margin-bottom: 4px !important;
     }
+    .v-label, .onek-lbl {
+      white-space: nowrap !important;
+      font-size: 0.82rem !important;
+    }
     .rec-desc, .rep-desc, .rec-payback, .rec-pb, .g-roi { display: none !important; }
     .t-tag, .rec-badge, .g-tag, .rep-tag {
       display: inline-flex !important; align-items: center !important;
@@ -296,7 +315,7 @@
       margin-bottom: 4px !important; white-space: nowrap !important;
     }
     .t-name, .rec-name, .g-title, .rep-title {
-      font-size: 0.9rem !important; font-weight: 900 !important;
+      font-size: 0.85rem !important; font-weight: 900 !important;
       color: #ffffff !important; line-height: 1.35 !important;
       margin-bottom: 8px !important; width: 100% !important;
       white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
@@ -336,7 +355,7 @@
     <!-- 1. 結論（ファーストビュー最上部） -->
     <div class="result-grid">
       <div class="onek-box">
-        <div class="onek-lbl"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> いま「1,000円ポッキリ」を1店舗買い足すと…</div>
+        <div class="onek-lbl"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> いま1,000円ポッキリを1店舗買い足すと</div>
         <div class="onek-main" id="onekMain">実質 450円 で商品が買えます！</div>
         <div class="onek-sub" id="onekSub">（これまでの買い物にも+1%が付き、合計 +550P 増えるため）</div>
       </div>
@@ -398,7 +417,7 @@
 
     const FURU = [
       { tag: '食費削減の王様', name: 'ふるさと納税「新米・無洗米 10kg〜」', q: 'ふるさと納税 米 無洗米 ランキング' },
-      { tag: '半年間買わずに済む', name: 'ふるさと納税「トイレットペーパー・ティッシュ」', q: 'ふるさと納税 トイレットペーパー ティッシュ' }
+      { tag: '半年間買わずに済む', name: 'ふるさと納税「トイレットペーパー大容量」', q: 'ふるさと納税 トイレットペーパー ティッシュ' }
     ];
 
     function renderTiles() {
@@ -456,7 +475,7 @@
         capMain.innerHTML = `あと ${remainYen.toLocaleString()} 円まで満額ポイント対象！`;
         capMain.style.color = '#34d399';
         capBox.style.borderColor = '#34d399';
-        capSub.innerHTML = `${shops}店舗の上限ライン: ${limitYen.toLocaleString()}円 ｜ 現在ボーナス: +${curPts.toLocaleString()}P`;
+        capSub.innerHTML = `${shops}店舗の上限: ${limitYen.toLocaleString()}円 ｜ 現在獲得: +${curPts.toLocaleString()}P`;
       } else {
         capMain.innerHTML = `上限（${cap.toLocaleString()}P）に達しています！`;
         capMain.style.color = '#fb7185';

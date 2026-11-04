@@ -119,6 +119,8 @@
   
     
     
+    
+    
     /* === v7.4 3D Glossy Tactile Calculator UI & Subtractive 3-Element Cards === */
     .svg-ic {
       width: 1.08em; height: 1.08em; vertical-align: -0.15em;
@@ -172,8 +174,21 @@
       white-space: nowrap !important;
       font-size: clamp(1.02rem, 4.4vw, 1.32rem) !important;
     }
-    .v-kpi-val, .v-kpi-lbl {
+    .v-sub {
       white-space: nowrap !important;
+      font-size: 0.78rem !important;
+    }
+    .v-kpi {
+      padding: 8px 4px !important;
+      min-width: 0 !important;
+    }
+    .v-kpi-val {
+      white-space: nowrap !important;
+      font-size: 0.88rem !important;
+    }
+    .v-kpi-lbl {
+      white-space: nowrap !important;
+      font-size: 0.68rem !important;
     }
     .sliders-card, .card, .custom-card, .control-card, .replace-box {
       background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
@@ -302,6 +317,10 @@
       display: flex !important; flex-direction: column-reverse !important; align-items: flex-start !important; gap: 3px !important;
       min-width: 0 !important; max-width: 100% !important; margin-bottom: 4px !important;
     }
+    .v-label, .onek-lbl {
+      white-space: nowrap !important;
+      font-size: 0.82rem !important;
+    }
     .rec-desc, .rep-desc, .rec-payback, .rec-pb, .g-roi { display: none !important; }
     .t-tag, .rec-badge, .g-tag, .rep-tag {
       display: inline-flex !important; align-items: center !important;
@@ -313,7 +332,7 @@
       margin-bottom: 4px !important; white-space: nowrap !important;
     }
     .t-name, .rec-name, .g-title, .rep-title {
-      font-size: 0.9rem !important; font-weight: 900 !important;
+      font-size: 0.85rem !important; font-weight: 900 !important;
       color: #ffffff !important; line-height: 1.35 !important;
       margin-bottom: 8px !important; width: 100% !important;
       white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
@@ -479,7 +498,7 @@
         {
           badge: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> 毎月の固定費も0円診断（PR）',
           best: false,
-          name: '保険マンモス｜家計＆保険の無料見直し相談（特典付）',
+          name: '保険マンモス｜家計＆保険の0円見直し相談',
           pb: '相談完全無料',
           url: 'https://af.moshimo.com/af/c/click?a_id=5880339&p_id=7778&pc_id=22539&pl_id=97004',
           btn: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 0円で家計・固定費の見直し相談を見る ↗'
@@ -508,7 +527,7 @@
       const months = netCost / save;
       const profit5Y = (save * 60) - netCost;
 
-      document.getElementById('vLabel').innerHTML = `${cur.icon} ${cur.name}（実質 ${netCost.toLocaleString()}円）は…`;
+      document.getElementById('vLabel').innerHTML = `${cur.icon} ${cur.name}（実質${netCost.toLocaleString()}円）の回収目安`;
       document.getElementById('vMain').innerHTML = months < 1
         ? `約 ${Math.max(1, Math.round(months * 30))} 日で元が取れる！`
         : `約 ${months.toFixed(1)} ヶ月で元が取れる！`;

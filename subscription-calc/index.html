@@ -95,6 +95,8 @@
   
     
     
+    
+    
     /* === v7.4 3D Glossy Tactile Calculator UI & Subtractive 3-Element Cards === */
     .svg-ic {
       width: 1.08em; height: 1.08em; vertical-align: -0.15em;
@@ -148,8 +150,21 @@
       white-space: nowrap !important;
       font-size: clamp(1.02rem, 4.4vw, 1.32rem) !important;
     }
-    .v-kpi-val, .v-kpi-lbl {
+    .v-sub {
       white-space: nowrap !important;
+      font-size: 0.78rem !important;
+    }
+    .v-kpi {
+      padding: 8px 4px !important;
+      min-width: 0 !important;
+    }
+    .v-kpi-val {
+      white-space: nowrap !important;
+      font-size: 0.88rem !important;
+    }
+    .v-kpi-lbl {
+      white-space: nowrap !important;
+      font-size: 0.68rem !important;
     }
     .sliders-card, .card, .custom-card, .control-card, .replace-box {
       background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
@@ -278,6 +293,10 @@
       display: flex !important; flex-direction: column-reverse !important; align-items: flex-start !important; gap: 3px !important;
       min-width: 0 !important; max-width: 100% !important; margin-bottom: 4px !important;
     }
+    .v-label, .onek-lbl {
+      white-space: nowrap !important;
+      font-size: 0.82rem !important;
+    }
     .rec-desc, .rep-desc, .rec-payback, .rec-pb, .g-roi { display: none !important; }
     .t-tag, .rec-badge, .g-tag, .rep-tag {
       display: inline-flex !important; align-items: center !important;
@@ -289,7 +308,7 @@
       margin-bottom: 4px !important; white-space: nowrap !important;
     }
     .t-name, .rec-name, .g-title, .rep-title {
-      font-size: 0.9rem !important; font-weight: 900 !important;
+      font-size: 0.85rem !important; font-weight: 900 !important;
       color: #ffffff !important; line-height: 1.35 !important;
       margin-bottom: 8px !important; width: 100% !important;
       white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
@@ -366,7 +385,7 @@
       <div class="rep-list">
         <div class="rep-item">
           <div class="rep-top">
-            <div class="rep-title"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> 保険マンモス｜家計＆保険の0円見直し無料相談</div>
+            <div class="rep-title"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> 保険マンモス｜家計＆保険の0円見直し相談</div>
             <div class="rep-tag">相談完全無料・PR</div>
           </div>
           <div class="rep-desc">サブスク以上に毎月大きな固定費になっている保険や家計の無駄をプロが0円で診断（相談特典付）。</div>
@@ -375,7 +394,7 @@
 
         <div class="rep-item">
           <div class="rep-top">
-            <div class="rep-title"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> マネーフォワード クラウド｜引き落とし自動可視化</div>
+            <div class="rep-title"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> マネーフォワード｜引き落とし自動可視化</div>
             <div class="rep-tag">無料トライアル・PR</div>
           </div>
           <div class="rep-desc">解約し忘れているサブスクや毎月の固定費・帳簿を自動で一覧化して無駄な出費をストップ。</div>
@@ -384,7 +403,7 @@
 
         <div class="rep-item">
           <div class="rep-top">
-            <div class="rep-title"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/></svg> カフェ・ペットボトル習慣 水筒＆全自動珈琲</div>
+            <div class="rep-title"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/></svg> 象印シームレス水筒 ＆ 全自動珈琲メーカー</div>
             <div class="rep-tag">約1.5ヶ月で元取り</div>
           </div>
           <div class="rep-desc">毎日150〜300円の飲料代をマイボトル＆自宅抽出（1杯25円）に変えるだけで年間5万円浮きます。</div>

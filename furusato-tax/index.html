@@ -113,6 +113,8 @@
   
     
     
+    
+    
     /* === v7.4 3D Glossy Tactile Calculator UI & Subtractive 3-Element Cards === */
     .svg-ic {
       width: 1.08em; height: 1.08em; vertical-align: -0.15em;
@@ -166,8 +168,21 @@
       white-space: nowrap !important;
       font-size: clamp(1.02rem, 4.4vw, 1.32rem) !important;
     }
-    .v-kpi-val, .v-kpi-lbl {
+    .v-sub {
       white-space: nowrap !important;
+      font-size: 0.78rem !important;
+    }
+    .v-kpi {
+      padding: 8px 4px !important;
+      min-width: 0 !important;
+    }
+    .v-kpi-val {
+      white-space: nowrap !important;
+      font-size: 0.88rem !important;
+    }
+    .v-kpi-lbl {
+      white-space: nowrap !important;
+      font-size: 0.68rem !important;
     }
     .sliders-card, .card, .custom-card, .control-card, .replace-box {
       background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
@@ -296,6 +311,10 @@
       display: flex !important; flex-direction: column-reverse !important; align-items: flex-start !important; gap: 3px !important;
       min-width: 0 !important; max-width: 100% !important; margin-bottom: 4px !important;
     }
+    .v-label, .onek-lbl {
+      white-space: nowrap !important;
+      font-size: 0.82rem !important;
+    }
     .rec-desc, .rep-desc, .rec-payback, .rec-pb, .g-roi { display: none !important; }
     .t-tag, .rec-badge, .g-tag, .rep-tag {
       display: inline-flex !important; align-items: center !important;
@@ -307,7 +326,7 @@
       margin-bottom: 4px !important; white-space: nowrap !important;
     }
     .t-name, .rec-name, .g-title, .rep-title {
-      font-size: 0.9rem !important; font-weight: 900 !important;
+      font-size: 0.85rem !important; font-weight: 900 !important;
       color: #ffffff !important; line-height: 1.35 !important;
       margin-bottom: 8px !important; width: 100% !important;
       white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
@@ -349,7 +368,7 @@
 
     <!-- 2. 結論ボックス -->
     <div class="verdict-box">
-      <div class="v-label" id="vLabel"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> 独身・共働き（年収 500万円）の上限目安は…</div>
+      <div class="v-label" id="vLabel"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> 独身・共働き（年収500万円）の上限目安</div>
       <div class="v-main" id="vMain">約 61,000 円</div>
       <div class="v-sub" id="vSub"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 1万円の返礼品が 6個 もらえて、ポイントだけで自己負担2,000円も黒字化！</div>
       <div class="v-kpis">
@@ -418,7 +437,7 @@
       { tag: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="2 18 22 18 19 7 14 12 12 5 10 12 5 7 2 18"/></svg> 総合人気No.1', name: 'オホーツク産 大粒ホタテ＆厚切り銀鮭', q: 'ふるさと納税 ホタテ 鮭 ランキング' },
       { tag: '食費を直撃カット', name: '新米・無洗米 10kg〜20kg 定期便', q: 'ふるさと納税 米 無洗米 20kg 10kg' },
       { tag: '半年間買わずに済む', name: 'トイレットペーパー・ティッシュ大容量', q: 'ふるさと納税 トイレットペーパー ティッシュ' },
-      { tag: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> 節税と合わせて固定費削減（PR）', name: '保険マンモス｜家計＆保険の0円見直し無料相談', url: 'https://af.moshimo.com/af/c/click?a_id=5880339&p_id=7778&pc_id=22539&pl_id=97004', btn: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 0円無料相談を見る ↗' }
+      { tag: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> 節税と合わせて固定費削減（PR）', name: '保険マンモス｜家計＆保険の0円見直し相談', url: 'https://af.moshimo.com/af/c/click?a_id=5880339&p_id=7778&pc_id=22539&pl_id=97004', btn: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 0円無料相談を見る ↗' }
     ];
 
     let curFam = FAMILY_TYPES[0];
@@ -484,7 +503,7 @@
       const netProfit = totalVal - 2000;
       const count10k = Math.max(1, Math.floor(limit / 10000));
 
-      document.getElementById('vLabel').innerHTML = `${curFam.icon} ${curFam.name}（年収 ${inc}万円）の上限目安は…`;
+      document.getElementById('vLabel').innerHTML = `${curFam.icon} ${curFam.name}（年収${inc}万円）の上限目安`;
       document.getElementById('vMain').innerHTML = `約 ${limit.toLocaleString()} 円`;
       document.getElementById('vSub').innerHTML = pts >= 2000
         ? `<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 1万円の返礼品が約 ${count10k}個 もらえて、還元ポイント(+${pts.toLocaleString()}P)だけで自己負担2,000円も完全タダ！`
