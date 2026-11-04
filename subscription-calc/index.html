@@ -92,12 +92,238 @@
       padding: 10px; border-radius: 8px;
     }
     .btn-rakuten:hover { background: #334155; color: #ffffff; }
+  
+    
+    
+    /* === v7.4 3D Glossy Tactile Calculator UI & Subtractive 3-Element Cards === */
+    .svg-ic {
+      width: 1.08em; height: 1.08em; vertical-align: -0.15em;
+      display: inline-block; flex-shrink: 0; margin-right: 3px;
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.45));
+    }
+    html, body {
+      background: radial-gradient(circle at 50% 0%, #172554 0%, #0b1120 55%, #060a14 100%) !important;
+      overflow-x: hidden !important;
+    }
+    .container {
+      max-width: 600px !important; width: 100% !important; box-sizing: border-box !important; overflow-x: hidden !important;
+    }
+    .back-link {
+      display: inline-flex !important; align-items: center !important; gap: 5px !important;
+      background: linear-gradient(180deg, #334155 0%, #1e293b 100%) !important;
+      border: 1.5px solid #64748b !important; border-top-color: #94a3b8 !important;
+      color: #f8fafc !important; text-decoration: none !important;
+      font-size: 0.8rem !important; font-weight: 800 !important;
+      padding: 6px 13px !important; border-radius: 999px !important;
+      margin-bottom: 12px !important; white-space: nowrap !important;
+      box-shadow: 0 3px 0 #090d16, inset 0 1px 1px rgba(255, 255, 255, 0.25) !important;
+    }
+    h1 {
+      font-size: 1.1rem !important; font-weight: 900 !important;
+      color: #ffffff !important; text-shadow: 0 2px 6px rgba(0, 0, 0, 0.65) !important;
+      line-height: 1.3 !important; white-space: nowrap !important;
+      letter-spacing: -0.02em !important;
+    }
+    .lead {
+      font-size: 0.79rem !important; color: #cbd5e1 !important; font-weight: 600 !important;
+      margin-bottom: 14px !important; white-space: nowrap !important;
+      overflow: hidden !important; text-overflow: ellipsis !important;
+    }
+
+    /* 3D Dark Glass Verdict & Main Control Cards */
+    .verdict-box, .hero-box, .result-box, .onek-box, .cap-box {
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.96) 0%, rgba(7, 12, 24, 0.99) 100%) !important;
+      border: 2px solid #10b981 !important; border-top-color: #6ee7b7 !important;
+      border-radius: 20px !important; min-width: 0 !important; max-width: 100% !important;
+      box-shadow:
+        0 6px 0 #022c22,
+        0 12px 26px rgba(0, 0, 0, 0.6),
+        inset 0 2px 2px rgba(255, 255, 255, 0.18) !important;
+    }
+    .v-main {
+      white-space: nowrap !important;
+      font-size: clamp(1.35rem, 5.4vw, 1.9rem) !important;
+    }
+    .onek-main, .cap-main {
+      white-space: nowrap !important;
+      font-size: clamp(1.02rem, 4.4vw, 1.32rem) !important;
+    }
+    .v-kpi-val, .v-kpi-lbl {
+      white-space: nowrap !important;
+    }
+    .sliders-card, .card, .custom-card, .control-card, .replace-box {
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
+      border: 1.5px solid #475569 !important; border-top-color: #64748b !important;
+      border-radius: 18px !important; min-width: 0 !important; max-width: 100% !important;
+      box-shadow:
+        0 5px 0 #050811,
+        0 8px 20px rgba(0, 0, 0, 0.5),
+        inset 0 1.5px 1px rgba(255, 255, 255, 0.14) !important;
+    }
+    .s-head, .control-header {
+      white-space: nowrap !important;
+      font-size: 0.8rem !important;
+      gap: 4px !important;
+    }
+    .s-val, .control-val {
+      white-space: nowrap !important;
+      font-size: 0.9rem !important;
+    }
+
+    /* 3D Tactile Preset / Chip / Tab Buttons (Zero 1-char overflow on 390px) */
+    .p-btn, .chip, .sub-chip, .cap-tab {
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
+      border: 1.5px solid #475569 !important; border-top-color: #64748b !important;
+      border-radius: 14px !important;
+      padding: 10px 10px !important;
+      gap: 6px !important; min-width: 0 !important;
+      box-shadow:
+        0 4px 0 #050811,
+        0 5px 12px rgba(0, 0, 0, 0.4),
+        inset 0 1.5px 1px rgba(255, 255, 255, 0.14) !important;
+      transition: transform 0.08s ease, box-shadow 0.08s ease !important;
+    }
+    .cap-tab {
+      white-space: nowrap !important;
+      font-size: 0.78rem !important;
+      padding: 9px 4px !important;
+    }
+    .p-btn.active, .chip.on, .sub-chip.active, .cap-tab.active {
+      background: linear-gradient(180deg, #065f46 0%, #064e3b 100%) !important;
+      border: 2px solid #34d399 !important; border-top-color: #a7f3d0 !important;
+      color: #ffffff !important;
+      box-shadow:
+        0 4px 0 #022c22,
+        0 0 16px rgba(16, 185, 129, 0.35),
+        inset 0 1.5px 1px rgba(255, 255, 255, 0.35) !important;
+    }
+    .p-btn:active, .chip:active, .sub-chip:active, .cap-tab:active {
+      transform: translateY(2px) !important;
+    }
+    .p-icon, .chip-icon {
+      width: 24px !important; height: 24px !important;
+      border-radius: 7px !important;
+      background: rgba(16, 185, 129, 0.16) !important;
+      border: 1px solid rgba(52, 211, 153, 0.35) !important;
+      display: inline-flex !important; align-items: center !important; justify-content: center !important;
+      flex-shrink: 0 !important;
+    }
+    .sub-chip .chip-icon { display: none !important; }
+    .p-icon .svg-ic, .chip-icon .svg-ic { margin-right: 0 !important; width: 14px !important; height: 14px !important; }
+    .p-name, .chip-name, .g-name, .c-name {
+      font-size: 0.84rem !important; font-weight: 900 !important;
+      white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
+    }
+    .p-tag, .p-sub, .chip-sub, .chip-price, .g-sub, .c-sub {
+      font-size: 0.71rem !important;
+      white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
+    }
+
+    /* 3D Recessed Groove Track & 3D Glossy Spherical Slider Thumb */
+    input[type="range"] {
+      -webkit-appearance: none !important;
+      appearance: none !important;
+      width: 100% !important;
+      height: 12px !important;
+      border-radius: 999px !important;
+      background: linear-gradient(180deg, #050811 0%, #1e293b 100%) !important;
+      border: 1.5px solid #334155 !important;
+      border-bottom-color: #64748b !important;
+      box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.85) !important;
+      outline: none !important;
+      margin: 6px 0 !important;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none !important;
+      appearance: none !important;
+      width: 26px !important;
+      height: 26px !important;
+      border-radius: 50% !important;
+      background: radial-gradient(circle at 35% 30%, #ffffff 0%, #6ee7b7 28%, #10b981 72%, #047857 100%) !important;
+      border: 2px solid #ffffff !important;
+      box-shadow: 0 3px 0 #064e3b, 0 5px 10px rgba(0, 0, 0, 0.65) !important;
+      cursor: pointer !important;
+    }
+
+    /* Section Titles: 1-line clean display */
+    .sec-title, .rec-title, .rep-head-title {
+      font-size: 0.88rem !important; font-weight: 900 !important;
+      white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
+    }
+
+    /* 3D Subtractive Recommendation Cards (1 Column on Mobile for 1-line Badge + 1-line Title + 3D Gold Button) */
+    .rec-grid, .tile-grid, .rec-list, .rep-list, .goods-grid {
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      gap: 10px !important;
+      min-width: 0 !important; width: 100% !important;
+    }
+    @media (min-width: 640px) {
+      .rec-grid, .tile-grid, .goods-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+    }
+    .tile, .rec-card, .g-card, .rep-item {
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
+      border: 1.5px solid #475569 !important; border-top-color: #64748b !important;
+      border-radius: 16px !important;
+      padding: 12px 13px !important;
+      min-width: 0 !important; max-width: 100% !important; overflow: hidden !important;
+      box-shadow:
+        0 5px 0 #050811,
+        0 8px 18px rgba(0, 0, 0, 0.48),
+        inset 0 1.5px 1px rgba(255, 255, 255, 0.16) !important;
+    }
+    .rep-top {
+      display: flex !important; flex-direction: column-reverse !important; align-items: flex-start !important; gap: 3px !important;
+      min-width: 0 !important; max-width: 100% !important; margin-bottom: 4px !important;
+    }
+    .rec-desc, .rep-desc, .rec-payback, .rec-pb, .g-roi { display: none !important; }
+    .t-tag, .rec-badge, .g-tag, .rep-tag {
+      display: inline-flex !important; align-items: center !important;
+      font-size: 0.72rem !important; font-weight: 900 !important;
+      color: #34d399 !important;
+      background: rgba(16, 185, 129, 0.14) !important;
+      border: 1px solid rgba(52, 211, 153, 0.38) !important;
+      padding: 2px 9px !important; border-radius: 999px !important;
+      margin-bottom: 4px !important; white-space: nowrap !important;
+    }
+    .t-name, .rec-name, .g-title, .rep-title {
+      font-size: 0.9rem !important; font-weight: 900 !important;
+      color: #ffffff !important; line-height: 1.35 !important;
+      margin-bottom: 8px !important; width: 100% !important;
+      white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
+    }
+
+    /* 3D Amber Gold Glossy CTA Buttons */
+    .hero-cta, .btn-rakuten, .t-btn {
+      display: flex !important; align-items: center !important; justify-content: center !important; gap: 4px !important;
+      background: linear-gradient(180deg, #fde047 0%, #f59e0b 58%, #d97706 100%) !important;
+      border: 1.5px solid #fef08a !important; border-top-color: #ffffff !important;
+      color: #090d16 !important;
+      font-weight: 900 !important; font-size: 0.8rem !important;
+      padding: 9px 10px !important; border-radius: 12px !important;
+      text-decoration: none !important; text-align: center !important;
+      white-space: nowrap !important; min-width: 0 !important; max-width: 100% !important;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.65) !important;
+      box-shadow:
+        0 4px 0 #92400e,
+        0 6px 14px rgba(245, 158, 11, 0.38),
+        inset 0 2px 1px rgba(255, 255, 255, 0.85) !important;
+      transition: transform 0.08s ease, box-shadow 0.08s ease !important;
+    }
+    .hero-cta:active, .btn-rakuten:active, .t-btn:active {
+      transform: translateY(3px) !important;
+      box-shadow: 0 1px 0 #92400e !important;
+    }
+    footer a { white-space: nowrap !important; }
+
   </style>
 </head>
 <body>
   <div class="container">
     <a href="/?tab=tools" class="back-link">← 暮らしの損得計算一覧へ戻る</a>
-    <h1>✂️ 固定費・サブスク10年総額チェック</h1>
+    <h1><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#f472b6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg> 固定費・サブスク10年総額チェック</h1>
     <p class="lead">払っているものをタップして1年・10年総額を即計算</p>
 
     <!-- 1. 結果（一番上で常に即見える） -->
@@ -118,7 +344,7 @@
 
     <!-- 2. タップでON/OFFできるサブスク一覧（文字打ち不要・はみ出しゼロ） -->
     <div class="sec-label">
-      <span>👇 払っているものをタップして選択</span>
+      <span>払っているものをタップして選択</span>
       <span style="font-size:0.74rem; color:var(--accent);">タップでON/OFF</span>
     </div>
     <div class="chips-grid" id="chipsGrid"></div>
@@ -126,7 +352,7 @@
     <!-- 3. プラスアルファ調整スライダー -->
     <div class="custom-card">
       <div class="custom-head">
-        <span>➕ その他の月額課金・微調整</span>
+        <span>その他の月額課金・微調整</span>
         <span style="color:var(--accent);" id="lblExtra">+0 円/月</span>
       </div>
       <input type="range" id="inExtra" min="0" max="20000" step="500" value="0" oninput="calc()">
@@ -134,35 +360,35 @@
 
     <!-- 4. シンプルな買い切り置換提案 -->
     <div class="replace-box">
-      <div class="rep-badge">💡 毎月の固定費を根本から減らす厳選3ステップ</div>
-      <div style="font-size:1.05rem; font-weight:900; color:#fff;">0円固定費見直し ＆ すぐ元が取れる買い切り置換</div>
+      <div class="rep-badge"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> 毎月の固定費を根本から減らす厳選3ステップ</div>
+      <div style="font-size:1.05rem; font-weight:900; color:#fff;">0円固定費見直し ＆ 買い切り置換3選</div>
 
       <div class="rep-list">
         <div class="rep-item">
           <div class="rep-top">
-            <div class="rep-title">🏠 保険マンモス｜家計＆保険の0円見直し無料相談</div>
+            <div class="rep-title"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> 保険マンモス｜家計＆保険の0円見直し無料相談</div>
             <div class="rep-tag">相談完全無料・PR</div>
           </div>
           <div class="rep-desc">サブスク以上に毎月大きな固定費になっている保険や家計の無駄をプロが0円で診断（相談特典付）。</div>
-          <a href="https://af.moshimo.com/af/c/click?a_id=5880339&p_id=7778&pc_id=22539&pl_id=97004" target="_blank" rel="nofollow sponsored noopener" class="btn-rakuten">✨ 0円で家計・固定費の見直し相談をする ↗</a>
+          <a href="https://af.moshimo.com/af/c/click?a_id=5880339&p_id=7778&pc_id=22539&pl_id=97004" target="_blank" rel="nofollow sponsored noopener" class="btn-rakuten"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 0円で家計・固定費の見直し相談へ ↗</a>
         </div>
 
         <div class="rep-item">
           <div class="rep-top">
-            <div class="rep-title">📊 マネーフォワード クラウド｜引き落とし自動可視化</div>
+            <div class="rep-title"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> マネーフォワード クラウド｜引き落とし自動可視化</div>
             <div class="rep-tag">無料トライアル・PR</div>
           </div>
           <div class="rep-desc">解約し忘れているサブスクや毎月の固定費・帳簿を自動で一覧化して無駄な出費をストップ。</div>
-          <a href="https://af.moshimo.com/af/c/click?a_id=5880342&p_id=888&pc_id=1087&pl_id=64839" target="_blank" rel="nofollow sponsored noopener" class="btn-rakuten">✨ 無料で家計・帳簿の自動管理を試す ↗</a>
+          <a href="https://af.moshimo.com/af/c/click?a_id=5880342&p_id=888&pc_id=1087&pl_id=64839" target="_blank" rel="nofollow sponsored noopener" class="btn-rakuten"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 無料で家計・帳簿の自動管理を試す ↗</a>
         </div>
 
         <div class="rep-item">
           <div class="rep-top">
-            <div class="rep-title">☕ カフェ・ペットボトル習慣 ➔ 水筒＆全自動珈琲</div>
+            <div class="rep-title"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/></svg> カフェ・ペットボトル習慣 水筒＆全自動珈琲</div>
             <div class="rep-tag">約1.5ヶ月で元取り</div>
           </div>
           <div class="rep-desc">毎日150〜300円の飲料代をマイボトル＆自宅抽出（1杯25円）に変えるだけで年間5万円浮きます。</div>
-          <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E5%2585%25A8%25E8%2587%25AA%25E5%258B%2595%25E3%2582%25B3%25E3%2583%25BC%25E3%2583%2592%25E3%2583%25BC%25E3%2583%25A1%25E3%2583%25BC%25E3%2582%25AB%25E3%2583%25BC%2520%25E8%25B1%25A1%25E5%258D%25B0%2520%25E6%25B0%25B4%25E7%25AD%2592%2F" target="_blank" rel="nofollow sponsored noopener" class="btn-rakuten">🛍️ 楽天市場で人気モデルを見る（PR） ↗</a>
+          <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E5%2585%25A8%25E8%2587%25AA%25E5%258B%2595%25E3%2582%25B3%25E3%2583%25BC%25E3%2583%2592%25E3%2583%25BC%25E3%2583%25A1%25E3%2583%25BC%25E3%2582%25AB%25E3%2583%25BC%2520%25E8%25B1%25A1%25E5%258D%25B0%2520%25E6%25B0%25B4%25E7%25AD%2592%2F" target="_blank" rel="nofollow sponsored noopener" class="btn-rakuten"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg> 楽天市場で人気モデルを見る（PR） ↗</a>
         </div>
       </div>
     </div>
@@ -170,14 +396,14 @@
 
   <script>
     const ITEMS = [
-      { icon: '🎬', name: '動画サブスク', price: 1490, on: true },
-      { icon: '🎵', name: '音楽サブスク', price: 1080, on: false },
-      { icon: '☕', name: 'コンビニ珈琲・飲料', price: 4500, on: true },
-      { icon: '🏋️', name: '24時間ジム会費', price: 7980, on: true },
-      { icon: '🍺', name: '晩酌・缶チューハイ', price: 5000, on: false },
-      { icon: '🎮', name: 'ゲーム・アプリ課金', price: 1500, on: false },
-      { icon: '📖', name: '雑誌・漫画読み放題', price: 980, on: false },
-      { icon: '☁️', name: 'スマホ容量・クラウド', price: 450, on: false }
+      { icon: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>', name: '動画サブスク', price: 1490, on: true },
+      { icon: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>', name: '音楽サブスク', price: 1080, on: false },
+      { icon: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/></svg>', name: 'カフェ・飲料習慣', price: 4500, on: true },
+      { icon: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>', name: '24時間ジム会費', price: 7980, on: true },
+      { icon: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>', name: '晩酌・お酒習慣', price: 5000, on: false },
+      { icon: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>', name: 'スマホ課金', price: 1500, on: false },
+      { icon: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>', name: '雑誌・電子書籍', price: 980, on: false },
+      { icon: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>', name: 'クラウド容量', price: 450, on: false }
     ];
 
     function renderChips() {
@@ -191,7 +417,7 @@
               <div class="chip-price">月 ${it.price.toLocaleString()}円</div>
             </div>
           </div>
-          <div class="chip-check">${it.on ? '✓' : ''}</div>
+          <div class="chip-check">${it.on ? '' : ''}</div>
         </div>
       `).join('');
     }
@@ -204,7 +430,7 @@
 
     function calc() {
       const extra = Number(document.getElementById('inExtra').value) || 0;
-      document.getElementById('lblExtra').innerText = '+' + extra.toLocaleString() + ' 円/月';
+      document.getElementById('lblExtra').innerHTML = '+' + extra.toLocaleString() + ' 円/月';
 
       let monthly = extra;
       ITEMS.forEach(it => { if (it.on) monthly += it.price; });
@@ -213,9 +439,9 @@
       const r = 0.05 / 12;
       const future = Math.round(monthly * ((Math.pow(1 + r, 120) - 1) / r));
 
-      document.getElementById('resMonthly').innerText = monthly.toLocaleString() + ' 円/月';
-      document.getElementById('resYearly').innerText = yearly.toLocaleString() + ' 円';
-      document.getElementById('resInvest').innerText = future.toLocaleString() + ' 円';
+      document.getElementById('resMonthly').innerHTML = monthly.toLocaleString() + ' 円/月';
+      document.getElementById('resYearly').innerHTML = yearly.toLocaleString() + ' 円';
+      document.getElementById('resInvest').innerHTML = future.toLocaleString() + ' 円';
     }
 
     renderChips();
@@ -223,13 +449,13 @@
   </script>
 
 <!-- Moshimo Official Rakuten Sponsor -->
-<footer style="max-width: 600px; margin: 28px auto 16px; padding: 14px 16px 0; border-top: 1px solid rgba(148,163,184,0.18); text-align: center; font-size: 0.75rem; color: #64748b;">
+<footer style="max-width: 580px; margin: 28px auto 16px; padding: 14px 16px 0; border-top: 1px solid rgba(148,163,184,0.18); text-align: center; font-size: 0.75rem; color: #64748b;">
   <div style="margin-bottom: 6px;">
-    <a href="/?tab=tools" style="color: #94a3b8; text-decoration: none; font-weight: 700;">← 暮らしの損得計算一覧へ戻る</a>
+    <a href="/?tab=tools" style="color: #94a3b8; text-decoration: none; font-weight: 700;">← 暮らしの損得計算一覧へ</a>
     <span style="margin: 0 8px; color: #475569;">｜</span>
     <a href="/?tab=games" style="color: #94a3b8; text-decoration: none;">脳トレゲーム一覧</a>
     <span style="margin: 0 8px; color: #475569;">｜</span>
-    <a href="/about/" style="color: #94a3b8; text-decoration: none;">運営者情報・ポリシー</a>
+    <a href="/about/" style="color: #94a3b8; text-decoration: none;">運営者情報</a>
   </div>
   <div>© 2026 Coreworks Studio（適格販売により収入を得ています）</div>
   <img src="https://i.moshimo.com/af/i/impression?a_id=5876771&p_id=54&pc_id=54&pl_id=618" width="1" height="1" style="border:none;" loading="lazy" alt="">

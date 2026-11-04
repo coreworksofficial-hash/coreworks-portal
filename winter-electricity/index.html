@@ -79,24 +79,250 @@
     .g-roi { font-size: 0.8125rem; color: var(--subtle); font-weight: 500; margin-bottom: 10px; }
     .btn-rakuten { display: block; text-align: center; background: #1e293b; border: 1px solid #475569; color: var(--muted); text-decoration: none; font-weight: 600; font-size: 0.8125rem; padding: 8px 6px; border-radius: 8px; }
     .btn-rakuten:hover { background: #334155; color: #ffffff; }
+  
+    
+    
+    /* === v7.4 3D Glossy Tactile Calculator UI & Subtractive 3-Element Cards === */
+    .svg-ic {
+      width: 1.08em; height: 1.08em; vertical-align: -0.15em;
+      display: inline-block; flex-shrink: 0; margin-right: 3px;
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.45));
+    }
+    html, body {
+      background: radial-gradient(circle at 50% 0%, #172554 0%, #0b1120 55%, #060a14 100%) !important;
+      overflow-x: hidden !important;
+    }
+    .container {
+      max-width: 600px !important; width: 100% !important; box-sizing: border-box !important; overflow-x: hidden !important;
+    }
+    .back-link {
+      display: inline-flex !important; align-items: center !important; gap: 5px !important;
+      background: linear-gradient(180deg, #334155 0%, #1e293b 100%) !important;
+      border: 1.5px solid #64748b !important; border-top-color: #94a3b8 !important;
+      color: #f8fafc !important; text-decoration: none !important;
+      font-size: 0.8rem !important; font-weight: 800 !important;
+      padding: 6px 13px !important; border-radius: 999px !important;
+      margin-bottom: 12px !important; white-space: nowrap !important;
+      box-shadow: 0 3px 0 #090d16, inset 0 1px 1px rgba(255, 255, 255, 0.25) !important;
+    }
+    h1 {
+      font-size: 1.1rem !important; font-weight: 900 !important;
+      color: #ffffff !important; text-shadow: 0 2px 6px rgba(0, 0, 0, 0.65) !important;
+      line-height: 1.3 !important; white-space: nowrap !important;
+      letter-spacing: -0.02em !important;
+    }
+    .lead {
+      font-size: 0.79rem !important; color: #cbd5e1 !important; font-weight: 600 !important;
+      margin-bottom: 14px !important; white-space: nowrap !important;
+      overflow: hidden !important; text-overflow: ellipsis !important;
+    }
+
+    /* 3D Dark Glass Verdict & Main Control Cards */
+    .verdict-box, .hero-box, .result-box, .onek-box, .cap-box {
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.96) 0%, rgba(7, 12, 24, 0.99) 100%) !important;
+      border: 2px solid #10b981 !important; border-top-color: #6ee7b7 !important;
+      border-radius: 20px !important; min-width: 0 !important; max-width: 100% !important;
+      box-shadow:
+        0 6px 0 #022c22,
+        0 12px 26px rgba(0, 0, 0, 0.6),
+        inset 0 2px 2px rgba(255, 255, 255, 0.18) !important;
+    }
+    .v-main {
+      white-space: nowrap !important;
+      font-size: clamp(1.35rem, 5.4vw, 1.9rem) !important;
+    }
+    .onek-main, .cap-main {
+      white-space: nowrap !important;
+      font-size: clamp(1.02rem, 4.4vw, 1.32rem) !important;
+    }
+    .v-kpi-val, .v-kpi-lbl {
+      white-space: nowrap !important;
+    }
+    .sliders-card, .card, .custom-card, .control-card, .replace-box {
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
+      border: 1.5px solid #475569 !important; border-top-color: #64748b !important;
+      border-radius: 18px !important; min-width: 0 !important; max-width: 100% !important;
+      box-shadow:
+        0 5px 0 #050811,
+        0 8px 20px rgba(0, 0, 0, 0.5),
+        inset 0 1.5px 1px rgba(255, 255, 255, 0.14) !important;
+    }
+    .s-head, .control-header {
+      white-space: nowrap !important;
+      font-size: 0.8rem !important;
+      gap: 4px !important;
+    }
+    .s-val, .control-val {
+      white-space: nowrap !important;
+      font-size: 0.9rem !important;
+    }
+
+    /* 3D Tactile Preset / Chip / Tab Buttons (Zero 1-char overflow on 390px) */
+    .p-btn, .chip, .sub-chip, .cap-tab {
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
+      border: 1.5px solid #475569 !important; border-top-color: #64748b !important;
+      border-radius: 14px !important;
+      padding: 10px 10px !important;
+      gap: 6px !important; min-width: 0 !important;
+      box-shadow:
+        0 4px 0 #050811,
+        0 5px 12px rgba(0, 0, 0, 0.4),
+        inset 0 1.5px 1px rgba(255, 255, 255, 0.14) !important;
+      transition: transform 0.08s ease, box-shadow 0.08s ease !important;
+    }
+    .cap-tab {
+      white-space: nowrap !important;
+      font-size: 0.78rem !important;
+      padding: 9px 4px !important;
+    }
+    .p-btn.active, .chip.on, .sub-chip.active, .cap-tab.active {
+      background: linear-gradient(180deg, #065f46 0%, #064e3b 100%) !important;
+      border: 2px solid #34d399 !important; border-top-color: #a7f3d0 !important;
+      color: #ffffff !important;
+      box-shadow:
+        0 4px 0 #022c22,
+        0 0 16px rgba(16, 185, 129, 0.35),
+        inset 0 1.5px 1px rgba(255, 255, 255, 0.35) !important;
+    }
+    .p-btn:active, .chip:active, .sub-chip:active, .cap-tab:active {
+      transform: translateY(2px) !important;
+    }
+    .p-icon, .chip-icon {
+      width: 24px !important; height: 24px !important;
+      border-radius: 7px !important;
+      background: rgba(16, 185, 129, 0.16) !important;
+      border: 1px solid rgba(52, 211, 153, 0.35) !important;
+      display: inline-flex !important; align-items: center !important; justify-content: center !important;
+      flex-shrink: 0 !important;
+    }
+    .sub-chip .chip-icon { display: none !important; }
+    .p-icon .svg-ic, .chip-icon .svg-ic { margin-right: 0 !important; width: 14px !important; height: 14px !important; }
+    .p-name, .chip-name, .g-name, .c-name {
+      font-size: 0.84rem !important; font-weight: 900 !important;
+      white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
+    }
+    .p-tag, .p-sub, .chip-sub, .chip-price, .g-sub, .c-sub {
+      font-size: 0.71rem !important;
+      white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
+    }
+
+    /* 3D Recessed Groove Track & 3D Glossy Spherical Slider Thumb */
+    input[type="range"] {
+      -webkit-appearance: none !important;
+      appearance: none !important;
+      width: 100% !important;
+      height: 12px !important;
+      border-radius: 999px !important;
+      background: linear-gradient(180deg, #050811 0%, #1e293b 100%) !important;
+      border: 1.5px solid #334155 !important;
+      border-bottom-color: #64748b !important;
+      box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.85) !important;
+      outline: none !important;
+      margin: 6px 0 !important;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none !important;
+      appearance: none !important;
+      width: 26px !important;
+      height: 26px !important;
+      border-radius: 50% !important;
+      background: radial-gradient(circle at 35% 30%, #ffffff 0%, #6ee7b7 28%, #10b981 72%, #047857 100%) !important;
+      border: 2px solid #ffffff !important;
+      box-shadow: 0 3px 0 #064e3b, 0 5px 10px rgba(0, 0, 0, 0.65) !important;
+      cursor: pointer !important;
+    }
+
+    /* Section Titles: 1-line clean display */
+    .sec-title, .rec-title, .rep-head-title {
+      font-size: 0.88rem !important; font-weight: 900 !important;
+      white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
+    }
+
+    /* 3D Subtractive Recommendation Cards (1 Column on Mobile for 1-line Badge + 1-line Title + 3D Gold Button) */
+    .rec-grid, .tile-grid, .rec-list, .rep-list, .goods-grid {
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      gap: 10px !important;
+      min-width: 0 !important; width: 100% !important;
+    }
+    @media (min-width: 640px) {
+      .rec-grid, .tile-grid, .goods-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+    }
+    .tile, .rec-card, .g-card, .rep-item {
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
+      border: 1.5px solid #475569 !important; border-top-color: #64748b !important;
+      border-radius: 16px !important;
+      padding: 12px 13px !important;
+      min-width: 0 !important; max-width: 100% !important; overflow: hidden !important;
+      box-shadow:
+        0 5px 0 #050811,
+        0 8px 18px rgba(0, 0, 0, 0.48),
+        inset 0 1.5px 1px rgba(255, 255, 255, 0.16) !important;
+    }
+    .rep-top {
+      display: flex !important; flex-direction: column-reverse !important; align-items: flex-start !important; gap: 3px !important;
+      min-width: 0 !important; max-width: 100% !important; margin-bottom: 4px !important;
+    }
+    .rec-desc, .rep-desc, .rec-payback, .rec-pb, .g-roi { display: none !important; }
+    .t-tag, .rec-badge, .g-tag, .rep-tag {
+      display: inline-flex !important; align-items: center !important;
+      font-size: 0.72rem !important; font-weight: 900 !important;
+      color: #34d399 !important;
+      background: rgba(16, 185, 129, 0.14) !important;
+      border: 1px solid rgba(52, 211, 153, 0.38) !important;
+      padding: 2px 9px !important; border-radius: 999px !important;
+      margin-bottom: 4px !important; white-space: nowrap !important;
+    }
+    .t-name, .rec-name, .g-title, .rep-title {
+      font-size: 0.9rem !important; font-weight: 900 !important;
+      color: #ffffff !important; line-height: 1.35 !important;
+      margin-bottom: 8px !important; width: 100% !important;
+      white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
+    }
+
+    /* 3D Amber Gold Glossy CTA Buttons */
+    .hero-cta, .btn-rakuten, .t-btn {
+      display: flex !important; align-items: center !important; justify-content: center !important; gap: 4px !important;
+      background: linear-gradient(180deg, #fde047 0%, #f59e0b 58%, #d97706 100%) !important;
+      border: 1.5px solid #fef08a !important; border-top-color: #ffffff !important;
+      color: #090d16 !important;
+      font-weight: 900 !important; font-size: 0.8rem !important;
+      padding: 9px 10px !important; border-radius: 12px !important;
+      text-decoration: none !important; text-align: center !important;
+      white-space: nowrap !important; min-width: 0 !important; max-width: 100% !important;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.65) !important;
+      box-shadow:
+        0 4px 0 #92400e,
+        0 6px 14px rgba(245, 158, 11, 0.38),
+        inset 0 2px 1px rgba(255, 255, 255, 0.85) !important;
+      transition: transform 0.08s ease, box-shadow 0.08s ease !important;
+    }
+    .hero-cta:active, .btn-rakuten:active, .t-btn:active {
+      transform: translateY(3px) !important;
+      box-shadow: 0 1px 0 #92400e !important;
+    }
+    footer a { white-space: nowrap !important; }
+
   </style>
 </head>
 <body>
   <div class="container">
     <a href="/?tab=tools" class="back-link">← 暮らしの損得計算一覧へ戻る</a>
-    <h1>🧣 冬の暖房費 いくら浮く？計算</h1>
+    <h1><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fb923c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c1 3 4 5 4 9a4 4 0 1 1-8 0c0-4 3-6 4-9z"/><path d="M12 14v7"/></svg> 冬の暖房費 いくら浮く？計算</h1>
     <p class="lead">電気毛布（1h 0.9円）併用で浮く金額を1秒診断</p>
 
     <!-- 1. 結論 -->
     <div class="hero-box">
       <div class="h-lbl">ひと冬（4ヶ月）で浮く電気代</div>
       <div class="h-main" id="resSaved">+12,400 円 お得！</div>
-      <div class="h-sub" id="resSub">対策なし 23,760円 ➔ 併用後 11,360円（約35日でグッズ代の元が取れる！）</div>
+      <div class="h-sub" id="resSub">対策なし 23,760円 併用後 11,360円（約35日でグッズ代の元が取れる！）</div>
     </div>
 
     <!-- 2. 操作パネル -->
     <div class="card">
-      <div class="row-lbl"><span>🌡️ いま使っているメイン暖房</span></div>
+      <div class="row-lbl"><span><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fb923c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c1 3 4 5 4 9a4 4 0 1 1-8 0c0-4 3-6 4-9z"/><path d="M12 14v7"/></svg> いま使っているメイン暖房</span></div>
       <select id="inType" onchange="calc()">
         <option value="0.7" selected>エアコン暖房（1時間 約22円）</option>
         <option value="1.1">セラミックヒーター（1時間 約34円）</option>
@@ -104,17 +330,17 @@
       </select>
 
       <div class="row-lbl">
-        <span>⏰ 1日に使う時間</span>
+        <span><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg> 1日に使う時間</span>
         <span style="color:var(--orange);" id="lblHours">9 時間/日</span>
       </div>
       <input type="range" id="inHours" min="2" max="24" step="1" value="9" oninput="calc()">
 
-      <div class="row-lbl" style="margin-top:14px;"><span>👇 併用する節電グッズ（タップでON/OFF）</span></div>
+      <div class="row-lbl" style="margin-top:14px;"><span>併用する節電グッズ（タップでON/OFF）</span></div>
       <div class="chips-grid" id="chipsGrid"></div>
     </div>
 
     <!-- 3. 節電グッズ4選 -->
-    <div class="sec-title">🔥 初月で元が取れる「冬の節電＆電気代削減」厳選3選</div>
+    <div class="sec-title"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fb923c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c1 3 4 5 4 9a4 4 0 1 1-8 0c0-4 3-6 4-9z"/><path d="M12 14v7"/></svg> 初月で元が取れる「冬の節電＆暖房対策」厳選3選</div>
     <div class="goods-grid" id="goodsGrid"></div>
   </div>
 
@@ -127,16 +353,16 @@
     }
 
     const COMBOS = [
-      { name: '⚡ 電気毛布', sub: '1h 0.9円 (-32%)', cut: 0.32, cost: 3980, kw: 0.03, on: true },
-      { name: '🧥 着る毛布', sub: '電気代0円 (-18%)', cut: 0.18, cost: 3200, kw: 0, on: true },
-      { name: '🪟 窓断熱シート', sub: '熱逃げ防止 (-12%)', cut: 0.12, cost: 1800, kw: 0, on: false },
-      { name: '🧦 こたつソックス', sub: '足元保温 (-8%)', cut: 0.08, cost: 1980, kw: 0, on: false }
+      { name: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> 電気毛布', sub: '1h 0.9円 (-32%)', cut: 0.32, cost: 3980, kw: 0.03, on: true },
+      { name: '着る毛布', sub: '電気代0円 (-18%)', cut: 0.18, cost: 3200, kw: 0, on: true },
+      { name: '窓断熱シート', sub: '熱逃げ防止 (-12%)', cut: 0.12, cost: 1800, kw: 0, on: false },
+      { name: 'こたつソックス', sub: '足元保温 (-8%)', cut: 0.08, cost: 1980, kw: 0, on: false }
     ];
 
     const GOODS = [
-      { tag: '☀️ 根本から電気代カット（PR）', title: '暮らしの節約×再エネ補助金ナビ（0円オンライン診断）', roi: '国・自治体の省エネ補助金＆電気代削減額を無料診断', url: 'https://af.moshimo.com/af/c/click?a_id=5880340&p_id=7507&pc_id=21688&pl_id=94219', btn: '✨ 0円無料診断へ ↗' },
-      { tag: '👑 1時間0.9円の神暖房', title: '丸洗いOK フランネル電気毛布（掛け敷き兼用）', roi: '約3週間で元取り！', q: '電気毛布 掛け敷き 丸洗い フランネル' },
-      { tag: '💻 足元がこたつ化', title: '5面遠赤外線 デスク下パネルヒーター', roi: '約1ヶ月で元取り！', q: 'パネルヒーター デスク下 足元 5面' }
+      { tag: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fb923c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c1 3 4 5 4 9a4 4 0 1 1-8 0c0-4 3-6 4-9z"/><path d="M12 14v7"/></svg> 根本から電気代カット（PR）', title: '再エネ補助金ナビ｜電気代削減の0円無料診断', roi: '国・自治体の省エネ補助金＆電気代削減額を無料診断', url: 'https://af.moshimo.com/af/c/click?a_id=5880340&p_id=7507&pc_id=21688&pl_id=94219', btn: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 0円無料診断へ ↗' },
+      { tag: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="2 18 22 18 19 7 14 12 12 5 10 12 5 7 2 18"/></svg> 1時間0.9円の神暖房', title: '丸洗いOK フランネル電気毛布（掛け敷き兼用）', roi: '約3週間で元取り！', q: '電気毛布 掛け敷き 丸洗い フランネル' },
+      { tag: '足元がこたつ化', title: '5面遠赤外線 デスク下パネルヒーター', roi: '約1ヶ月で元取り！', q: 'パネルヒーター デスク下 足元 5面' }
     ];
 
     function renderChips() {
@@ -146,7 +372,7 @@
             <div class="c-name">${c.name}</div>
             <div class="c-sub">${c.sub}</div>
           </div>
-          <div class="c-chk">${c.on ? '✓' : ''}</div>
+          <div class="c-chk">${c.on ? '' : ''}</div>
         </div>
       `).join('');
     }
@@ -163,9 +389,9 @@
           <div>
             <div class="g-tag">${g.tag}</div>
             <div class="g-title">${g.title}</div>
-            <div class="g-roi">⚡ ${g.roi}</div>
+            <div class="g-roi"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> ${g.roi}</div>
           </div>
-          <a href="${g.url || rakutenUrl(g.q)}" target="_blank" rel="nofollow sponsored noopener" class="btn-rakuten">${g.btn || '🛍️ 楽天で見る ↗'}</a>
+          <a href="${g.url || rakutenUrl(g.q)}" target="_blank" rel="nofollow sponsored noopener" class="btn-rakuten">${g.btn || '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg> 楽天で見る ↗'}</a>
         </div>
       `).join('');
     }
@@ -173,7 +399,7 @@
     function calc() {
       const baseKw = Number(document.getElementById('inType').value) || 0.7;
       const hours = Number(document.getElementById('inHours').value) || 9;
-      document.getElementById('lblHours').textContent = `${hours} 時間/日`;
+      document.getElementById('lblHours').innerHTML = `${hours} 時間/日`;
 
       const rate = 31;
       const days = 120;
@@ -192,9 +418,9 @@
       const dailySaved = Math.max(0, beforeDaily - afterDaily);
       const paybackDays = dailySaved > 0 ? Math.round(invest / dailySaved) : 0;
 
-      document.getElementById('resSaved').textContent = `+${saved.toLocaleString()} 円 お得！`;
-      document.getElementById('resSub').textContent = dailySaved > 0
-        ? `対策なし ${beforeWinter.toLocaleString()}円 ➔ 併用後 ${afterWinter.toLocaleString()}円（約${paybackDays}日でグッズ代の元が取れる！）`
+      document.getElementById('resSaved').innerHTML = `+${saved.toLocaleString()} 円 お得！`;
+      document.getElementById('resSub').innerHTML = dailySaved > 0
+        ? `対策なし ${beforeWinter.toLocaleString()}円 併用後 ${afterWinter.toLocaleString()}円（約${paybackDays}日でグッズ代の元が取れる！）`
         : '併用グッズを1つ以上タップして選んでください';
     }
 
@@ -204,13 +430,13 @@
   </script>
 
 <!-- Moshimo Official Rakuten Sponsor -->
-<footer style="max-width: 600px; margin: 28px auto 16px; padding: 14px 16px 0; border-top: 1px solid rgba(148,163,184,0.18); text-align: center; font-size: 0.75rem; color: #64748b;">
+<footer style="max-width: 580px; margin: 28px auto 16px; padding: 14px 16px 0; border-top: 1px solid rgba(148,163,184,0.18); text-align: center; font-size: 0.75rem; color: #64748b;">
   <div style="margin-bottom: 6px;">
-    <a href="/?tab=tools" style="color: #94a3b8; text-decoration: none; font-weight: 700;">← 暮らしの損得計算一覧へ戻る</a>
+    <a href="/?tab=tools" style="color: #94a3b8; text-decoration: none; font-weight: 700;">← 暮らしの損得計算一覧へ</a>
     <span style="margin: 0 8px; color: #475569;">｜</span>
     <a href="/?tab=games" style="color: #94a3b8; text-decoration: none;">脳トレゲーム一覧</a>
     <span style="margin: 0 8px; color: #475569;">｜</span>
-    <a href="/about/" style="color: #94a3b8; text-decoration: none;">運営者情報・ポリシー</a>
+    <a href="/about/" style="color: #94a3b8; text-decoration: none;">運営者情報</a>
   </div>
   <div>© 2026 Coreworks Studio（適格販売により収入を得ています）</div>
   <img src="https://i.moshimo.com/af/i/impression?a_id=5876771&p_id=54&pc_id=54&pl_id=618" width="1" height="1" style="border:none;" loading="lazy" alt="">

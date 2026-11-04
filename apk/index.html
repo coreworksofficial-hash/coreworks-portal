@@ -5,79 +5,104 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Coreworks 公式Androidアプリ (APK) ダウンロード一覧</title>
   <style>
-    body { background: #0f172a; color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif; margin: 0; padding: 20px 16px 48px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    body {
+      background: radial-gradient(circle at 50% 0%, #172554 0%, #0b1120 55%, #060a14 100%);
+      color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+      padding: 20px 14px 48px; min-height: 100vh;
+    }
     .wrap { max-width: 640px; margin: 0 auto; }
     .back-nav { margin-bottom: 14px; }
-    .back-link { display: inline-flex; align-items: center; gap: 6px; color: #38bdf8; text-decoration: none; font-size: 0.9rem; font-weight: 700; }
-    h1 { font-size: 1.3rem; margin-bottom: 6px; text-align: center; }
-    p { font-size: 0.9rem; color: #cbd5e1; text-align: center; margin-bottom: 20px; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: linear-gradient(180deg, #334155 0%, #1e293b 100%);
+      border: 1.5px solid #64748b; border-top-color: #94a3b8;
+      color: #f8fafc; text-decoration: none; font-size: 0.82rem; font-weight: 800;
+      padding: 7px 13px; border-radius: 999px;
+      box-shadow: 0 3px 0 #090d16, inset 0 1px 1px rgba(255,255,255,0.25);
+    }
+    h1 { font-size: 1.22rem; font-weight: 900; margin-bottom: 5px; text-align: center; white-space: nowrap; text-shadow: 0 2px 6px rgba(0,0,0,0.6); }
+    p { font-size: 0.82rem; color: #cbd5e1; text-align: center; margin-bottom: 16px; font-weight: 600; white-space: nowrap; }
     .list { display: flex; flex-direction: column; gap: 12px; }
-    .apk-card { display: flex; align-items: center; gap: 14px; background: #1e293b; border: 1px solid #334155; border-left: 4px solid #10b981; border-radius: 14px; padding: 14px; text-decoration: none; color: inherit; }
-    .apk-icon { width: 58px; height: 58px; border-radius: 15px; flex-shrink: 0; object-fit: cover; box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
+    .apk-card {
+      display: flex; align-items: center; gap: 12px;
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+      border: 1.5px solid #334155; border-top-color: #64748b; border-left: 4px solid #10b981;
+      border-radius: 16px; padding: 12px 13px; text-decoration: none; color: inherit;
+      box-shadow: 0 5px 0 #050811, 0 8px 18px rgba(0,0,0,0.5), inset 0 1.5px 1px rgba(255,255,255,0.16);
+      transition: transform 0.08s ease, box-shadow 0.08s ease;
+    }
+    .apk-card:active { transform: translateY(3px); box-shadow: 0 2px 0 #050811; }
+    .apk-icon {
+      width: 54px; height: 54px; border-radius: 14px; flex-shrink: 0; object-fit: cover;
+      border: 1.5px solid #6ee7b7; border-top-color: #ffffff;
+      box-shadow: 0 4px 0 #022c22, 0 6px 12px rgba(0,0,0,0.45);
+    }
     .apk-info { flex: 1; min-width: 0; }
-    .apk-title { font-size: 1.05rem; font-weight: 700; color: #f8fafc; margin-bottom: 4px; }
-    .apk-pkg { font-size: 0.8rem; color: #34d399; word-break: break-all; }
-    .apk-dl { background: rgba(16, 185, 129, 0.16); border: 1px solid #10b981; color: #34d399; font-weight: 700; font-size: 0.85rem; padding: 8px 12px; border-radius: 999px; flex-shrink: 0; }
+    .apk-title { font-size: 0.98rem; font-weight: 900; color: #ffffff; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .apk-pkg { font-size: 0.75rem; color: #34d399; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .apk-dl {
+      background: linear-gradient(180deg, #34d399 0%, #10b981 55%, #059669 100%);
+      border: 1.5px solid #a7f3d0; border-top-color: #ffffff;
+      color: #042f2e; font-weight: 900; font-size: 0.78rem; padding: 8px 11px; border-radius: 999px; flex-shrink: 0; white-space: nowrap;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+      box-shadow: 0 3px 0 #064e3b, inset 0 1.5px 1px rgba(255,255,255,0.7);
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="back-nav">
-      <a href="/?tab=games" class="back-link">← 脳トレゲーム一覧（Webポータル）へ戻る</a>
+      <a href="/?tab=games" class="back-link">← 脳トレゲーム一覧へ戻る</a>
     </div>
-    <h1><svg style="width:1.15em;height:1.15em;vertical-align:-0.18em;margin-right:4px;" viewBox="0 0 24 24" fill="none"><rect x="5" y="2" width="14" height="20" rx="3" fill="#38bdf8" stroke="#e0f2fe" stroke-width="1.6"/><rect x="7" y="5" width="10" height="13" rx="1" fill="#0f172a"/><circle cx="12" cy="19.8" r="1" fill="#0f172a"/></svg>Coreworks 公式Androidアプリ (APK)</h1>
-    <p>スマホで今すぐ遊べる瞬間脳トレIQシリーズ（全6種・v7.4最新版）</p>
+    <h1><svg style="width:1.15em;height:1.15em;vertical-align:-0.18em;margin-right:5px;" viewBox="0 0 24 24" fill="none"><rect x="5" y="2" width="14" height="20" rx="3" fill="#38bdf8" stroke="#e0f2fe" stroke-width="1.6"/><rect x="7" y="5" width="10" height="13" rx="1" fill="#0f172a"/><circle cx="12" cy="19.8" r="1" fill="#0f172a"/></svg>Coreworks 公式Androidアプリ</h1>
+    <p>瞬間脳トレIQシリーズ 公式APK直ダウンロード（全6種）</p>
     <div class="list">
       <a href="./KanjiBrainIQ_v6.apk?v=7.4" download="KanjiBrainIQ_v6.apk" class="apk-card">
-        <img src="./icons/kanji_icon_512.png?v=7.4" alt="瞬間脳トレ！違和感探し（漢字間違い探し）" class="apk-icon">
+        <img src="./icons/kanji_icon_512.png?v=7.4" alt="漢字間違い探しIQ" class="apk-icon">
         <div class="apk-info">
-          <div class="apk-title">瞬間脳トレ！違和感探し（漢字間違い探し）</div>
-          <div class="apk-pkg">KanjiBrainIQ_v6.apk（v7.4 最新版・3D高コントラスト白磁タイル＆認定試験搭載）</div>
+          <div class="apk-title">漢字間違い探しIQ</div>
+          <div class="apk-pkg">KanjiBrainIQ_v6.apk</div>
         </div>
         <div class="apk-dl">APK DL ↓</div>
       </a>
-
       <a href="./ColorSenseIQ_v6.apk?v=7.4" download="ColorSenseIQ_v6.apk" class="apk-card">
-        <img src="./icons/color_icon_512.png?v=7.4" alt="色彩センス！絶対色感テスト" class="apk-icon">
+        <img src="./icons/color_icon_512.png?v=7.4" alt="色彩センス！絶対色感" class="apk-icon">
         <div class="apk-info">
-          <div class="apk-title">色彩センス！絶対色感テスト</div>
-          <div class="apk-pkg">ColorSenseIQ_v6.apk（v7.4 最新版・3DタクタイルUI＆認定試験搭載）</div>
+          <div class="apk-title">色彩センス！絶対色感</div>
+          <div class="apk-pkg">ColorSenseIQ_v6.apk</div>
         </div>
         <div class="apk-dl">APK DL ↓</div>
       </a>
-
       <a href="./MakeTenIQ_v6.apk?v=7.4" download="MakeTenIQ_v6.apk" class="apk-card">
-        <img src="./icons/maketen_icon_512.png?v=7.4" alt="瞬間計算！ピタッと合計パズル" class="apk-icon">
+        <img src="./icons/maketen_icon_512.png?v=7.4" alt="瞬間暗算！テンパズル" class="apk-icon">
         <div class="apk-info">
-          <div class="apk-title">瞬間計算！ピタッと合計パズル</div>
-          <div class="apk-pkg">MakeTenIQ_v6.apk（v7.4 最新版・3D高コントラスト白磁タイル＆認定試験搭載）</div>
+          <div class="apk-title">瞬間暗算！テンパズル</div>
+          <div class="apk-pkg">MakeTenIQ_v6.apk</div>
         </div>
         <div class="apk-dl">APK DL ↓</div>
       </a>
-
       <a href="./FlashMemoryIQ_v6.apk?v=7.4" download="FlashMemoryIQ_v6.apk" class="apk-card">
-        <img src="./icons/memory_icon_512.png?v=7.4" alt="1秒記憶！フラッシュパネル" class="apk-icon">
+        <img src="./icons/memory_icon_512.png?v=7.4" alt="1秒記憶！フラッシュ" class="apk-icon">
         <div class="apk-info">
-          <div class="apk-title">1秒記憶！フラッシュパネル</div>
-          <div class="apk-pkg">FlashMemoryIQ_v6.apk（v7.4 最新版・3DタクタイルUI＆認定試験搭載）</div>
+          <div class="apk-title">1秒記憶！フラッシュ</div>
+          <div class="apk-pkg">FlashMemoryIQ_v6.apk</div>
         </div>
         <div class="apk-dl">APK DL ↓</div>
       </a>
-
       <a href="./ShapeMirrorIQ_v6.apk?v=7.4" download="ShapeMirrorIQ_v6.apk" class="apk-card">
-        <img src="./icons/shape_icon_512.png?v=7.4" alt="直感回転！ぴったり図形パズル" class="apk-icon">
+        <img src="./icons/shape_icon_512.png?v=7.4" alt="直感回転！図形パズル" class="apk-icon">
         <div class="apk-info">
-          <div class="apk-title">直感回転！ぴったり図形パズル</div>
-          <div class="apk-pkg">ShapeMirrorIQ_v6.apk（v7.4 最新版・3Dダークインディゴ盤面＆認定試験搭載）</div>
+          <div class="apk-title">直感回転！図形パズル</div>
+          <div class="apk-pkg">ShapeMirrorIQ_v6.apk</div>
         </div>
         <div class="apk-dl">APK DL ↓</div>
       </a>
-
       <a href="./SpeedNumberIQ_v6.apk?v=7.4" download="SpeedNumberIQ_v6.apk" class="apk-card">
-        <img src="./icons/speed_icon_512.png?v=7.4" alt="爆速連打！ナンバー順タップ" class="apk-icon">
+        <img src="./icons/speed_icon_512.png?v=7.4" alt="爆速連打！数字タップ" class="apk-icon">
         <div class="apk-info">
-          <div class="apk-title">爆速連打！ナンバー順タップ</div>
-          <div class="apk-pkg">SpeedNumberIQ_v6.apk（v7.4 最新版・3D高コントラスト白磁タイル＆認定試験搭載）</div>
+          <div class="apk-title">爆速連打！数字タップ</div>
+          <div class="apk-pkg">SpeedNumberIQ_v6.apk</div>
         </div>
         <div class="apk-dl">APK DL ↓</div>
       </a>
