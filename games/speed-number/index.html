@@ -206,7 +206,7 @@
     justify-content: center;
     font-size: 34px;
     font-weight: 900;
-    color: #ffffff;
+    color: #0f172a;
     cursor: pointer;
     box-shadow: 0 5px 12px rgba(0, 0, 0, 0.38);
     transition: transform 0.07s ease, background-color 0.12s ease, opacity 0.15s ease;
@@ -333,7 +333,7 @@
     border-radius: 999px;
   }
 
-  .modal-title { font-size: 25px; font-weight: 900; color: #ffffff; }
+  .modal-title { font-size: 25px; font-weight: 900; color: #0f172a; }
   .modal-iq { font-size: 34px; font-weight: 900; color: #facc15; }
   .modal-comment { font-size: 15px; font-weight: 700; color: #fed7aa; line-height: 1.45; }
 
@@ -659,7 +659,7 @@
   }
 
 
-  /* === v7.3 Single-Line Header/Footer & No-Wrap Polish === */
+  /* === v7.4 Single-Line Header/Footer & No-Wrap Polish === */
   .header-row, .top-bar {
     display: flex !important;
     align-items: center !important;
@@ -708,8 +708,7 @@
     font-size: 13px !important;
     line-height: 1.2 !important;
     min-width: 0 !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
+    overflow: visible !important; flex: 1 !important;
   }
   #hintBtn, .hint-btn {
     white-space: nowrap !important;
@@ -732,7 +731,7 @@
   }
 
 
-  /* === v7.3 Complete 3D Glossy Tactile UI Unification + Subtractive 3-Element Modals === */
+  /* === v7.4 Complete 3D Glossy Tactile UI Unification + Subtractive 3-Element Modals === */
   .svg-ic {
     width: 1.15em;
     height: 1.15em;
@@ -801,39 +800,173 @@
       inset 0 2px 3px rgba(255, 255, 255, 0.22) !important;
   }
 
-  /* 3D Tactile Beveled Game Tiles (Kanji, Make-10, Flash Memory, Shape Mirror, Speed Number) */
-  .cell:not(.color-tile), .num-card, .mem-cell, .choice-btn, .shape-card, .num-tile {
+      /* 3D Tactile Beveled Game Tiles (v7.4 High-Contrast Per-App Specification) */
+  /* A. Pearl-White 3D Tiles for Text/Number Apps (Kanji, Make-10, Speed Number) -> Ultra-High-Contrast Deep Navy Text (#0f172a) */
+  .cell:not(.color-tile), .num-card, .num-tile {
     background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 82%, #dbeafe 100%) !important;
-    border: 2px solid #cbd5e1 !important;
+    border: 2.5px solid #cbd5e1 !important;
     border-top-color: #ffffff !important;
+    color: #0f172a !important;
+    font-weight: 900 !important;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.95) !important;
     box-shadow:
       0 5px 0 #475569,
       0 7px 14px rgba(0, 0, 0, 0.38),
       inset 0 2px 1px rgba(255, 255, 255, 0.95) !important;
     transition: transform 0.07s cubic-bezier(0.2, 0.9, 0.3, 1.2), box-shadow 0.07s ease !important;
   }
-  .cell:not(.color-tile):active, .num-card:active, .mem-cell:active, .choice-btn:active, .shape-card:active, .num-tile:active {
+  .cell:not(.color-tile) *, .num-card *, .num-tile * {
+    color: inherit !important;
+  }
+  .cell:not(.color-tile):active, .num-card:active, .num-tile:active {
     transform: translateY(3px) scale(0.95) !important;
     box-shadow:
       0 1px 0 #334155,
       0 2px 5px rgba(0, 0, 0, 0.3),
       inset 0 1px 2px rgba(0, 0, 0, 0.15) !important;
   }
+
+  /* B. State Overrides for Kanji, Make-10, Speed Number (Must follow base rule with !important) */
+  .num-card.selected, .num-tile.highlight-next {
+    background: linear-gradient(180deg, #fde047 0%, #f59e0b 100%) !important;
+    border: 3px solid #ffffff !important;
+    color: #0f172a !important;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+    transform: translateY(-2px) scale(1.04) !important;
+    box-shadow:
+      0 6px 0 #b45309,
+      0 0 22px rgba(250, 204, 21, 0.85),
+      inset 0 2px 1px rgba(255, 255, 255, 0.9) !important;
+  }
+  .cell.correct-cell, .num-card.correct-card {
+    background: linear-gradient(180deg, #34d399 0%, #10b981 55%, #047857 100%) !important;
+    border: 3px solid #facc15 !important;
+    color: #ffffff !important;
+    text-shadow: 0 2px 5px rgba(5, 46, 22, 0.85) !important;
+    transform: scale(1.05) !important;
+    box-shadow:
+      0 5px 0 #064e3b,
+      0 0 24px rgba(250, 204, 21, 0.75),
+      inset 0 2px 1px rgba(255, 255, 255, 0.65) !important;
+  }
+  .cell.wrong-cell, .num-card.wrong-card, .num-tile.wrong-tile {
+    background: linear-gradient(180deg, #f87171 0%, #ef4444 55%, #b91c1c 100%) !important;
+    border: 3px solid #fecaca !important;
+    color: #ffffff !important;
+    text-shadow: 0 2px 4px rgba(69, 10, 10, 0.85) !important;
+    box-shadow:
+      0 4px 0 #7f1d1d,
+      0 6px 14px rgba(239, 68, 68, 0.5) !important;
+  }
+  .num-tile.done {
+    background: linear-gradient(180deg, #065f46 0%, #064e3b 100%) !important;
+    border: 2px solid #10b981 !important;
+    color: #6ee7b7 !important;
+    text-shadow: none !important;
+    opacity: 0.38 !important;
+    box-shadow: none !important;
+    pointer-events: none !important;
+  }
+  .cell.dimmed, .num-card.dimmed, .color-tile.dimmed, .shape-card.dimmed {
+    opacity: 0.2 !important;
+    pointer-events: none !important;
+  }
+
+  /* C. 3D Dark Indigo Tactile Cards for Shape Mirror (.shape-card + 3x3 .mini-grid) */
+  .shape-card {
+    background: linear-gradient(180deg, #2e265e 0%, #1a153b 100%) !important;
+    border: 2.5px solid #5b4fa3 !important;
+    border-top-color: #8b7fd4 !important;
+    box-shadow:
+      0 5px 0 #0d0a24,
+      0 8px 16px rgba(0, 0, 0, 0.48),
+      inset 0 2px 1px rgba(255, 255, 255, 0.25) !important;
+    transition: transform 0.07s cubic-bezier(0.2, 0.9, 0.3, 1.2), box-shadow 0.07s ease !important;
+  }
+  .shape-card:active {
+    transform: translateY(3px) scale(0.95) !important;
+    box-shadow: 0 1px 0 #0d0a24, 0 2px 5px rgba(0, 0, 0, 0.35) !important;
+  }
+  .shape-card.correct-card {
+    background: linear-gradient(180deg, #059669 0%, #064e3b 100%) !important;
+    border: 3px solid #facc15 !important;
+    box-shadow: 0 5px 0 #022c22, 0 0 22px rgba(52, 211, 153, 0.75) !important;
+  }
+  .shape-card.wrong-card {
+    background: linear-gradient(180deg, #dc2626 0%, #7f1d1d 100%) !important;
+    border: 3px solid #fecaca !important;
+  }
+  .mini-cell {
+    background-color: rgba(255, 255, 255, 0.12) !important;
+    border-radius: 5px !important;
+  }
+  .mini-cell.on {
+    background: linear-gradient(180deg, #7dd3fc 0%, #0284c7 100%) !important;
+    box-shadow: 0 2px 0 #0369a1, inset 0 1px 1px rgba(255, 255, 255, 0.65) !important;
+  }
+  .mini-cell.anchor {
+    background: linear-gradient(180deg, #fde047 0%, #d97706 100%) !important;
+    box-shadow: 0 2px 0 #92400e, inset 0 1px 1px rgba(255, 255, 255, 0.75) !important;
+  }
+
+  /* D. 3D Tactile Panels for Flash Memory (.panel) */
+  .panel {
+    background: linear-gradient(180deg, #253569 0%, #172247 100%) !important;
+    border: 2.5px solid #3b5299 !important;
+    border-top-color: #607ec9 !important;
+    color: #ffffff !important;
+    box-shadow:
+      0 5px 0 #090e24,
+      0 8px 16px rgba(0, 0, 0, 0.45),
+      inset 0 2px 1px rgba(255, 255, 255, 0.25) !important;
+  }
+  .panel.lit {
+    background: linear-gradient(180deg, #fde047 0%, #f59e0b 100%) !important;
+    border: 3px solid #ffffff !important;
+    color: #451a03 !important;
+    box-shadow:
+      0 5px 0 #92400e,
+      0 0 24px rgba(245, 158, 11, 0.85),
+      inset 0 2px 2px rgba(255, 255, 255, 0.85) !important;
+  }
+  .panel.found {
+    background: linear-gradient(180deg, #34d399 0%, #059669 100%) !important;
+    border: 3px solid #a7f3d0 !important;
+    color: #052e16 !important;
+    box-shadow:
+      0 5px 0 #064e3b,
+      0 0 18px rgba(16, 185, 129, 0.65),
+      inset 0 2px 1px rgba(255, 255, 255, 0.65) !important;
+  }
+  .panel.wrong {
+    background: linear-gradient(180deg, #f87171 0%, #dc2626 100%) !important;
+    border: 3px solid #fecaca !important;
+    color: #ffffff !important;
+  }
+
+  /* E. Target Card & Next Card High-Contrast Text */
   .target-card, .next-card {
     background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
     border: 2px solid #facc15 !important;
     border-top-color: #fef08a !important;
     border-radius: 18px !important;
+    color: #f8fafc !important;
     box-shadow:
       0 5px 0 #020617,
       0 8px 18px rgba(0, 0, 0, 0.48),
       inset 0 1.5px 1px rgba(255, 255, 255, 0.28) !important;
   }
-  .target-num, .next-num {
-    background: linear-gradient(180deg, #fef047 0%, #f59e0b 100%) !important;
-    color: #052e16 !important;
-    border: 1.5px solid #ffffff !important;
-    box-shadow: 0 3px 0 #92400e, inset 0 1.5px 1px rgba(255, 255, 255, 0.75) !important;
+  .target-label, .next-label {
+    color: #f8fafc !important;
+    font-weight: 900 !important;
+  }
+  .target-num {
+    background: linear-gradient(180deg, #fde047 0%, #f59e0b 100%) !important;
+    color: #0f172a !important;
+    font-weight: 900 !important;
+    padding: 2px 14px !important;
+    border-radius: 12px !important;
+    box-shadow: 0 3px 0 #92400e, inset 0 1px 1px rgba(255, 255, 255, 0.8) !important;
   }
 
   /* 3. Bottom 3D Dark Glass Capsule Dock & 3D Sapphire/Gold Hint Button */
@@ -1295,7 +1428,7 @@
           <a href="/payback-calc/" style="flex:1; padding:10px 6px; border-radius:8px; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); color:#34d399; font-size:13px; font-weight:700; text-decoration:none; text-align:center;">
             🚿 元取り1秒計算
           </a>
-          <a href="/?tab=game" style="flex:1; padding:10px 6px; border-radius:8px; background:rgba(99,102,241,0.16); border:1px solid rgba(99,102,241,0.4); color:#818cf8; font-size:13px; font-weight:700; text-decoration:none; text-align:center;">
+          <a href="/?tab=games" style="flex:1; padding:10px 6px; border-radius:8px; background:rgba(99,102,241,0.16); border:1px solid rgba(99,102,241,0.4); color:#818cf8; font-size:13px; font-weight:700; text-decoration:none; text-align:center;">
             🧠 脳トレ一覧へ
           </a>
         </div>
@@ -1352,7 +1485,7 @@
       <div id="stageJumpGrid" style="display:grid; grid-template-columns:repeat(5, 1fr); gap:6px; width:100%;"></div>
 
       <button class="primary-btn" id="closeSettingsBtn">✅ 閉じてゲームに戻る</button>
-      <a href="/?tab=game" class="web-portal-link" id="settingsPortalBtn" style="display:block; width:100%; margin-top:4px; padding:10px; border-radius:12px; background:rgba(99,102,241,0.18); border:1px solid rgba(99,102,241,0.45); color:#a5b4fc; font-size:13px; font-weight:800; text-decoration:none; text-align:center;">🏠 ゲーム一覧（ポータル）へ戻る</a>
+      <a href="/?tab=games" class="web-portal-link" id="settingsPortalBtn" style="display:block; width:100%; margin-top:4px; padding:10px; border-radius:12px; background:rgba(99,102,241,0.18); border:1px solid rgba(99,102,241,0.45); color:#a5b4fc; font-size:13px; font-weight:800; text-decoration:none; text-align:center;">🏠 ゲーム一覧（ポータル）へ戻る</a>
     </div>
   </div>
 
