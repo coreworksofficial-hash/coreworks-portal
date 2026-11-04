@@ -41,18 +41,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://coreworks-portal.pages.dev/valuelens/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://coreworks-portal.pages.dev/wage-calc/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://coreworks-portal.pages.dev/sns-studio/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://coreworks-portal.pages.dev/make-ten/</loc>
     <priority>0.8</priority>
   </url>

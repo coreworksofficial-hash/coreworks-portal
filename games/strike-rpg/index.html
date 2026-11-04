@@ -1,1777 +1,3045 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>クリスタル・ポケッツ TCG｜3Dホログラムカード収集＆バトル</title>
-  <style>
-    :root {
-      --bg-top: #f8fafd;
-      --bg-mid: #eef2f8;
-      --bg-bot: #e3eaf4;
-      --text-main: #0f172a;
-      --text-sub: #475569;
-      --card-radius: 22px;
-    }
-
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
-      -webkit-user-select: none;
-    }
-
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", -apple-system, BlinkMacSystemFont, sans-serif;
-      background: linear-gradient(165deg, var(--bg-top) 0%, var(--bg-mid) 52%, var(--bg-bot) 100%);
-      color: var(--text-main);
-    }
-
-    /* Ambient Museum Lighting */
-    .ambient-bg {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      background:
-        radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0) 60%),
-        radial-gradient(circle at 85% 80%, rgba(191, 219, 254, 0.45) 0%, transparent 55%),
-        radial-gradient(circle at 15% 75%, rgba(254, 243, 199, 0.45) 0%, transparent 55%);
-    }
-
-    .app-shell {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: 440px;
-      height: 100%;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: env(safe-area-inset-top, 10px) 16px calc(env(safe-area-inset-bottom, 12px) + 74px);
-    }
-
-    /* Minimal Top Header */
-    .top-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 4px 6px;
-      flex-shrink: 0;
-    }
-
-    .brand-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(255, 255, 255, 0.88);
-      backdrop-filter: blur(12px);
-      padding: 7px 14px;
-      border-radius: 999px;
-      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06), inset 0 0 0 1px rgba(255, 255, 255, 0.95);
-      font-weight: 900;
-      font-size: 14px;
-      letter-spacing: 0.03em;
-      color: #0f172a;
-    }
-
-    .collection-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(255, 255, 255, 0.88);
-      backdrop-filter: blur(12px);
-      padding: 7px 14px;
-      border-radius: 999px;
-      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06), inset 0 0 0 1px rgba(255, 255, 255, 0.95);
-      font-weight: 800;
-      font-size: 13px;
-      color: #334155;
-    }
-
-    /* Views */
-    .view-screen {
-      display: none;
-      flex: 1;
-      width: 100%;
-      height: 100%;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .view-screen.active {
-      display: flex;
-    }
-
-    /* ============================================================================
-       UNIFIED 3D HOLOGRAPHIC CARD COMPONENT (SUBTRACTION DESIGN: ONLY 3 ELEMENTS)
-       ============================================================================ */
-    .tcg-card {
-      position: relative;
-      width: 288px;
-      height: 414px;
-      border-radius: var(--card-radius);
-      padding: 11px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transform-style: preserve-3d;
-      transition: transform 0.16s cubic-bezier(0.2, 0.85, 0.3, 1), box-shadow 0.2s ease;
-      box-shadow:
-        0 24px 48px -12px rgba(15, 23, 42, 0.28),
-        0 6px 16px -4px rgba(15, 23, 42, 0.14),
-        inset 0 0 0 2px rgba(255, 255, 255, 0.95);
-      cursor: pointer;
-      overflow: hidden;
-      background: linear-gradient(145deg, #ffffff 0%, #f1f5f9 45%, #cbd5e1 100%);
-    }
-
-    /* Element Frame Themes */
-    .tcg-card[data-elem="gold"] {
-      background: linear-gradient(145deg, #fffbeb 0%, #fde68a 38%, #f59e0b 82%, #b45309 100%);
-      box-shadow: 0 26px 52px -12px rgba(180, 83, 9, 0.32), 0 8px 20px rgba(15, 23, 42, 0.14), inset 0 0 0 2.5px rgba(255, 255, 255, 0.96);
-    }
-    .tcg-card[data-elem="fire"] {
-      background: linear-gradient(145deg, #fff1f2 0%, #fecdd3 35%, #f43f5e 82%, #be123c 100%);
-      box-shadow: 0 26px 52px -12px rgba(190, 18, 60, 0.3), 0 8px 20px rgba(15, 23, 42, 0.14), inset 0 0 0 2.5px rgba(255, 255, 255, 0.96);
-    }
-    .tcg-card[data-elem="water"] {
-      background: linear-gradient(145deg, #f0f9ff 0%, #bae6fd 35%, #0ea5e9 82%, #0369a1 100%);
-      box-shadow: 0 26px 52px -12px rgba(3, 105, 161, 0.3), 0 8px 20px rgba(15, 23, 42, 0.14), inset 0 0 0 2.5px rgba(255, 255, 255, 0.96);
-    }
-    .tcg-card[data-elem="leaf"] {
-      background: linear-gradient(145deg, #ecfdf5 0%, #a7f3d0 35%, #10b981 82%, #047857 100%);
-      box-shadow: 0 26px 52px -12px rgba(4, 120, 87, 0.3), 0 8px 20px rgba(15, 23, 42, 0.14), inset 0 0 0 2.5px rgba(255, 255, 255, 0.96);
-    }
-    .tcg-card[data-elem="cosmic"] {
-      background: linear-gradient(145deg, #f5f3ff 0%, #ddd6fe 35%, #8b5cf6 82%, #5b21b6 100%);
-      box-shadow: 0 26px 52px -12px rgba(91, 33, 182, 0.32), 0 8px 20px rgba(15, 23, 42, 0.14), inset 0 0 0 2.5px rgba(255, 255, 255, 0.96);
-    }
-
-    /* Inner Metallic Bezel */
-    .tcg-card-inner {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      border-radius: 15px;
-      background: rgba(255, 255, 255, 0.94);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 10px 11px 11px;
-      box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.98), 0 2px 8px rgba(15, 23, 42, 0.08);
-      overflow: hidden;
-      z-index: 2;
-    }
-
-    /* Holographic Foil Overlay */
-    .tcg-holo-overlay {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 5;
-      background:
-        linear-gradient(
-          118deg,
-          transparent 20%,
-          rgba(255, 0, 128, 0.16) 36%,
-          rgba(255, 230, 0, 0.2) 45%,
-          rgba(0, 255, 200, 0.2) 54%,
-          rgba(0, 140, 255, 0.16) 63%,
-          transparent 78%
-        );
-      background-size: 240% 240%;
-      background-position: var(--holo-x, 50%) var(--holo-y, 50%);
-      mix-blend-mode: color-dodge;
-      opacity: 0.78;
-      transition: background-position 0.1s ease;
-    }
-
-    .tcg-glare-overlay {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 6;
-      background: radial-gradient(circle at var(--glare-x, 35%) var(--glare-y, 25%), rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 0) 55%);
-      mix-blend-mode: overlay;
-    }
-
-    /* 1. Card Top Header: Name + Big HP (Zero Truncation!) */
-    .tcg-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 4px;
-      height: 32px;
-      flex-shrink: 0;
-    }
-
-    .tcg-title-wrap {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      min-width: 0;
-    }
-
-    .tcg-rarity-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2px 6px;
-      border-radius: 6px;
-      font-size: 10px;
-      font-weight: 900;
-      background: linear-gradient(135deg, #fef3c7, #f59e0b);
-      color: #78350f;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
-      flex-shrink: 0;
-    }
-
-    .tcg-name {
-      font-size: 16px;
-      font-weight: 900;
-      color: #0f172a;
-      white-space: nowrap;
-      letter-spacing: -0.03em;
-    }
-
-    .tcg-hp-wrap {
-      display: flex;
-      align-items: baseline;
-      gap: 2px;
-      flex-shrink: 0;
-      color: #0f172a;
-    }
-
-    .tcg-hp-label {
-      font-size: 10px;
-      font-weight: 900;
-      color: #64748b;
-    }
-
-    .tcg-hp-val {
-      font-size: 21px;
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      color: #0f172a;
-    }
-
-    /* 2. Card Center Illustration (74% of height, zero clipping) */
-    .tcg-art-frame {
-      position: relative;
-      width: 100%;
-      flex: 1;
-      margin: 6px 0 8px;
-      border-radius: 11px;
-      overflow: hidden;
-      background: #0f172a;
-      box-shadow:
-        inset 0 0 0 2px rgba(255, 255, 255, 0.8),
-        0 4px 12px rgba(15, 23, 42, 0.14);
-    }
-
-    .tcg-art-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transform: scale(1.01);
-    }
-
-    /* 3. Card Bottom Move Row (1 Clean Row: Move Name + Big Damage) */
-    .tcg-move-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 44px;
-      padding: 0 12px;
-      border-radius: 10px;
-      background: rgba(241, 245, 249, 0.94);
-      border: 1px solid rgba(203, 213, 225, 0.85);
-      flex-shrink: 0;
-    }
-
-    .tcg-move-left {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .tcg-elem-dot {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-    }
-
-    .tcg-move-name {
-      font-size: 16px;
-      font-weight: 900;
-      color: #0f172a;
-      letter-spacing: -0.01em;
-    }
-
-    .tcg-move-dmg {
-      font-size: 24px;
-      font-weight: 900;
-      color: #0f172a;
-      letter-spacing: -0.03em;
-    }
-
-    /* ============================================================================
-       VIEW 1: PACK OPENING (POKÉPOCK-STYLE FOIL CUT & 5-CARD STACK REVEAL)
-       ============================================================================ */
-    .pack-stage-wrap {
-      position: relative;
-      width: 100%;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* Pure Silver Foil Booster Pack (Cropped to remove dark studio margins!) */
-    .pack-3d-container {
-      position: relative;
-      width: 246px;
-      height: 404px;
-      perspective: 1100px;
-      touch-action: none;
-      cursor: ew-resize;
-      user-select: none;
-    }
-
-    /* Inner Card Back & Rainbow God-Rays revealed inside the V-cut gap */
-    .pack-inner-card-peek {
-      position: absolute;
-      left: 4%;
-      right: 4%;
-      top: 10%;
-      height: 120px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, #fde047 0%, #38bdf8 50%, #a855f7 100%);
-      box-shadow: 0 0 32px rgba(250, 204, 21, 0.85), 0 0 60px rgba(56, 189, 248, 0.7);
-      opacity: 0;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    /* Bottom 82% of Silver Foil Booster Pack */
-    .pack-body-bottom {
-      position: absolute;
-      inset: 0;
-      border-radius: 18px;
-      background-image: url('assets/card_pack.jpg');
-      background-size: 158% 114%;
-      background-position: 50% 48%;
-      clip-path: polygon(0% 18%, 100% 18%, 100% 100%, 0% 100%);
-      box-shadow:
-        0 28px 54px -10px rgba(15, 23, 42, 0.32),
-        inset 0 0 0 2px rgba(255, 255, 255, 0.7);
-      z-index: 2;
-      transition: transform 0.52s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.42s ease;
-    }
-
-    /* Top 18% Crimp Foil Strip — Hinge on right side, curls up cleanly as cut progresses */
-    .pack-body-top {
-      position: absolute;
-      inset: 0;
-      border-radius: 18px;
-      background-image: url('assets/card_pack.jpg');
-      background-size: 158% 114%;
-      background-position: 50% 48%;
-      clip-path: polygon(0% 0%, 100% 0%, 100% 18.2%, 0% 18.2%);
-      transform-origin: 100% 18.2%;
-      z-index: 3;
-      transition: transform 0.06s linear, opacity 0.35s ease;
-      box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.75);
-    }
-
-    /* Metallic Crimp Ridges Overlay on Top Strip */
-    .pack-body-top::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      height: 18.2%;
-      background: repeating-linear-gradient(
-        90deg,
-        rgba(255,255,255,0.22) 0px,
-        rgba(255,255,255,0.22) 2px,
-        rgba(15,23,42,0.12) 2px,
-        rgba(15,23,42,0.12) 4px
-      );
-      pointer-events: none;
-    }
-
-    /* Sleek thin glowing hair-line guide at the 18% crimp seam */
-    .pack-laser-guide {
-      position: absolute;
-      left: 2%;
-      right: 2%;
-      top: 18%;
-      height: 2px;
-      background: linear-gradient(90deg, rgba(255,255,255,0.2), rgba(255,255,255,0.95) 50%, rgba(255,255,255,0.2));
-      box-shadow: 0 0 10px rgba(56, 189, 248, 0.85);
-      z-index: 4;
-      pointer-events: none;
-      overflow: hidden;
-    }
-
-    .pack-laser-GuideComet {
-      width: 35%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, #ffffff, #fde047, transparent);
-      animation: cometSlide 1.6s infinite ease-in-out;
-    }
-
-    @keyframes cometSlide {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(320%); }
-    }
-
-    /* Real-time Canvas for Plasma Slice & Foil Sparks */
-    #pack-cut-canvas {
-      position: absolute;
-      left: -46px;
-      top: -45px;
-      width: 338px;
-      height: 220px;
-      pointer-events: none;
-      z-index: 10;
-    }
-
-    .pack-hint-caption {
-      margin-top: 22px;
-      font-size: 14px;
-      font-weight: 800;
-      color: #475569;
-      letter-spacing: 0.04em;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(255, 255, 255, 0.82);
-      padding: 8px 18px;
-      border-radius: 999px;
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
-    }
-
-    /* 5-Card Stack Reveal Stage (ONLY shown right after cutting a pack) */
-    .pack-stack-stage {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      height: 100%;
-      position: relative;
-    }
-
-    .pack-stack-stage.active {
-      display: flex;
-    }
-
-    .stack-counter-pill {
-      margin-bottom: 18px;
-      background: rgba(15, 23, 42, 0.9);
-      color: #ffffff;
-      font-size: 14px;
-      font-weight: 900;
-      padding: 6px 18px;
-      border-radius: 999px;
-      letter-spacing: 0.08em;
-      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.16);
-    }
-
-    .card-stack-pile {
-      position: relative;
-      width: 288px;
-      height: 414px;
-      perspective: 1200px;
-      touch-action: pan-y;
-      margin-bottom: 10px;
-    }
-
-    .stack-card-slot {
-      position: absolute;
-      inset: 0;
-      transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.32s ease;
-      will-change: transform, opacity;
-    }
-
-    .stack-card-slot.swiped-away {
-      transform: translate3d(360px, -35px, 90px) rotateZ(18deg) rotateY(25deg) !important;
-      opacity: 0 !important;
-      pointer-events: none;
-    }
-
-    /* Last card (5/5 EX Rare) Prismatic Aura */
-    .stack-card-slot.ex-climax-glow .tcg-card {
-      box-shadow:
-        0 0 38px rgba(250, 204, 21, 0.88),
-        0 0 70px rgba(56, 189, 248, 0.65),
-        0 24px 48px rgba(15, 23, 42, 0.3);
-    }
-
-    /* 5-Card Pull Summary Grid */
-    .pack-summary-stage {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      height: 100%;
-      gap: 14px;
-    }
-
-    .pack-summary-stage.active {
-      display: flex;
-    }
-
-    .summary-cards-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      max-width: 390px;
-    }
-
-    .summary-mini-card {
-      width: 108px;
-      height: 154px;
-      border-radius: 12px;
-      padding: 5px;
-      background: #ffffff;
-      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.14);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      cursor: pointer;
-      transition: transform 0.15s ease;
-    }
-
-    .summary-mini-card:active {
-      transform: scale(0.95);
-    }
-
-    .summary-mini-art {
-      width: 100%;
-      height: 104px;
-      border-radius: 8px;
-      object-fit: cover;
-    }
-
-    .summary-mini-name {
-      font-size: 11px;
-      font-weight: 900;
-      text-align: center;
-      color: #0f172a;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .primary-pill-btn {
-      border: none;
-      outline: none;
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      color: #ffffff;
-      font-size: 15px;
-      font-weight: 900;
-      padding: 13px 28px;
-      border-radius: 999px;
-      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.22);
-      cursor: pointer;
-      letter-spacing: 0.03em;
-      transition: transform 0.12s ease;
-    }
-
-    .primary-pill-btn:active {
-      transform: scale(0.96);
-    }
-
-    /* ============================================================================
-       VIEW 2: COLLECTION & SINGLE 3D CARD VIEWER (ZERO STACKING!)
-       ============================================================================ */
-    .dex-layout {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      height: 100%;
-      padding: 4px 0 6px;
-    }
-
-    .single-card-showcase {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      perspective: 1200px;
-      flex: 1;
-      width: 100%;
-    }
-
-    .dex-thumb-strip {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      width: 100%;
-      max-width: 368px;
-      padding: 10px 12px;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(14px);
-      border-radius: 20px;
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.07), inset 0 0 0 1px rgba(255, 255, 255, 0.95);
-      flex-shrink: 0;
-    }
-
-    .dex-thumb-item {
-      position: relative;
-      height: 56px;
-      border-radius: 11px;
-      overflow: hidden;
-      cursor: pointer;
-      border: 2.5px solid transparent;
-      transition: transform 0.14s ease, border-color 0.14s ease;
-      background: #cbd5e1;
-    }
-
-    .dex-thumb-item.active {
-      border-color: #0f172a;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 14px rgba(15, 23, 42, 0.18);
-    }
-
-    .dex-thumb-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    /* ============================================================================
-       VIEW 3: SIMPLE 1v1 TURN-BASED CARD BATTLE
-       ============================================================================ */
-    .battle-layout {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      height: 100%;
-      padding: 2px 0 4px;
-      position: relative;
-    }
-
-    .stage-SelectStrip {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 5px;
-      width: 100%;
-      max-width: 376px;
-      flex-shrink: 0;
-    }
-
-    .stage-pill {
-      border: none;
-      background: rgba(255, 255, 255, 0.85);
-      color: #475569;
-      font-size: 11px;
-      font-weight: 900;
-      padding: 7px 0;
-      text-align: center;
-      border-radius: 999px;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
-      white-space: nowrap;
-    }
-
-    .stage-pill.active {
-      background: #0f172a;
-      color: #ffffff;
-    }
-
-    /* Opponent Zone */
-    .battle-zone-enemy {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      width: 100%;
-      max-width: 376px;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(12px);
-      padding: 10px 14px;
-      border-radius: 20px;
-      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.08), inset 0 0 0 1px rgba(255, 255, 255, 0.95);
-      transition: transform 0.18s ease;
-    }
-
-    .enemy-mini-card {
-      width: 80px;
-      height: 104px;
-      border-radius: 12px;
-      overflow: hidden;
-      flex-shrink: 0;
-      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.2);
-      border: 2px solid #ffffff;
-      position: relative;
-    }
-
-    .enemy-mini-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .enemy-status-box {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .enemy-tag {
-      font-size: 11px;
-      font-weight: 900;
-      color: #e11d48;
-      letter-spacing: 0.05em;
-    }
-
-    .enemy-name {
-      font-size: 17px;
-      font-weight: 900;
-      color: #0f172a;
-      margin: 2px 0 8px;
-      white-space: nowrap;
-    }
-
-    .hp-bar-outer {
-      width: 100%;
-      height: 12px;
-      background: #e2e8f0;
-      border-radius: 999px;
-      overflow: hidden;
-      box-shadow: inset 0 1px 3px rgba(0,0,0,0.12);
-    }
-
-    .hp-bar-fill {
-      height: 100%;
-      width: 100%;
-      background: linear-gradient(90deg, #10b981, #34d399);
-      border-radius: 999px;
-      transition: width 0.3s cubic-bezier(0.22, 1, 0.36, 1), background 0.3s ease;
-    }
-
-    .hp-bar-fill.enemy {
-      background: linear-gradient(90deg, #f43f5e, #fb7185);
-    }
-
-    .hp-numbers {
-      display: flex;
-      justify-content: space-between;
-      font-size: 12px;
-      font-weight: 900;
-      color: #334155;
-      margin-top: 4px;
-    }
-
-    /* Player Active Card in Battle */
-    .battle-player-stage {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      flex: 1;
-      width: 100%;
-    }
-
-    .battle-card-scaler {
-      transform: scale(0.75);
-      transform-origin: center center;
-      transition: transform 0.22s cubic-bezier(0.2, 0.9, 0.3, 1.2);
-    }
-
-    .battle-card-scaler.attacking {
-      transform: scale(0.81) translateY(-38px) rotateX(12deg);
-    }
-
-    .battle-card-scaler.hit {
-      transform: scale(0.72) translateX(10px);
-    }
-
-    /* Floating Damage Popup */
-    .dmg-popup {
-      position: absolute;
-      top: 12%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0.5);
-      font-size: 40px;
-      font-weight: 900;
-      color: #e11d48;
-      text-shadow: 0 4px 0 #ffffff, 0 8px 24px rgba(225, 29, 72, 0.45);
-      pointer-events: none;
-      opacity: 0;
-      z-index: 30;
-      transition: transform 0.28s cubic-bezier(0.18, 1.25, 0.4, 1), opacity 0.25s ease;
-    }
-
-    .dmg-popup.show {
-      opacity: 1;
-      transform: translate(-50%, -65%) scale(1);
-    }
-
-    /* Player Controls: HP + 2 Simple Move Buttons */
-    .battle-controls-dock {
-      width: 100%;
-      max-width: 376px;
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(16px);
-      padding: 10px 14px 12px;
-      border-radius: 22px;
-      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.09), inset 0 0 0 1px rgba(255, 255, 255, 0.95);
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      flex-shrink: 0;
-    }
-
-    .move-buttons-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .battle-move-btn {
-      border: none;
-      outline: none;
-      border-radius: 14px;
-      padding: 12px 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-family: inherit;
-      cursor: pointer;
-      transition: transform 0.1s ease, box-shadow 0.15s ease;
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      color: #ffffff;
-      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.2);
-    }
-
-    .battle-move-btn.ex-skill {
-      background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
-      color: #ffffff;
-      box-shadow: 0 6px 18px rgba(217, 119, 6, 0.35);
-    }
-
-    .battle-move-btn:active {
-      transform: scale(0.96);
-    }
-
-    .move-btn-label {
-      font-size: 14px;
-      font-weight: 900;
-      text-align: left;
-    }
-
-    .move-btn-power {
-      font-size: 18px;
-      font-weight: 900;
-    }
-
-    /* Bottom Navigation Dock (Only 3 Clean Tabs) */
-    .bottom-nav {
-      position: fixed;
-      bottom: env(safe-area-inset-bottom, 12px);
-      left: 50%;
-      transform: translateX(-50%);
-      width: calc(100% - 32px);
-      max-width: 400px;
-      height: 60px;
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(20px);
-      border-radius: 999px;
-      box-shadow:
-        0 14px 34px rgba(15, 23, 42, 0.12),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.95);
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      padding: 6px;
-      z-index: 50;
-    }
-
-    .nav-tab-btn {
-      border: none;
-      background: transparent;
-      border-radius: 999px;
-      font-family: inherit;
-      font-size: 14px;
-      font-weight: 900;
-      color: #64748b;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      cursor: pointer;
-      transition: background 0.18s ease, color 0.18s ease;
-    }
-
-    .nav-tab-btn.active {
-      background: #0f172a;
-      color: #ffffff;
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.22);
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>クリスタル・ポケット TCG (ポケポケ完全踏襲版)</title>
+<style>
+  :root {
+    --bg-main: #EEF2F8;
+    --bg-grad: linear-gradient(180deg, #F6F9FC 0%, #E8EEF6 55%, #DFE7F2 100%);
+    --surface: #F4F7FB;
+    --surface-pure: #FFFFFF;
+    --text-main: #1E293B;
+    --text-sub: #64748B;
+    --accent-blue: #0EA5E9;
+    --accent-indigo: #4F46E5;
+    --accent-gold: #F59E0B;
+    --neu-out: 6px 6px 14px rgba(163, 177, 198, 0.45), -6px -6px 14px rgba(255, 255, 255, 0.95);
+    --neu-out-sm: 3px 3px 8px rgba(163, 177, 198, 0.4), -3px -3px 8px rgba(255, 255, 255, 0.95);
+    --neu-in: inset 4px 4px 8px rgba(163, 177, 198, 0.45), inset -4px -4px 8px rgba(255, 255, 255, 0.9);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #CBD5E1;
+    color: var(--text-main);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #app-shell {
+    position: relative;
+    width: 100%;
+    max-width: 430px;
+    height: 100%;
+    max-height: 932px;
+    background: var(--bg-grad);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.25);
+  }
+
+  /* ===== Top Status Header ===== */
+  .top-bar {
+    height: 54px;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.78);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.9);
+    z-index: 30;
+    flex-shrink: 0;
+  }
+
+  .brand-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--surface-pure);
+    padding: 5px 11px;
+    border-radius: 999px;
+    box-shadow: var(--neu-out-sm);
+    font-weight: 900;
+    font-size: 12px;
+    letter-spacing: 0.01em;
+    color: #0F172A;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .brand-orb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: conic-gradient(from 45deg, #38BDF8, #818CF8, #F472B6, #FBBF24, #38BDF8);
+    box-shadow: 0 0 6px rgba(56, 189, 248, 0.6);
+    flex-shrink: 0;
+  }
+
+  .top-stats {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .stat-pill {
+    background: var(--surface-pure);
+    padding: 5px 10px;
+    border-radius: 999px;
+    box-shadow: var(--neu-out-sm);
+    font-size: 11px;
+    font-weight: 800;
+    color: #334155;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+  }
+
+  .stat-pill strong {
+    color: var(--accent-indigo);
+    font-size: 12px;
+  }
+
+  /* ===== Main Tab Viewport ===== */
+  .tab-viewport {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tab-page {
+    position: absolute;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 16px;
+  }
+
+  .tab-page.active {
+    display: flex;
+  }
+
+  /* ===== Bottom Navigation (3 Tabs) ===== */
+  .bottom-nav {
+    height: 68px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(16px);
+    border-top: 1px solid rgba(255, 255, 255, 0.95);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 6px 14px;
+    z-index: 40;
+    flex-shrink: 0;
+  }
+
+  .nav-btn {
+    flex: 1;
+    max-width: 118px;
+    height: 50px;
+    border: none;
+    background: transparent;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    color: #64748B;
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .nav-btn .ico {
+    font-size: 19px;
+    line-height: 1;
+    transition: transform 0.2s;
+  }
+
+  .nav-btn.active {
+    background: var(--surface-pure);
+    color: #0F172A;
+    box-shadow: var(--neu-out-sm);
+  }
+
+  .nav-btn.active .ico {
+    transform: translateY(-1px) scale(1.08);
+  }
+
+  /* ===== Common Neumorphic Pill Button ===== */
+  .neu-btn {
+    border: none;
+    background: linear-gradient(180deg, #FFFFFF 0%, #F1F5F9 100%);
+    color: #0F172A;
+    font-weight: 900;
+    font-size: 14px;
+    padding: 12px 26px;
+    border-radius: 999px;
+    box-shadow: var(--neu-out);
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .neu-btn:active {
+    transform: scale(0.96);
+    box-shadow: var(--neu-in);
+  }
+
+  .neu-btn.primary {
+    background: linear-gradient(135deg, #0EA5E9 0%, #4F46E5 100%);
+    color: #FFFFFF;
+    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.35), inset 0 1px 1px rgba(255,255,255,0.4);
+  }
+
+  /* =========================================================================
+     POKEPOCK FAITHFUL CARD COMPONENT (.pk-card)
+     ========================================================================= */
+  .pk-card {
+    position: relative;
+    width: 240px;
+    height: 336px;
+    border-radius: 16px;
+    padding: 8px;
+    background: linear-gradient(145deg, #E2E8F0 0%, #FFFFFF 35%, #CBD5E1 70%, #94A3B8 100%);
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.22), inset 0 0 0 1.5px rgba(255, 255, 255, 0.9);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    transition: transform 0.12s ease-out;
+    flex-shrink: 0;
+  }
+
+  .pk-card.is-ex {
+    background: linear-gradient(145deg, #FDE68A 0%, #FFFBEB 28%, #F59E0B 62%, #D97706 100%);
+    box-shadow: 0 14px 32px rgba(245, 158, 11, 0.35), inset 0 0 0 2px #FEF3C7;
+  }
+
+  .pk-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 11px;
+    padding: 7px 8px 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    z-index: 2;
+  }
+
+  /* Element Background Themes */
+  .pk-card[data-type="fire"] .pk-card-inner {
+    background: linear-gradient(165deg, #FEE2E2 0%, #FECACA 45%, #FCA5A5 100%);
+  }
+  .pk-card[data-type="water"] .pk-card-inner {
+    background: linear-gradient(165deg, #E0F2FE 0%, #BAE6FD 45%, #7DD3FC 100%);
+  }
+  .pk-card[data-type="lightning"] .pk-card-inner {
+    background: linear-gradient(165deg, #FEF9C3 0%, #FEF08A 45%, #FDE047 100%);
+  }
+  .pk-card[data-type="grass"] .pk-card-inner {
+    background: linear-gradient(165deg, #DCFCE7 0%, #BBF7D0 45%, #86EFAC 100%);
+  }
+  .pk-card[data-type="psychic"] .pk-card-inner {
+    background: linear-gradient(165deg, #F3E8FF 0%, #E9D5FF 45%, #D8B4FE 100%);
+  }
+  .pk-card[data-type="support"] .pk-card-inner {
+    background: linear-gradient(165deg, #FFEDD5 0%, #FED7AA 50%, #FDBA74 100%);
+  }
+  .pk-card[data-type="goods"] .pk-card-inner {
+    background: linear-gradient(165deg, #E0E7FF 0%, #C7D2FE 50%, #A5B4FC 100%);
+  }
+
+  /* Rainbow Holo Overlay for EX / Star Cards */
+  .pk-holo-sheen {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(125deg,
+      rgba(255,255,255,0) 15%,
+      rgba(255, 0, 128, 0.18) 32%,
+      rgba(0, 255, 255, 0.22) 48%,
+      rgba(255, 230, 0, 0.2) 64%,
+      rgba(255,255,255,0) 82%);
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 5;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .pk-card.is-ex .pk-holo-sheen {
+    opacity: 0.85;
+  }
+
+  /* 1. Card Top Header: Stage Badge + Name + HP + Element Orb */
+  .pk-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+    height: 24px;
+    flex-shrink: 0;
+  }
+
+  .pk-header-left {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    min-width: 0;
+  }
+
+  .pk-stage-badge {
+    background: linear-gradient(180deg, #FFFFFF 0%, #E2E8F0 100%);
+    border: 1px solid #94A3B8;
+    border-radius: 999px;
+    padding: 1px 6px;
+    font-size: 9px;
+    font-weight: 900;
+    color: #334155;
+    letter-spacing: -0.02em;
+    flex-shrink: 0;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  }
+
+  .pk-stage-badge.support {
+    background: linear-gradient(180deg, #F97316, #EA580C);
+    color: #FFF;
+    border-color: #C2410C;
+  }
+
+  .pk-stage-badge.goods {
+    background: linear-gradient(180deg, #2563EB, #1D4ED8);
+    color: #FFF;
+    border-color: #1E40AF;
+  }
+
+  .pk-name {
+    font-size: 12.5px;
+    font-weight: 900;
+    color: #0F172A;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: -0.03em;
+  }
+
+  .pk-ex-tag {
+    display: inline-block;
+    background: linear-gradient(180deg, #FEF08A 0%, #F59E0B 60%, #B45309 100%);
+    color: #1E293B;
+    font-style: italic;
+    font-weight: 900;
+    font-size: 10px;
+    padding: 0 4px;
+    border-radius: 4px;
+    border: 1px solid #78350F;
+    margin-left: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  }
+
+  .pk-header-right {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    flex-shrink: 0;
+  }
+
+  .pk-hp-label {
+    font-size: 8.5px;
+    font-weight: 900;
+    color: #334155;
+    margin-top: 3px;
+  }
+
+  .pk-hp-val {
+    font-size: 15px;
+    font-weight: 900;
+    color: #0F172A;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  .pk-type-orb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    border: 1.5px solid #FFFFFF;
+    box-shadow: 0 2px 4px rgba(15,23,42,0.25);
+    flex-shrink: 0;
+  }
+  .orb-fire { background: radial-gradient(circle at 30% 30%, #FB923C, #DC2626); }
+  .orb-water { background: radial-gradient(circle at 30% 30%, #38BDF8, #0284C7); }
+  .orb-lightning { background: radial-gradient(circle at 30% 30%, #FDE047, #CA8A04); }
+  .orb-grass { background: radial-gradient(circle at 30% 30%, #4ADE80, #16A34A); }
+  .orb-psychic { background: radial-gradient(circle at 30% 30%, #C084FC, #7E22CE); }
+  .orb-colorless { background: radial-gradient(circle at 30% 30%, #FFFFFF, #94A3B8); }
+
+  /* 2. Center Illustration Frame (Silver Bezel) */
+  .pk-art-frame {
+    position: relative;
+    width: 100%;
+    height: 154px;
+    border-radius: 8px;
+    border: 2.5px solid #E2E8F0;
+    box-shadow: 0 3px 8px rgba(15, 23, 42, 0.2), inset 0 0 8px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    background: #0F172A;
+    flex-shrink: 0;
+  }
+
+  .pk-card.is-ex .pk-art-frame {
+    border-color: #FDE68A;
+    box-shadow: 0 3px 10px rgba(217, 119, 6, 0.35), inset 0 0 10px rgba(251, 191, 36, 0.3);
+  }
+
+  .pk-art-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    display: block;
+  }
+
+  .pk-trainer-svg-wrap {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* 3. Move Section (Energy Orbs + Move Name + Damage) */
+  .pk-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4px 2px 2px;
+    gap: 3px;
+  }
+
+  .pk-move-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.68);
+    border-radius: 7px;
+    padding: 6px 8px;
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+  }
+
+  .pk-move-cost {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    min-width: 38px;
+  }
+
+  .pk-move-cost .pk-type-orb {
+    width: 16px;
+    height: 16px;
+    font-size: 9px;
+  }
+
+  .pk-move-name {
+    font-size: 11.5px;
+    font-weight: 900;
+    color: #0F172A;
+    flex: 1;
+    text-align: left;
+    padding-left: 4px;
+    letter-spacing: -0.02em;
+  }
+
+  .pk-move-dmg {
+    font-size: 16px;
+    font-weight: 900;
+    color: #0F172A;
+    letter-spacing: -0.03em;
+  }
+
+  .pk-move-desc {
+    font-size: 9px;
+    font-weight: 700;
+    color: #334155;
+    line-height: 1.3;
+    padding: 2px 4px;
+  }
+
+  .pk-trainer-effect {
+    background: rgba(255, 255, 255, 0.82);
+    border-radius: 8px;
+    padding: 7px 9px;
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    font-size: 10px;
+    font-weight: 800;
+    color: #1E293B;
+    line-height: 1.4;
+  }
+
+  .pk-trainer-rule {
+    font-size: 8.5px;
+    color: #475569;
+    font-weight: 700;
+    margin-top: 3px;
+  }
+
+  /* 4. Bottom Weakness / Retreat / Rarity / Dex Bar */
+  .pk-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    flex-shrink: 0;
+  }
+
+  .pk-stats-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.75);
+    border-radius: 999px;
+    padding: 2px 8px;
+    font-size: 9px;
+    font-weight: 800;
+    color: #334155;
+    border: 1px solid rgba(255,255,255,0.9);
+  }
+
+  .pk-stat-item {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+
+  .pk-stat-item .pk-type-orb {
+    width: 13px;
+    height: 13px;
+    font-size: 8px;
+    border-width: 1px;
+  }
+
+  .pk-meta-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 3px;
+    font-size: 9px;
+    font-weight: 900;
+  }
+
+  .pk-rarity-badge {
+    background: rgba(15, 23, 42, 0.1);
+    padding: 1px 6px;
+    border-radius: 999px;
+    color: #0F172A;
+    letter-spacing: 1px;
+    font-size: 9.5px;
+  }
+
+  .pk-rarity-badge.star {
+    background: linear-gradient(90deg, #FDE047, #F59E0B);
+    color: #78350F;
+    box-shadow: 0 1px 3px rgba(245, 158, 11, 0.4);
+  }
+
+  .pk-dex-no {
+    color: #334155;
+    font-size: 8.5px;
+    font-weight: 800;
+  }
+
+  .pk-ex-rulebox {
+    font-size: 7.5px;
+    font-weight: 900;
+    background: linear-gradient(90deg, #FEF3C7, #FDE68A);
+    color: #92400E;
+    padding: 1px 5px;
+    border-radius: 4px;
+    border: 1px solid #F59E0B;
+  }
+
+  /* Compact Card Variant for Dex Grid & Summary (.pk-card.mini) */
+  .pk-card.mini {
+    width: 108px;
+    height: 152px;
+    border-radius: 10px;
+    padding: 4px;
+    box-shadow: 0 5px 12px rgba(15, 23, 42, 0.16);
+  }
+  .pk-card.mini .pk-card-inner {
+    border-radius: 7px;
+    padding: 4px;
+  }
+  .pk-card.mini .pk-header {
+    height: 14px;
+  }
+  .pk-card.mini .pk-stage-badge {
+    font-size: 6px;
+    padding: 0 3px;
+  }
+  .pk-card.mini .pk-name {
+    font-size: 7.5px;
+  }
+  .pk-card.mini .pk-ex-tag {
+    font-size: 6.5px;
+    padding: 0 2px;
+  }
+  .pk-card.mini .pk-hp-label {
+    font-size: 6px;
+  }
+  .pk-card.mini .pk-hp-val {
+    font-size: 9px;
+  }
+  .pk-card.mini .pk-type-orb {
+    width: 11px;
+    height: 11px;
+    font-size: 6.5px;
+  }
+  .pk-card.mini .pk-art-frame {
+    height: 68px;
+    border-width: 1.5px;
+    border-radius: 5px;
+  }
+  .pk-card.mini .pk-move-row {
+    padding: 2px 4px;
+    border-radius: 4px;
+  }
+  .pk-card.mini .pk-move-cost {
+    min-width: 18px;
+    gap: 1px;
+  }
+  .pk-card.mini .pk-move-cost .pk-type-orb {
+    width: 9px;
+    height: 9px;
+    font-size: 5px;
+  }
+  .pk-card.mini .pk-move-name {
+    font-size: 6.5px;
+  }
+  .pk-card.mini .pk-move-dmg {
+    font-size: 9px;
+  }
+  .pk-card.mini .pk-move-desc,
+  .pk-card.mini .pk-ex-rulebox,
+  .pk-card.mini .pk-trainer-rule {
+    display: none;
+  }
+  .pk-card.mini .pk-trainer-effect {
+    padding: 3px 4px;
+    font-size: 6.5px;
+    line-height: 1.25;
+  }
+  .pk-card.mini .pk-stats-bar {
+    padding: 1px 4px;
+    font-size: 6px;
+  }
+  .pk-card.mini .pk-stat-item .pk-type-orb {
+    width: 8px;
+    height: 8px;
+    font-size: 5px;
+  }
+  .pk-card.mini .pk-meta-bar {
+    font-size: 6.5px;
+  }
+  .pk-card.mini .pk-rarity-badge {
+    font-size: 6.5px;
+    padding: 0 4px;
+  }
+  .pk-card.mini .pk-dex-no {
+    font-size: 6px;
+  }
+
+  /* =========================================================================
+     TAB 1: HOME & PACK OPENING + DEX SLOT SNAP-IN REGISTRATION
+     ========================================================================= */
+  .home-stage {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px 14px;
+    position: relative;
+  }
+
+  .pack-header-banner {
+    text-align: center;
+  }
+
+  .pack-series-pill {
+    display: inline-block;
+    background: var(--surface-pure);
+    box-shadow: var(--neu-out-sm);
+    padding: 4px 14px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 900;
+    color: var(--accent-indigo);
+    margin-bottom: 5px;
+  }
+
+  .pack-main-title {
+    font-size: 19px;
+    font-weight: 900;
+    color: #0F172A;
+    letter-spacing: -0.02em;
+  }
+
+  .pack-sub-hint {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #64748B;
+    margin-top: 2px;
+  }
+
+  /* 3D Booster Pack Container */
+  .booster-wrap {
+    position: relative;
+    width: 226px;
+    height: 344px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    perspective: 900px;
+    margin: 4px 0;
+  }
+
+  .booster-pack {
+    position: relative;
+    width: 214px;
+    height: 332px;
+    border-radius: 16px;
+    box-shadow: 0 22px 44px rgba(15, 23, 42, 0.28);
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease;
+  }
+
+  /* Top Foil Strip that gets sliced off */
+  .booster-top-foil {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 54px;
+    border-radius: 16px 16px 0 0;
+    background: linear-gradient(90deg, #94A3B8 0%, #F8FAFC 25%, #CBD5E1 50%, #F8FAFC 75%, #94A3B8 100%);
+    border-bottom: 2px dashed rgba(56, 189, 248, 0.85);
+    overflow: hidden;
+    z-index: 6;
+    transform-origin: top right;
+    transition: transform 0.55s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.5s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .booster-top-foil::before {
+    content: "◀  SLICE HERE TO OPEN  ▶";
+    font-size: 9.5px;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    color: #334155;
+    background: rgba(255,255,255,0.75);
+    padding: 3px 10px;
+    border-radius: 999px;
+  }
+
+  .booster-top-foil.sliced {
+    transform: translate(90px, -110px) rotate(28deg) scale(0.85);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .booster-body {
+    position: absolute;
+    top: 52px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 0 0 16px 16px;
+    background: url('assets/card_pack.jpg') center/cover no-repeat, linear-gradient(145deg, #1E293B, #0F172A);
+    border: 3px solid #E2E8F0;
+    border-top: none;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 14px;
+  }
+
+  .booster-body::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(125deg, rgba(255,255,255,0) 20%, rgba(255,255,255,0.38) 48%, rgba(56,189,248,0.25) 55%, rgba(255,255,255,0) 80%);
+    pointer-events: none;
+  }
+
+  .booster-badge {
+    position: relative;
+    z-index: 3;
+    background: rgba(15, 23, 42, 0.82);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(253, 224, 71, 0.7);
+    border-radius: 12px;
+    padding: 8px 10px;
+    text-align: center;
+    color: #FFFFFF;
+  }
+
+  .booster-badge .b-title {
+    font-size: 13px;
+    font-weight: 900;
+    color: #FDE047;
+  }
+
+  .booster-badge .b-sub {
+    font-size: 9.5px;
+    color: #E2E8F0;
+    margin-top: 2px;
+  }
+
+  /* Interactive Slice Track on top of the pack */
+  .slice-zone {
+    position: absolute;
+    top: 24px;
+    left: -10px;
+    right: -10px;
+    height: 56px;
+    z-index: 15;
+    cursor: ew-resize;
+    display: flex;
+    align-items: center;
+  }
+
+  .slice-guide-line {
+    width: 100%;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(14, 165, 233, 0.22);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(14, 165, 233, 0.55);
+  }
+
+  .slice-laser-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #38BDF8, #818CF8, #F472B6, #FDE047);
+    box-shadow: 0 0 16px #38BDF8;
+    transition: width 0.05s linear;
+  }
+
+  .slice-knob {
+    position: absolute;
+    left: 0%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    border: 2.5px solid #0EA5E9;
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 900;
+    color: #0EA5E9;
+    pointer-events: none;
+  }
+
+  /* Pack Opening Stage 2: 5-Card Stack Flip */
+  .pack-step-view {
+    position: absolute;
+    inset: 0;
+    background: var(--bg-grad);
+    z-index: 25;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px 18px;
+  }
+
+  .pack-step-view.active {
+    display: flex;
+  }
+
+  .stack-counter-pill {
+    background: var(--surface-pure);
+    box-shadow: var(--neu-out-sm);
+    padding: 6px 18px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 900;
+    color: #0F172A;
+  }
+
+  .card-stack-stage {
+    position: relative;
+    width: 260px;
+    height: 360px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .stack-new-badge {
+    position: absolute;
+    top: -10px;
+    right: -6px;
+    z-index: 20;
+    background: linear-gradient(135deg, #F43F5E, #FB923C);
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 900;
+    padding: 4px 12px;
+    border-radius: 999px;
+    border: 2px solid #FFFFFF;
+    box-shadow: 0 6px 16px rgba(244, 63, 94, 0.5);
+    animation: pulseNew 1s infinite alternate;
+  }
+
+  @keyframes pulseNew {
+    from { transform: scale(1) rotate(6deg); }
+    to { transform: scale(1.1) rotate(6deg); }
+  }
+
+  .swipe-away {
+    animation: cardSwipeOut 0.36s cubic-bezier(0.2, 0.85, 0.3, 1) forwards;
+  }
+
+  @keyframes cardSwipeOut {
+    0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
+    100% { transform: translate(160px, -90px) rotate(18deg) scale(0.88); opacity: 0; }
+  }
+
+  /* Pack Opening Stage 3: 5-Card Pull Summary */
+  .summary-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    max-width: 370px;
+    margin: 6px 0;
+  }
+
+  .summary-item-wrap {
+    position: relative;
+  }
+
+  .mini-new-tag {
+    position: absolute;
+    top: -6px;
+    right: -4px;
+    z-index: 10;
+    background: linear-gradient(135deg, #F43F5E, #FB923C);
+    color: #FFF;
+    font-size: 9px;
+    font-weight: 900;
+    padding: 2px 7px;
+    border-radius: 999px;
+    border: 1.5px solid #FFF;
+    box-shadow: 0 3px 8px rgba(244, 63, 94, 0.45);
+  }
+
+  /* Pack Opening Stage 4: DEX SLOT SNAP-IN REGISTRATION ANIMATION */
+  .dex-reg-board {
+    width: 100%;
+    max-width: 390px;
+    background: rgba(255, 255, 255, 0.72);
+    border-radius: 20px;
+    padding: 10px;
+    box-shadow: var(--neu-in);
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 7px;
+    position: relative;
+  }
+
+  .reg-slot {
+    position: relative;
+    height: 94px;
+    border-radius: 10px;
+    background: #E2E8F0;
+    box-shadow: inset 3px 3px 6px rgba(148, 163, 184, 0.55), inset -3px -3px 6px rgba(255, 255, 255, 0.9);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+
+  .reg-slot-num {
+    font-size: 13px;
+    font-weight: 900;
+    color: #94A3B8;
+    letter-spacing: 0.04em;
+  }
+
+  .reg-slot.filled {
+    background: #FFFFFF;
+    box-shadow: 0 3px 8px rgba(15, 23, 42, 0.14);
+    border: 1.5px solid #CBD5E1;
+  }
+
+  .reg-slot.snap-highlight {
+    border: 2.5px solid #0EA5E9;
+    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.3), 0 8px 20px rgba(14, 165, 233, 0.45);
+    animation: slotSnapBounce 0.55s cubic-bezier(0.2, 0.9, 0.3, 1);
+  }
+
+  @keyframes slotSnapBounce {
+    0% { transform: scale(1.32); }
+    50% { transform: scale(0.93); }
+    100% { transform: scale(1); }
+  }
+
+  .reg-mini-thumb {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 4px;
+    font-size: 7.5px;
+    font-weight: 900;
+    color: #0F172A;
+    position: relative;
+  }
+
+  .reg-mini-thumb img {
+    width: 100%;
+    height: 54px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 1px solid rgba(255,255,255,0.8);
+  }
+
+  .pachi-pop {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.35), transparent 70%);
+    pointer-events: none;
+    z-index: 15;
+  }
+
+  .pachi-badge {
+    background: linear-gradient(135deg, #0EA5E9, #4F46E5);
+    color: #FFFFFF;
+    font-size: 9px;
+    font-weight: 900;
+    padding: 2px 6px;
+    border-radius: 999px;
+    border: 1.5px solid #FFFFFF;
+    box-shadow: 0 3px 10px rgba(14, 165, 233, 0.6);
+  }
+
+  /* =========================================================================
+     TAB 2: MY CARDS (NUMBERED DEX 001-015 & SINGLE 1-CARD 3D VIEWER)
+     ========================================================================= */
+  .dex-header-box {
+    padding: 12px 16px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .dex-title-area h2 {
+    font-size: 17px;
+    font-weight: 900;
+    color: #0F172A;
+  }
+
+  .dex-title-area p {
+    font-size: 11px;
+    color: #64748B;
+    font-weight: 700;
+  }
+
+  .dex-progress-pill {
+    background: var(--surface-pure);
+    box-shadow: var(--neu-out-sm);
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 900;
+    color: var(--accent-indigo);
+  }
+
+  .dex-grid {
+    padding: 6px 14px 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    justify-items: center;
+  }
+
+  .dex-cell {
+    position: relative;
+    width: 108px;
+    height: 152px;
+    cursor: pointer;
+  }
+
+  .dex-empty-slot {
+    width: 108px;
+    height: 152px;
+    border-radius: 12px;
+    background: #E2E8F0;
+    box-shadow: var(--neu-in);
+    border: 1.5px dashed #CBD5E1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    color: #94A3B8;
+  }
+
+  .dex-empty-slot .slot-no {
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    color: #94A3B8;
+    text-shadow: 1px 1px 0 #FFFFFF;
+  }
+
+  .dex-empty-slot .slot-hint {
+    font-size: 9px;
+    font-weight: 800;
+    color: #94A3B8;
+  }
+
+  .dex-count-badge {
+    position: absolute;
+    bottom: -5px;
+    right: -4px;
+    z-index: 10;
+    background: #0F172A;
+    color: #FFFFFF;
+    font-size: 9.5px;
+    font-weight: 900;
+    padding: 2px 7px;
+    border-radius: 999px;
+    border: 1.5px solid #FFFFFF;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  }
+
+  /* SINGLE 1-CARD 3D HOLOGRAPHIC VIEWER MODAL (Zero background card clutter) */
+  .single-viewer-modal {
+    position: absolute;
+    inset: 0;
+    background: rgba(241, 245, 249, 0.88);
+    backdrop-filter: blur(18px);
+    z-index: 80;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 18px 24px;
+  }
+
+  .single-viewer-modal.active {
+    display: flex;
+  }
+
+  .viewer-top-bar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .viewer-stage {
+    perspective: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 6px 0;
+  }
+
+  .viewer-stage .pk-card {
+    transform: scale(1.12);
+    box-shadow: 0 24px 48px rgba(15, 23, 42, 0.28);
+  }
+
+  .viewer-info-card {
+    width: 100%;
+    background: var(--surface-pure);
+    border-radius: 18px;
+    padding: 12px 16px;
+    box-shadow: var(--neu-out-sm);
+    text-align: center;
+  }
+
+  .viewer-info-card h4 {
+    font-size: 13px;
+    font-weight: 900;
+    color: #0F172A;
+    margin-bottom: 3px;
+  }
+
+  .viewer-info-card p {
+    font-size: 11px;
+    font-weight: 700;
+    color: #475569;
+  }
+
+  /* =========================================================================
+     TAB 3: POKEPOCK-FAITHFUL BATTLE (3 POINTS, ACTIVE 1 + BENCH 3, ENERGY ZONE)
+     ========================================================================= */
+  .battle-arena {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 8px 10px 8px;
+    background: radial-gradient(circle at 50% 48%, #FFFFFF 0%, #E2E8F0 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Top Battle Status Bar: Turn + Points (0/3) */
+  .bt-hud {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.88);
+    border-radius: 14px;
+    padding: 6px 10px;
+    box-shadow: var(--neu-out-sm);
+    z-index: 10;
+  }
+
+  .bt-score-box {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10.5px;
+    font-weight: 900;
+  }
+
+  .pt-dots {
+    display: flex;
+    gap: 4px;
+  }
+
+  .pt-dot {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #CBD5E1;
+    box-shadow: inset 1px 1px 3px rgba(0,0,0,0.25);
+    border: 1.5px solid #FFFFFF;
+  }
+
+  .pt-dot.won-player {
+    background: radial-gradient(circle at 30% 30%, #38BDF8, #2563EB);
+    box-shadow: 0 0 8px rgba(37, 99, 235, 0.7);
+  }
+
+  .pt-dot.won-enemy {
+    background: radial-gradient(circle at 30% 30%, #FB7185, #E11D48);
+    box-shadow: 0 0 8px rgba(225, 29, 72, 0.7);
+  }
+
+  .bt-turn-pill {
+    background: linear-gradient(135deg, #0F172A, #334155);
+    color: #FFFFFF;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 900;
+  }
+
+  /* Bench Row (3 Slots) */
+  .bt-bench-row {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    z-index: 5;
+  }
+
+  .bt-bench-slot {
+    width: 78px;
+    height: 76px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.65);
+    border: 1.5px dashed #94A3B8;
+    box-shadow: var(--neu-in);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.15s, border-color 0.15s;
+  }
+
+  .bt-bench-slot.occupied {
+    background: #FFFFFF;
+    border: 2px solid #CBD5E1;
+    box-shadow: var(--neu-out-sm);
+  }
+
+  .bt-bench-slot.selectable-target {
+    border-color: #0EA5E9;
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.35);
+  }
+
+  .bench-empty-label {
+    font-size: 8.5px;
+    font-weight: 800;
+    color: #94A3B8;
+    margin: auto;
+  }
+
+  .bench-art {
+    width: 100%;
+    height: 36px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+
+  .bench-name {
+    font-size: 7.5px;
+    font-weight: 900;
+    color: #0F172A;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    text-align: center;
+  }
+
+  .bench-hp-bar {
+    width: 100%;
+    height: 10px;
+    background: #E2E8F0;
+    border-radius: 999px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bench-hp-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #22C55E, #10B981);
+    transition: width 0.25s;
+  }
+
+  .bench-hp-txt {
+    position: absolute;
+    inset: 0;
+    font-size: 7.5px;
+    font-weight: 900;
+    color: #0F172A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .attached-en-row {
+    position: absolute;
+    top: -5px;
+    left: 3px;
+    display: flex;
+    gap: 2px;
+    z-index: 8;
+  }
+
+  .attached-en-row .pk-type-orb {
+    width: 13px;
+    height: 13px;
+    font-size: 7.5px;
+  }
+
+  /* Active Battle Spots (Enemy & Player) */
+  .bt-active-zone {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 2px 4px;
+    z-index: 6;
+  }
+
+  .bt-active-card-slot {
+    width: 162px;
+    height: 122px;
+    border-radius: 14px;
+    background: #FFFFFF;
+    border: 2.5px solid #94A3B8;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.16);
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    transition: transform 0.2s;
+  }
+
+  .bt-active-card-slot.is-ex {
+    border-color: #F59E0B;
+    background: linear-gradient(145deg, #FFFBEB, #FEF3C7);
+  }
+
+  .bt-active-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 10px;
+    font-weight: 900;
+  }
+
+  .bt-active-art-wrap {
+    position: relative;
+    width: 100%;
+    height: 60px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1.5px solid #CBD5E1;
+  }
+
+  .bt-active-art-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+  }
+
+  .bt-hp-pill {
+    width: 100%;
+    height: 15px;
+    background: #E2E8F0;
+    border-radius: 999px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #CBD5E1;
+  }
+
+  .bt-hp-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #22C55E, #16A34A);
+    transition: width 0.25s;
+  }
+
+  .bt-hp-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9.5px;
+    font-weight: 900;
+    color: #0F172A;
+  }
+
+  /* Player Active Controls (Move Button + Retreat Button) */
+  .bt-command-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .bt-atk-btn {
+    width: 100%;
+    border: none;
+    border-radius: 12px;
+    padding: 8px 8px;
+    background: linear-gradient(135deg, #0EA5E9 0%, #4F46E5 100%);
+    color: #FFFFFF;
+    font-weight: 900;
+    font-size: 10.5px;
+    box-shadow: 0 5px 14px rgba(79, 70, 229, 0.35);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    transition: transform 0.15s, opacity 0.15s;
+  }
+
+  .bt-atk-btn.disabled {
+    background: #CBD5E1;
+    color: #64748B;
+    box-shadow: none;
+  }
+
+  .bt-atk-top {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .bt-sub-actions {
+    display: flex;
+    gap: 5px;
+  }
+
+  .bt-mini-btn {
+    flex: 1;
+    border: 1px solid #CBD5E1;
+    background: #FFFFFF;
+    color: #334155;
+    border-radius: 9px;
+    padding: 5px 6px;
+    font-size: 9.5px;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: var(--neu-out-sm);
+  }
+
+  /* Center Battle Banner */
+  .bt-log-banner {
+    background: rgba(15, 23, 42, 0.84);
+    color: #FFFFFF;
+    border-radius: 999px;
+    padding: 4px 12px;
+    font-size: 10.5px;
+    font-weight: 800;
+    text-align: center;
+    align-self: center;
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.18);
+    z-index: 10;
+  }
+
+  /* Bottom Battle Dock: Hand Cards + Energy Zone */
+  .bt-bottom-dock {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.82);
+    border-radius: 16px;
+    padding: 6px 8px;
+    box-shadow: var(--neu-out-sm);
+    z-index: 12;
+  }
+
+  .bt-hand-scroll {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    overflow-x: auto;
+    padding: 2px 2px;
+    scrollbar-width: none;
+  }
+  .bt-hand-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hand-card-chip {
+    width: 66px;
+    height: 82px;
+    border-radius: 9px;
+    background: #FFFFFF;
+    border: 2px solid #94A3B8;
+    box-shadow: 0 3px 8px rgba(15, 23, 42, 0.15);
+    padding: 3px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-shrink: 0;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.15s;
+  }
+
+  .hand-card-chip:active {
+    transform: translateY(-4px) scale(1.04);
+  }
+
+  .hand-card-chip.support { border-color: #F97316; background: #FFF7ED; }
+  .hand-card-chip.goods { border-color: #2563EB; background: #EFF6FF; }
+
+  .hc-tag {
+    font-size: 7px;
+    font-weight: 900;
+    padding: 1px 4px;
+    border-radius: 999px;
+    background: #E2E8F0;
+    color: #0F172A;
+    text-align: center;
+  }
+  .hand-card-chip.support .hc-tag { background: #F97316; color: #FFF; }
+  .hand-card-chip.goods .hc-tag { background: #2563EB; color: #FFF; }
+
+  .hc-name {
+    font-size: 7.5px;
+    font-weight: 900;
+    color: #0F172A;
+    text-align: center;
+    line-height: 1.15;
+  }
+
+  .hc-thumb {
+    width: 100%;
+    height: 36px;
+    border-radius: 5px;
+    object-fit: cover;
+  }
+
+  /* PokéPock Authentic Energy Zone */
+  .energy-zone-pod {
+    width: 82px;
+    height: 82px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 50%, #FFFFFF 0%, #E2E8F0 72%, #CBD5E1 100%);
+    border: 3px solid #FFFFFF;
+    box-shadow: var(--neu-out-sm), inset 0 2px 6px rgba(15,23,42,0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .energy-zone-pod.ready {
+    border-color: #38BDF8;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.35), 0 6px 16px rgba(14, 165, 233, 0.35);
+    animation: pulseEnergyZone 1.2s infinite alternate;
+  }
+
+  @keyframes pulseEnergyZone {
+    from { transform: scale(1); }
+    to { transform: scale(1.05); }
+  }
+
+  .ez-title {
+    font-size: 7.5px;
+    font-weight: 900;
+    color: #334155;
+    margin-bottom: 2px;
+  }
+
+  .ez-main-orb {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    border: 2px solid #FFFFFF;
+    box-shadow: 0 3px 10px rgba(15, 23, 42, 0.3);
+  }
+
+  .ez-sub {
+    font-size: 7.5px;
+    font-weight: 900;
+    color: #0284C7;
+    margin-top: 2px;
+  }
+
+  /* Battle Result Modal */
+  .bt-result-modal {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.72);
+    backdrop-filter: blur(8px);
+    z-index: 60;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .bt-result-modal.active {
+    display: flex;
+  }
+
+  .bt-result-box {
+    width: 100%;
+    max-width: 320px;
+    background: #FFFFFF;
+    border-radius: 24px;
+    padding: 22px 18px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+  }
+</style>
 </head>
 <body>
-  <div class="ambient-bg"></div>
+<div id="app-shell">
 
-  <div class="app-shell">
-    <!-- Minimal Museum Header -->
-    <header class="top-bar">
-      <div class="brand-pill">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-          <path d="M12 2L20 7V17L12 22L4 17V7L12 2Z" fill="url(#g1)" stroke="#0f172a" stroke-width="1.8"/>
-          <defs>
-            <linearGradient id="g1" x1="4" y1="2" x2="20" y2="22" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#fde047"/>
-              <stop offset="0.5" stop-color="#38bdf8"/>
-              <stop offset="1" stop-color="#a855f7"/>
-            </linearGradient>
-          </defs>
-        </svg>
-        <span>クリスタル・ポケッツ</span>
-      </div>
-      <div class="collection-pill" id="header-dex-count">図鑑 8 / 8</div>
-    </header>
+  <!-- Top Header -->
+  <header class="top-bar">
+    <div class="brand-pill">
+      <span class="brand-orb"></span>
+      <span>CRYSTAL POCKET</span>
+    </div>
+    <div class="top-stats">
+      <div class="stat-pill">図鑑 <strong id="hdr-dex-count">9 / 15</strong></div>
+      <div class="stat-pill">砂時計 <strong id="hdr-stamina">12</strong></div>
+    </div>
+  </header>
 
-    <!-- ======================================================================
-         TAB 1: 3D BOOSTER PACK OPENING & 5-CARD STACK FLIP
-         ====================================================================== -->
-    <section class="view-screen active" id="view-pack">
-      <!-- State A: Sealed Pack with Real-Time Foil Cutting -->
-      <div class="pack-stage-wrap" id="pack-sealed-stage">
-        <div class="pack-3d-container" id="pack-3d-box">
-          <div class="pack-inner-card-peek" id="pack-god-rays"></div>
-          <div class="pack-body-bottom" id="pack-bottom-part"></div>
-          <div class="pack-body-top" id="pack-top-foil"></div>
-          <div class="pack-laser-guide" id="pack-guide-line">
-            <div class="pack-laser-GuideComet"></div>
-          </div>
-          <canvas id="pack-cut-canvas" width="338" height="220"></canvas>
+  <!-- Main Viewport -->
+  <main class="tab-viewport">
+
+    <!-- ===============================================================
+         TAB 1: HOME (PACK OPENING & DEX SLOT SNAP-IN REGISTRATION)
+         =============================================================== -->
+    <section id="tab-home" class="tab-page active">
+      <div class="home-stage">
+        <div class="pack-header-banner">
+          <div class="pack-series-pill">拡張パック 第1弾「最強のクリスタル」</div>
+          <h1 class="pack-main-title">ブースターパック開封</h1>
+          <p class="pack-sub-hint">パック上部のカットラインを右へなぞって開封！（1パック5枚入り）</p>
         </div>
-        <div class="pack-hint-caption" id="pack-hint-text">
-          <span>横にスワイプしてパックをカット</span>
-        </div>
-      </div>
 
-      <!-- State B: 5-Card Stack One-by-One Flip (ONLY here are cards stacked!) -->
-      <div class="pack-stack-stage" id="pack-stack-stage">
-        <div class="stack-counter-pill" id="stack-counter-text">1 / 5</div>
-        <div class="card-stack-pile" id="card-stack-pile"></div>
-        <div class="pack-hint-caption" style="margin-top:16px;">
-          <span>カードをタップまたはスワイプでめくる</span>
-        </div>
-      </div>
-
-      <!-- State C: 5-Card Pull Summary -->
-      <div class="pack-summary-stage" id="pack-summary-stage">
-        <div class="stack-counter-pill">獲得したカード 5枚</div>
-        <div class="summary-cards-grid" id="summary-cards-grid"></div>
-        <button class="primary-pill-btn" id="btn-reset-pack">次のパックを開封する</button>
-      </div>
-    </section>
-
-    <!-- ======================================================================
-         TAB 2: SINGLE 3D CARD VIEWER & COLLECTION (NO STACKED BACKGROUND!)
-         ====================================================================== -->
-    <section class="view-screen" id="view-dex">
-      <div class="dex-layout">
-        <div class="single-card-showcase" id="dex-single-showcase"></div>
-        <div class="dex-thumb-strip" id="dex-thumb-strip"></div>
-      </div>
-    </section>
-
-    <!-- ======================================================================
-         TAB 3: 1v1 TURN-BASED CARD BATTLE
-         ====================================================================== -->
-    <section class="view-screen" id="view-battle">
-      <div class="battle-layout">
-        <div class="stage-SelectStrip" id="battle-stage-strip"></div>
-
-        <!-- Opponent Boss Card & HP -->
-        <div class="battle-zone-enemy" id="battle-enemy-zone">
-          <div class="enemy-mini-card">
-            <img id="enemy-card-img" src="assets/boss_crysalis.jpg" alt="Enemy Boss" />
-          </div>
-          <div class="enemy-status-box">
-            <div class="enemy-tag" id="enemy-stage-label">STAGE 1 BOSS</div>
-            <div class="enemy-name" id="enemy-card-name">氷晶クリサリス</div>
-            <div class="hp-bar-outer">
-              <div class="hp-bar-fill enemy" id="enemy-hp-bar"></div>
+        <!-- 3D Booster Pack + Foil Slice Zone -->
+        <div class="booster-wrap" id="booster-wrap">
+          <div class="slice-zone" id="slice-zone" title="右へスワイプして開封">
+            <div class="slice-guide-line">
+              <div class="slice-laser-fill" id="slice-laser-fill"></div>
             </div>
-            <div class="hp-numbers">
-              <span>相手HP</span>
-              <span id="enemy-hp-text">220 / 220</span>
+            <div class="slice-knob" id="slice-knob">✂️</div>
+          </div>
+
+          <div class="booster-pack" id="booster-pack">
+            <div class="booster-top-foil" id="booster-top-foil"></div>
+            <div class="booster-body">
+              <div class="booster-badge">
+                <div class="b-title">CRYSTAL GENESIS</div>
+                <div class="b-sub">全15種（モンスター12種＋トレーナーズ3種）</div>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Player Active 3D Card -->
-        <div class="battle-player-stage">
-          <div class="dmg-popup" id="battle-dmg-popup">-150</div>
-          <div class="battle-card-scaler" id="battle-player-card-wrap"></div>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:8px; width:100%;">
+          <button class="neu-btn primary" id="btn-quick-slice" onclick="triggerPackOpen()">
+            ✨ パックを開封する（5枚引く）
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 2: 5-Card Stack Flip View (1/5 to 5/5) -->
+      <div class="pack-step-view" id="view-pack-stack">
+        <div style="text-align:center;">
+          <div class="stack-counter-pill" id="stack-counter-pill">カードめくり  1 / 5</div>
+          <p style="font-size:11px; color:#64748B; font-weight:700; margin-top:4px;">カードをタップまたはスワイプして次のカードへ</p>
         </div>
 
-        <!-- Simple 2-Button Move Controls -->
-        <div class="battle-controls-dock">
-          <div class="hp-numbers" style="margin-top:0;">
-            <span id="player-battle-name">神竜レヴィアタン</span>
-            <span id="player-hp-text">HP 320 / 320</span>
-          </div>
-          <div class="hp-bar-outer">
-            <div class="hp-bar-fill" id="player-hp-bar"></div>
-          </div>
-          <div class="move-buttons-row">
-            <button class="battle-move-btn" id="btn-move-normal">
-              <span class="move-btn-label" id="move-normal-name">創世の雷光</span>
-              <span class="move-btn-power" id="move-normal-dmg">150</span>
-            </button>
-            <button class="battle-move-btn ex-skill" id="btn-move-ex">
-              <span class="move-btn-label" id="move-ex-name">神竜ノヴァ</span>
-              <span class="move-btn-power" id="move-ex-dmg">240</span>
-            </button>
-          </div>
+        <div class="card-stack-stage" id="card-stack-stage" onclick="nextPackCard()">
+          <!-- Active card injected here -->
+        </div>
+
+        <button class="neu-btn primary" onclick="nextPackCard()">
+          👉 次のカードをめくる
+        </button>
+      </div>
+
+      <!-- STEP 3: 5-Card Pull Summary View -->
+      <div class="pack-step-view" id="view-pack-summary">
+        <div style="text-align:center;">
+          <div class="pack-series-pill">OPENING RESULT</div>
+          <h2 style="font-size:18px; font-weight:900; color:#0F172A;">獲得したカード一覧（5枚）</h2>
+        </div>
+
+        <div class="summary-grid" id="summary-grid"></div>
+
+        <button class="neu-btn primary" id="btn-to-dex-reg" onclick="startDexRegistrationSequence()">
+          📖 次へ（図鑑へパチッ！と登録）
+        </button>
+      </div>
+
+      <!-- STEP 4: DEX EMPTY SLOT SNAP-IN REGISTRATION ANIMATION -->
+      <div class="pack-step-view" id="view-dex-reg">
+        <div style="text-align:center;">
+          <div class="pack-series-pill" id="reg-status-pill">NEWカードを空きスロットへ登録中！</div>
+          <h2 style="font-size:17px; font-weight:900; color:#0F172A;">カード図鑑 登録演出（<span id="reg-counter-txt">9 / 15</span>）</h2>
+          <p style="font-size:11px; color:#475569; font-weight:700;">新しく手に入れたカードが図鑑の空き番号スロットにパチッ！とはまります</p>
+        </div>
+
+        <div class="dex-reg-board" id="dex-reg-board"></div>
+
+        <div style="display:flex; gap:10px;">
+          <button class="neu-btn" onclick="closePackFlowToDex()">📖 図鑑を見る</button>
+          <button class="neu-btn primary" onclick="resetPackFlow()">✨ もう1パック開ける</button>
         </div>
       </div>
     </section>
-  </div>
 
-  <!-- Minimal 3-Tab Bottom Navigation -->
+    <!-- ===============================================================
+         TAB 2: MY CARDS (NUMBERED DEX 001-015 & SINGLE 3D VIEWER)
+         =============================================================== -->
+    <section id="tab-dex" class="tab-page">
+      <div class="dex-header-box">
+        <div class="dex-title-area">
+          <h2>マイカード図鑑（001〜015）</h2>
+          <p>所持カードをタップすると単体3Dホロビューワーが開きます</p>
+        </div>
+        <div class="dex-progress-pill" id="dex-tab-progress">9 / 15 登録済</div>
+      </div>
+
+      <div class="dex-grid" id="dex-grid"></div>
+
+      <!-- Single 1-Card 3D Holographic Viewer Modal -->
+      <div class="single-viewer-modal" id="single-viewer-modal">
+        <div class="viewer-top-bar">
+          <div class="stat-pill" id="viewer-dex-badge">No.001 / 015</div>
+          <button class="neu-btn" style="padding:7px 16px; font-size:12px;" onclick="closeSingleCardViewer()">✕ 閉じる</button>
+        </div>
+
+        <div class="viewer-stage" id="viewer-stage">
+          <div id="viewer-card-mount"></div>
+        </div>
+
+        <div class="viewer-info-card">
+          <h4 id="viewer-card-title">イグニス・ドラコ ex</h4>
+          <p id="viewer-card-desc">指でカードを左右・上下に傾けると3Dホログラムが輝きます</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===============================================================
+         TAB 3: BATTLE (3-POINT VICTORY, ACTIVE 1 + BENCH 3, ENERGY ZONE)
+         =============================================================== -->
+    <section id="tab-battle" class="tab-page">
+      <div class="battle-arena">
+
+        <!-- Top HUD: Points & Turn -->
+        <div class="bt-hud">
+          <div class="bt-score-box">
+            <span>相手</span>
+            <div class="pt-dots" id="enemy-pt-dots">
+              <span class="pt-dot"></span><span class="pt-dot"></span><span class="pt-dot"></span>
+            </div>
+            <span id="enemy-pt-txt">0/3</span>
+          </div>
+
+          <div class="bt-turn-pill" id="bt-turn-pill">TURN 1 - あなたの番</div>
+
+          <div class="bt-score-box">
+            <span id="player-pt-txt">0/3</span>
+            <div class="pt-dots" id="player-pt-dots">
+              <span class="pt-dot"></span><span class="pt-dot"></span><span class="pt-dot"></span>
+            </div>
+            <span>自分</span>
+          </div>
+        </div>
+
+        <!-- Opponent Bench (3 Slots) -->
+        <div class="bt-bench-row" id="enemy-bench-row"></div>
+
+        <!-- Opponent Active Spot -->
+        <div class="bt-active-zone" style="justify-content:center;">
+          <div id="enemy-active-mount"></div>
+          <div style="display:flex; flex-direction:column; gap:5px;">
+            <div class="stat-pill" style="font-size:10px; padding:4px 9px;">👑 先に<strong>3PT先取</strong>で勝利</div>
+            <div class="stat-pill" style="font-size:9.5px; padding:4px 9px;">💡 通常=<strong>1pt</strong> / ex=<strong>2pt</strong></div>
+            <div class="stat-pill" style="font-size:9.5px; padding:4px 9px;">📚 自分の山札: <strong id="bt-deck-count">11</strong>枚</div>
+          </div>
+        </div>
+
+        <!-- Center Action Log Banner -->
+        <div class="bt-log-banner" id="bt-log-banner">
+          右下の「エネルギーゾーン」から場のモンスターにエネルギーをつけよう！
+        </div>
+
+        <!-- Player Active Spot + Command Panel -->
+        <div class="bt-active-zone">
+          <div id="player-active-mount"></div>
+
+          <div class="bt-command-panel">
+            <button class="bt-atk-btn" id="btn-bt-attack" onclick="playerExecuteAttack()">
+              <div class="bt-atk-top">
+                <span id="bt-atk-name">⚔️ ワザを使う</span>
+                <span id="bt-atk-dmg">110</span>
+              </div>
+              <span style="font-size:8.5px; opacity:0.9;" id="bt-atk-cost-txt">必要エネルギー: 🔥🔥</span>
+            </button>
+
+            <div class="bt-sub-actions">
+              <button class="bt-mini-btn" id="btn-bt-retreat" onclick="playerExecuteRetreat()">🏃 にげる</button>
+              <button class="bt-mini-btn" onclick="endPlayerTurn()">⏭ ターン終了</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Player Bench (3 Slots) -->
+        <div class="bt-bench-row" id="player-bench-row"></div>
+
+        <!-- Bottom Dock: Hand Cards + Energy Zone -->
+        <div class="bt-bottom-dock">
+          <div class="bt-hand-scroll" id="bt-hand-scroll"></div>
+
+          <div class="energy-zone-pod ready" id="energy-zone-pod" onclick="attachTurnEnergy()">
+            <span class="ez-title">エネルギーゾーン</span>
+            <div class="ez-main-orb orb-fire" id="ez-main-orb">🔥</div>
+            <span class="ez-sub" id="ez-status-txt">タップで付与(1)</span>
+          </div>
+        </div>
+
+        <!-- Battle Result Overlay -->
+        <div class="bt-result-modal" id="bt-result-modal">
+          <div class="bt-result-box">
+            <div class="pack-series-pill" id="bt-res-badge">VICTORY!</div>
+            <h2 style="font-size:22px; font-weight:900; margin:6px 0;" id="bt-res-title">3ポイント先取 勝利！</h2>
+            <p style="font-size:12px; color:#475569; font-weight:700; margin-bottom:16px;" id="bt-res-desc">
+              見事3ポイントを先取してバトルに勝利しました！パック砂時計＋4個を獲得！
+            </p>
+            <button class="neu-btn primary" style="width:100%;" onclick="initBattleGame()">
+              ⚔️ もう一度バトルする
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom 3-Tab Navigation -->
   <nav class="bottom-nav">
-    <button class="nav-tab-btn active" data-tab="pack" id="tab-btn-pack">パック開封</button>
-    <button class="nav-tab-btn" data-tab="dex" id="tab-btn-dex">カード図鑑</button>
-    <button class="nav-tab-btn" data-tab="battle" id="tab-btn-battle">カードバトル</button>
+    <button class="nav-btn active" data-tab="home" onclick="switchTab('home')">
+      <span class="ico">🏠</span>
+      <span>ホーム(開封)</span>
+    </button>
+    <button class="nav-btn" data-tab="dex" onclick="switchTab('dex')">
+      <span class="ico">📖</span>
+      <span>マイカード</span>
+    </button>
+    <button class="nav-btn" data-tab="battle" onclick="switchTab('battle')">
+      <span class="ico">⚔️</span>
+      <span>バトル</span>
+    </button>
   </nav>
 
-  <script>
-    /* ==========================================================================
-       CARD MASTER DATA (CRISP ZERO-TRUNCATION NAMES MATCHED 100% TO ARTWORK)
-       ========================================================================== */
-    const CARDS = [
-      {
-        id: 'dragon',
-        name: '神竜レヴィアタン',
-        rarity: '★ EX',
-        hp: 320,
-        elem: 'gold',
-        elemColor: '#f59e0b',
-        art: 'assets/card_dragon.jpg',
-        artPos: '58% 22%',
-        moveName: '創世の雷光',
-        moveDmg: 150,
-        exName: '神竜ノヴァ',
-        exDmg: 240
-      },
-      {
-        id: 'orion',
-        name: '太陽神オリオン',
-        rarity: '★ EX',
-        hp: 290,
-        elem: 'fire',
-        elemColor: '#f43f5e',
-        art: 'assets/card_orion.jpg',
-        artPos: '50% 22%',
-        moveName: '陽炎ブレード',
-        moveDmg: 135,
-        exName: 'サンバースト',
-        exDmg: 215
-      },
-      {
-        id: 'aurora',
-        name: '星竜オーロラ',
-        rarity: '♦♦♦',
-        hp: 270,
-        elem: 'cosmic',
-        elemColor: '#8b5cf6',
-        art: 'assets/card_aurora.jpg',
-        artPos: '50% 20%',
-        moveName: 'プリズムレイ',
-        moveDmg: 120,
-        exName: '極光ブレス',
-        exDmg: 195
-      },
-      {
-        id: 'ignis',
-        name: '魔竜イグニス',
-        rarity: '★ EX',
-        hp: 300,
-        elem: 'fire',
-        elemColor: '#f43f5e',
-        art: 'assets/boss_ignis.jpg',
-        artPos: '50% 25%',
-        moveName: '紅蓮フレア',
-        moveDmg: 140,
-        exName: '獄炎メテオ',
-        exDmg: 230
-      },
-      {
-        id: 'elara',
-        name: '聖女エララ',
-        rarity: '♦♦♦',
-        hp: 260,
-        elem: 'gold',
-        elemColor: '#f59e0b',
-        art: 'assets/card_elara.jpg',
-        artPos: '50% 20%',
-        moveName: '聖光アロー',
-        moveDmg: 115,
-        exName: 'セラフィム光',
-        exDmg: 190
-      },
-      {
-        id: 'liam',
-        name: '翠鹿セレス',
-        rarity: '♦♦♦',
-        hp: 260,
-        elem: 'leaf',
-        elemColor: '#10b981',
-        art: 'assets/card_liam.jpg',
-        artPos: '50% 20%',
-        moveName: '翠風ストーム',
-        moveDmg: 115,
-        exName: '世界樹の波動',
-        exDmg: 190
-      },
-      {
-        id: 'crysalis',
-        name: '氷晶クリサリス',
-        rarity: '♦♦♦',
-        hp: 280,
-        elem: 'water',
-        elemColor: '#0ea5e9',
-        art: 'assets/boss_crysalis.jpg',
-        artPos: '50% 25%',
-        moveName: '絶対零度',
-        moveDmg: 125,
-        exName: '氷晶クエイク',
-        exDmg: 200
-      },
-      {
-        id: 'leviathan',
-        name: '海竜リヴァイア',
-        rarity: '★ EX',
-        hp: 310,
-        elem: 'water',
-        elemColor: '#0ea5e9',
-        art: 'assets/boss_leviathan.jpg',
-        artPos: '50% 25%',
-        moveName: 'アビスタイド',
-        moveDmg: 140,
-        exName: '深淵の咆哮',
-        exDmg: 225
-      }
-    ];
+</div>
 
-    const STAGES = [
-      { stage: 1, name: '氷晶クリサリス', hp: 220, atk: 55, art: 'assets/boss_crysalis.jpg' },
-      { stage: 2, name: '翠鹿セレス', hp: 270, atk: 65, art: 'assets/card_liam.jpg' },
-      { stage: 3, name: '魔竜イグニス', hp: 330, atk: 75, art: 'assets/boss_ignis.jpg' },
-      { stage: 4, name: '海竜リヴァイア', hp: 390, atk: 85, art: 'assets/boss_leviathan.jpg' },
-      { stage: 5, name: '神竜レヴィアタン', hp: 460, atk: 95, art: 'assets/card_dragon.jpg' }
-    ];
+<script>
+/* =========================================================================
+   1. MASTER CARD DATABASE (001 - 015: 12 MONSTERS + 3 TRAINERS)
+   ========================================================================= */
+const TYPE_META = {
+  fire:      { icon: '🔥', name: '炎', orbClass: 'orb-fire' },
+  water:     { icon: '💧', name: '水', orbClass: 'orb-water' },
+  lightning: { icon: '⚡', name: '雷', orbClass: 'orb-lightning' },
+  grass:     { icon: '🌿', name: '草', orbClass: 'orb-grass' },
+  psychic:   { icon: '🔮', name: '超', orbClass: 'orb-psychic' },
+  colorless: { icon: '⚪', name: '無', orbClass: 'orb-colorless' }
+};
 
-    /* ==========================================================================
-       WEB AUDIO SYNTHESIZER
-       ========================================================================== */
-    let audioCtx = null;
-    function ensureAudio() {
-      if (!audioCtx) {
-        const AC = window.AudioContext || window.webkitAudioContext;
-        if (AC) audioCtx = new AC();
-      }
-      if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+const MASTER_CARDS = [
+  {
+    id: 1, dex: '001', kind: 'monster', isEx: true,
+    name: 'イグニス・ドラコ', type: 'fire', hp: 150,
+    moveName: '紅蓮メテオドライブ', moveCost: 2, moveDmg: 110,
+    moveDesc: '圧倒的な蒼炎で相手バトル場を焼き尽くす。',
+    weakness: 'water', retreat: 2, rarity: '♦♦♦♦',
+    art: 'assets/card_dragon.jpg', filter: 'none'
+  },
+  {
+    id: 2, dex: '002', kind: 'monster', isEx: false,
+    name: 'フレア・ワイバーン', type: 'fire', hp: 90,
+    moveName: 'フレイムクロー', moveCost: 1, moveDmg: 40,
+    moveDesc: '素早い炎の爪で切り裂く速攻ワザ。',
+    weakness: 'water', retreat: 1, rarity: '♦',
+    art: 'assets/boss_ignis.jpg', filter: 'saturate(1.2)'
+  },
+  {
+    id: 3, dex: '003', kind: 'monster', isEx: false,
+    name: 'マグマ・ゴーレム', type: 'fire', hp: 110,
+    moveName: 'ボルケーノスタンプ', moveCost: 2, moveDmg: 70,
+    moveDesc: '灼熱の拳を叩きつける重撃。',
+    weakness: 'water', retreat: 2, rarity: '♦♦',
+    art: 'assets/boss_ignis.jpg', filter: 'hue-rotate(-18deg) contrast(1.12)'
+  },
+  {
+    id: 4, dex: '004', kind: 'monster', isEx: true,
+    name: 'リヴァイアサン', type: 'water', hp: 160,
+    moveName: 'アビスタイダル', moveCost: 2, moveDmg: 120,
+    moveDesc: '深海の激流で相手を飲み込む大技。',
+    weakness: 'lightning', retreat: 2, rarity: '♦♦♦♦',
+    art: 'assets/boss_leviathan.jpg', filter: 'none'
+  },
+  {
+    id: 5, dex: '005', kind: 'monster', isEx: false,
+    name: 'オーロラ・ヴァルキリー', type: 'water', hp: 100,
+    moveName: 'クリスタルランス', moveCost: 1, moveDmg: 50,
+    moveDesc: '氷結の槍で急所を正確に貫く。',
+    weakness: 'lightning', retreat: 1, rarity: '♦♦♦',
+    art: 'assets/card_aurora.jpg', filter: 'none'
+  },
+  {
+    id: 6, dex: '006', kind: 'monster', isEx: false,
+    name: 'フロスト・セイレーン', type: 'water', hp: 80,
+    moveName: 'アクアウェーブ', moveCost: 1, moveDmg: 40,
+    moveDesc: '冷たい水流を放って攻撃する。',
+    weakness: 'lightning', retreat: 1, rarity: '♦',
+    art: 'assets/card_aurora.jpg', filter: 'hue-rotate(18deg) saturate(1.25)'
+  },
+  {
+    id: 7, dex: '007', kind: 'monster', isEx: true,
+    name: '聖騎士オリオン', type: 'lightning', hp: 140,
+    moveName: 'サンダーカリバー', moveCost: 2, moveDmg: 100,
+    moveDesc: '雷光を纏った聖剣で一閃する。',
+    weakness: 'grass', retreat: 1, rarity: '★',
+    art: 'assets/card_orion.jpg', filter: 'none'
+  },
+  {
+    id: 8, dex: '008', kind: 'monster', isEx: false,
+    name: 'ライトニング・リアム', type: 'lightning', hp: 90,
+    moveName: 'スパークラッシュ', moveCost: 1, moveDmg: 45,
+    moveDesc: '電光石火の連撃を叩き込む。',
+    weakness: 'grass', retreat: 1, rarity: '♦♦',
+    art: 'assets/card_liam.jpg', filter: 'none'
+  },
+  {
+    id: 9, dex: '009', kind: 'monster', isEx: false,
+    name: 'プラズマ・ストライカー', type: 'lightning', hp: 100,
+    moveName: 'ボルトスマッシュ', moveCost: 2, moveDmg: 70,
+    moveDesc: '高圧電流をまとった一撃。',
+    weakness: 'grass', retreat: 1, rarity: '♦♦',
+    art: 'assets/card_liam.jpg', filter: 'hue-rotate(22deg) contrast(1.1)'
+  },
+  {
+    id: 10, dex: '010', kind: 'monster', isEx: true,
+    name: '精霊姫エララ', type: 'grass', hp: 140,
+    moveName: 'エメラルドレクイエム', moveCost: 2, moveDmg: 100,
+    moveDesc: '世界樹の魔力を解放して攻撃する。',
+    weakness: 'fire', retreat: 1, rarity: '★',
+    art: 'assets/card_elara.jpg', filter: 'none'
+  },
+  {
+    id: 11, dex: '011', kind: 'monster', isEx: false,
+    name: 'シルフィード・アーチャー', type: 'grass', hp: 80,
+    moveName: 'リーフアロー', moveCost: 1, moveDmg: 40,
+    moveDesc: '風の矢で素早く先制する。',
+    weakness: 'fire', retreat: 1, rarity: '♦',
+    art: 'assets/card_elara.jpg', filter: 'hue-rotate(-18deg) saturate(1.2)'
+  },
+  {
+    id: 12, dex: '012', kind: 'monster', isEx: true,
+    name: 'クリサリス・エンプレス', type: 'psychic', hp: 150,
+    moveName: 'ディメンションノヴァ', moveCost: 2, moveDmg: 110,
+    moveDesc: '時空を歪める超重力で粉砕する。',
+    weakness: 'lightning', retreat: 2, rarity: '★',
+    art: 'assets/boss_crysalis.jpg', filter: 'none'
+  },
+  {
+    id: 13, dex: '013', kind: 'support', isEx: false,
+    name: '博士の研究', type: 'support',
+    effect: '自分の山札を2枚引く。',
+    rule: 'サポートは、自分の番に1枚しか使えない。',
+    rarity: '♦♦', svgType: 'professor'
+  },
+  {
+    id: 14, dex: '014', kind: 'goods', isEx: false,
+    name: 'モンスターボール', type: 'goods',
+    effect: '自分の山札から「たねモンスター」をランダムに1枚、手札に加える。',
+    rule: 'グッズは、自分の番に何枚でも使える。',
+    rarity: '♦', svgType: 'ball'
+  },
+  {
+    id: 15, dex: '015', kind: 'goods', isEx: false,
+    name: 'きずぐすり', type: 'goods',
+    effect: '自分のモンスター1体のHPを「20」回復する。',
+    rule: 'グッズは、自分の番に何枚でも使える。',
+    rarity: '♦', svgType: 'potion'
+  }
+];
+
+/* Initial Collection State:
+   Start with 9 owned cards (1, 2, 5, 7, 8, 10, 13, 14, 15) and 6 unowned slots (3, 4, 6, 9, 11, 12)
+   so the numbered empty slots are immediately visible and Pack Opening guarantees NEW slot snap-ins! */
+let collection = {
+  1: 1, 2: 2, 5: 1, 7: 1, 8: 2, 10: 1, 13: 2, 14: 2, 15: 2
+};
+let packHourglasses = 12;
+
+/* WebAudio Crisp Sound Synthesizer */
+let audioCtx = null;
+function playTone(kind) {
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    const now = audioCtx.currentTime;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    if (kind === 'slice') {
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(320, now);
+      osc.frequency.exponentialRampToValueAtTime(1280, now + 0.18);
+      gain.gain.setValueAtTime(0.14, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+      osc.start(now); osc.stop(now + 0.2);
+    } else if (kind === 'flip') {
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(520, now);
+      osc.frequency.exponentialRampToValueAtTime(880, now + 0.09);
+      gain.gain.setValueAtTime(0.12, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+      osc.start(now); osc.stop(now + 0.1);
+    } else if (kind === 'snap') {
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(740, now);
+      osc.frequency.setValueAtTime(1180, now + 0.05);
+      gain.gain.setValueAtTime(0.18, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.16);
+      osc.start(now); osc.stop(now + 0.16);
+    } else if (kind === 'attack') {
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(220, now);
+      osc.frequency.exponentialRampToValueAtTime(90, now + 0.18);
+      gain.gain.setValueAtTime(0.16, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+      osc.start(now); osc.stop(now + 0.2);
     }
+  } catch (e) {}
+}
 
-    function playFoilSliceGrain(progress) {
-      try {
-        ensureAudio();
-        if (!audioCtx) return;
-        const now = audioCtx.currentTime;
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(540 + progress * 1240, now);
-        gain.gain.setValueAtTime(0.04, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
-        osc.connect(gain).connect(audioCtx.destination);
-        osc.start(now);
-        osc.stop(now + 0.06);
-      } catch (e) {}
-    }
+/* =========================================================================
+   2. POKEPOCK FAITHFUL CARD HTML BUILDER
+   ========================================================================= */
+function renderTrainerSVG(svgType) {
+  if (svgType === 'professor') {
+    return `<svg viewBox="0 0 200 130" width="100%" height="100%">
+      <defs>
+        <linearGradient id="pg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#312E81"/><stop offset="100%" stop-color="#7C2D12"/>
+        </linearGradient>
+      </defs>
+      <rect width="200" height="130" fill="url(#pg)"/>
+      <circle cx="100" cy="65" r="46" fill="none" stroke="#FDE047" stroke-width="2" stroke-dasharray="4 3"/>
+      <rect x="64" y="34" width="72" height="62" rx="6" fill="#FEF3C7" stroke="#F59E0B" stroke-width="3"/>
+      <line x1="100" y1="34" x2="100" y2="96" stroke="#B45309" stroke-width="3"/>
+      <circle cx="100" cy="62" r="14" fill="#38BDF8" opacity="0.85"/>
+      <text x="100" y="118" text-anchor="middle" fill="#FDE047" font-size="11" font-weight="900">ARCANE RESEARCH</text>
+    </svg>`;
+  }
+  if (svgType === 'ball') {
+    return `<svg viewBox="0 0 200 130" width="100%" height="100%">
+      <defs>
+        <radialGradient id="bg" cx="50%" cy="50%" r="60%">
+          <stop offset="0%" stop-color="#1E3A8A"/><stop offset="100%" stop-color="#0F172A"/>
+        </radialGradient>
+      </defs>
+      <rect width="200" height="130" fill="url(#bg)"/>
+      <circle cx="100" cy="64" r="40" fill="#EF4444" stroke="#F8FAFC" stroke-width="3"/>
+      <path d="M60 64 A40 40 0 0 0 140 64 Z" fill="#F8FAFC"/>
+      <line x1="60" y1="64" x2="140" y2="64" stroke="#0F172A" stroke-width="6"/>
+      <circle cx="100" cy="64" r="12" fill="#38BDF8" stroke="#0F172A" stroke-width="4"/>
+    </svg>`;
+  }
+  return `<svg viewBox="0 0 200 130" width="100%" height="100%">
+    <defs>
+      <linearGradient id="pot" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#064E3B"/><stop offset="100%" stop-color="#0F172A"/>
+      </linearGradient>
+    </defs>
+    <rect width="200" height="130" fill="url(#pot)"/>
+    <rect x="86" y="22" width="28" height="14" rx="4" fill="#CBD5E1"/>
+    <path d="M75 45 L125 45 L136 96 A12 12 0 0 1 124 108 L76 108 A12 12 0 0 1 64 96 Z" fill="#10B981" stroke="#A7F3D0" stroke-width="3"/>
+    <path d="M100 56 L100 88 M84 72 L116 72" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/>
+  </svg>`;
+}
 
-    function playPackOpenFanfare() {
-      try {
-        ensureAudio();
-        if (!audioCtx) return;
-        const notes = [523.25, 659.25, 783.99, 1046.5];
-        notes.forEach((freq, i) => {
-          const now = audioCtx.currentTime + i * 0.07;
-          const osc = audioCtx.createOscillator();
-          const gain = audioCtx.createGain();
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(freq, now);
-          gain.gain.setValueAtTime(0.09, now);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
-          osc.connect(gain).connect(audioCtx.destination);
-          osc.start(now);
-          osc.stop(now + 0.35);
-        });
-      } catch (e) {}
-    }
+function getArtUrl(p) {
+  if (!p) return '';
+  return (window.__APK_ASSET_DATA_URLS && window.__APK_ASSET_DATA_URLS[p]) || p;
+}
 
-    function playCardFlipSound(isEx) {
-      try {
-        ensureAudio();
-        if (!audioCtx) return;
-        const now = audioCtx.currentTime;
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = isEx ? 'triangle' : 'sine';
-        osc.frequency.setValueAtTime(isEx ? 440 : 320, now);
-        osc.frequency.exponentialRampToValueAtTime(isEx ? 1320 : 760, now + 0.14);
-        gain.gain.setValueAtTime(0.08, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
-        osc.connect(gain).connect(audioCtx.destination);
-        osc.start(now);
-        osc.stop(now + 0.18);
-      } catch (e) {}
-    }
+function renderCardHTML(card, size = 'full') {
+  const isMini = size === 'mini';
+  const sizeClass = isMini ? 'mini' : '';
+  const exClass = card.isEx ? 'is-ex' : '';
 
-    /* ==========================================================================
-       BUILD CLEAN 3-ELEMENT 3D HOLOGRAPHIC CARD HTML
-       ========================================================================== */
-    function createCardElement(card, interactiveTilt = true) {
-      const el = document.createElement('div');
-      el.className = 'tcg-card';
-      el.setAttribute('data-elem', card.elem);
-      el.innerHTML = `
-        <div class="tcg-holo-overlay"></div>
-        <div class="tcg-glare-overlay"></div>
-        <div class="tcg-card-inner">
-          <div class="tcg-header">
-            <div class="tcg-title-wrap">
-              <span class="tcg-rarity-badge">${card.rarity}</span>
-              <span class="tcg-name">${card.name}</span>
+  if (card.kind === 'support' || card.kind === 'goods') {
+    const badgeLabel = card.kind === 'support' ? 'サポート' : 'グッズ';
+    return `
+      <div class="pk-card ${sizeClass}" data-type="${card.kind}">
+        <div class="pk-holo-sheen"></div>
+        <div class="pk-card-inner">
+          <div class="pk-header">
+            <div class="pk-header-left">
+              <span class="pk-stage-badge ${card.kind}">${badgeLabel}</span>
+              <span class="pk-name">${card.name}</span>
             </div>
-            <div class="tcg-hp-wrap">
-              <span class="tcg-hp-label">HP</span>
-              <span class="tcg-hp-val">${card.hp}</span>
+            <div class="pk-header-right">
+              <span style="font-size:${isMini?'6.5px':'9px'}; font-weight:900; color:#475569;">TRAINER'S</span>
             </div>
           </div>
-          <div class="tcg-art-frame">
-            <img class="tcg-art-img" src="${card.art}" alt="${card.name}" style="object-position: ${card.artPos};" draggable="false" />
+
+          <div class="pk-art-frame">
+            <div class="pk-trainer-svg-wrap">${renderTrainerSVG(card.svgType)}</div>
           </div>
-          <div class="tcg-move-bar">
-            <div class="tcg-move-left">
-              <span class="tcg-elem-dot" style="background: ${card.elemColor};">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="#fff"><path d="M13 2L4 14h7l-2 8 9-12h-7l2-8z"/></svg>
-              </span>
-              <span class="tcg-move-name">${card.moveName}</span>
+
+          <div class="pk-body">
+            <div class="pk-trainer-effect">
+              <div>${card.effect}</div>
+              <div class="pk-trainer-rule">${card.rule}</div>
             </div>
-            <span class="tcg-move-dmg">${card.moveDmg}</span>
+          </div>
+
+          <div class="pk-footer">
+            <div class="pk-meta-bar">
+              <span class="pk-rarity-badge">${card.rarity}</span>
+              <span class="pk-dex-no">${card.dex} / 015</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // Monster Card
+  const tMeta = TYPE_META[card.type];
+  const wMeta = TYPE_META[card.weakness];
+  let costOrbs = '';
+  for (let i = 0; i < card.moveCost; i++) {
+    costOrbs += `<span class="pk-type-orb ${tMeta.orbClass}">${tMeta.icon}</span>`;
+  }
+  let retreatOrbs = '';
+  for (let i = 0; i < card.retreat; i++) {
+    retreatOrbs += `<span class="pk-type-orb orb-colorless">⚪</span>`;
+  }
+  const starClass = card.rarity.includes('★') ? 'star' : '';
+
+  return `
+    <div class="pk-card ${sizeClass} ${exClass}" data-type="${card.type}">
+      <div class="pk-holo-sheen"></div>
+      <div class="pk-card-inner">
+        <!-- 1. Header -->
+        <div class="pk-header">
+          <div class="pk-header-left">
+            <span class="pk-stage-badge">たね</span>
+            <span class="pk-name">${card.name}${card.isEx ? '<span class="pk-ex-tag">ex</span>' : ''}</span>
+          </div>
+          <div class="pk-header-right">
+            <span class="pk-hp-label">HP</span>
+            <span class="pk-hp-val">${card.hp}</span>
+            <span class="pk-type-orb ${tMeta.orbClass}">${tMeta.icon}</span>
+          </div>
+        </div>
+
+        <!-- 2. Silver-Bezel Illustration -->
+        <div class="pk-art-frame">
+          <img class="pk-art-img" src="${getArtUrl(card.art)}" alt="${card.name}" style="filter:${card.filter};">
+        </div>
+
+        <!-- 3. Move Row (Energy Orbs + Move Name + Damage) -->
+        <div class="pk-body">
+          <div class="pk-move-row">
+            <div class="pk-move-cost">${costOrbs}</div>
+            <div class="pk-move-name">${card.moveName}</div>
+            <div class="pk-move-dmg">${card.moveDmg}</div>
+          </div>
+          <div class="pk-move-desc">${card.moveDesc}</div>
+        </div>
+
+        <!-- 4. Bottom Weakness / Retreat / Rarity / Dex Bar -->
+        <div class="pk-footer">
+          <div class="pk-stats-bar">
+            <div class="pk-stat-item">
+              <span>弱点</span>
+              <span class="pk-type-orb ${wMeta.orbClass}">${wMeta.icon}</span>
+              <span>+20</span>
+            </div>
+            <div class="pk-stat-item">
+              <span>にげる</span>
+              ${retreatOrbs}
+            </div>
+          </div>
+          <div class="pk-meta-bar">
+            <span class="pk-rarity-badge ${starClass}">${card.rarity}</span>
+            ${card.isEx ? '<span class="pk-ex-rulebox">exきぜつ時:相手2PT</span>' : ''}
+            <span class="pk-dex-no">${card.dex} / 015</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/* =========================================================================
+   3. PACK OPENING & DEX EMPTY SLOT SNAP-IN REGISTRATION FLOW
+   ========================================================================= */
+let currentPackCards = []; // Array of { card, isNew }
+let currentPackIndex = 0;
+let isSlicing = false;
+
+function updateHeaderStats() {
+  const ownedCount = Object.keys(collection).filter(k => collection[k] > 0).length;
+  document.getElementById('hdr-dex-count').textContent = `${ownedCount} / 15`;
+  document.getElementById('dex-tab-progress').textContent = `${ownedCount} / 15 登録済`;
+  document.getElementById('hdr-stamina').textContent = packHourglasses;
+}
+
+// Interactive Left-to-Right Foil Slice Drag
+(function initSliceInteraction() {
+  const zone = document.getElementById('slice-zone');
+  const fill = document.getElementById('slice-laser-fill');
+  const knob = document.getElementById('slice-knob');
+
+  function updateSliceProgress(clientX) {
+    const rect = zone.getBoundingClientRect();
+    let pct = ((clientX - rect.left) / rect.width) * 100;
+    pct = Math.max(0, Math.min(100, pct));
+    fill.style.width = pct + '%';
+    knob.style.left = pct + '%';
+    if (pct >= 82 && !isSlicing) {
+      isSlicing = true;
+      triggerPackOpen();
+    }
+  }
+
+  zone.addEventListener('pointerdown', (e) => {
+    isSlicing = false;
+    zone.setPointerCapture(e.pointerId);
+    updateSliceProgress(e.clientX);
+  });
+  zone.addEventListener('pointermove', (e) => {
+    if (e.buttons > 0) updateSliceProgress(e.clientX);
+  });
+})();
+
+function generatePack5Cards() {
+  const unownedIds = MASTER_CARDS.map(c => c.id).filter(id => !collection[id]);
+  const ownedIds = MASTER_CARDS.map(c => c.id).filter(id => collection[id] > 0);
+  const pulled = [];
+
+  // Ensure at least 2 unowned cards (if available) so the player always experiences NEW slot registration!
+  const targetNew = Math.min(2, unownedIds.length);
+  const shuffledUnowned = [...unownedIds].sort(() => Math.random() - 0.5);
+  const shuffledAll = [...MASTER_CARDS].sort(() => Math.random() - 0.5);
+
+  // First 3 cards: mix of common/owned and 1 new
+  for (let i = 0; i < 5; i++) {
+    let chosenCard = null;
+    if ((i === 1 || i === 4) && shuffledUnowned.length > 0) {
+      const uid = shuffledUnowned.shift();
+      chosenCard = MASTER_CARDS.find(c => c.id === uid);
+    } else {
+      chosenCard = shuffledAll[i % shuffledAll.length];
+    }
+    const isNew = !collection[chosenCard.id] && !pulled.some(p => p.card.id === chosenCard.id);
+    pulled.push({ card: chosenCard, isNew });
+  }
+  return pulled;
+}
+
+function triggerPackOpen() {
+  playTone('slice');
+  const foil = document.getElementById('booster-top-foil');
+  const fill = document.getElementById('slice-laser-fill');
+  const knob = document.getElementById('slice-knob');
+  fill.style.width = '100%';
+  knob.style.left = '100%';
+  foil.classList.add('sliced');
+
+  if (packHourglasses > 0) packHourglasses--;
+  currentPackCards = generatePack5Cards();
+  currentPackIndex = 0;
+
+  setTimeout(() => {
+    document.getElementById('view-pack-stack').classList.add('active');
+    renderCurrentPackCard();
+  }, 460);
+}
+
+function renderCurrentPackCard() {
+  const entry = currentPackCards[currentPackIndex];
+  document.getElementById('stack-counter-pill').textContent = `カードめくり  ${currentPackIndex + 1} / 5`;
+  const stage = document.getElementById('card-stack-stage');
+  stage.innerHTML = `
+    <div id="active-pack-card-wrap" style="position:relative;">
+      ${entry.isNew ? '<div class="stack-new-badge">✨ NEW! 初ゲット</div>' : ''}
+      ${renderCardHTML(entry.card, 'full')}
+    </div>
+  `;
+  playTone('flip');
+}
+
+function nextPackCard() {
+  const wrap = document.getElementById('active-pack-card-wrap');
+  if (wrap) wrap.classList.add('swipe-away');
+  setTimeout(() => {
+    currentPackIndex++;
+    if (currentPackIndex < currentPackCards.length) {
+      renderCurrentPackCard();
+    } else {
+      showPackSummaryView();
+    }
+  }, 240);
+}
+
+function showPackSummaryView() {
+  document.getElementById('view-pack-stack').classList.remove('active');
+  document.getElementById('view-pack-summary').classList.add('active');
+
+  const grid = document.getElementById('summary-grid');
+  grid.innerHTML = currentPackCards.map(entry => `
+    <div class="summary-item-wrap">
+      ${entry.isNew ? '<span class="mini-new-tag">NEW</span>' : ''}
+      ${renderCardHTML(entry.card, 'mini')}
+    </div>
+  `).join('');
+}
+
+/* STEP 4: DEX EMPTY SLOT SNAP-IN REGISTRATION ANIMATION */
+function startDexRegistrationSequence() {
+  document.getElementById('view-pack-summary').classList.remove('active');
+  document.getElementById('view-dex-reg').classList.add('active');
+
+  const board = document.getElementById('dex-reg-board');
+  const ownedBefore = Object.keys(collection).filter(k => collection[k] > 0).length;
+  document.getElementById('reg-counter-txt').textContent = `${ownedBefore} / 15`;
+
+  // Render all 15 slots in their BEFORE-registration state
+  board.innerHTML = MASTER_CARDS.map(card => {
+    const alreadyOwned = collection[card.id] > 0;
+    if (alreadyOwned) {
+      return renderRegSlotHTML(card, true, false);
+    }
+    return `
+      <div class="reg-slot" id="reg-slot-${card.id}">
+        <span class="reg-slot-num">${card.dex}</span>
+      </div>
+    `;
+  }).join('');
+
+  // Commit all 5 pulled cards into collection and animate NEW ones snapping into their empty slots!
+  const newEntries = currentPackCards.filter(e => e.isNew);
+  currentPackCards.forEach(e => {
+    collection[e.card.id] = (collection[e.card.id] || 0) + 1;
+  });
+
+  if (newEntries.length === 0) {
+    document.getElementById('reg-status-pill').textContent = '全カード所持済み（枚数カウントアップ！）';
+    updateHeaderStats();
+    renderDexGrid();
+    return;
+  }
+
+  let runningCount = ownedBefore;
+  newEntries.forEach((entry, idx) => {
+    setTimeout(() => {
+      const slotEl = document.getElementById(`reg-slot-${entry.card.id}`);
+      if (slotEl) {
+        playTone('snap');
+        slotEl.className = 'reg-slot filled snap-highlight';
+        slotEl.innerHTML = renderRegSlotInnerHTML(entry.card, true);
+        runningCount++;
+        document.getElementById('reg-counter-txt').textContent = `${runningCount} / 15`;
+        document.getElementById('reg-status-pill').textContent = `No.${entry.card.dex}「${entry.card.name}」が図鑑にパチッ！と登録されました！`;
+        updateHeaderStats();
+        renderDexGrid();
+      }
+    }, 350 + idx * 550);
+  });
+}
+
+function renderRegSlotInnerHTML(card, showPachi) {
+  const thumbSrc = getArtUrl(card.art || '');
+  const thumbBlock = thumbSrc
+    ? `<img src="${thumbSrc}" alt="${card.name}" style="filter:${card.filter||'none'}">`
+    : `<div style="height:54px;border-radius:5px;overflow:hidden;">${renderTrainerSVG(card.svgType)}</div>`;
+  return `
+    <div class="reg-mini-thumb">
+      <div style="display:flex;justify-content:space-between;font-size:7px;">
+        <span>${card.dex}</span>
+        <span>${card.rarity}</span>
+      </div>
+      ${thumbBlock}
+      <div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:7px;">${card.name}</div>
+      ${showPachi ? '<div class="pachi-pop"><span class="pachi-badge">パチッ！NEW</span></div>' : ''}
+    </div>
+  `;
+}
+
+function renderRegSlotHTML(card, filled, showPachi) {
+  return `
+    <div class="reg-slot ${filled ? 'filled' : ''}" id="reg-slot-${card.id}">
+      ${filled ? renderRegSlotInnerHTML(card, showPachi) : `<span class="reg-slot-num">${card.dex}</span>`}
+    </div>
+  `;
+}
+
+function resetPackFlow() {
+  document.getElementById('view-pack-stack').classList.remove('active');
+  document.getElementById('view-pack-summary').classList.remove('active');
+  document.getElementById('view-dex-reg').classList.remove('active');
+  document.getElementById('booster-top-foil').classList.remove('sliced');
+  document.getElementById('slice-laser-fill').style.width = '0%';
+  document.getElementById('slice-knob').style.left = '0%';
+  isSlicing = false;
+}
+
+function closePackFlowToDex() {
+  resetPackFlow();
+  switchTab('dex');
+}
+
+/* =========================================================================
+   4. MY CARDS (NUMBERED DEX GRID 001-015 & SINGLE 3D VIEWER)
+   ========================================================================= */
+function renderDexGrid() {
+  const grid = document.getElementById('dex-grid');
+  grid.innerHTML = MASTER_CARDS.map(card => {
+    const count = collection[card.id] || 0;
+    if (count > 0) {
+      return `
+        <div class="dex-cell" onclick="openSingleCardViewer(${card.id})">
+          ${renderCardHTML(card, 'mini')}
+          <span class="dex-count-badge">×${count}</span>
+        </div>
+      `;
+    } else {
+      return `
+        <div class="dex-cell">
+          <div class="dex-empty-slot">
+            <span class="slot-no">${card.dex}</span>
+            <span class="slot-hint">未所持スロット</span>
           </div>
         </div>
       `;
-
-      if (interactiveTilt) {
-        el.addEventListener('pointermove', (ev) => {
-          const rect = el.getBoundingClientRect();
-          const px = (ev.clientX - rect.left) / rect.width;
-          const py = (ev.clientY - rect.top) / rect.height;
-          const rx = (0.5 - py) * 20;
-          const ry = (px - 0.5) * 22;
-          el.style.transform = `rotateX(${rx.toFixed(1)}deg) rotateY(${ry.toFixed(1)}deg) scale(1.02)`;
-          el.style.setProperty('--holo-x', `${(px * 100).toFixed(1)}%`);
-          el.style.setProperty('--holo-y', `${(py * 100).toFixed(1)}%`);
-          el.style.setProperty('--glare-x', `${(px * 100).toFixed(1)}%`);
-          el.style.setProperty('--glare-y', `${(py * 100).toFixed(1)}%`);
-        });
-        el.addEventListener('pointerleave', () => {
-          el.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
-        });
-      }
-      return el;
     }
+  }).join('');
+}
 
-    /* ==========================================================================
-       TAB 1: REALISTIC POKÉPOCK PACK CUTTING & 5-CARD STACK REVEAL
-       ========================================================================== */
-    const packBox = document.getElementById('pack-3d-box');
-    const packTopFoil = document.getElementById('pack-top-foil');
-    const packBottomPart = document.getElementById('pack-bottom-part');
-    const packGodRays = document.getElementById('pack-god-rays');
-    const packGuideLine = document.getElementById('pack-guide-line');
-    const cutCanvas = document.getElementById('pack-cut-canvas');
-    const cutCtx = cutCanvas.getContext('2d');
+function openSingleCardViewer(cardId) {
+  const card = MASTER_CARDS.find(c => c.id === cardId);
+  if (!card) return;
+  playTone('flip');
+  const modal = document.getElementById('single-viewer-modal');
+  const mount = document.getElementById('viewer-card-mount');
+  mount.innerHTML = renderCardHTML(card, 'full');
+  document.getElementById('viewer-dex-badge').textContent = `No.${card.dex} / 015 （所持 ×${collection[card.id] || 1}）`;
+  document.getElementById('viewer-card-title').textContent = card.name + (card.isEx ? ' ex' : '');
+  document.getElementById('viewer-card-desc').textContent =
+    card.kind === 'monster'
+      ? `【${TYPE_META[card.type].name}タイプ / HP ${card.hp}】ワザ「${card.moveName}」ダメージ ${card.moveDmg}`
+      : `【${card.kind === 'support' ? 'サポート' : 'グッズ'}】${card.effect}`;
+  modal.classList.add('active');
 
-    let cutProgress = 0; // 0.0 to 1.0
-    let isDraggingPack = false;
-    let isPackOpened = false;
-    let sparks = [];
-    let currentPulledCards = [];
-    let currentStackIndex = 0;
+  // Interactive 3D tilt on the single card
+  const pkCard = mount.querySelector('.pk-card');
+  const stage = document.getElementById('viewer-stage');
+  stage.onpointermove = (e) => {
+    const rect = stage.getBoundingClientRect();
+    const nx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+    const ny = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+    pkCard.style.transform = `scale(1.12) rotateY(${nx * 18}deg) rotateX(${-ny * 16}deg)`;
+  };
+  stage.onpointerleave = () => {
+    pkCard.style.transform = 'scale(1.12) rotateY(0deg) rotateX(0deg)';
+  };
+}
 
-    function renderCutVisuals(progress) {
-      cutProgress = Math.max(0, Math.min(1, progress));
+function closeSingleCardViewer() {
+  document.getElementById('single-viewer-modal').classList.remove('active');
+}
 
-      // 1. Realistic right-hinged V-slice opening: top foil pivots from right seam edge (100% 18.2%)
-      const deg = cutProgress * 7.5;
-      const liftY = cutProgress * 6;
-      packTopFoil.style.transform = `translateY(-${liftY.toFixed(1)}px) rotateZ(${deg.toFixed(2)}deg)`;
+/* =========================================================================
+   5. POKEPOCK-FAITHFUL BATTLE SYSTEM (3 POINTS, ACTIVE 1 + BENCH 3, ENERGY ZONE)
+   ========================================================================= */
+let btState = null;
 
-      // 2. Inner prismatic card glow peeking through the V-cut seam
-      packGodRays.style.opacity = (cutProgress * 0.92).toFixed(2);
-      packGodRays.style.clipPath = `polygon(0% 0%, ${(cutProgress * 100).toFixed(1)}% 0%, ${(cutProgress * 100).toFixed(1)}% 100%, 0% 100%)`;
+function cloneBattleUnit(card) {
+  return {
+    uid: Math.random().toString(36).slice(2),
+    cardId: card.id,
+    name: card.name,
+    isEx: card.isEx,
+    type: card.type,
+    maxHp: card.hp,
+    hp: card.hp,
+    moveName: card.moveName,
+    moveCost: card.moveCost,
+    moveDmg: card.moveDmg,
+    weakness: card.weakness,
+    retreat: card.retreat,
+    art: card.art,
+    filter: card.filter,
+    energy: 0
+  };
+}
 
-      // 3. Draw razor-sharp plasma cut line + sparks on Canvas
-      cutCtx.clearRect(0, 0, cutCanvas.width, cutCanvas.height);
-      if (cutProgress > 0.01) {
-        const startX = 46;
-        const endX = 46 + cutProgress * 246;
-        const seamY = 118;
+function initBattleGame() {
+  document.getElementById('bt-result-modal').classList.remove('active');
 
-        // Outer cyan/gold plasma glow
-        cutCtx.save();
-        cutCtx.strokeStyle = '#38bdf8';
-        cutCtx.shadowColor = '#fde047';
-        cutCtx.shadowBlur = 18;
-        cutCtx.lineWidth = 5;
-        cutCtx.lineCap = 'round';
-        cutCtx.beginPath();
-        cutCtx.moveTo(startX, seamY);
-        cutCtx.lineTo(endX, seamY);
-        cutCtx.stroke();
+  const dragon = MASTER_CARDS.find(c => c.id === 1);   // イグニス・ドラコ ex (HP150, 2エネ110)
+  const orion  = MASTER_CARDS.find(c => c.id === 7);   // 聖騎士オリオン ex (HP140, 2エネ100)
+  const aurora = MASTER_CARDS.find(c => c.id === 5);   // オーロラ・ヴァルキリー (HP100, 1エネ50)
+  const wyvern = MASTER_CARDS.find(c => c.id === 2);   // フレア・ワイバーン (HP90, 1エネ40)
+  const elara  = MASTER_CARDS.find(c => c.id === 10);  // 精霊姫エララ ex
+  const liam   = MASTER_CARDS.find(c => c.id === 8);   // ライトニング・リアム
+  const prof   = MASTER_CARDS.find(c => c.id === 13);  // 博士の研究 (山札2枚ドロー)
+  const ball   = MASTER_CARDS.find(c => c.id === 14);  // モンスターボール (たね1枚サーチ)
+  const potion = MASTER_CARDS.find(c => c.id === 15);  // きずぐすり (HP20回復)
 
-        // Inner white-hot laser core
-        cutCtx.strokeStyle = '#ffffff';
-        cutCtx.lineWidth = 2.2;
-        cutCtx.beginPath();
-        cutCtx.moveTo(startX, seamY);
-        cutCtx.lineTo(endX, seamY);
-        cutCtx.stroke();
+  // Enemy Field: Active + 2 Bench
+  const enemyActive = cloneBattleUnit(wyvern);
+  const enemyBench1 = cloneBattleUnit(MASTER_CARDS.find(c => c.id === 4)); // リヴァイアサン ex
+  const enemyBench2 = cloneBattleUnit(liam);
 
-        // Bright star flare at the cutting tip
-        const grad = cutCtx.createRadialGradient(endX, seamY, 1, endX, seamY, 26);
-        grad.addColorStop(0, 'rgba(255,255,255,1)');
-        grad.addColorStop(0.35, 'rgba(253,224,71,0.95)');
-        grad.addColorStop(0.7, 'rgba(56,189,248,0.55)');
-        grad.addColorStop(1, 'rgba(56,189,248,0)');
-        cutCtx.fillStyle = grad;
-        cutCtx.beginPath();
-        cutCtx.arc(endX, seamY, 26, 0, Math.PI * 2);
-        cutCtx.fill();
+  // Player Field: Active (イグニス・ドラコ ex with 1 energy already attached) + 2 Bench
+  const playerActive = cloneBattleUnit(dragon);
+  playerActive.energy = 1;
+  const playerBench1 = cloneBattleUnit(aurora);
+  const playerBench2 = cloneBattleUnit(orion);
 
-        // Cross hair star flare rays
-        cutCtx.strokeStyle = 'rgba(255,255,255,0.9)';
-        cutCtx.lineWidth = 1.5;
-        cutCtx.beginPath();
-        cutCtx.moveTo(endX - 18, seamY);
-        cutCtx.lineTo(endX + 18, seamY);
-        cutCtx.moveTo(endX, seamY - 14);
-        cutCtx.lineTo(endX, seamY + 14);
-        cutCtx.stroke();
-        cutCtx.restore();
+  // Player Hand: 博士の研究, モンスターボール, きずぐすり, 精霊姫エララ ex
+  const hand = [prof, ball, potion, elara];
 
-        // Spawn sparks at tip
-        for (let i = 0; i < 5; i++) {
-          sparks.push({
-            x: endX,
-            y: seamY,
-            vx: (Math.random() - 0.35) * 6.5,
-            vy: (Math.random() - 0.65) * 6.5,
-            r: 1.5 + Math.random() * 2.5,
-            alpha: 1,
-            color: Math.random() > 0.35 ? '#fde047' : '#ffffff'
-          });
-        }
-      }
+  // Player 20-card Deck remaining (11 cards)
+  const deck = [liam, wyvern, prof, potion, ball, aurora, orion, elara, dragon, potion, liam];
 
-      // Update & draw sparks
-      for (let i = sparks.length - 1; i >= 0; i--) {
-        const p = sparks[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vy += 0.18;
-        p.alpha -= 0.05;
-        if (p.alpha <= 0) {
-          sparks.splice(i, 1);
-          continue;
-        }
-        cutCtx.save();
-        cutCtx.globalAlpha = p.alpha;
-        cutCtx.fillStyle = p.color;
-        cutCtx.beginPath();
-        cutCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        cutCtx.fill();
-        cutCtx.restore();
+  btState = {
+    turn: 1,
+    isPlayerTurn: true,
+    playerPoints: 0,
+    enemyPoints: 0,
+    energyAvailable: 1,
+    usedSupportThisTurn: false,
+    enemyActive,
+    enemyBench: [enemyBench1, enemyBench2, null],
+    playerActive,
+    playerBench: [playerBench1, playerBench2, null],
+    hand,
+    deck,
+    log: '右下の「エネルギーゾーン」をタップしてエネルギーを付与しよう！'
+  };
+
+  renderBattleScreen();
+}
+
+function renderActiveSlotHTML(unit, isEnemy) {
+  if (!unit) {
+    return `<div class="bt-active-card-slot"><div class="bench-empty-label">バトル場 空き</div></div>`;
+  }
+  const tMeta = TYPE_META[unit.type];
+  const wMeta = TYPE_META[unit.weakness];
+  const hpPct = Math.max(0, Math.round((unit.hp / unit.maxHp) * 100));
+  let enOrbs = '';
+  for (let i = 0; i < unit.energy; i++) {
+    enOrbs += `<span class="pk-type-orb ${tMeta.orbClass}">${tMeta.icon}</span>`;
+  }
+
+  return `
+    <div class="bt-active-card-slot ${unit.isEx ? 'is-ex' : ''}">
+      <div class="attached-en-row">${enOrbs}</div>
+      <div class="bt-active-top">
+        <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+          ${unit.name}${unit.isEx ? '<span class="pk-ex-tag">ex</span>' : ''}
+        </span>
+        <span class="pk-type-orb ${tMeta.orbClass}" style="width:16px;height:16px;font-size:9px;">${tMeta.icon}</span>
+      </div>
+      <div class="bt-active-art-wrap">
+        <img src="${getArtUrl(unit.art)}" alt="${unit.name}" style="filter:${unit.filter||'none'};">
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:8px;font-weight:800;color:#475569;">
+        <span>⚔️${unit.moveName}(${unit.moveDmg})</span>
+        <span>弱点:${wMeta.icon}+20</span>
+      </div>
+      <div class="bt-hp-pill">
+        <div class="bt-hp-fill" style="width:${hpPct}%;"></div>
+        <div class="bt-hp-text">HP ${unit.hp} / ${unit.maxHp}</div>
+      </div>
+    </div>
+  `;
+}
+
+function renderBenchRowHTML(benchArr, isPlayer) {
+  return benchArr.map((unit, idx) => {
+    if (!unit) {
+      return `
+        <div class="bt-bench-slot" onclick="${isPlayer ? `onBenchSlotClick(${idx})` : ''}">
+          <span class="bench-empty-label">ベンチ ${idx + 1}</span>
+        </div>
+      `;
+    }
+    const tMeta = TYPE_META[unit.type];
+    const hpPct = Math.max(0, Math.round((unit.hp / unit.maxHp) * 100));
+    let enOrbs = '';
+    for (let i = 0; i < unit.energy; i++) {
+      enOrbs += `<span class="pk-type-orb ${tMeta.orbClass}">${tMeta.icon}</span>`;
+    }
+    return `
+      <div class="bt-bench-slot occupied" onclick="${isPlayer ? `onBenchSlotClick(${idx})` : ''}">
+        <div class="attached-en-row">${enOrbs}</div>
+        <img class="bench-art" src="${getArtUrl(unit.art)}" alt="${unit.name}" style="filter:${unit.filter||'none'};">
+        <div class="bench-name">${unit.name}${unit.isEx ? ' ex' : ''}</div>
+        <div class="bench-hp-bar">
+          <div class="bench-hp-fill" style="width:${hpPct}%;"></div>
+          <div class="bench-hp-txt">${unit.hp}/${unit.maxHp}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderBattleScreen() {
+  if (!btState) return;
+
+  // Points
+  document.getElementById('player-pt-txt').textContent = `${btState.playerPoints}/3`;
+  document.getElementById('enemy-pt-txt').textContent = `${btState.enemyPoints}/3`;
+  document.getElementById('player-pt-dots').innerHTML = [0, 1, 2].map(i =>
+    `<span class="pt-dot ${i < btState.playerPoints ? 'won-player' : ''}"></span>`
+  ).join('');
+  document.getElementById('enemy-pt-dots').innerHTML = [0, 1, 2].map(i =>
+    `<span class="pt-dot ${i < btState.enemyPoints ? 'won-enemy' : ''}"></span>`
+  ).join('');
+
+  document.getElementById('bt-turn-pill').textContent =
+    `TURN ${btState.turn} - ${btState.isPlayerTurn ? 'あなたの番' : '相手の番'}`;
+  document.getElementById('bt-deck-count').textContent = btState.deck.length;
+  document.getElementById('bt-log-banner').textContent = btState.log;
+
+  // Benches & Actives
+  document.getElementById('enemy-bench-row').innerHTML = renderBenchRowHTML(btState.enemyBench, false);
+  document.getElementById('player-bench-row').innerHTML = renderBenchRowHTML(btState.playerBench, true);
+  document.getElementById('enemy-active-mount').innerHTML = renderActiveSlotHTML(btState.enemyActive, true);
+  document.getElementById('player-active-mount').innerHTML = renderActiveSlotHTML(btState.playerActive, false);
+
+  // Attack Button state
+  const pAct = btState.playerActive;
+  const atkBtn = document.getElementById('btn-bt-attack');
+  if (pAct) {
+    const tMeta = TYPE_META[pAct.type];
+    const isWeak = btState.enemyActive && btState.enemyActive.weakness === pAct.type;
+    const totalDmg = pAct.moveDmg + (isWeak ? 20 : 0);
+    document.getElementById('bt-atk-name').textContent = `⚔️ ${pAct.moveName}`;
+    document.getElementById('bt-atk-dmg').textContent = `${totalDmg}${isWeak ? '(弱点+20!)' : ''}`;
+    document.getElementById('bt-atk-cost-txt').textContent =
+      `エネルギー: ${pAct.energy} / ${pAct.moveCost}個 ${pAct.energy >= pAct.moveCost ? '【発動可能！】' : '（右下のエネルギーを付与）'}`;
+    if (pAct.energy >= pAct.moveCost && btState.isPlayerTurn) {
+      atkBtn.classList.remove('disabled');
+    } else {
+      atkBtn.classList.add('disabled');
+    }
+  }
+
+  // Energy Zone Pod
+  const ezPod = document.getElementById('energy-zone-pod');
+  const ezOrb = document.getElementById('ez-main-orb');
+  const ezTxt = document.getElementById('ez-status-txt');
+  const activeType = pAct ? TYPE_META[pAct.type] : TYPE_META.fire;
+  ezOrb.className = `ez-main-orb ${activeType.orbClass}`;
+  ezOrb.textContent = activeType.icon;
+
+  if (btState.energyAvailable > 0 && btState.isPlayerTurn) {
+    ezPod.classList.add('ready');
+    ezTxt.textContent = 'タップで付与(1)';
+  } else {
+    ezPod.classList.remove('ready');
+    ezTxt.textContent = '付与済み(次ターン)';
+  }
+
+  // Player Hand
+  const handEl = document.getElementById('bt-hand-scroll');
+  handEl.innerHTML = btState.hand.map((card, idx) => {
+    const tag = card.kind === 'monster' ? 'たね' : (card.kind === 'support' ? 'サポート' : 'グッズ');
+    const thumb = card.art
+      ? `<img class="hc-thumb" src="${getArtUrl(card.art)}" alt="${card.name}">`
+      : `<div style="height:36px;border-radius:4px;overflow:hidden;">${renderTrainerSVG(card.svgType)}</div>`;
+    return `
+      <div class="hand-card-chip ${card.kind}" onclick="playHandCard(${idx})">
+        <span class="hc-tag">${tag}</span>
+        ${thumb}
+        <div class="hc-name">${card.name}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function attachTurnEnergy() {
+  if (!btState || !btState.isPlayerTurn) return;
+  if (btState.energyAvailable <= 0) {
+    btState.log = 'この番のエネルギーはすでに付与済みです。ワザを使うかターン終了してください。';
+    renderBattleScreen();
+    return;
+  }
+  if (!btState.playerActive) return;
+  playTone('snap');
+  btState.playerActive.energy += 1;
+  btState.energyAvailable = 0;
+  btState.log = `⚡ エネルギーゾーンから「${btState.playerActive.name}」にエネルギーを1個付与！ワザ発動可能！`;
+  renderBattleScreen();
+}
+
+function playHandCard(handIdx) {
+  if (!btState || !btState.isPlayerTurn) return;
+  const card = btState.hand[handIdx];
+  if (!card) return;
+
+  if (card.kind === 'monster') {
+    const emptyIdx = btState.playerBench.findIndex(b => b === null);
+    if (emptyIdx === -1) {
+      btState.log = 'ベンチが3体満員のため、これ以上たねモンスターを出せません。';
+      renderBattleScreen();
+      return;
+    }
+    playTone('snap');
+    btState.playerBench[emptyIdx] = cloneBattleUnit(card);
+    btState.hand.splice(handIdx, 1);
+    btState.log = `✨ 手札からたねモンスター「${card.name}」をベンチ${emptyIdx + 1}に出しました！`;
+    renderBattleScreen();
+    return;
+  }
+
+  if (card.kind === 'support') {
+    if (btState.usedSupportThisTurn) {
+      btState.log = 'サポートカードは1ターンに1枚しか使えません！';
+      renderBattleScreen();
+      return;
+    }
+    playTone('flip');
+    btState.usedSupportThisTurn = true;
+    btState.hand.splice(handIdx, 1);
+    let drawn = 0;
+    for (let i = 0; i < 2; i++) {
+      if (btState.deck.length > 0) {
+        btState.hand.push(btState.deck.shift());
+        drawn++;
       }
     }
+    btState.log = `📖 サポート『博士の研究』発動！山札からカードを${drawn}枚引きました！`;
+    renderBattleScreen();
+    return;
+  }
 
-    window.setPackCutProgress = function(val) {
-      renderCutVisuals(val);
-    };
-
-    function triggerCompletePackCut() {
-      if (isPackOpened) return;
-      isPackOpened = true;
-      playPackOpenFanfare();
-      packGuideLine.style.opacity = '0';
-
-      packTopFoil.style.transition = 'transform 0.46s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease';
-      packTopFoil.style.transform = 'translateY(-150px) translateX(40px) rotateZ(20deg)';
-      packTopFoil.style.opacity = '0';
-
-      packBottomPart.style.transform = 'translateY(180px) scale(0.92)';
-      packBottomPart.style.opacity = '0';
-      packGodRays.style.opacity = '0';
-
-      setTimeout(() => {
-        cutCtx.clearRect(0, 0, cutCanvas.width, cutCanvas.height);
-        buildFiveCardStack();
-      }, 400);
-    }
-
-    function animateAutoSliceFrom(startVal) {
-      let p = startVal;
-      function step() {
-        if (isPackOpened) return;
-        p += 0.07;
-        renderCutVisuals(p);
-        playFoilSliceGrain(p);
-        if (p >= 1) {
-          triggerCompletePackCut();
-        } else {
-          requestAnimationFrame(step);
-        }
-      }
-      requestAnimationFrame(step);
-    }
-
-    packBox.addEventListener('pointerdown', (ev) => {
-      if (isPackOpened) return;
-      isDraggingPack = true;
-      packBox.setPointerCapture(ev.pointerId);
-      const rect = packBox.getBoundingClientRect();
-      const relX = (ev.clientX - rect.left) / rect.width;
-      renderCutVisuals(Math.max(0.08, Math.min(0.95, relX)));
-      playFoilSliceGrain(cutProgress);
-    });
-
-    packBox.addEventListener('pointermove', (ev) => {
-      if (!isDraggingPack || isPackOpened) return;
-      const rect = packBox.getBoundingClientRect();
-      const relX = (ev.clientX - rect.left) / rect.width;
-      if (relX > cutProgress) {
-        renderCutVisuals(relX);
-        playFoilSliceGrain(cutProgress);
-      }
-      if (cutProgress >= 0.86) {
-        isDraggingPack = false;
-        triggerCompletePackCut();
-      }
-    });
-
-    packBox.addEventListener('pointerup', () => {
-      if (!isDraggingPack || isPackOpened) return;
-      isDraggingPack = false;
-      animateAutoSliceFrom(cutProgress);
-    });
-
-    /* ==========================================================================
-       STATE B: 5-CARD STACK ONE-BY-ONE REVEAL (CLEAR LAYERED STACK!)
-       ========================================================================== */
-    function buildFiveCardStack() {
-      document.getElementById('pack-sealed-stage').style.display = 'none';
-      const stackStage = document.getElementById('pack-stack-stage');
-      stackStage.classList.add('active');
-
-      currentPulledCards = [
-        CARDS[2], // 星竜オーロラ
-        CARDS[4], // 聖女エララ
-        CARDS[5], // 翠鹿セレス
-        CARDS[1], // 太陽神オリオン
-        CARDS[0]  // 5th climax card: 神竜レヴィアタン (★ EX)
-      ];
-      currentStackIndex = 0;
-      renderStackPile();
-    }
-
-    function renderStackPile() {
-      const pile = document.getElementById('card-stack-pile');
-      pile.innerHTML = '';
-      document.getElementById('stack-counter-text').textContent = `${currentStackIndex + 1} / 5`;
-
-      for (let i = currentPulledCards.length - 1; i >= 0; i--) {
-        const slot = document.createElement('div');
-        slot.className = 'stack-card-slot';
-        if (i === 4) slot.classList.add('ex-climax-glow');
-        slot.dataset.idx = i;
-
-        const offset = i - currentStackIndex;
-        slot.style.zIndex = String(20 - i);
-        slot.style.transform = `translateY(${offset * 10}px) translateX(${offset * 6}px) rotateZ(${offset * 1.6}deg) scale(${1 - offset * 0.025})`;
-
-        const cardEl = createCardElement(currentPulledCards[i], true);
-        slot.appendChild(cardEl);
-
-        slot.addEventListener('click', () => {
-          if (parseInt(slot.dataset.idx, 10) !== currentStackIndex) return;
-          peelTopCardFromStack();
-        });
-
-        pile.appendChild(slot);
-      }
-    }
-
-    function peelTopCardFromStack() {
-      const slots = Array.from(document.querySelectorAll('.stack-card-slot'));
-      const activeSlot = slots.find(s => parseInt(s.dataset.idx, 10) === currentStackIndex);
-      if (!activeSlot) return;
-
-      playCardFlipSound(currentStackIndex >= 3);
-      activeSlot.classList.add('swiped-away');
-      currentStackIndex++;
-
-      if (currentStackIndex >= currentPulledCards.length) {
-        setTimeout(showPackSummary, 360);
+  if (card.kind === 'goods') {
+    playTone('flip');
+    if (card.svgType === 'ball') {
+      btState.hand.splice(handIdx, 1);
+      const monIdx = btState.deck.findIndex(c => c.kind === 'monster');
+      if (monIdx !== -1) {
+        const [found] = btState.deck.splice(monIdx, 1);
+        btState.hand.push(found);
+        btState.log = `🔴 グッズ『モンスターボール』発動！山札から「${found.name}」を手札に加えました！`;
       } else {
-        document.getElementById('stack-counter-text').textContent = `${currentStackIndex + 1} / 5`;
-        slots.forEach(s => {
-          const idx = parseInt(s.dataset.idx, 10);
-          if (idx >= currentStackIndex) {
-            const offset = idx - currentStackIndex;
-            s.style.transform = `translateY(${offset * 10}px) translateX(${offset * 6}px) rotateZ(${offset * 1.6}deg) scale(${1 - offset * 0.025})`;
-          }
-        });
+        btState.log = 'モンスターボールを使用しましたが、山札にたねモンスターがいませんでした。';
+      }
+      renderBattleScreen();
+    } else if (card.svgType === 'potion') {
+      const target = btState.playerActive;
+      btState.hand.splice(handIdx, 1);
+      const before = target.hp;
+      target.hp = Math.min(target.maxHp, target.hp + 20);
+      btState.log = `🧪 グッズ『きずぐすり』発動！「${target.name}」のHPを20回復（${before}→${target.hp}）！`;
+      renderBattleScreen();
+    }
+  }
+}
+
+function onBenchSlotClick(benchIdx) {
+  if (!btState || !btState.isPlayerTurn) return;
+  const benchUnit = btState.playerBench[benchIdx];
+  if (!benchUnit) return;
+  if (btState.energyAvailable > 0) {
+    playTone('snap');
+    benchUnit.energy += 1;
+    btState.energyAvailable = 0;
+    btState.log = `⚡ ベンチの「${benchUnit.name}」にエネルギーを1個付与しました！`;
+    renderBattleScreen();
+  }
+}
+
+function playerExecuteRetreat() {
+  if (!btState || !btState.isPlayerTurn) return;
+  const act = btState.playerActive;
+  const benchIdx = btState.playerBench.findIndex(b => b !== null);
+  if (benchIdx === -1) {
+    btState.log = 'ベンチに控えモンスターがいないため、にげられません。';
+    renderBattleScreen();
+    return;
+  }
+  if (act.energy < act.retreat) {
+    btState.log = `にげるにはエネルギーが${act.retreat}個必要です（現在${act.energy}個）。`;
+    renderBattleScreen();
+    return;
+  }
+  playTone('flip');
+  act.energy -= act.retreat;
+  const nextActive = btState.playerBench[benchIdx];
+  btState.playerBench[benchIdx] = act;
+  btState.playerActive = nextActive;
+  btState.log = `🏃 「${act.name}」がベンチに下がり、「${nextActive.name}」がバトル場に出ました！`;
+  renderBattleScreen();
+}
+
+function playerExecuteAttack() {
+  if (!btState || !btState.isPlayerTurn) return;
+  const pAct = btState.playerActive;
+  const eAct = btState.enemyActive;
+  if (!pAct || !eAct) return;
+  if (pAct.energy < pAct.moveCost) {
+    btState.log = 'ワザに必要なエネルギーが足りません！右下のエネルギーゾーンをタップしてください。';
+    renderBattleScreen();
+    return;
+  }
+
+  playTone('attack');
+  const isWeak = eAct.weakness === pAct.type;
+  const dmg = pAct.moveDmg + (isWeak ? 20 : 0);
+  eAct.hp = Math.max(0, eAct.hp - dmg);
+  btState.log = `💥 ${pAct.name}の「${pAct.moveName}」！${isWeak ? '弱点+20で' : ''}${dmg}ダメージ！`;
+  renderBattleScreen();
+
+  if (eAct.hp <= 0) {
+    const gainedPts = eAct.isEx ? 2 : 1;
+    btState.playerPoints = Math.min(3, btState.playerPoints + gainedPts);
+    btState.log = `🎉 相手の「${eAct.name}${eAct.isEx ? ' ex' : ''}」をきぜつさせた！ +${gainedPts}ポイント獲得！`;
+    renderBattleScreen();
+
+    if (btState.playerPoints >= 3) {
+      setTimeout(() => showBattleResult(true), 500);
+      return;
+    }
+
+    // Promote enemy bench
+    const nextIdx = btState.enemyBench.findIndex(b => b !== null);
+    if (nextIdx !== -1) {
+      btState.enemyActive = btState.enemyBench[nextIdx];
+      btState.enemyBench[nextIdx] = null;
+    } else {
+      setTimeout(() => showBattleResult(true), 500);
+      return;
+    }
+  }
+
+  setTimeout(() => endPlayerTurn(), 650);
+}
+
+function endPlayerTurn() {
+  if (!btState || !btState.isPlayerTurn) return;
+  btState.isPlayerTurn = false;
+  btState.log = '相手の番：エネルギーを付与して攻撃を準備中...';
+  renderBattleScreen();
+
+  setTimeout(() => {
+    const eAct = btState.enemyActive;
+    const pAct = btState.playerActive;
+    if (!eAct || !pAct) return;
+    eAct.energy += 1;
+    playTone('attack');
+    const isWeak = pAct.weakness === eAct.type;
+    const dmg = 30 + (isWeak ? 20 : 0);
+    pAct.hp = Math.max(0, pAct.hp - dmg);
+    btState.log = `⚡ 相手「${eAct.name}」の攻撃！ ${dmg}ダメージを受けた！`;
+
+    if (pAct.hp <= 0) {
+      const lostPts = pAct.isEx ? 2 : 1;
+      btState.enemyPoints = Math.min(3, btState.enemyPoints + lostPts);
+      if (btState.enemyPoints >= 3) {
+        renderBattleScreen();
+        setTimeout(() => showBattleResult(false), 500);
+        return;
+      }
+      const nextIdx = btState.playerBench.findIndex(b => b !== null);
+      if (nextIdx !== -1) {
+        btState.playerActive = btState.playerBench[nextIdx];
+        btState.playerBench[nextIdx] = null;
       }
     }
 
-    function showPackSummary() {
-      document.getElementById('pack-stack-stage').classList.remove('active');
-      const sumStage = document.getElementById('pack-summary-stage');
-      sumStage.classList.add('active');
-      const grid = document.getElementById('summary-cards-grid');
-      grid.innerHTML = '';
-
-      currentPulledCards.forEach((c) => {
-        const mini = document.createElement('div');
-        mini.className = 'summary-mini-card';
-        mini.innerHTML = `
-          <img class="summary-mini-art" src="${c.art}" style="object-position:${c.artPos};" alt="${c.name}" />
-          <div class="summary-mini-name">${c.name}</div>
-        `;
-        mini.addEventListener('click', () => {
-          selectDexCard(c.id);
-          switchTab('dex');
-        });
-        grid.appendChild(mini);
-      });
+    // Start Next Player Turn
+    btState.turn += 1;
+    btState.isPlayerTurn = true;
+    btState.energyAvailable = 1;
+    btState.usedSupportThisTurn = false;
+    if (btState.deck.length > 0) {
+      btState.hand.push(btState.deck.shift());
     }
+    btState.log = `TURN ${btState.turn}：山札から1枚ドロー！エネルギーゾーンに1個チャージされました！`;
+    renderBattleScreen();
+  }, 650);
+}
 
-    function resetPackScreen() {
-      isPackOpened = false;
-      cutProgress = 0;
-      sparks = [];
-      cutCtx.clearRect(0, 0, cutCanvas.width, cutCanvas.height);
+function showBattleResult(isWin) {
+  if (isWin) packHourglasses += 4;
+  updateHeaderStats();
+  document.getElementById('bt-res-badge').textContent = isWin ? 'VICTORY! 3 POINTS' : 'DEFEAT';
+  document.getElementById('bt-res-title').textContent = isWin ? '🏆 3ポイント先取 勝利！' : 'バトル敗北...';
+  document.getElementById('bt-res-desc').textContent = isWin
+    ? '相手モンスターを撃破して3ポイントを先取しました！報酬としてパック砂時計＋4個を獲得！'
+    : '相手に3ポイントを先取されました。デッキやきずぐすりを活用して再挑戦しましょう！';
+  document.getElementById('bt-result-modal').classList.add('active');
+}
 
-      document.getElementById('pack-summary-stage').classList.remove('active');
-      document.getElementById('pack-stack-stage').classList.remove('active');
-      const sealed = document.getElementById('pack-sealed-stage');
-      sealed.style.display = 'flex';
+/* =========================================================================
+   6. TAB NAVIGATION & INITIALIZATION
+   ========================================================================= */
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const targetPage = document.getElementById('tab-' + tabId);
+  if (targetPage) targetPage.classList.add('active');
+  const targetBtn = document.querySelector(`.nav-btn[data-tab="${tabId}"]`);
+  if (targetBtn) targetBtn.classList.add('active');
 
-      packTopFoil.style.transition = 'none';
-      packTopFoil.style.transform = 'translateY(0) rotateZ(0)';
-      packTopFoil.style.opacity = '1';
-      packBottomPart.style.transform = 'translateY(0) scale(1)';
-      packBottomPart.style.opacity = '1';
-      packGodRays.style.opacity = '0';
-      packGuideLine.style.opacity = '1';
-    }
+  if (tabId === 'dex') renderDexGrid();
+  if (tabId === 'battle' && !btState) initBattleGame();
+}
 
-    document.getElementById('btn-reset-pack').addEventListener('click', resetPackScreen);
-
-    /* ==========================================================================
-       TAB 2: SINGLE 3D CARD VIEWER (STRICTLY 1 CARD, NO STACKED DUMMY CARDS!)
-       ========================================================================== */
-    let activeDexCardId = 'dragon';
-
-    function selectDexCard(cardId) {
-      activeDexCardId = cardId;
-      const card = CARDS.find(c => c.id === cardId) || CARDS[0];
-      const showcase = document.getElementById('dex-single-showcase');
-      showcase.innerHTML = '';
-      showcase.appendChild(createCardElement(card, true));
-
-      const Strip = document.getElementById('dex-thumb-strip');
-      Strip.innerHTML = '';
-      CARDS.forEach(c => {
-        const item = document.createElement('div');
-        item.className = 'dex-thumb-item' + (c.id === activeDexCardId ? ' active' : '');
-        item.innerHTML = `<img src="${c.art}" style="object-position:${c.artPos};" alt="${c.name}" />`;
-        item.addEventListener('click', () => {
-          playCardFlipSound(false);
-          selectDexCard(c.id);
-        });
-        Strip.appendChild(item);
-      });
-    }
-
-    /* ==========================================================================
-       TAB 3: 1v1 TURN-BASED CARD BATTLE
-       ========================================================================== */
-    let currentStageIdx = 0;
-    let battleEnemyHp = 220;
-    let battleEnemyMaxHp = 220;
-    let battlePlayerHp = 320;
-    let battlePlayerMaxHp = 320;
-    let battleBusy = false;
-
-    function initBattleStage(stageIdx) {
-      currentStageIdx = stageIdx;
-      const st = STAGES[stageIdx] || STAGES[0];
-      const playerCard = CARDS.find(c => c.id === activeDexCardId) || CARDS[0];
-
-      battleEnemyMaxHp = st.hp;
-      battleEnemyHp = st.hp;
-      battlePlayerMaxHp = playerCard.hp;
-      battlePlayerHp = playerCard.hp;
-      battleBusy = false;
-
-      const strip = document.getElementById('battle-stage-strip');
-      strip.innerHTML = '';
-      STAGES.forEach((s, idx) => {
-        const btn = document.createElement('button');
-        btn.className = 'stage-pill' + (idx === currentStageIdx ? ' active' : '');
-        btn.textContent = `STAGE ${s.stage}`;
-        btn.addEventListener('click', () => initBattleStage(idx));
-        strip.appendChild(btn);
-      });
-
-      document.getElementById('enemy-card-img').src = st.art;
-      document.getElementById('enemy-stage-label').textContent = `STAGE ${st.stage} BOSS`;
-      document.getElementById('enemy-card-name').textContent = st.name;
-      updateBattleHpBars();
-
-      const wrap = document.getElementById('battle-player-card-wrap');
-      wrap.innerHTML = '';
-      wrap.appendChild(createCardElement(playerCard, true));
-
-      document.getElementById('player-battle-name').textContent = playerCard.name;
-      document.getElementById('move-normal-name').textContent = playerCard.moveName;
-      document.getElementById('move-normal-dmg').textContent = playerCard.moveDmg;
-      document.getElementById('move-ex-name').textContent = playerCard.exName;
-      document.getElementById('move-ex-dmg').textContent = playerCard.exDmg;
-    }
-
-    function updateBattleHpBars() {
-      const ePct = Math.max(0, Math.min(100, (battleEnemyHp / battleEnemyMaxHp) * 100));
-      const pPct = Math.max(0, Math.min(100, (battlePlayerHp / battlePlayerMaxHp) * 100));
-      document.getElementById('enemy-hp-bar').style.width = ePct + '%';
-      document.getElementById('enemy-hp-text').textContent = `${battleEnemyHp} / ${battleEnemyMaxHp}`;
-      document.getElementById('player-hp-bar').style.width = pPct + '%';
-      document.getElementById('player-hp-text').textContent = `HP ${battlePlayerHp} / ${battlePlayerMaxHp}`;
-    }
-
-    function showDmgPopup(text, color = '#e11d48') {
-      const pop = document.getElementById('battle-dmg-popup');
-      pop.textContent = text;
-      pop.style.color = color;
-      pop.classList.add('show');
-      setTimeout(() => pop.classList.remove('show'), 650);
-    }
-
-    function executePlayerTurn(isEx) {
-      if (battleBusy) return;
-      battleBusy = true;
-      const playerCard = CARDS.find(c => c.id === activeDexCardId) || CARDS[0];
-      const dmg = isEx ? playerCard.exDmg : playerCard.moveDmg;
-
-      playCardFlipSound(true);
-      const wrap = document.getElementById('battle-player-card-wrap');
-      wrap.classList.add('attacking');
-
-      setTimeout(() => {
-        wrap.classList.remove('attacking');
-        battleEnemyHp = Math.max(0, battleEnemyHp - dmg);
-        updateBattleHpBars();
-        showDmgPopup(`-${dmg}`, isEx ? '#d97706' : '#e11d48');
-
-        const enemyZone = document.getElementById('battle-enemy-zone');
-        enemyZone.style.transform = 'translateX(-10px) scale(0.97)';
-        setTimeout(() => { enemyZone.style.transform = 'none'; }, 180);
-
-        if (battleEnemyHp <= 0) {
-          playPackOpenFanfare();
-          setTimeout(() => {
-            showDmgPopup('VICTORY!', '#10b981');
-            setTimeout(() => {
-              const nextIdx = (currentStageIdx + 1) % STAGES.length;
-              initBattleStage(nextIdx);
-            }, 900);
-          }, 350);
-          return;
-        }
-
-        setTimeout(() => {
-          const st = STAGES[currentStageIdx] || STAGES[0];
-          battlePlayerHp = Math.max(10, battlePlayerHp - st.atk);
-          wrap.classList.add('hit');
-          setTimeout(() => wrap.classList.remove('hit'), 200);
-          updateBattleHpBars();
-          battleBusy = false;
-        }, 520);
-      }, 220);
-    }
-
-    document.getElementById('btn-move-normal').addEventListener('click', () => executePlayerTurn(false));
-    document.getElementById('btn-move-ex').addEventListener('click', () => executePlayerTurn(true));
-
-    /* ==========================================================================
-       NAVIGATION TABS
-       ========================================================================== */
-    function switchTab(tabName) {
-      document.querySelectorAll('.view-screen').forEach(s => s.classList.remove('active'));
-      document.querySelectorAll('.nav-tab-btn').forEach(b => b.classList.remove('active'));
-
-      document.getElementById(`view-${tabName}`).classList.add('active');
-      document.getElementById(`tab-btn-${tabName}`).classList.add('active');
-
-      if (tabName === 'dex') selectDexCard(activeDexCardId);
-      if (tabName === 'battle') initBattleStage(currentStageIdx);
-    }
-
-    document.querySelectorAll('.nav-tab-btn').forEach(btn => {
-      btn.addEventListener('click', () => switchTab(btn.dataset.tab));
-    });
-
-    selectDexCard('dragon');
-    initBattleStage(0);
-  </script>
+window.addEventListener('DOMContentLoaded', () => {
+  if (window.__APK_ASSET_DATA_URLS && window.__APK_ASSET_DATA_URLS['assets/card_pack.jpg']) {
+    const bb = document.querySelector('.booster-body');
+    if (bb) bb.style.backgroundImage = `url('${window.__APK_ASSET_DATA_URLS['assets/card_pack.jpg']}')`;
+  }
+  updateHeaderStats();
+  renderDexGrid();
+  initBattleGame();
+});
+</script>
 </body>
 </html>
