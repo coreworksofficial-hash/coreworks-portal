@@ -1737,11 +1737,10 @@
       const isCurrent = (m === state.mission);
       const cfg = MISSION_CONFIG[m];
       const statusText = state.devMode
-        ? (isCurrent ? `▶️ 選択中 (ステージ ${state.stage}/10)` : '🛠️ テスト解放中')
-        : (cleared ? '🏆 制覇済（再挑戦OK）' : (unlocked ? (isCurrent ? `▶️ 挑戦中 (ステージ ${state.stage}/10)` : '挑戦可能') : '🔒 未解放'));
+        ? (isCurrent ? `▶️ 選択中 (${state.stage}/10)` : '🛠️ テスト解放中')
+        : (cleared ? '🏆 制覇済' : (unlocked ? (isCurrent ? `▶️ 挑戦中 (${state.stage}/10)` : '挑戦可能') : '🔒 未解放'));
       return `<button class="mission-btn ${isCurrent ? 'active' : ''}" data-mission="${m}" ${unlocked ? '' : 'disabled'}>
-        <span>${cfg.name}（${cfg.normalSec}秒）</span>
-        <span style="font-size:13px;">${statusText}</span>
+        <span style="font-size:13px;">${cfg.name}（${cfg.normalSec}秒）</span><span style="font-size:12px;">${statusText}</span>
       </button>`;
     }).join('');
 
