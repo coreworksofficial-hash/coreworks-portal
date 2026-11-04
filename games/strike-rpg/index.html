@@ -1443,68 +1443,87 @@
 
   .pack-3d-container {
     position: relative;
-    width: 246px;
-    height: 404px;
+    width: 224px;
+    height: 396px;
     perspective: 1100px;
     touch-action: none;
     cursor: ew-resize;
+    user-select: none;
+    -webkit-user-select: none;
+    filter: drop-shadow(0 22px 36px rgba(15, 23, 42, 0.28));
   }
 
   .pack-inner-card-peek {
     position: absolute;
-    left: 4%;
-    right: 4%;
-    top: 10%;
-    height: 120px;
-    border-radius: 14px;
+    left: 6%;
+    right: 6%;
+    top: 12%;
+    height: 110px;
+    border-radius: 12px;
     background: linear-gradient(135deg, #FDE047 0%, #38BDF8 50%, #A855F7 100%);
-    box-shadow: 0 0 32px rgba(250, 204, 21, 0.85), 0 0 60px rgba(56, 189, 248, 0.7);
+    box-shadow: 0 0 32px rgba(250, 204, 21, 0.9), 0 0 60px rgba(56, 189, 248, 0.75);
     opacity: 0;
     z-index: 1;
+    pointer-events: none;
   }
 
   .pack-body-bottom {
     position: absolute;
     inset: 0;
-    border-radius: 18px;
-    background-image: url('assets/card_pack.jpg');
-    background-size: 158% 114%;
-    background-position: 50% 48%;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
     clip-path: polygon(0% 18%, 100% 18%, 100% 100%, 0% 100%);
-    box-shadow: 0 28px 54px -10px rgba(15, 23, 42, 0.32), inset 0 0 0 2px rgba(255, 255, 255, 0.7);
     z-index: 2;
-    transition: transform 0.52s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.42s ease;
   }
 
   .pack-body-top {
     position: absolute;
     inset: 0;
-    border-radius: 18px;
-    background-image: url('assets/card_pack.jpg');
-    background-size: 158% 114%;
-    background-position: 50% 48%;
-    clip-path: polygon(0% 0%, 100% 0%, 100% 18.2%, 0% 18.2%);
-    transform-origin: 100% 18.2%;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 18.3%, 0% 18.3%);
+    transform-origin: 85% 18%;
     z-index: 3;
-    transition: transform 0.06s linear, opacity 0.35s ease;
   }
 
   .pack-laser-guide {
     position: absolute;
-    left: 2%;
-    right: 2%;
+    left: 0;
+    right: 0;
     top: 18%;
     height: 2px;
-    background: linear-gradient(90deg, rgba(255,255,255,0.2), rgba(255,255,255,0.95) 50%, rgba(255,255,255,0.2));
-    box-shadow: 0 0 10px rgba(56, 189, 248, 0.85);
+    background: repeating-linear-gradient(90deg, rgba(255,255,255,0.95) 0px, rgba(255,255,255,0.95) 8px, rgba(56,189,248,0.35) 8px, rgba(56,189,248,0.35) 14px);
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.95);
     z-index: 4;
+    pointer-events: none;
+  }
+
+  .pack-laser-guide::before {
+    content: "▶ SLIDE TO CUT ▶";
+    position: absolute;
+    top: -17px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(15, 23, 42, 0.78);
+    color: #FDE047;
+    font-size: 8.5px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    padding: 1px 8px;
+    border-radius: 999px;
+    border: 1px solid rgba(253, 224, 71, 0.7);
+    white-space: nowrap;
   }
 
   #pack-cut-canvas {
     position: absolute;
     left: -46px;
     top: -45px;
-    width: 338px;
+    width: 316px;
     height: 220px;
     pointer-events: none;
     z-index: 10;
@@ -2523,17 +2542,17 @@
 
         <!-- OVERLAY A: Pack Foil Cutting Stage -->
         <div class="overlay-screen" id="ov-pack-cut">
-          <div style="width:100%;display:flex;justify-content:space-between;align-items:center;">
-            <button class="neu-btn" style="padding:7px 14px;font-size:12px;" onclick="closeAllPackOverlays()">← 戻る</button>
-            <span style="font-size:13px;font-weight:900;color:#334155;">上部のカットラインをスワイプまたはボタンで開封</span>
-            <span style="width:48px;"></span>
+          <div style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:8px;">
+            <button class="neu-btn" style="padding:7px 14px;font-size:12px;white-space:nowrap;flex-shrink:0;" onclick="closeAllPackOverlays()">← 戻る</button>
+            <span style="font-size:12px;font-weight:900;color:#334155;white-space:nowrap;">上部ラインをスワイプまたはボタンで開封</span>
+            <span style="width:32px;flex-shrink:0;"></span>
           </div>
           <div class="pack-3d-container" id="pack-3d-box">
             <div class="pack-inner-card-peek" id="pack-god-rays"></div>
             <div class="pack-body-bottom" id="pack-bottom-part"></div>
             <div class="pack-body-top" id="pack-top-foil"></div>
             <div class="pack-laser-guide" id="pack-guide-line"></div>
-            <canvas id="pack-cut-canvas" width="338" height="220"></canvas>
+            <canvas id="pack-cut-canvas" width="316" height="220"></canvas>
           </div>
           <button class="neu-btn primary" id="btn-trigger-cut" onclick="triggerPackOpen()">
             <svg class="svg-ic" viewBox="0 0 24 24" fill="currentColor"><polygon points="13 2 4 14 11 14 10 22 20 10 13 10"/></svg>
@@ -2560,7 +2579,7 @@
           </div>
           <div style="display:flex;gap:12px;">
             <button class="neu-btn" id="btn-reg-to-dex" onclick="closePackFlowToDex()">カード図鑑を見る</button>
-            <button class="neu-btn primary" onclick="closeAllPackOverlays()">続けて開封する</button>
+            <button class="neu-btn primary" onclick="openPackCuttingOverlay()">続けて開封する</button>
           </div>
         </div>
 
@@ -3222,26 +3241,88 @@ function swapExpansionPack() {
 
 let cutProgress = 0;
 let isPackOpened = false;
+let isDraggingCut = false;
+let dragStartX = 0;
 let currentPackCards = [];
 let currentPackIndex = 0;
+
+function renderSelectedPackInnerHTML() {
+  const isAlt = currentPackTheme === 1;
+  const artUrl = getArtUrl(isAlt ? 'assets/card_orion.jpg' : 'assets/card_dragon.jpg');
+  const subName = isAlt ? '太陽神オリオン ex' : '炎竜イグニス ex';
+  const topCrimpStyle = isAlt
+    ? 'background:linear-gradient(90deg,#38BDF8 0%,#E0F2FE 25%,#0284C7 50%,#E0F2FE 75%,#1D4ED8 100%);'
+    : '';
+  const botCrimpStyle = isAlt
+    ? 'background:linear-gradient(90deg,#0284C7 0%,#E0F2FE 50%,#1E3A8A 100%);'
+    : '';
+  const pillStyle = isAlt
+    ? 'background:linear-gradient(90deg,#0284C7,#2563EB);'
+    : '';
+  return `
+    <div class="pack-foil-crimp-top" style="${topCrimpStyle}"></div>
+    <div class="pack-art-middle" style="background-image:url('${artUrl}');">
+      <div class="pack-top-mini-logo">CRYSTAL POCKET [A1]</div>
+      <div class="pack-bottom-emblem">
+        <div class="pack-series-title">デュアルジェネシス</div>
+        <div class="pack-char-pill" style="${pillStyle}">${subName}</div>
+      </div>
+    </div>
+    <div class="pack-foil-crimp-bot" style="${botCrimpStyle}"></div>
+  `;
+}
 
 function openPackCuttingOverlay() {
   playTone('flip');
   isPackOpened = false;
+  isDraggingCut = false;
+  cutProgress = 0;
+
+  // Hide bottom navigation bar during pack opening flow
+  const nav = document.getElementById('main-bottom-nav');
+  if (nav) nav.classList.add('hidden');
+
+  // Ensure other pack overlays are closed and show pack cut overlay
+  document.getElementById('ov-pack-stack').classList.remove('active');
+  document.getElementById('ov-dex-reg').classList.remove('active');
   document.getElementById('ov-pack-cut').classList.add('active');
+
   const packTopFoil = document.getElementById('pack-top-foil');
   const packBottomPart = document.getElementById('pack-bottom-part');
+  const packGodRays = document.getElementById('pack-god-rays');
+  const packGuideLine = document.getElementById('pack-guide-line');
+
+  // Render the exact same pack design selected on the Home screen into both halves
+  const packHTML = renderSelectedPackInnerHTML();
+  packTopFoil.innerHTML = packHTML;
+  packBottomPart.innerHTML = packHTML;
+
+  // Reset all transforms & transitions so the pack starts 100% sealed with 0px gap
   packTopFoil.style.transition = 'none';
+  packTopFoil.style.transform = 'translate3d(0px, 0px, 0px) rotateZ(0deg)';
   packTopFoil.style.opacity = '1';
-  packBottomPart.style.transform = 'none';
+
+  packBottomPart.style.transition = 'none';
+  packBottomPart.style.transform = 'translate3d(0px, 0px, 0px)';
   packBottomPart.style.opacity = '1';
-  renderCutVisuals(0.62);
+
+  if (packGodRays) {
+    packGodRays.style.transition = 'none';
+    packGodRays.style.opacity = '0';
+  }
+  if (packGuideLine) {
+    packGuideLine.style.opacity = '1';
+  }
+
+  renderCutVisuals(0);
 }
 
 function closeAllPackOverlays() {
   document.getElementById('ov-pack-cut').classList.remove('active');
   document.getElementById('ov-pack-stack').classList.remove('active');
   document.getElementById('ov-dex-reg').classList.remove('active');
+  const nav = document.getElementById('main-bottom-nav');
+  if (nav) nav.classList.remove('hidden');
 }
 
 function renderCutVisuals(progress) {
@@ -3252,23 +3333,24 @@ function renderCutVisuals(progress) {
   const cutCtx = cutCanvas.getContext('2d');
 
   cutProgress = Math.max(0, Math.min(1, progress));
-  const deg = cutProgress * 7.5;
-  const liftY = cutProgress * 6;
-  packTopFoil.style.transform = `translateY(-${liftY.toFixed(1)}px) rotateZ(${deg.toFixed(2)}deg)`;
 
-  packGodRays.style.opacity = (cutProgress * 0.92).toFixed(2);
-  packGodRays.style.clipPath = `polygon(0% 0%, ${(cutProgress * 100).toFixed(1)}% 0%, ${(cutProgress * 100).toFixed(1)}% 100%, 0% 100%)`;
+  // IMPORTANT: Before the pack is fully cut open (isPackOpened === false),
+  // keep top and bottom 100% sealed with ZERO tilt and ZERO gap!
+  if (!isPackOpened) {
+    packTopFoil.style.transform = 'translate3d(0px, 0px, 0px) rotateZ(0deg)';
+    if (packGodRays) packGodRays.style.opacity = '0';
+  }
 
   cutCtx.clearRect(0, 0, cutCanvas.width, cutCanvas.height);
   if (cutProgress > 0.01) {
     const startX = 46;
-    const endX = 46 + cutProgress * 246;
-    const seamY = 118;
+    const endX = 46 + cutProgress * 224;
+    const seamY = 116;
 
     cutCtx.save();
     cutCtx.strokeStyle = '#38BDF8';
     cutCtx.shadowColor = '#FDE047';
-    cutCtx.shadowBlur = 18;
+    cutCtx.shadowBlur = 16;
     cutCtx.lineWidth = 5;
     cutCtx.lineCap = 'round';
     cutCtx.beginPath();
@@ -3282,11 +3364,59 @@ function renderCutVisuals(progress) {
     cutCtx.moveTo(startX, seamY);
     cutCtx.lineTo(endX, seamY);
     cutCtx.stroke();
+
+    // Glowing spark at the tip of the laser cut
+    cutCtx.fillStyle = '#FEF08A';
+    cutCtx.beginPath();
+    cutCtx.arc(endX, seamY, 5.5, 0, Math.PI * 2);
+    cutCtx.fill();
     cutCtx.restore();
   }
 }
 
 window.setPackCutProgress = renderCutVisuals;
+
+function initPackSwipeEvents() {
+  const box = document.getElementById('pack-3d-box');
+  if (!box) return;
+
+  const getRelProgress = (clientX) => {
+    const rect = box.getBoundingClientRect();
+    const relX = clientX - rect.left;
+    return Math.max(0, Math.min(1, relX / Math.max(1, rect.width)));
+  };
+
+  box.addEventListener('pointerdown', (e) => {
+    if (isPackOpened) return;
+    isDraggingCut = true;
+    dragStartX = e.clientX;
+    try { box.setPointerCapture(e.pointerId); } catch (err) {}
+    renderCutVisuals(0.08);
+  });
+
+  box.addEventListener('pointermove', (e) => {
+    if (!isDraggingCut || isPackOpened) return;
+    const p = getRelProgress(e.clientX);
+    renderCutVisuals(p);
+    if (p >= 0.82) {
+      isDraggingCut = false;
+      triggerPackOpen();
+    }
+  });
+
+  const endDrag = () => {
+    if (!isDraggingCut || isPackOpened) return;
+    isDraggingCut = false;
+    if (cutProgress >= 0.72) {
+      triggerPackOpen();
+    } else {
+      renderCutVisuals(0);
+    }
+  };
+
+  box.addEventListener('pointerup', endDrag);
+  box.addEventListener('pointercancel', endDrag);
+}
 
 function generatePack5Cards() {
   const unownedIds = MASTER_CARDS.map(c => c.id).filter(id => !collection[id]);
@@ -3313,6 +3443,28 @@ function triggerPackOpen() {
   isPackOpened = true;
   playTone('slice');
   renderCutVisuals(1);
+
+  // Animate top foil cap slicing off and flying diagonally upward-right!
+  const packTopFoil = document.getElementById('pack-top-foil');
+  const packBottomPart = document.getElementById('pack-bottom-part');
+  const packGodRays = document.getElementById('pack-god-rays');
+  const packGuideLine = document.getElementById('pack-guide-line');
+
+  if (packGuideLine) packGuideLine.style.opacity = '0';
+  if (packGodRays) {
+    packGodRays.style.transition = 'opacity 0.18s ease';
+    packGodRays.style.opacity = '1';
+  }
+  if (packTopFoil) {
+    packTopFoil.style.transition = 'transform 0.42s cubic-bezier(0.2, 0.85, 0.3, 1), opacity 0.38s ease';
+    packTopFoil.style.transform = 'translate3d(54px, -68px, 0px) rotateZ(22deg)';
+    packTopFoil.style.opacity = '0';
+  }
+  if (packBottomPart) {
+    packBottomPart.style.transition = 'transform 0.42s cubic-bezier(0.2, 0.85, 0.3, 1)';
+    packBottomPart.style.transform = 'translate3d(0px, 12px, 0px)';
+  }
+
   packPoints += 20;
   updatePackPointsUI();
 
@@ -3323,7 +3475,7 @@ function triggerPackOpen() {
     document.getElementById('ov-pack-cut').classList.remove('active');
     document.getElementById('ov-pack-stack').classList.add('active');
     renderCurrentPackCard();
-  }, 300);
+  }, 440);
 }
 
 function renderCurrentPackCard() {
@@ -4016,11 +4168,8 @@ window.addEventListener('DOMContentLoaded', () => {
     if (mArt) mArt.style.backgroundImage = `url('${getArtUrl('assets/card_dragon.jpg')}')`;
     if (mRef) mRef.style.backgroundImage = `url('${getArtUrl('assets/card_dragon.jpg')}')`;
     if (sArt) sArt.style.backgroundImage = `url('${getArtUrl('assets/card_orion.jpg')}')`;
-    const pt = document.getElementById('pack-top-foil');
-    const pb = document.getElementById('pack-bottom-part');
-    if (pt) pt.style.backgroundImage = `url('${getArtUrl('assets/card_pack.jpg')}')`;
-    if (pb) pb.style.backgroundImage = `url('${getArtUrl('assets/card_pack.jpg')}')`;
   }
+  initPackSwipeEvents();
   updatePackPointsUI();
   renderTitleFloatingCards();
   renderFeaturedAndStageCards();
