@@ -370,7 +370,7 @@
     <div class="verdict-box">
       <div class="v-label" id="vLabel"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> 独身・共働き（年収500万円）の上限目安</div>
       <div class="v-main" id="vMain">約 61,000 円</div>
-      <div class="v-sub" id="vSub"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 1万円の返礼品が 6個 もらえて、ポイントだけで自己負担2,000円も黒字化！</div>
+      <div class="v-sub" id="vSub"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 1万円の返礼品が約6個 ＆ 還元+6,100Pで実質黒字！</div>
       <div class="v-kpis">
         <div class="v-kpi">
           <div class="v-kpi-lbl">返礼品(3割換算)＋還元P</div>
@@ -506,8 +506,8 @@
       document.getElementById('vLabel').innerHTML = `${curFam.icon} ${curFam.name}（年収${inc}万円）の上限目安`;
       document.getElementById('vMain').innerHTML = `約 ${limit.toLocaleString()} 円`;
       document.getElementById('vSub').innerHTML = pts >= 2000
-        ? `<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 1万円の返礼品が約 ${count10k}個 もらえて、還元ポイント(+${pts.toLocaleString()}P)だけで自己負担2,000円も完全タダ！`
-        : `<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 1万円の返礼品が約 ${count10k}個 もらえます！（還元ポイント +${pts.toLocaleString()}P）`;
+        ? `<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 1万円の返礼品が約${count10k}個 ＆ 還元+${pts.toLocaleString()}Pで実質黒字！`
+        : `<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 1万円の返礼品が約${count10k}個 ＆ 還元ポイント +${pts.toLocaleString()}P！`;
       document.getElementById('vTotalBenefit').innerHTML = `+${totalVal.toLocaleString()} 円相当`;
       document.getElementById('vNetProfit').innerHTML = `+${netProfit.toLocaleString()} 円おトク`;
     }
