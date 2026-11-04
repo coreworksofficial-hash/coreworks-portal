@@ -3,510 +3,336 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>大手キャリア vs 格安SIM「10年間の損得差額」1秒シミュレーター ｜ Coreworks Studio</title>
-  <meta name="description" content="毎月のスマホ代と家族の人数を選ぶだけで、大手キャリアのまま放置した場合の1年間・10年間の損失額と、浮いたお金で買える人気家電・ガジェットを1秒で計算します。">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "大手キャリアから格安SIM・楽天モバイルに乗り換えると10年でいくら浮きますか？",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "1人あたり月8,500円から月2,000円前後のプランへ乗り換えた場合、1人で年間約78,000円（10年で約78万円）、夫婦2人なら10年で約156万円もの固定費が浮きます。"
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "スマホの機種変更はどうするのが一番お得ですか？",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "キャリアショップの割高な分割プランではなく、楽天市場のお買い物マラソン期間中にSIMフリー端末（iPhoneや人気Android）を購入すると、大量のポイント還元がついて実質最安になります。"
-        }
-      }
-    ]
-  }
-  </script>
+  <title>格安SIM乗り換え「10年損得」1秒計算｜Coreworks</title>
+  <meta name="description" content="現在のスマホ代から格安SIM・オンラインプランへ乗り換えた場合、1年・10年でいくら現金が浮くかを1秒計算。">
   <style>
     :root {
-      --bg: #0f172a;
-      --card: #1e293b;
-      --border: #334155;
+      --bg: #070b14;
+      --card: #11192c;
       --text: #f8fafc;
-      --muted: #cbd5e1;
-      --subtle: #94a3b8;
-      --accent: #10b981;
-      --blue: #3b82f6;
-      --green: #34d399;
-      --amber: #fde047;
-      --rose: #fb7185;
+      --muted: #94a3b8;
+      --border: rgba(148, 163, 184, 0.22);
+      --c1: #a855f7;
+      --c2: #7e22ce;
+      --light: #d8b4fe;
+      --soft-bg: rgba(168,85,247,0.16);
+      --theme-border: rgba(192,132,252,0.48);
+      --theme-glow: rgba(168,85,247,0.26);
+      --result-bg: linear-gradient(180deg, rgba(59,7,100,0.78) 0%, rgba(15,23,42,0.96) 100%);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    html, body { overflow-x: hidden; width: 100%; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", sans-serif; font-size: 16px; line-height: 1.5; }
-    .container { max-width: 600px; margin: 0 auto; padding: 16px 16px 48px; }
-    .back-link { display: inline-block; margin-bottom: 10px; color: var(--blue); text-decoration: none; font-size: 0.9375rem; font-weight: 700; }
-    h1 { font-size: 1.35rem; font-weight: 800; margin-bottom: 4px; color: var(--text); }
-    .lead { color: var(--muted); font-size: 0.9rem; margin-bottom: 16px; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic UI", "Meiryo", sans-serif;
+      background-color: var(--bg);
+      background-image: radial-gradient(circle at 50% 0%, var(--theme-glow), transparent 55%);
+      color: var(--text);
+      line-height: 1.45;
+      padding: 8px 12px 20px;
+      min-height: 100vh;
+    }
+    .container { max-width: 520px; margin: 0 auto; }
 
-    /* 1. 家族人数プリセット */
-    .preset-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 16px; }
-    .p-btn {
-      background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-      padding: 11px 10px; display: flex; align-items: center; gap: 8px;
-      color: var(--text); cursor: pointer; text-align: left; min-width: 0;
+    /* Top Bar & Compact Title */
+    .top-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 8px;
     }
-    .p-btn.active {
-      background: rgba(16, 185, 129, 0.16); border-color: var(--accent);
-      box-shadow: 0 0 0 1px var(--accent);
+    .back-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 6px 12px; border-radius: 999px;
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid rgba(148,163,184,0.32);
+      box-shadow: 0 2px 0 #020617, inset 0 1px 0 rgba(255,255,255,0.1);
+      color: #e2e8f0; text-decoration: none; font-size: 0.75rem; font-weight: 800;
     }
-    .p-icon { font-size: 1.45rem; flex-shrink: 0; }
-    .p-name { font-size: 0.875rem; font-weight: 700; color: var(--text); line-height: 1.3; }
-    .p-tag { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
-
-    /* 2. 結論ボックス */
-    .verdict-box {
-      background: linear-gradient(145deg, rgba(16, 185, 129, 0.18), rgba(30, 41, 59, 0.95));
-      border: 2px solid var(--accent); border-radius: 16px;
-      padding: 18px 15px; text-align: center; margin-bottom: 18px;
+    .top-tag {
+      font-size: 0.68rem; font-weight: 900; color: var(--light);
+      background: var(--soft-bg); border: 1px solid var(--theme-border);
+      padding: 3px 10px; border-radius: 999px;
     }
-    .v-label { font-size: 0.9rem; color: var(--muted); font-weight: 700; }
-    .v-main { font-size: 2.05rem; font-weight: 800; color: #ffffff; margin: 4px 0 6px; letter-spacing: -0.02em; }
-    .v-sub { font-size: 0.85rem; color: var(--amber); font-weight: 700; margin-bottom: 12px; }
-    .v-kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
-    .v-kpi { background: rgba(15, 23, 42, 0.75); border: 1px solid var(--border); border-radius: 10px; padding: 10px 8px; }
-    .v-kpi-lbl { font-size: 0.78rem; color: var(--muted); }
-    .v-kpi-val { font-size: 1.125rem; font-weight: 800; margin-top: 3px; color: var(--text); }
-    .hero-cta {
-      display: block; width: 100%; padding: 13px 12px; border-radius: 12px;
-      background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
-      color: #0f172a; font-weight: 800; font-size: 0.92rem; text-decoration: none;
-      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+    .page-header {
+      margin-bottom: 9px; padding: 0 2px;
     }
-
-    /* 3. スライダー操作 */
-    .sliders-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 16px; margin-bottom: 22px; }
-    .s-row { margin-bottom: 16px; }
-    .s-row:last-child { margin-bottom: 0; }
-    .s-head { display: flex; justify-content: space-between; align-items: baseline; font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
-    .s-val { color: var(--green); font-weight: 800; font-size: 1rem; }
-    input[type="range"] { width: 100%; accent-color: var(--accent); height: 8px; cursor: pointer; }
-
-    /* 4. 浮いたお金で買えるご褒美家電・ガジェット提案 */
-    .sec-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 10px; color: var(--text); border-top: 1px solid var(--border); padding-top: 18px; }
-    .tile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-    .tile {
-      background: rgba(30, 41, 59, 0.75); border: 1px solid var(--border); border-radius: 12px;
-      padding: 13px 11px; text-decoration: none; color: inherit;
-      display: flex; flex-direction: column; justify-content: space-between; min-width: 0;
-      transition: border-color 0.15s ease, background 0.15s ease;
+    .page-title {
+      font-size: 1.18rem; font-weight: 900; color: #ffffff;
+      letter-spacing: -0.02em; line-height: 1.25;
+      display: flex; align-items: center; gap: 7px;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.5);
     }
-    .tile:hover { border-color: var(--accent); background: rgba(30, 41, 59, 0.95); }
-    .t-tag { font-size: 0.75rem; font-weight: 700; color: var(--green); margin-bottom: 4px; }
-    .t-name { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 10px; line-height: 1.35; }
-    .t-btn {
-      background: rgba(245, 158, 11, 0.16); border: 1px solid #f59e0b;
-      color: var(--amber); text-align: center; padding: 7px 6px; border-radius: 8px;
-      font-size: 0.8rem; font-weight: 700;
-    }
-  
-    
-    
-    
-    
-    /* === v7.4 3D Glossy Tactile Calculator UI & Subtractive 3-Element Cards === */
-    .svg-ic {
-      width: 1.08em; height: 1.08em; vertical-align: -0.15em;
-      display: inline-block; flex-shrink: 0; margin-right: 3px;
-      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.45));
-    }
-    html, body {
-      background: radial-gradient(circle at 50% 0%, #172554 0%, #0b1120 55%, #060a14 100%) !important;
-      overflow-x: hidden !important;
-    }
-    .container {
-      max-width: 600px !important; width: 100% !important; box-sizing: border-box !important; overflow-x: hidden !important;
-    }
-    .back-link {
-      display: inline-flex !important; align-items: center !important; gap: 5px !important;
-      background: linear-gradient(180deg, #334155 0%, #1e293b 100%) !important;
-      border: 1.5px solid #64748b !important; border-top-color: #94a3b8 !important;
-      color: #f8fafc !important; text-decoration: none !important;
-      font-size: 0.8rem !important; font-weight: 800 !important;
-      padding: 6px 13px !important; border-radius: 999px !important;
-      margin-bottom: 12px !important; white-space: nowrap !important;
-      box-shadow: 0 3px 0 #090d16, inset 0 1px 1px rgba(255, 255, 255, 0.25) !important;
-    }
-    h1 {
-      font-size: 1.1rem !important; font-weight: 900 !important;
-      color: #ffffff !important; text-shadow: 0 2px 6px rgba(0, 0, 0, 0.65) !important;
-      line-height: 1.3 !important; white-space: nowrap !important;
-      letter-spacing: -0.02em !important;
-    }
-    .lead {
-      font-size: 0.79rem !important; color: #cbd5e1 !important; font-weight: 600 !important;
-      margin-bottom: 14px !important; white-space: nowrap !important;
-      overflow: hidden !important; text-overflow: ellipsis !important;
+    .page-title svg { width: 20px; height: 20px; stroke: var(--light); flex-shrink: 0; }
+    .page-sub {
+      font-size: 0.73rem; color: #cbd5e1; margin-top: 2px; white-space: nowrap;
     }
 
-    /* 3D Dark Glass Verdict & Main Control Cards */
-    .verdict-box, .hero-box, .result-box, .onek-box, .cap-box {
-      background: linear-gradient(180deg, rgba(15, 23, 42, 0.96) 0%, rgba(7, 12, 24, 0.99) 100%) !important;
-      border: 2px solid #10b981 !important; border-top-color: #6ee7b7 !important;
-      border-radius: 20px !important; min-width: 0 !important; max-width: 100% !important;
-      box-shadow:
-        0 6px 0 #022c22,
-        0 12px 26px rgba(0, 0, 0, 0.6),
-        inset 0 2px 2px rgba(255, 255, 255, 0.18) !important;
+    /* ① Unified Input Card */
+    .input-card {
+      background: linear-gradient(180deg, #17223b 0%, #0f172a 100%);
+      border: 1.5px solid rgba(148, 163, 184, 0.28);
+      border-radius: 16px;
+      padding: 11px 12px;
+      margin-bottom: 10px;
+      box-shadow: 0 5px 0 #020617, 0 8px 18px rgba(0,0,0,0.42), inset 0 1px 1px rgba(255,255,255,0.1);
     }
-    .v-main {
-      white-space: nowrap !important;
-      font-size: clamp(1.35rem, 5.4vw, 1.9rem) !important;
+    .sec-label {
+      font-size: 0.73rem; font-weight: 900; color: var(--light);
+      margin-bottom: 7px; display: flex; align-items: center; justify-content: space-between;
     }
-    .onek-main, .cap-main {
-      white-space: nowrap !important;
-      font-size: clamp(1.02rem, 4.4vw, 1.32rem) !important;
-    }
-    .v-sub {
-      white-space: nowrap !important;
-      font-size: 0.78rem !important;
-    }
-    .v-kpi {
-      padding: 8px 4px !important;
-      min-width: 0 !important;
-    }
-    .v-kpi-val {
-      white-space: nowrap !important;
-      font-size: 0.88rem !important;
-    }
-    .v-kpi-lbl {
-      white-space: nowrap !important;
-      font-size: 0.68rem !important;
-    }
-    .sliders-card, .card, .custom-card, .control-card, .replace-box {
-      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
-      border: 1.5px solid #475569 !important; border-top-color: #64748b !important;
-      border-radius: 18px !important; min-width: 0 !important; max-width: 100% !important;
-      box-shadow:
-        0 5px 0 #050811,
-        0 8px 20px rgba(0, 0, 0, 0.5),
-        inset 0 1.5px 1px rgba(255, 255, 255, 0.14) !important;
-    }
-    .s-head, .control-header {
-      white-space: nowrap !important;
-      font-size: 0.8rem !important;
-      gap: 4px !important;
-    }
-    .s-val, .control-val {
-      white-space: nowrap !important;
-      font-size: 0.9rem !important;
-    }
+    .sec-label span.hint { font-size: 0.68rem; color: #94a3b8; font-weight: 700; }
 
-    /* 3D Tactile Preset / Chip / Tab Buttons (Zero 1-char overflow on 390px) */
-    .p-btn, .chip, .sub-chip, .cap-tab {
-      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
-      border: 1.5px solid #475569 !important; border-top-color: #64748b !important;
-      border-radius: 14px !important;
-      padding: 10px 10px !important;
-      gap: 6px !important; min-width: 0 !important;
-      box-shadow:
-        0 4px 0 #050811,
-        0 5px 12px rgba(0, 0, 0, 0.4),
-        inset 0 1.5px 1px rgba(255, 255, 255, 0.14) !important;
-      transition: transform 0.08s ease, box-shadow 0.08s ease !important;
+    /* 2x2 Preset Grid */
+    .preset-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 7px;
+      margin-bottom: 10px;
     }
-    .cap-tab {
-      white-space: nowrap !important;
-      font-size: 0.78rem !important;
-      padding: 9px 4px !important;
+    .preset-btn {
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+      border: 1.5px solid rgba(148, 163, 184, 0.26);
+      color: #cbd5e1; padding: 7px 6px; border-radius: 11px;
+      font-size: 0.76rem; font-weight: 800; cursor: pointer;
+      text-align: center; line-height: 1.25;
+      box-shadow: 0 3px 0 #020617, inset 0 1px 0 rgba(255,255,255,0.08);
+      transition: transform 0.1s;
+      white-space: nowrap;
     }
-    .p-btn.active, .chip.on, .sub-chip.active, .cap-tab.active {
-      background: linear-gradient(180deg, #065f46 0%, #064e3b 100%) !important;
-      border: 2px solid #34d399 !important; border-top-color: #a7f3d0 !important;
-      color: #ffffff !important;
-      box-shadow:
-        0 4px 0 #022c22,
-        0 0 16px rgba(16, 185, 129, 0.35),
-        inset 0 1.5px 1px rgba(255, 255, 255, 0.35) !important;
+    .preset-btn small {
+      display: block; font-size: 0.64rem; color: #94a3b8; font-weight: 700; margin-top: 1px;
     }
-    .p-btn:active, .chip:active, .sub-chip:active, .cap-tab:active {
-      transform: translateY(2px) !important;
+    .preset-btn.active {
+      background: linear-gradient(180deg, var(--c1) 0%, var(--c2) 100%);
+      border-color: var(--light); color: #ffffff;
+      box-shadow: 0 3px 0 #020617, 0 0 12px var(--theme-glow), inset 0 1.5px 1px rgba(255,255,255,0.35);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.45);
     }
-    .p-icon, .chip-icon {
-      width: 24px !important; height: 24px !important;
-      border-radius: 7px !important;
-      background: rgba(16, 185, 129, 0.16) !important;
-      border: 1px solid rgba(52, 211, 153, 0.35) !important;
-      display: inline-flex !important; align-items: center !important; justify-content: center !important;
-      flex-shrink: 0 !important;
-    }
-    .sub-chip .chip-icon { display: none !important; }
-    .p-icon .svg-ic, .chip-icon .svg-ic { margin-right: 0 !important; width: 14px !important; height: 14px !important; }
-    .p-name, .chip-name, .g-name, .c-name {
-      font-size: 0.84rem !important; font-weight: 900 !important;
-      white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
-    }
-    .p-tag, .p-sub, .chip-sub, .chip-price, .g-sub, .c-sub {
-      font-size: 0.71rem !important;
-      white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
-    }
+    .preset-btn.active small { color: rgba(255,255,255,0.92); }
 
-    /* 3D Recessed Groove Track & 3D Glossy Spherical Slider Thumb */
+    /* Sliders inside Input Card */
+    .slider-row {
+      margin-top: 8px; padding-top: 8px;
+      border-top: 1px solid rgba(148, 163, 184, 0.15);
+    }
+    .slider-row:first-of-type { margin-top: 0; }
+    .slider-top {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 5px; gap: 6px;
+    }
+    .slider-name { font-size: 0.77rem; font-weight: 800; color: #e2e8f0; white-space: nowrap; }
+    .slider-val {
+      font-size: 0.88rem; font-weight: 900; color: var(--light);
+      background: rgba(2, 6, 23, 0.65); border: 1px solid var(--theme-border);
+      padding: 2px 9px; border-radius: 8px;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap; flex-shrink: 0;
+    }
     input[type="range"] {
-      -webkit-appearance: none !important;
-      appearance: none !important;
-      width: 100% !important;
-      height: 12px !important;
-      border-radius: 999px !important;
-      background: linear-gradient(180deg, #050811 0%, #1e293b 100%) !important;
-      border: 1.5px solid #334155 !important;
-      border-bottom-color: #64748b !important;
-      box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.85) !important;
-      outline: none !important;
-      margin: 6px 0 !important;
+      -webkit-appearance: none; appearance: none;
+      width: 100%; height: 8px; border-radius: 999px;
+      background: #090e1a; border: 1px solid rgba(148,163,184,0.25);
+      outline: none; cursor: pointer;
     }
     input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none !important;
-      appearance: none !important;
-      width: 26px !important;
-      height: 26px !important;
-      border-radius: 50% !important;
-      background: radial-gradient(circle at 35% 30%, #ffffff 0%, #6ee7b7 28%, #10b981 72%, #047857 100%) !important;
-      border: 2px solid #ffffff !important;
-      box-shadow: 0 3px 0 #064e3b, 0 5px 10px rgba(0, 0, 0, 0.65) !important;
-      cursor: pointer !important;
+      -webkit-appearance: none; appearance: none;
+      width: 24px; height: 24px; border-radius: 50%;
+      background: linear-gradient(180deg, var(--light) 0%, var(--c1) 55%, var(--c2) 100%);
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.65), 0 0 10px var(--theme-glow);
+      cursor: pointer;
     }
 
-    /* Section Titles: 1-line clean display */
-    .sec-title, .rec-title, .rep-head-title {
-      font-size: 0.88rem !important; font-weight: 900 !important;
-      white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
+    /* ② Real-time Result Card (Immediately below Input Card, ZERO ad buttons inside) */
+    .result-card {
+      background: var(--result-bg);
+      border: 2px solid var(--theme-border);
+      border-radius: 16px;
+      padding: 12px 13px;
+      margin-bottom: 11px;
+      text-align: center;
+      box-shadow: 0 5px 0 #020617, 0 10px 24px rgba(0,0,0,0.5), 0 0 20px var(--theme-glow), inset 0 1.5px 1px rgba(255,255,255,0.18);
+    }
+    .res-eyebrow {
+      font-size: 0.73rem; font-weight: 800; color: #e2e8f0;
+      margin-bottom: 2px; white-space: nowrap;
+    }
+    .res-hero {
+      font-size: 1.72rem; font-weight: 900; color: var(--light);
+      line-height: 1.18; letter-spacing: -0.02em;
+      text-shadow: 0 2px 12px var(--theme-glow);
+      font-variant-numeric: tabular-nums;
+      margin-bottom: 8px; white-space: nowrap;
+    }
+    .res-sub-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 7px;
+    }
+    .res-pill {
+      background: rgba(2, 6, 23, 0.62);
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      border-radius: 10px; padding: 6px 6px;
+    }
+    .res-pill-lbl { font-size: 0.65rem; color: #94a3b8; font-weight: 700; white-space: nowrap; }
+    .res-pill-val {
+      font-size: 0.84rem; font-weight: 900; color: #ffffff;
+      margin-top: 1px; font-variant-numeric: tabular-nums;
+      white-space: nowrap;
     }
 
-    /* 3D Subtractive Recommendation Cards (1 Column on Mobile for 1-line Badge + 1-line Title + 3D Gold Button) */
-    .rec-grid, .tile-grid, .rec-list, .rep-list, .goods-grid {
-      display: grid !important;
-      grid-template-columns: 1fr !important;
-      gap: 10px !important;
-      min-width: 0 !important; width: 100% !important;
+    /* ③ Curated Action Cards (2 to 3 max, below result) */
+    .action-sec-title {
+      font-size: 0.75rem; font-weight: 900; color: #cbd5e1;
+      margin: 2px 2px 6px; display: flex; align-items: center; gap: 5px;
+      white-space: nowrap;
     }
-    @media (min-width: 640px) {
-      .rec-grid, .tile-grid, .goods-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
-      }
+    .action-list { display: flex; flex-direction: column; gap: 7px; }
+    .action-card {
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+      background: linear-gradient(180deg, #17223b 0%, #0f172a 100%);
+      border: 1.5px solid rgba(148, 163, 184, 0.26);
+      border-radius: 14px; padding: 9px 11px;
+      text-decoration: none; color: var(--text);
+      box-shadow: 0 4px 0 #020617, 0 6px 14px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.08);
     }
-    .tile, .rec-card, .g-card, .rep-item {
-      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
-      border: 1.5px solid #475569 !important; border-top-color: #64748b !important;
-      border-radius: 16px !important;
-      padding: 12px 13px !important;
-      min-width: 0 !important; max-width: 100% !important; overflow: hidden !important;
-      box-shadow:
-        0 5px 0 #050811,
-        0 8px 18px rgba(0, 0, 0, 0.48),
-        inset 0 1.5px 1px rgba(255, 255, 255, 0.16) !important;
+    .action-info { flex: 1; min-width: 0; }
+    .action-badge {
+      display: inline-block; font-size: 0.62rem; font-weight: 900;
+      color: var(--light); background: var(--soft-bg);
+      border: 1px solid var(--theme-border);
+      padding: 1px 7px; border-radius: 999px; margin-bottom: 3px;
     }
-    .rep-top {
-      display: flex !important; flex-direction: column-reverse !important; align-items: flex-start !important; gap: 3px !important;
-      min-width: 0 !important; max-width: 100% !important; margin-bottom: 4px !important;
+    .action-name {
+      font-size: 0.8rem; font-weight: 900; color: #ffffff;
+      line-height: 1.25; white-space: nowrap;
     }
-    .v-label, .onek-lbl {
-      white-space: nowrap !important;
-      font-size: 0.82rem !important;
+    .action-btn {
+      flex-shrink: 0;
+      padding: 8px 11px; border-radius: 10px;
+      font-size: 0.75rem; font-weight: 900;
+      color: #1e1b4b;
+      background: linear-gradient(180deg, #fde047 0%, #f59e0b 55%, #d97706 100%);
+      border: 1.5px solid #fef08a;
+      box-shadow: 0 3px 0 #78350f, inset 0 1px 1px rgba(255,255,255,0.65);
+      white-space: nowrap;
     }
-    .rec-desc, .rep-desc, .rec-payback, .rec-pb, .g-roi { display: none !important; }
-    .t-tag, .rec-badge, .g-tag, .rep-tag {
-      display: inline-flex !important; align-items: center !important;
-      font-size: 0.72rem !important; font-weight: 900 !important;
-      color: #34d399 !important;
-      background: rgba(16, 185, 129, 0.14) !important;
-      border: 1px solid rgba(52, 211, 153, 0.38) !important;
-      padding: 2px 9px !important; border-radius: 999px !important;
-      margin-bottom: 4px !important; white-space: nowrap !important;
+    .action-card.secondary .action-btn {
+      color: #ffffff;
+      background: linear-gradient(180deg, var(--c1) 0%, var(--c2) 100%);
+      border-color: var(--light);
+      box-shadow: 0 3px 0 #020617, inset 0 1px 1px rgba(255,255,255,0.35);
     }
-    .t-name, .rec-name, .g-title, .rep-title {
-      font-size: 0.85rem !important; font-weight: 900 !important;
-      color: #ffffff !important; line-height: 1.35 !important;
-      margin-bottom: 8px !important; width: 100% !important;
-      white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
-    }
-
-    /* 3D Amber Gold Glossy CTA Buttons */
-    .hero-cta, .btn-rakuten, .t-btn {
-      display: flex !important; align-items: center !important; justify-content: center !important; gap: 4px !important;
-      background: linear-gradient(180deg, #fde047 0%, #f59e0b 58%, #d97706 100%) !important;
-      border: 1.5px solid #fef08a !important; border-top-color: #ffffff !important;
-      color: #090d16 !important;
-      font-weight: 900 !important; font-size: 0.8rem !important;
-      padding: 9px 10px !important; border-radius: 12px !important;
-      text-decoration: none !important; text-align: center !important;
-      white-space: nowrap !important; min-width: 0 !important; max-width: 100% !important;
-      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.65) !important;
-      box-shadow:
-        0 4px 0 #92400e,
-        0 6px 14px rgba(245, 158, 11, 0.38),
-        inset 0 2px 1px rgba(255, 255, 255, 0.85) !important;
-      transition: transform 0.08s ease, box-shadow 0.08s ease !important;
-    }
-    .hero-cta:active, .btn-rakuten:active, .t-btn:active {
-      transform: translateY(3px) !important;
-      box-shadow: 0 1px 0 #92400e !important;
-    }
-    footer a { white-space: nowrap !important; }
-
   </style>
 </head>
 <body>
   <div class="container">
-    <a href="/?tab=tools&v=7.7" class="back-link">← 暮らしの損得計算一覧へ戻る</a>
-    <h1><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> 格安SIM 10年損得シミュレーター</h1>
-    <p class="lead">スマホ代を見直して10年間で浮く金額を1秒算出</p>
+    <div class="top-bar">
+      <a href="/?tab=tools&v=7.8" class="back-pill">← 損得計算一覧へ</a>
+      <span class="top-tag">通信費10年試算</span>
+    </div>
+    <div class="page-header">
+      <h1 class="page-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+        格安SIM 10年損得計算
+      </h1>
+      <p class="page-sub">今のスマホ代を放置した場合と、乗り換えた場合の10年差額を算出</p>
+    </div>
 
-    <!-- 1. 人数プリセット -->
-    <div class="preset-grid" id="presetGrid"></div>
+    <!-- ① 統合入力カード -->
+    <div class="input-card">
+      <div class="sec-label">① 現在の契約状況を選択 <span class="hint">ワンタップ選択</span></div>
+      <div class="preset-grid" id="simGrid">
+        <button type="button" class="preset-btn active" data-cur="8500" data-next="2980">大手キャリア無制限<small>月8,500円 ➔ 2,980円</small></button>
+        <button type="button" class="preset-btn" data-cur="7000" data-next="1980">大手キャリア標準<small>月7,000円 ➔ 1,980円</small></button>
+        <button type="button" class="preset-btn" data-cur="4500" data-next="1080">サブブランド中容量<small>月4,500円 ➔ 1,080円</small></button>
+        <button type="button" class="preset-btn" data-cur="16000" data-next="4980">夫婦・家族2人分合計<small>月16,000円 ➔ 4,980円</small></button>
+      </div>
 
-    <!-- 2. 結論ボックス -->
-    <div class="verdict-box">
-      <div class="v-label" id="vLabel"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> 2回線を格安SIMへ乗り換えた10年差額</div>
-      <div class="v-main" id="vMain">+1,560,000 円 浮く！</div>
-      <div class="v-sub" id="vSub">放置すると高級家電や旅行1回分の大金を失います</div>
-      <div class="v-kpis">
-        <div class="v-kpi">
-          <div class="v-kpi-lbl">毎月浮く固定費</div>
-          <div class="v-kpi-val" id="vMonthly" style="color:var(--green);">+13,000 円/月</div>
+      <div class="slider-row">
+        <div class="slider-top">
+          <span class="slider-name">② 現在のスマホ月額（合計）</span>
+          <span class="slider-val" id="curVal">月 8,500 円</span>
         </div>
-        <div class="v-kpi">
-          <div class="v-kpi-lbl">1年間で浮く現金</div>
-          <div class="v-kpi-val" id="vYearly" style="color:var(--amber);">+156,000 円/年</div>
+        <input type="range" id="curSlider" min="3000" max="24000" step="500" value="8500">
+      </div>
+      <div class="slider-row">
+        <div class="slider-top">
+          <span class="slider-name">③ 乗り換え後の月額目安</span>
+          <span class="slider-val" id="nextVal">月 2,980 円</span>
+        </div>
+        <input type="range" id="nextSlider" min="980" max="6000" step="100" value="2980">
+      </div>
+    </div>
+
+    <!-- ② リアルタイム計算結果カード -->
+    <div class="result-card">
+      <div class="res-eyebrow">乗り換えで10年間に手元に残る現金総額</div>
+      <div class="res-hero" id="save10yVal">662,400 円 節約</div>
+      <div class="res-sub-grid">
+        <div class="res-pill">
+          <div class="res-pill-lbl">1年間で浮く現金</div>
+          <div class="res-pill-val" id="save1yVal">年 66,240 円</div>
+        </div>
+        <div class="res-pill">
+          <div class="res-pill-lbl">毎月の固定費削減</div>
+          <div class="res-pill-val" id="saveMonthVal">月 -5,520 円</div>
         </div>
       </div>
-      <a id="heroRankLink" href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2FSIM%25E3%2583%2595%25E3%2583%25AA%25E3%2583%25BC%2520%25E3%2582%25B9%25E3%2583%259E%25E3%2583%259B%2520%25E6%259C%25AC%25E4%25BD%2593%2F" target="_blank" rel="nofollow sponsored noopener" class="hero-cta">
-        <svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> 楽天「SIMフリースマホ＆人気機種」を見る ↗
+    </div>
+
+    <!-- ③ 厳選2枚の解決策カード -->
+    <div class="action-sec-title">▼ 乗り換えに人気のSIMフリー端末・周辺機器（PR）</div>
+    <div class="action-list">
+      <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2FSIM%25E3%2583%2595%25E3%2583%25AA%25E3%2583%25BC%2520%25E3%2582%25B9%25E3%2583%259E%25E3%2583%25BC%25E3%2583%2588%25E3%2583%2595%25E3%2582%25A9%25E3%2583%25B3%2520iPhone%2520%25E6%259C%25AC%25E4%25BD%2593%2520%25E6%25A5%25BD%25E5%25A4%25A9%25E3%2583%25A2%25E3%2583%2590%25E3%2582%25A4%25E3%2583%25AB%2F" target="_blank" rel="nofollow sponsored noopener" class="action-card">
+        <div class="action-info">
+          <span class="action-badge">楽天市場 ポイント高還元</span>
+          <div class="action-name">SIMフリーiPhone・スマホ人気ランキング</div>
+        </div>
+        <span class="action-btn">楽天で見る ↗</span>
+      </a>
+      <a href="https://www.amazon.co.jp/s?k=SIM%E3%83%95%E3%83%AA%E3%83%BC%20%E3%82%B9%E3%83%9E%E3%83%BC%E3%83%88%E3%83%95%E3%82%A9%E3%83%B3%20%E6%9C%AC%E4%BD%93%20%E4%BA%BA%E6%B0%97&tag=coreworks0d-22" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
+        <div class="action-info">
+          <span class="action-badge">Amazon ベストセラー</span>
+          <div class="action-name">Amazon SIMフリー端末・充電器特集</div>
+        </div>
+        <span class="action-btn">Amazonで見る ↗</span>
       </a>
     </div>
-
-    <!-- 3. スライダー操作 -->
-    <div class="sliders-card">
-      <div class="s-row">
-        <div class="s-head">
-          <span><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M14.8 9A2 2 0 0 0 13 8h-2a2 2 0 0 0 0 4h2a2 2 0 0 1 0 4h-2a2 2 0 0 1-1.8-1"/><path d="M12 6v2m0 8v2"/></svg> いまのスマホ代（1人あたり月額）</span>
-          <span class="s-val" id="lblCur" style="color:var(--rose);">月 8,500 円</span>
-        </div>
-        <input type="range" id="rngCur" min="3500" max="15000" step="500" value="8500" oninput="calc()">
-      </div>
-      <div class="s-row">
-        <div class="s-head">
-          <span><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 乗り換え後の月額（格安SIM・楽天等）</span>
-          <span class="s-val" id="lblNew">月 2,000 円</span>
-        </div>
-        <input type="range" id="rngNew" min="1000" max="4500" step="200" value="2000" oninput="calc()">
-      </div>
-      <div class="s-row">
-        <div class="s-head">
-          <span><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> 家族のスマホ回線数</span>
-          <span class="s-val" id="lblLines" style="color:var(--amber);">2 回線</span>
-        </div>
-        <input type="range" id="rngLines" min="1" max="5" step="1" value="2" oninput="calc()">
-      </div>
-    </div>
-
-    <!-- 4. 浮いたスマホ代で実質タダで買える名品6選 -->
-    <div class="sec-title" id="giftTitle"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13"/><path d="M3 12h18"/><path d="M12 8c-2-3-6-3-6 0s6 0 6 0z"/><path d="M12 8c2-3 6-3 6 0s-6 0-6 0z"/></svg> 浮いたスマホ代で実質タダで買える人気家電4選</div>
-    <div class="tile-grid" id="giftTiles"></div>
   </div>
 
   <script>
-    const AID = '5876771';
-    const PID = '54';
-    function rakutenUrl(q) {
-      return 'https://af.moshimo.com/af/c/click?a_id=' + AID + '&p_id=' + PID + '&pc_id=54&pl_id=616&url=' +
-        encodeURIComponent('https://search.rakuten.co.jp/search/mall/' + encodeURIComponent(q) + '/');
+    const curSlider = document.getElementById('curSlider');
+    const nextSlider = document.getElementById('nextSlider');
+    const curVal = document.getElementById('curVal');
+    const nextVal = document.getElementById('nextVal');
+    const save10yVal = document.getElementById('save10yVal');
+    const save1yVal = document.getElementById('save1yVal');
+    const saveMonthVal = document.getElementById('saveMonthVal');
+
+    function update() {
+      const cur = parseInt(curSlider.value, 10);
+      const nxt = parseInt(nextSlider.value, 10);
+      curVal.textContent = '月 ' + cur.toLocaleString() + ' 円';
+      nextVal.textContent = '月 ' + nxt.toLocaleString() + ' 円';
+      const diff = Math.max(0, cur - nxt);
+      saveMonthVal.textContent = '月 -' + diff.toLocaleString() + ' 円';
+      save1yVal.textContent = '年 ' + (diff * 12).toLocaleString() + ' 円';
+      save10yVal.textContent = (diff * 120).toLocaleString() + ' 円 節約';
     }
 
-    const PRESETS = [
-      { id: 'p1', icon: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>', name: '1人（単身）', tag: '10年で約78万円浮く', cur: 8500, next: 2000, lines: 1 },
-      { id: 'p2', icon: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>', name: '夫婦・2人世帯', tag: '10年で約156万円浮く', cur: 8500, next: 2000, lines: 2 },
-      { id: 'p3', icon: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>', name: '家族3人シェア', tag: '10年で約234万円浮く', cur: 8500, next: 2000, lines: 3 },
-      { id: 'p4', icon: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>', name: '家族4人まるごと', tag: '10年で約312万円浮く', cur: 8500, next: 2000, lines: 4 }
-    ];
-
-    const TILES = [
-      { tag: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> 固定費削減の王道（PR）', name: '保険マンモス｜家計＆保険の0円見直し相談', url: 'https://af.moshimo.com/af/c/click?a_id=5880339&p_id=7778&pc_id=22539&pl_id=97004', btn: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 無料相談を見る ↗' },
-      { tag: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> 浮いたお金を自動管理（PR）', name: 'マネーフォワード｜家計＆固定費の自動管理', url: 'https://af.moshimo.com/af/c/click?a_id=5880342&p_id=888&pc_id=1087&pl_id=64839', btn: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> 無料で試す ↗' },
-      { tag: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> 乗り換え前に最安入手', name: 'SIMフリー iPhone ＆ 人気Android本体', q: 'SIMフリー スマートフォン 本体 ランキング' },
-      { tag: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> 外出先のギガ・電池対策', name: 'Anker モバイルバッテリー＆急速充電器', q: 'Anker モバイルバッテリー 急速充電器' }
-    ];
-
-    let curPreset = PRESETS[1];
-
-    function renderPresets() {
-      document.getElementById('presetGrid').innerHTML = PRESETS.map(p => `
-        <button type="button" class="p-btn ${p.id === curPreset.id ? 'active' : ''}" onclick="selectPreset('${p.id}')">
-          <span class="p-icon">${p.icon}</span>
-          <div style="min-width:0;">
-            <div class="p-name">${p.name}</div>
-            <div class="p-tag">${p.tag}</div>
-          </div>
-        </button>
-      `).join('');
-    }
-
-    function selectPreset(id) {
-      const p = PRESETS.find(x => x.id === id);
-      if (!p) return;
-      curPreset = p;
-      document.getElementById('rngCur').value = p.cur;
-      document.getElementById('rngNew').value = p.next;
-      document.getElementById('rngLines').value = p.lines;
-      renderPresets();
-      calc();
-    }
-
-    function renderTiles() {
-      document.getElementById('heroRankLink').href = rakutenUrl('SIMフリー スマートフォン Anker ランキング');
-      document.getElementById('giftTiles').innerHTML = TILES.map(t => `
-        <a href="${t.url || rakutenUrl(t.q)}" target="_blank" rel="nofollow sponsored noopener" class="tile">
-          <div>
-            <div class="t-tag">${t.tag}</div>
-            <div class="t-name">${t.name}</div>
-          </div>
-          <div class="t-btn">${t.btn || '<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg> 楽天で見る ↗'}</div>
-        </a>
-      `).join('');
-    }
-
-    function calc() {
-      const curFee = Number(document.getElementById('rngCur').value) || 8500;
-      const newFee = Number(document.getElementById('rngNew').value) || 2000;
-      const lines = Number(document.getElementById('rngLines').value) || 2;
-
-      const diffPerLine = Math.max(0, curFee - newFee);
-      const monthlySave = diffPerLine * lines;
-      const yearlySave = monthlySave * 12;
-      const tenYearSave = yearlySave * 10;
-
-      document.getElementById('lblCur').innerHTML = `月 ${curFee.toLocaleString()} 円`;
-      document.getElementById('lblNew').innerHTML = `月 ${newFee.toLocaleString()} 円`;
-      document.getElementById('lblLines').innerHTML = `${lines} 回線`;
-
-      document.getElementById('vLabel').innerHTML = `<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> ${lines}回線を格安SIMへ乗り換えた10年差額`;
-      document.getElementById('vMain').innerHTML = `+${tenYearSave.toLocaleString()} 円 浮く！`;
-      document.getElementById('vMonthly').innerHTML = `+${monthlySave.toLocaleString()} 円/月`;
-      document.getElementById('vYearly').innerHTML = `+${yearlySave.toLocaleString()} 円/年`;
-      document.getElementById('giftTitle').innerHTML = `<svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13"/><path d="M3 12h18"/><path d="M12 8c-2-3-6-3-6 0s6 0 6 0z"/><path d="M12 8c2-3 6-3 6 0s-6 0-6 0z"/></svg> 1年目に浮く${(yearlySave / 10000).toFixed(1)}万円で買える人気家電4選`;
-    }
-
-    renderPresets();
-    renderTiles();
-    calc();
+    document.querySelectorAll('#simGrid .preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#simGrid .preset-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        curSlider.value = btn.getAttribute('data-cur');
+        nextSlider.value = btn.getAttribute('data-next');
+        update();
+      });
+    });
+    curSlider.addEventListener('input', update);
+    nextSlider.addEventListener('input', update);
+    update();
   </script>
 <!-- Moshimo Official Rakuten Sponsor -->
 <footer style="max-width: 580px; margin: 28px auto 16px; padding: 14px 16px 0; border-top: 1px solid rgba(148,163,184,0.18); text-align: center; font-size: 0.74rem; color: #64748b;">
   <div style="margin-bottom: 6px;">
-    <a href="/?tab=tools&v=7.7" style="color: #94a3b8; text-decoration: none; font-weight: 700;">← 暮らしの損得計算一覧へ</a>
+    <a href="/?tab=tools&v=7.8" style="color: #94a3b8; text-decoration: none; font-weight: 700;">← 損得計算一覧へ</a>
     <span style="margin: 0 8px; color: #475569;">｜</span>
-    <a href="/?tab=games&v=7.7" style="color: #94a3b8; text-decoration: none;">脳トレゲーム一覧</a>
+    <a href="/?tab=games&v=7.8" style="color: #94a3b8; text-decoration: none;">脳トレゲーム一覧</a>
     <span style="margin: 0 8px; color: #475569;">｜</span>
     <a href="/about/" style="color: #94a3b8; text-decoration: none;">運営者情報</a>
   </div>
@@ -516,4 +342,3 @@
 </footer>
 </body>
 </html>
-

@@ -3,518 +3,364 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>楽天マラソン「上限＆1,000円買い足し損得」1秒チェッカー ｜ Coreworks Studio</title>
-  <meta name="description" content="楽天お買い物マラソンで上限7,000Pまであといくら買えるか、1,000円ポッキリ商品を買い足すと黒字になるかをスライダー2本で即判定します。">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "楽天お買い物マラソンの7,000ポイント上限はいくら買うと達しますか？",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "10店舗完走（+9%）の場合、税抜77,778円の購入で上限7,000ポイントに達します。"
-        }
-      }
-    ]
-  }
-  </script>
+  <title>楽天お買い物マラソン「上限枠＆1,000円買い足し損得」1秒計算｜Coreworks</title>
+  <meta name="description" content="現在の買い回り店舗数と合計金額から、7,000P上限までの残り購入枠と1,000円買い足し時の実質負担額を1秒で計算します。">
   <style>
     :root {
-      --bg: #0f172a;
-      --card: #1e293b;
-      --border: #334155;
+      --bg: #070b14;
+      --card: #11192c;
       --text: #f8fafc;
-      --muted: #cbd5e1;
-      --subtle: #94a3b8;
-      --accent: #3b82f6;
-      --green: #38bdf8;
-      --amber: #f8fafc;
+      --muted: #94a3b8;
+      --border: rgba(148, 163, 184, 0.22);
+      --c1: #ef4444;
+      --c2: #b91c1c;
+      --light: #fca5a5;
+      --soft-bg: rgba(239,68,68,0.16);
+      --theme-border: rgba(248,113,113,0.48);
+      --theme-glow: rgba(239,68,68,0.26);
+      --result-bg: linear-gradient(180deg, rgba(69,10,10,0.8) 0%, rgba(15,23,42,0.96) 100%);
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { overflow-x: hidden; width: 100%; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", sans-serif; font-size: 16px; line-height: 1.5; }
-    .container { max-width: 600px; margin: 0 auto; padding: 16px 16px 48px; }
-    .back-link { display: inline-block; margin-bottom: 10px; color: var(--accent); text-decoration: none; font-size: 0.9375rem; font-weight: 700; }
-    h1 { font-size: 1.375rem; font-weight: 800; margin-bottom: 4px; color: var(--text); }
-    .lead { color: var(--muted); font-size: 0.9375rem; margin-bottom: 16px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic UI", "Meiryo", sans-serif;
+      background-color: var(--bg);
+      background-image: radial-gradient(circle at 50% 0%, var(--theme-glow), transparent 55%);
+      color: var(--text);
+      line-height: 1.45;
+      padding: 8px 12px 20px;
+      min-height: 100vh;
+    }
+    .container { max-width: 520px; margin: 0 auto; }
 
-    /* 1. 結論ボード（主役・大きく見やすく） */
-    .result-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 18px; }
-    .onek-box {
-      background: linear-gradient(135deg, rgba(59, 130, 246, 0.18), rgba(30, 41, 59, 0.9));
-      border: 2px solid var(--accent);
+    /* Top Bar & Compact Title */
+    .top-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .back-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 6px 12px; border-radius: 999px;
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid rgba(148,163,184,0.32);
+      box-shadow: 0 2px 0 #020617, inset 0 1px 0 rgba(255,255,255,0.1);
+      color: #e2e8f0; text-decoration: none; font-size: 0.75rem; font-weight: 800;
+    }
+    .top-tag {
+      font-size: 0.68rem; font-weight: 900; color: var(--light);
+      background: var(--soft-bg); border: 1px solid var(--theme-border);
+      padding: 3px 10px; border-radius: 999px;
+    }
+    .page-header {
+      margin-bottom: 9px; padding: 0 2px;
+    }
+    .page-title {
+      font-size: 1.18rem; font-weight: 900; color: #ffffff;
+      letter-spacing: -0.02em; line-height: 1.25;
+      display: flex; align-items: center; gap: 7px;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    }
+    .page-title svg { width: 20px; height: 20px; stroke: var(--light); flex-shrink: 0; }
+    .page-sub {
+      font-size: 0.73rem; color: #cbd5e1; margin-top: 2px; white-space: nowrap;
+    }
+
+    /* ① Unified Input Card */
+    .input-card {
+      background: linear-gradient(180deg, #17223b 0%, #0f172a 100%);
+      border: 1.5px solid rgba(148, 163, 184, 0.28);
       border-radius: 16px;
-      padding: 18px 16px;
-      text-align: center;
+      padding: 11px 12px;
+      margin-bottom: 10px;
+      box-shadow: 0 5px 0 #020617, 0 8px 18px rgba(0,0,0,0.42), inset 0 1px 1px rgba(255,255,255,0.1);
     }
-    .onek-lbl { font-size: 0.9rem; color: var(--muted); font-weight: 700; }
-    .onek-main { font-size: 1.45rem; font-weight: 800; color: #ffffff; margin: 6px 0; }
-    .onek-sub { font-size: 0.875rem; color: var(--muted); }
+    .sec-label {
+      font-size: 0.73rem; font-weight: 900; color: var(--light);
+      margin-bottom: 7px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .sec-label span.hint { font-size: 0.68rem; color: #94a3b8; font-weight: 700; }
 
-    .cap-box {
-      background: rgba(30, 41, 59, 0.8);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 14px;
-      text-align: center;
+    /* 2x2 Preset Grid */
+    .preset-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 7px;
+      margin-bottom: 10px;
     }
-    .cap-main { font-size: 1.15rem; font-weight: 800; color: var(--text); }
-    .cap-sub { font-size: 0.85rem; color: var(--muted); margin-top: 4px; }
+    .preset-btn {
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+      border: 1.5px solid rgba(148, 163, 184, 0.26);
+      color: #cbd5e1; padding: 7px 6px; border-radius: 11px;
+      font-size: 0.76rem; font-weight: 800; cursor: pointer;
+      text-align: center; line-height: 1.25;
+      box-shadow: 0 3px 0 #020617, inset 0 1px 0 rgba(255,255,255,0.08);
+      transition: transform 0.1s;
+      white-space: nowrap;
+    }
+    .preset-btn small {
+      display: block; font-size: 0.64rem; color: #94a3b8; font-weight: 700; margin-top: 1px;
+    }
+    .preset-btn.active {
+      background: linear-gradient(180deg, var(--c1) 0%, var(--c2) 100%);
+      border-color: var(--light); color: #ffffff;
+      box-shadow: 0 3px 0 #020617, 0 0 12px var(--theme-glow), inset 0 1.5px 1px rgba(255,255,255,0.35);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.45);
+    }
+    .preset-btn.active small { color: rgba(255,255,255,0.92); }
 
-    /* 2. スライダー2本の操作パネル */
-    .control-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px 16px; margin-bottom: 24px; }
-    .cap-tabs { display: flex; gap: 6px; margin-bottom: 16px; }
-    .cap-tab {
-      flex: 1; padding: 9px 6px; background: #0f172a; border: 1px solid var(--border);
-      color: var(--muted); border-radius: 8px; font-size: 0.875rem; font-weight: 700; cursor: pointer;
+    /* Sliders inside Input Card */
+    .slider-row {
+      margin-top: 8px; padding-top: 8px;
+      border-top: 1px solid rgba(148, 163, 184, 0.15);
     }
-    .cap-tab.active { background: var(--accent); border-color: var(--accent); color: #ffffff; }
-
-    .s-row { margin-bottom: 18px; }
-    .s-row:last-child { margin-bottom: 0; }
-    .s-head { display: flex; justify-content: space-between; font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
-    input[type="range"] { width: 100%; accent-color: var(--accent); height: 8px; cursor: pointer; }
-
-    /* 3. 控えめな商品タイル */
-    .sec-title { font-size: 0.9375rem; font-weight: 600; margin-bottom: 10px; color: var(--subtle); border-top: 1px solid var(--border); padding-top: 18px; }
-    .tile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 22px; }
-    .tile {
-      background: rgba(30, 41, 59, 0.6);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px 12px;
-      text-decoration: none;
-      color: inherit;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-width: 0;
+    .slider-row:first-of-type { margin-top: 0; }
+    .slider-top {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 5px; gap: 6px;
     }
-    .t-tag { font-size: 0.75rem; font-weight: 600; color: var(--muted); margin-bottom: 4px; }
-    .t-name { font-size: 0.9375rem; font-weight: 700; color: var(--text); margin-bottom: 10px; line-height: 1.35; }
-    .t-btn {
-      background: #1e293b; border: 1px solid #475569;
-      color: var(--muted); text-align: center; padding: 8px 6px; border-radius: 8px;
-      font-size: 0.8125rem; font-weight: 600;
+    .slider-name { font-size: 0.77rem; font-weight: 800; color: #e2e8f0; white-space: nowrap; }
+    .slider-val {
+      font-size: 0.88rem; font-weight: 900; color: var(--light);
+      background: rgba(2, 6, 23, 0.65); border: 1px solid var(--theme-border);
+      padding: 2px 9px; border-radius: 8px;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap; flex-shrink: 0;
     }
-  
-    
-    
-    
-    
-    /* === v7.4 3D Glossy Tactile Calculator UI & Subtractive 3-Element Cards === */
-    .svg-ic {
-      width: 1.08em; height: 1.08em; vertical-align: -0.15em;
-      display: inline-block; flex-shrink: 0; margin-right: 3px;
-      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.45));
-    }
-    html, body {
-      background: radial-gradient(circle at 50% 0%, #172554 0%, #0b1120 55%, #060a14 100%) !important;
-      overflow-x: hidden !important;
-    }
-    .container {
-      max-width: 600px !important; width: 100% !important; box-sizing: border-box !important; overflow-x: hidden !important;
-    }
-    .back-link {
-      display: inline-flex !important; align-items: center !important; gap: 5px !important;
-      background: linear-gradient(180deg, #334155 0%, #1e293b 100%) !important;
-      border: 1.5px solid #64748b !important; border-top-color: #94a3b8 !important;
-      color: #f8fafc !important; text-decoration: none !important;
-      font-size: 0.8rem !important; font-weight: 800 !important;
-      padding: 6px 13px !important; border-radius: 999px !important;
-      margin-bottom: 12px !important; white-space: nowrap !important;
-      box-shadow: 0 3px 0 #090d16, inset 0 1px 1px rgba(255, 255, 255, 0.25) !important;
-    }
-    h1 {
-      font-size: 1.1rem !important; font-weight: 900 !important;
-      color: #ffffff !important; text-shadow: 0 2px 6px rgba(0, 0, 0, 0.65) !important;
-      line-height: 1.3 !important; white-space: nowrap !important;
-      letter-spacing: -0.02em !important;
-    }
-    .lead {
-      font-size: 0.79rem !important; color: #cbd5e1 !important; font-weight: 600 !important;
-      margin-bottom: 14px !important; white-space: nowrap !important;
-      overflow: hidden !important; text-overflow: ellipsis !important;
-    }
-
-    /* 3D Dark Glass Verdict & Main Control Cards */
-    .verdict-box, .hero-box, .result-box, .onek-box, .cap-box {
-      background: linear-gradient(180deg, rgba(15, 23, 42, 0.96) 0%, rgba(7, 12, 24, 0.99) 100%) !important;
-      border: 2px solid #10b981 !important; border-top-color: #6ee7b7 !important;
-      border-radius: 20px !important; min-width: 0 !important; max-width: 100% !important;
-      box-shadow:
-        0 6px 0 #022c22,
-        0 12px 26px rgba(0, 0, 0, 0.6),
-        inset 0 2px 2px rgba(255, 255, 255, 0.18) !important;
-    }
-    .v-main {
-      white-space: nowrap !important;
-      font-size: clamp(1.35rem, 5.4vw, 1.9rem) !important;
-    }
-    .onek-main, .cap-main {
-      white-space: nowrap !important;
-      font-size: clamp(1.02rem, 4.4vw, 1.32rem) !important;
-    }
-    .v-sub {
-      white-space: nowrap !important;
-      font-size: 0.78rem !important;
-    }
-    .v-kpi {
-      padding: 8px 4px !important;
-      min-width: 0 !important;
-    }
-    .v-kpi-val {
-      white-space: nowrap !important;
-      font-size: 0.88rem !important;
-    }
-    .v-kpi-lbl {
-      white-space: nowrap !important;
-      font-size: 0.68rem !important;
-    }
-    .sliders-card, .card, .custom-card, .control-card, .replace-box {
-      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
-      border: 1.5px solid #475569 !important; border-top-color: #64748b !important;
-      border-radius: 18px !important; min-width: 0 !important; max-width: 100% !important;
-      box-shadow:
-        0 5px 0 #050811,
-        0 8px 20px rgba(0, 0, 0, 0.5),
-        inset 0 1.5px 1px rgba(255, 255, 255, 0.14) !important;
-    }
-    .s-head, .control-header {
-      white-space: nowrap !important;
-      font-size: 0.8rem !important;
-      gap: 4px !important;
-    }
-    .s-val, .control-val {
-      white-space: nowrap !important;
-      font-size: 0.9rem !important;
-    }
-
-    /* 3D Tactile Preset / Chip / Tab Buttons (Zero 1-char overflow on 390px) */
-    .p-btn, .chip, .sub-chip, .cap-tab {
-      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
-      border: 1.5px solid #475569 !important; border-top-color: #64748b !important;
-      border-radius: 14px !important;
-      padding: 10px 10px !important;
-      gap: 6px !important; min-width: 0 !important;
-      box-shadow:
-        0 4px 0 #050811,
-        0 5px 12px rgba(0, 0, 0, 0.4),
-        inset 0 1.5px 1px rgba(255, 255, 255, 0.14) !important;
-      transition: transform 0.08s ease, box-shadow 0.08s ease !important;
-    }
-    .cap-tab {
-      white-space: nowrap !important;
-      font-size: 0.78rem !important;
-      padding: 9px 4px !important;
-    }
-    .p-btn.active, .chip.on, .sub-chip.active, .cap-tab.active {
-      background: linear-gradient(180deg, #065f46 0%, #064e3b 100%) !important;
-      border: 2px solid #34d399 !important; border-top-color: #a7f3d0 !important;
-      color: #ffffff !important;
-      box-shadow:
-        0 4px 0 #022c22,
-        0 0 16px rgba(16, 185, 129, 0.35),
-        inset 0 1.5px 1px rgba(255, 255, 255, 0.35) !important;
-    }
-    .p-btn:active, .chip:active, .sub-chip:active, .cap-tab:active {
-      transform: translateY(2px) !important;
-    }
-    .p-icon, .chip-icon {
-      width: 24px !important; height: 24px !important;
-      border-radius: 7px !important;
-      background: rgba(16, 185, 129, 0.16) !important;
-      border: 1px solid rgba(52, 211, 153, 0.35) !important;
-      display: inline-flex !important; align-items: center !important; justify-content: center !important;
-      flex-shrink: 0 !important;
-    }
-    .sub-chip .chip-icon { display: none !important; }
-    .p-icon .svg-ic, .chip-icon .svg-ic { margin-right: 0 !important; width: 14px !important; height: 14px !important; }
-    .p-name, .chip-name, .g-name, .c-name {
-      font-size: 0.84rem !important; font-weight: 900 !important;
-      white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
-    }
-    .p-tag, .p-sub, .chip-sub, .chip-price, .g-sub, .c-sub {
-      font-size: 0.71rem !important;
-      white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
-    }
-
-    /* 3D Recessed Groove Track & 3D Glossy Spherical Slider Thumb */
     input[type="range"] {
-      -webkit-appearance: none !important;
-      appearance: none !important;
-      width: 100% !important;
-      height: 12px !important;
-      border-radius: 999px !important;
-      background: linear-gradient(180deg, #050811 0%, #1e293b 100%) !important;
-      border: 1.5px solid #334155 !important;
-      border-bottom-color: #64748b !important;
-      box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.85) !important;
-      outline: none !important;
-      margin: 6px 0 !important;
+      -webkit-appearance: none; appearance: none;
+      width: 100%; height: 8px; border-radius: 999px;
+      background: #090e1a; border: 1px solid rgba(148,163,184,0.25);
+      outline: none; cursor: pointer;
     }
     input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none !important;
-      appearance: none !important;
-      width: 26px !important;
-      height: 26px !important;
-      border-radius: 50% !important;
-      background: radial-gradient(circle at 35% 30%, #ffffff 0%, #6ee7b7 28%, #10b981 72%, #047857 100%) !important;
-      border: 2px solid #ffffff !important;
-      box-shadow: 0 3px 0 #064e3b, 0 5px 10px rgba(0, 0, 0, 0.65) !important;
-      cursor: pointer !important;
+      -webkit-appearance: none; appearance: none;
+      width: 24px; height: 24px; border-radius: 50%;
+      background: linear-gradient(180deg, var(--light) 0%, var(--c1) 55%, var(--c2) 100%);
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.65), 0 0 10px var(--theme-glow);
+      cursor: pointer;
     }
 
-    /* Section Titles: 1-line clean display */
-    .sec-title, .rec-title, .rep-head-title {
-      font-size: 0.88rem !important; font-weight: 900 !important;
-      white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
+    /* ② Real-time Result Card (Immediately below Input Card, ZERO ad buttons inside) */
+    .result-card {
+      background: var(--result-bg);
+      border: 2px solid var(--theme-border);
+      border-radius: 16px;
+      padding: 12px 13px;
+      margin-bottom: 11px;
+      text-align: center;
+      box-shadow: 0 5px 0 #020617, 0 10px 24px rgba(0,0,0,0.5), 0 0 20px var(--theme-glow), inset 0 1.5px 1px rgba(255,255,255,0.18);
+    }
+    .res-eyebrow {
+      font-size: 0.73rem; font-weight: 800; color: #e2e8f0;
+      margin-bottom: 2px; white-space: nowrap;
+    }
+    .res-hero {
+      font-size: 1.72rem; font-weight: 900; color: var(--light);
+      line-height: 1.18; letter-spacing: -0.02em;
+      text-shadow: 0 2px 12px var(--theme-glow);
+      font-variant-numeric: tabular-nums;
+      margin-bottom: 8px; white-space: nowrap;
+    }
+    .res-sub-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 7px;
+    }
+    .res-pill {
+      background: rgba(2, 6, 23, 0.62);
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      border-radius: 10px; padding: 6px 6px;
+    }
+    .res-pill-lbl { font-size: 0.65rem; color: #94a3b8; font-weight: 700; white-space: nowrap; }
+    .res-pill-val {
+      font-size: 0.84rem; font-weight: 900; color: #ffffff;
+      margin-top: 1px; font-variant-numeric: tabular-nums;
+      white-space: nowrap;
     }
 
-    /* 3D Subtractive Recommendation Cards (1 Column on Mobile for 1-line Badge + 1-line Title + 3D Gold Button) */
-    .rec-grid, .tile-grid, .rec-list, .rep-list, .goods-grid {
-      display: grid !important;
-      grid-template-columns: 1fr !important;
-      gap: 10px !important;
-      min-width: 0 !important; width: 100% !important;
+    /* ③ Curated Action Cards (2 to 3 max, below result) */
+    .action-sec-title {
+      font-size: 0.75rem; font-weight: 900; color: #cbd5e1;
+      margin: 2px 2px 6px; display: flex; align-items: center; gap: 5px;
+      white-space: nowrap;
     }
-    @media (min-width: 640px) {
-      .rec-grid, .tile-grid, .goods-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
-      }
+    .action-list { display: flex; flex-direction: column; gap: 7px; }
+    .action-card {
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+      background: linear-gradient(180deg, #17223b 0%, #0f172a 100%);
+      border: 1.5px solid rgba(148, 163, 184, 0.26);
+      border-radius: 14px; padding: 9px 11px;
+      text-decoration: none; color: var(--text);
+      box-shadow: 0 4px 0 #020617, 0 6px 14px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.08);
     }
-    .tile, .rec-card, .g-card, .rep-item {
-      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
-      border: 1.5px solid #475569 !important; border-top-color: #64748b !important;
-      border-radius: 16px !important;
-      padding: 12px 13px !important;
-      min-width: 0 !important; max-width: 100% !important; overflow: hidden !important;
-      box-shadow:
-        0 5px 0 #050811,
-        0 8px 18px rgba(0, 0, 0, 0.48),
-        inset 0 1.5px 1px rgba(255, 255, 255, 0.16) !important;
+    .action-info { flex: 1; min-width: 0; }
+    .action-badge {
+      display: inline-block; font-size: 0.62rem; font-weight: 900;
+      color: var(--light); background: var(--soft-bg);
+      border: 1px solid var(--theme-border);
+      padding: 1px 7px; border-radius: 999px; margin-bottom: 3px;
     }
-    .rep-top {
-      display: flex !important; flex-direction: column-reverse !important; align-items: flex-start !important; gap: 3px !important;
-      min-width: 0 !important; max-width: 100% !important; margin-bottom: 4px !important;
+    .action-name {
+      font-size: 0.8rem; font-weight: 900; color: #ffffff;
+      line-height: 1.25; white-space: nowrap;
     }
-    .v-label, .onek-lbl {
-      white-space: nowrap !important;
-      font-size: 0.82rem !important;
+    .action-btn {
+      flex-shrink: 0;
+      padding: 8px 11px; border-radius: 10px;
+      font-size: 0.75rem; font-weight: 900;
+      color: #1e1b4b;
+      background: linear-gradient(180deg, #fde047 0%, #f59e0b 55%, #d97706 100%);
+      border: 1.5px solid #fef08a;
+      box-shadow: 0 3px 0 #78350f, inset 0 1px 1px rgba(255,255,255,0.65);
+      white-space: nowrap;
     }
-    .rec-desc, .rep-desc, .rec-payback, .rec-pb, .g-roi { display: none !important; }
-    .t-tag, .rec-badge, .g-tag, .rep-tag {
-      display: inline-flex !important; align-items: center !important;
-      font-size: 0.72rem !important; font-weight: 900 !important;
-      color: #34d399 !important;
-      background: rgba(16, 185, 129, 0.14) !important;
-      border: 1px solid rgba(52, 211, 153, 0.38) !important;
-      padding: 2px 9px !important; border-radius: 999px !important;
-      margin-bottom: 4px !important; white-space: nowrap !important;
+    .action-card.secondary .action-btn {
+      color: #ffffff;
+      background: linear-gradient(180deg, var(--c1) 0%, var(--c2) 100%);
+      border-color: var(--light);
+      box-shadow: 0 3px 0 #020617, inset 0 1px 1px rgba(255,255,255,0.35);
     }
-    .t-name, .rec-name, .g-title, .rep-title {
-      font-size: 0.85rem !important; font-weight: 900 !important;
-      color: #ffffff !important; line-height: 1.35 !important;
-      margin-bottom: 8px !important; width: 100% !important;
-      white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
-    }
-
-    /* 3D Amber Gold Glossy CTA Buttons */
-    .hero-cta, .btn-rakuten, .t-btn {
-      display: flex !important; align-items: center !important; justify-content: center !important; gap: 4px !important;
-      background: linear-gradient(180deg, #fde047 0%, #f59e0b 58%, #d97706 100%) !important;
-      border: 1.5px solid #fef08a !important; border-top-color: #ffffff !important;
-      color: #090d16 !important;
-      font-weight: 900 !important; font-size: 0.8rem !important;
-      padding: 9px 10px !important; border-radius: 12px !important;
-      text-decoration: none !important; text-align: center !important;
-      white-space: nowrap !important; min-width: 0 !important; max-width: 100% !important;
-      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.65) !important;
-      box-shadow:
-        0 4px 0 #92400e,
-        0 6px 14px rgba(245, 158, 11, 0.38),
-        inset 0 2px 1px rgba(255, 255, 255, 0.85) !important;
-      transition: transform 0.08s ease, box-shadow 0.08s ease !important;
-    }
-    .hero-cta:active, .btn-rakuten:active, .t-btn:active {
-      transform: translateY(3px) !important;
-      box-shadow: 0 1px 0 #92400e !important;
-    }
-    footer a { white-space: nowrap !important; }
-
   </style>
 </head>
 <body>
   <div class="container">
-    <a href="/?tab=tools&v=7.7" class="back-link">← 暮らしの損得計算一覧へ戻る</a>
-    <h1><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg> 楽天マラソン 上限＆損得チェッカー</h1>
-    <p class="lead">スライダー2本で1,000円買い足し損得と上限枠を即判定</p>
+    <div class="top-bar">
+      <a href="/?tab=tools&v=7.8" class="back-pill">← 損得計算一覧へ</a>
+      <span class="top-tag">7,000P上限対応</span>
+    </div>
+    <div class="page-header">
+      <h1 class="page-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        楽天マラソン 上限＆損得
+      </h1>
+      <p class="page-sub">あと何円まで上限内か・1,000円買い足すと実質いくらかを1秒判定</p>
+    </div>
 
-    <!-- 1. 結論（ファーストビュー最上部） -->
-    <div class="result-grid">
-      <div class="onek-box">
-        <div class="onek-lbl"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> いま1,000円ポッキリを1店舗買い足すと</div>
-        <div class="onek-main" id="onekMain">実質 450円 で商品が買えます！</div>
-        <div class="onek-sub" id="onekSub">（これまでの買い物にも+1%が付き、合計 +550P 増えるため）</div>
+    <!-- ① 統合入力カード -->
+    <div class="input-card">
+      <div class="sec-label">① いまの買い回り状況を選択 <span class="hint">ワンタップ or スライド</span></div>
+      <div class="preset-grid" id="rakutenGrid">
+        <button type="button" class="preset-btn" data-shops="3" data-spend="15000">3店舗・1.5万円<small>序盤の買い足し判定</small></button>
+        <button type="button" class="preset-btn active" data-shops="5" data-spend="35000">5店舗・3.5万円<small>中盤の折り返し判定</small></button>
+        <button type="button" class="preset-btn" data-shops="7" data-spend="55000">7店舗・5.5万円<small>後半の上限チェック</small></button>
+        <button type="button" class="preset-btn" data-shops="9" data-spend="75000">9店舗・7.5万円<small>完走直前の枠確認</small></button>
       </div>
 
-      <div class="cap-box" id="capBox">
-        <div class="cap-main" id="capMain">あと 125,000 円まで上限に達しません</div>
-        <div class="cap-sub" id="capSub">5店舗（+4%）の上限到達ライン：175,000円 ｜ 現在獲得：+2,000P</div>
+      <div class="slider-row">
+        <div class="slider-top">
+          <span class="slider-name">② 現在の買い回り店舗数</span>
+          <span class="slider-val" id="shopsVal">5 店舗（+4%）</span>
+        </div>
+        <input type="range" id="shopsSlider" min="1" max="10" step="1" value="5">
+      </div>
+      <div class="slider-row">
+        <div class="slider-top">
+          <span class="slider-name">③ 現在の購入合計金額（税込）</span>
+          <span class="slider-val" id="spendVal">35,000 円</span>
+        </div>
+        <input type="range" id="spendSlider" min="0" max="120000" step="2500" value="35000">
       </div>
     </div>
 
-    <!-- 2. スライダー2本だけの操作パネル -->
-    <div class="control-card">
-      <div class="cap-tabs">
-        <button type="button" class="cap-tab" id="tab5000" onclick="setCap(5000)">上限 5,000P</button>
-        <button type="button" class="cap-tab active" id="tab7000" onclick="setCap(7000)">上限 7,000P</button>
-        <button type="button" class="cap-tab" id="tab10000" onclick="setCap(10000)">上限 10,000P</button>
-      </div>
-
-      <div class="s-row">
-        <div class="s-head">
-          <span><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg> いま何店舗買った？</span>
-          <span style="color:var(--amber);" id="lblShops">5 店舗（+4%中）</span>
+    <!-- ② リアルタイム計算結果カード（1枚に統合） -->
+    <div class="result-card">
+      <div class="res-eyebrow">上限7,000Pまでまだ買える残り枠</div>
+      <div class="res-hero" id="remainCapVal">あと 140,000 円</div>
+      <div class="res-sub-grid">
+        <div class="res-pill">
+          <div class="res-pill-lbl">1,000円買い足しの実質負担</div>
+          <div class="res-pill-val" id="nextShopNetVal">実質 590 円（+410P得）</div>
         </div>
-        <input type="range" id="inShops" min="1" max="10" step="1" value="5" oninput="calc()">
-      </div>
-
-      <div class="s-row">
-        <div class="s-head">
-          <span><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M14.8 9A2 2 0 0 0 13 8h-2a2 2 0 0 0 0 4h2a2 2 0 0 1 0 4h-2a2 2 0 0 1-1.8-1"/><path d="M12 6v2m0 8v2"/></svg> いま合計いくら買った？</span>
-          <span style="color:var(--accent);" id="lblSpend">50,000 円</span>
+        <div class="res-pill">
+          <div class="res-pill-lbl">現在の買い回り獲得予定</div>
+          <div class="res-pill-val" id="curPointsVal">1,400 P（上限内）</div>
         </div>
-        <input type="range" id="inSpend" min="0" max="160000" step="5000" value="50000" oninput="calc()">
       </div>
     </div>
 
-    <!-- 3. 1,000円ポッキリ鉄板タイル（文字少なく直感タップ） -->
-    <div class="sec-title"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#fb923c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c1 3 4 5 4 9a4 4 0 1 1-8 0c0-4 3-6 4-9z"/><path d="M12 14v7"/></svg> 店舗数稼ぎの定番「1,000円ポッキリ」厳選2選</div>
-    <div class="tile-grid" id="onekGrid"></div>
-
-    <!-- 4. 残り枠消化のふるさと納税タイル -->
-    <div class="sec-title"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13"/><path d="M3 12h18"/><path d="M12 8c-2-3-6-3-6 0s6 0 6 0z"/><path d="M12 8c2-3 6-3 6 0s-6 0-6 0z"/></svg> 残り枠の消化に！ふるさと納税の鉄板2選</div>
-    <div class="tile-grid" id="furuGrid"></div>
+    <!-- ③ 厳選2枚の解決策カード -->
+    <div class="action-sec-title">▼ 店舗数稼ぎに一番人気の1,000円ポッキリ＆返礼品（PR）</div>
+    <div class="action-list">
+      <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F1000%25E5%2586%2586%25E3%2583%259D%25E3%2583%2583%25E3%2582%25AD%25E3%2583%25AA%2520%25E9%2580%2581%25E6%2596%2599%25E7%2584%25A1%25E6%2596%2599%2520%25E6%25A5%25BD%25E5%2588%25B8%2520%25E3%2582%25B0%25E3%2583%25AB%25E3%2583%25A1%2520%25E6%2597%25A5%25E7%2594%25A8%25E5%2593%2581%2F" target="_blank" rel="nofollow sponsored noopener" class="action-card">
+        <div class="action-info">
+          <span class="action-badge">あと1店舗の買い足し定番</span>
+          <div class="action-name">楽天 1,000円ポッキリ＆楽券特集</div>
+        </div>
+        <span class="action-btn">楽天で見る ↗</span>
+      </a>
+      <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E3%2581%25B5%25E3%2582%258B%25E3%2581%2595%25E3%2581%25A8%25E7%25B4%258D%25E7%25A8%258E%25201000%25E5%2586%2586%25202000%25E5%2586%2586%25203000%25E5%2586%2586%2520%25E3%2583%25A9%25E3%2583%25B3%25E3%2582%25AD%25E3%2583%25B3%25E3%2582%25B0%2F" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
+        <div class="action-info">
+          <span class="action-badge">買い回り＋節税の二重取り</span>
+          <div class="action-name">楽天ふるさと納税 1,000円〜返礼品</div>
+        </div>
+        <span class="action-btn">返礼品を見る ↗</span>
+      </a>
+    </div>
   </div>
 
   <script>
-    const AID = '5876771';
-    const PID = '54';
-    let cap = 7000;
+    const shopsSlider = document.getElementById('shopsSlider');
+    const spendSlider = document.getElementById('spendSlider');
+    const shopsVal = document.getElementById('shopsVal');
+    const spendVal = document.getElementById('spendVal');
+    const remainCapVal = document.getElementById('remainCapVal');
+    const nextShopNetVal = document.getElementById('nextShopNetVal');
+    const curPointsVal = document.getElementById('curPointsVal');
+    const CAP = 7000;
 
-    function rakutenUrl(q) {
-      return 'https://af.moshimo.com/af/c/click?a_id=' + AID + '&p_id=' + PID + '&pc_id=54&pl_id=616&url=' +
-        encodeURIComponent('https://search.rakuten.co.jp/search/mall/' + encodeURIComponent(q) + '/');
-    }
+    function update() {
+      const shops = parseInt(shopsSlider.value, 10);
+      const spend = parseInt(spendSlider.value, 10);
+      const bonusRate = Math.max(0, shops - 1);
+      shopsVal.textContent = shops + ' 店舗（+' + bonusRate + '%）';
+      spendVal.textContent = spend.toLocaleString() + ' 円';
 
-    const ONEK = [
-      { tag: '送料0・無駄ゼロ', name: '楽券（コメダ・サーティワン等1,000円券）', q: '楽券 1000円 デジタルギフト' },
-      { tag: '人気No.1おやつ', name: '無塩ミックスナッツ 大容量 1,000円送料無料', q: 'ミックスナッツ 1000円ポッキリ 送料無料' }
-    ];
-
-    const FURU = [
-      { tag: '食費削減の王様', name: 'ふるさと納税「新米・無洗米 10kg〜」', q: 'ふるさと納税 米 無洗米 ランキング' },
-      { tag: '半年間買わずに済む', name: 'ふるさと納税「トイレットペーパー大容量」', q: 'ふるさと納税 トイレットペーパー ティッシュ' }
-    ];
-
-    function renderTiles() {
-      document.getElementById('onekGrid').innerHTML = ONEK.map(x => `
-        <a href="${rakutenUrl(x.q)}" target="_blank" rel="nofollow sponsored noopener" class="tile">
-          <div>
-            <div class="t-tag">${x.tag}</div>
-            <div class="t-name">${x.name}</div>
-          </div>
-          <div class="t-btn"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg> 楽天で見る ↗</div>
-        </a>
-      `).join('');
-
-      document.getElementById('furuGrid').innerHTML = FURU.map(x => `
-        <a href="${rakutenUrl(x.q)}" target="_blank" rel="nofollow sponsored noopener" class="tile">
-          <div>
-            <div class="t-tag" style="color:var(--green);">${x.tag}</div>
-            <div class="t-name">${x.name}</div>
-          </div>
-          <div class="t-btn"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13"/><path d="M3 12h18"/><path d="M12 8c-2-3-6-3-6 0s6 0 6 0z"/><path d="M12 8c2-3 6-3 6 0s-6 0-6 0z"/></svg> 返礼品を見る ↗</div>
-        </a>
-      `).join('');
-    }
-
-    function setCap(v) {
-      cap = v;
-      document.getElementById('tab5000').classList.toggle('active', v === 5000);
-      document.getElementById('tab7000').classList.toggle('active', v === 7000);
-      document.getElementById('tab10000').classList.toggle('active', v === 10000);
-      calc();
-    }
-
-    function calc() {
-      const shops = Number(document.getElementById('inShops').value) || 1;
-      const spend = Number(document.getElementById('inSpend').value) || 0;
-      const bonus = Math.max(0, shops - 1);
-
-      document.getElementById('lblShops').innerHTML = `${shops} 店舗（+${bonus}%中）`;
-      document.getElementById('lblSpend').innerHTML = `${spend.toLocaleString()} 円`;
-
-      const limitYen = bonus > 0 ? Math.floor(cap / (bonus / 100)) : 999999;
-      const remainYen = Math.max(0, limitYen - spend);
-      const curPts = Math.min(cap, Math.floor(spend * (bonus / 100)));
-
-      const capMain = document.getElementById('capMain');
-      const capSub = document.getElementById('capSub');
-      const capBox = document.getElementById('capBox');
+      const maxSpend = bonusRate > 0 ? Math.floor((CAP / (bonusRate / 100)) / 100) * 100 : 700000;
+      const remain = maxSpend - spend;
+      const rawPts = Math.floor(spend * (bonusRate / 100));
+      const curPts = Math.min(CAP, rawPts);
 
       if (shops === 1) {
-        capMain.innerHTML = '2店舗目からポイントが増えていきます！';
-        capMain.style.color = '#38bdf8';
-        capBox.style.borderColor = '#38bdf8';
-        capSub.innerHTML = '現在 1店舗（買い回りボーナス +0%）';
-      } else if (remainYen > 0) {
-        capMain.innerHTML = `あと ${remainYen.toLocaleString()} 円まで満額ポイント対象！`;
-        capMain.style.color = '#34d399';
-        capBox.style.borderColor = '#34d399';
-        capSub.innerHTML = `${shops}店舗の上限: ${limitYen.toLocaleString()}円 ｜ 現在獲得: +${curPts.toLocaleString()}P`;
+        remainCapVal.textContent = '2店舗目から倍率UP';
+      } else if (remain > 0) {
+        remainCapVal.textContent = 'あと ' + remain.toLocaleString() + ' 円';
       } else {
-        capMain.innerHTML = `上限（${cap.toLocaleString()}P）に達しています！`;
-        capMain.style.color = '#fb7185';
-        capBox.style.borderColor = '#fb7185';
-        capSub.innerHTML = 'これ以上の買い物は次回マラソンに回すのがお得です';
+        remainCapVal.textContent = '上限到達（+' + Math.abs(remain).toLocaleString() + '円超過）';
       }
 
-      const onekMain = document.getElementById('onekMain');
-      const onekSub = document.getElementById('onekSub');
+      curPointsVal.textContent = curPts.toLocaleString() + ' P' + (rawPts > CAP ? '（上限到達）' : '（上限内）');
 
       if (shops >= 10) {
-        onekMain.innerHTML = '10店舗完走（最大+9%）達成済み！';
-        onekSub.innerHTML = `残り枠（あと ${remainYen.toLocaleString()}円）でふるさと納税などを買うのが一番お得です。`;
+        nextShopNetVal.textContent = '10店舗完走済み（最大+9%）';
       } else {
-        const nextBonus = bonus + 1;
-        const nextPts = Math.min(cap, Math.floor((spend + 1000) * (nextBonus / 100)));
-        const diffPts = (nextPts - curPts) + 50; // 基本SPU5%分(+50P)を加味
-        const realCost = 1000 - diffPts;
-
-        if (realCost <= 0) {
-          onekMain.innerHTML = `実質タダどころか <span style="color:#34d399;">+${Math.abs(realCost).toLocaleString()}円の黒字</span>！`;
-          onekSub.innerHTML = `1,000円買い足すとポイントが +${diffPts.toLocaleString()}P 増えるため、買わないと損です！`;
+        const nextShops = shops + 1;
+        const nextBonusRate = nextShops - 1;
+        const nextPts = Math.min(CAP, Math.floor((spend + 1000) * (nextBonusRate / 100)));
+        const gainedPts = Math.max(0, nextPts - curPts) + 10;
+        const netCost = 1000 - gainedPts;
+        if (netCost <= 0) {
+          nextShopNetVal.textContent = '実質 0 円（+' + Math.abs(netCost).toLocaleString() + 'P黒字！）';
         } else {
-          onekMain.innerHTML = `実質 <span style="color:#fbbf24;">${realCost.toLocaleString()}円</span> で1,000円の商品が買えます！`;
-          onekSub.innerHTML = `（これまでの${spend.toLocaleString()}円にも+1%が付き、計 +${diffPts.toLocaleString()}P 増えるため）`;
+          nextShopNetVal.textContent = '実質 ' + netCost.toLocaleString() + ' 円（+' + gainedPts.toLocaleString() + 'P得）';
         }
       }
     }
 
-    renderTiles();
-    calc();
+    document.querySelectorAll('#rakutenGrid .preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#rakutenGrid .preset-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        shopsSlider.value = btn.getAttribute('data-shops');
+        spendSlider.value = btn.getAttribute('data-spend');
+        update();
+      });
+    });
+    shopsSlider.addEventListener('input', update);
+    spendSlider.addEventListener('input', update);
+    update();
   </script>
-
 <!-- Moshimo Official Rakuten Sponsor -->
 <footer style="max-width: 580px; margin: 28px auto 16px; padding: 14px 16px 0; border-top: 1px solid rgba(148,163,184,0.18); text-align: center; font-size: 0.74rem; color: #64748b;">
   <div style="margin-bottom: 6px;">
-    <a href="/?tab=tools&v=7.7" style="color: #94a3b8; text-decoration: none; font-weight: 700;">← 暮らしの損得計算一覧へ</a>
+    <a href="/?tab=tools&v=7.8" style="color: #94a3b8; text-decoration: none; font-weight: 700;">← 損得計算一覧へ</a>
     <span style="margin: 0 8px; color: #475569;">｜</span>
-    <a href="/?tab=games&v=7.7" style="color: #94a3b8; text-decoration: none;">脳トレゲーム一覧</a>
+    <a href="/?tab=games&v=7.8" style="color: #94a3b8; text-decoration: none;">脳トレゲーム一覧</a>
     <span style="margin: 0 8px; color: #475569;">｜</span>
     <a href="/about/" style="color: #94a3b8; text-decoration: none;">運営者情報</a>
   </div>
