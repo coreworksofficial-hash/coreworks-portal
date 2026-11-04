@@ -25,81 +25,90 @@
     p { font-size: 0.82rem; color: #cbd5e1; text-align: center; margin-bottom: 16px; font-weight: 600; white-space: nowrap; }
     .list { display: flex; flex-direction: column; gap: 12px; }
     .apk-card {
+      --t-light: #34d399; --t-mid: #10b981; --t-dark: #059669;
+      --t-border: #a7f3d0; --t-shadow: #064e3b; --t-glow: rgba(16, 185, 129, 0.42);
+      --t-text: #042f2e; --t-tshadow: rgba(255, 255, 255, 0.55);
       display: flex; align-items: center; gap: 12px;
       background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
-      border: 1.5px solid #334155; border-top-color: #64748b; border-left: 4px solid #10b981;
-      border-radius: 16px; padding: 12px 13px; text-decoration: none; color: inherit;
+      border: 1.5px solid #334155; border-top-color: #64748b; border-left: 5px solid var(--t-mid);
+      border-radius: 16px; padding: 11px 12px; text-decoration: none; color: inherit;
       box-shadow: 0 5px 0 #050811, 0 8px 18px rgba(0,0,0,0.5), inset 0 1.5px 1px rgba(255,255,255,0.16);
       transition: transform 0.08s ease, box-shadow 0.08s ease;
     }
     .apk-card:active { transform: translateY(3px); box-shadow: 0 2px 0 #050811; }
+    .theme-royalblue { --t-light:#60a5fa; --t-mid:#3b82f6; --t-dark:#1d4ed8; --t-border:#bfdbfe; --t-shadow:#1e3a8a; --t-glow:rgba(59,130,246,0.48); --t-text:#ffffff; --t-tshadow:rgba(0,0,0,0.6); }
+    .theme-magenta { --t-light:#e879f9; --t-mid:#d946ef; --t-dark:#9333ea; --t-border:#f5d0fe; --t-shadow:#581c87; --t-glow:rgba(217,70,239,0.48); --t-text:#ffffff; --t-tshadow:rgba(0,0,0,0.6); }
+    .theme-emerald { --t-light:#34d399; --t-mid:#10b981; --t-dark:#047857; --t-border:#a7f3d0; --t-shadow:#064e3b; --t-glow:rgba(16,185,129,0.42); --t-text:#042f2e; --t-tshadow:rgba(255,255,255,0.55); }
+    .theme-amber { --t-light:#fde047; --t-mid:#f59e0b; --t-dark:#d97706; --t-border:#fef08a; --t-shadow:#78350f; --t-glow:rgba(245,158,11,0.42); --t-text:#090d16; --t-tshadow:rgba(255,255,255,0.65); }
+    .theme-cyan { --t-light:#67e8f9; --t-mid:#06b6d4; --t-dark:#0284c7; --t-border:#cffafe; --t-shadow:#0c4a6e; --t-glow:rgba(6,182,212,0.42); --t-text:#082f49; --t-tshadow:rgba(255,255,255,0.6); }
+    .theme-crimson { --t-light:#fb7185; --t-mid:#ef4444; --t-dark:#b91c1c; --t-border:#fecaca; --t-shadow:#7f1d1d; --t-glow:rgba(239,68,68,0.45); --t-text:#ffffff; --t-tshadow:rgba(0,0,0,0.65); }
     .apk-icon {
       width: 54px; height: 54px; border-radius: 14px; flex-shrink: 0; object-fit: cover;
-      border: 1.5px solid #6ee7b7; border-top-color: #ffffff;
-      box-shadow: 0 4px 0 #022c22, 0 6px 12px rgba(0,0,0,0.45);
+      border: 2px solid var(--t-mid); border-top-color: #ffffff;
+      box-shadow: 0 4px 0 var(--t-shadow), 0 0 14px var(--t-glow);
     }
     .apk-info { flex: 1; min-width: 0; }
     .apk-title { font-size: 0.98rem; font-weight: 900; color: #ffffff; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .apk-pkg { font-size: 0.75rem; color: #34d399; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .apk-pkg { font-size: 0.75rem; color: var(--t-light); font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .apk-dl {
-      background: linear-gradient(180deg, #34d399 0%, #10b981 55%, #059669 100%);
-      border: 1.5px solid #a7f3d0; border-top-color: #ffffff;
-      color: #042f2e; font-weight: 900; font-size: 0.78rem; padding: 8px 11px; border-radius: 999px; flex-shrink: 0; white-space: nowrap;
-      text-shadow: 0 1px 0 rgba(255,255,255,0.5);
-      box-shadow: 0 3px 0 #064e3b, inset 0 1.5px 1px rgba(255,255,255,0.7);
+      background: linear-gradient(180deg, var(--t-light) 0%, var(--t-mid) 55%, var(--t-dark) 100%);
+      border: 1.5px solid var(--t-border); border-top-color: #ffffff;
+      color: var(--t-text); font-weight: 900; font-size: 0.78rem; padding: 8px 11px; border-radius: 999px; flex-shrink: 0; white-space: nowrap;
+      text-shadow: 0 1px 1px var(--t-tshadow);
+      box-shadow: 0 3px 0 var(--t-shadow), 0 4px 10px var(--t-glow), inset 0 1.5px 1px rgba(255,255,255,0.65);
     }
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="back-nav">
-      <a href="/?tab=games" class="back-link">← 脳トレゲーム一覧へ戻る</a>
+      <a href="/?tab=games&v=7.7" class="back-link">← 脳トレゲーム一覧へ戻る</a>
     </div>
     <h1><svg style="width:1.15em;height:1.15em;vertical-align:-0.18em;margin-right:5px;" viewBox="0 0 24 24" fill="none"><rect x="5" y="2" width="14" height="20" rx="3" fill="#38bdf8" stroke="#e0f2fe" stroke-width="1.6"/><rect x="7" y="5" width="10" height="13" rx="1" fill="#0f172a"/><circle cx="12" cy="19.8" r="1" fill="#0f172a"/></svg>Coreworks 公式Androidアプリ</h1>
     <p>瞬間脳トレIQシリーズ 公式APK直ダウンロード（全6種）</p>
     <div class="list">
-      <a href="./KanjiBrainIQ_v6.apk?v=7.4" download="KanjiBrainIQ_v6.apk" class="apk-card">
-        <img src="./icons/kanji_icon_512.png?v=7.4" alt="漢字間違い探しIQ" class="apk-icon">
+      <a href="./KanjiBrainIQ_v6.apk?v=7.7" download="KanjiBrainIQ_v6.apk" class="apk-card theme-royalblue">
+        <img src="./icons/kanji_icon_512.png?v=7.7" alt="漢字間違い探しIQ" class="apk-icon">
         <div class="apk-info">
           <div class="apk-title">漢字間違い探しIQ</div>
           <div class="apk-pkg">KanjiBrainIQ_v6.apk</div>
         </div>
         <div class="apk-dl">APK DL ↓</div>
       </a>
-      <a href="./ColorSenseIQ_v6.apk?v=7.4" download="ColorSenseIQ_v6.apk" class="apk-card">
-        <img src="./icons/color_icon_512.png?v=7.4" alt="色彩センス！絶対色感" class="apk-icon">
+      <a href="./ColorSenseIQ_v6.apk?v=7.7" download="ColorSenseIQ_v6.apk" class="apk-card theme-magenta">
+        <img src="./icons/color_icon_512.png?v=7.7" alt="色彩センス！絶対色感" class="apk-icon">
         <div class="apk-info">
           <div class="apk-title">色彩センス！絶対色感</div>
           <div class="apk-pkg">ColorSenseIQ_v6.apk</div>
         </div>
         <div class="apk-dl">APK DL ↓</div>
       </a>
-      <a href="./MakeTenIQ_v6.apk?v=7.4" download="MakeTenIQ_v6.apk" class="apk-card">
-        <img src="./icons/maketen_icon_512.png?v=7.4" alt="瞬間暗算！テンパズル" class="apk-icon">
+      <a href="./MakeTenIQ_v6.apk?v=7.7" download="MakeTenIQ_v6.apk" class="apk-card theme-emerald">
+        <img src="./icons/maketen_icon_512.png?v=7.7" alt="瞬間暗算！テンパズル" class="apk-icon">
         <div class="apk-info">
           <div class="apk-title">瞬間暗算！テンパズル</div>
           <div class="apk-pkg">MakeTenIQ_v6.apk</div>
         </div>
         <div class="apk-dl">APK DL ↓</div>
       </a>
-      <a href="./FlashMemoryIQ_v6.apk?v=7.4" download="FlashMemoryIQ_v6.apk" class="apk-card">
-        <img src="./icons/memory_icon_512.png?v=7.4" alt="1秒記憶！フラッシュ" class="apk-icon">
+      <a href="./FlashMemoryIQ_v6.apk?v=7.7" download="FlashMemoryIQ_v6.apk" class="apk-card theme-amber">
+        <img src="./icons/memory_icon_512.png?v=7.7" alt="1秒記憶！フラッシュ" class="apk-icon">
         <div class="apk-info">
           <div class="apk-title">1秒記憶！フラッシュ</div>
           <div class="apk-pkg">FlashMemoryIQ_v6.apk</div>
         </div>
         <div class="apk-dl">APK DL ↓</div>
       </a>
-      <a href="./ShapeMirrorIQ_v6.apk?v=7.4" download="ShapeMirrorIQ_v6.apk" class="apk-card">
-        <img src="./icons/shape_icon_512.png?v=7.4" alt="直感回転！図形パズル" class="apk-icon">
+      <a href="./ShapeMirrorIQ_v6.apk?v=7.7" download="ShapeMirrorIQ_v6.apk" class="apk-card theme-cyan">
+        <img src="./icons/shape_icon_512.png?v=7.7" alt="直感回転！図形パズル" class="apk-icon">
         <div class="apk-info">
           <div class="apk-title">直感回転！図形パズル</div>
           <div class="apk-pkg">ShapeMirrorIQ_v6.apk</div>
         </div>
         <div class="apk-dl">APK DL ↓</div>
       </a>
-      <a href="./SpeedNumberIQ_v6.apk?v=7.4" download="SpeedNumberIQ_v6.apk" class="apk-card">
-        <img src="./icons/speed_icon_512.png?v=7.4" alt="爆速連打！数字タップ" class="apk-icon">
+      <a href="./SpeedNumberIQ_v6.apk?v=7.7" download="SpeedNumberIQ_v6.apk" class="apk-card theme-crimson">
+        <img src="./icons/speed_icon_512.png?v=7.7" alt="爆速連打！数字タップ" class="apk-icon">
         <div class="apk-info">
           <div class="apk-title">爆速連打！数字タップ</div>
           <div class="apk-pkg">SpeedNumberIQ_v6.apk</div>

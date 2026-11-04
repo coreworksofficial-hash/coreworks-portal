@@ -13,43 +13,54 @@
       --subtle: #94a3b8;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    html, body {
-      overflow-x: hidden; width: 100%;
-      background: radial-gradient(circle at 50% 0%, #172554 0%, #0b1120 55%, #060a14 100%);
+    body {
+      background: radial-gradient(circle at 50% 0%, #172554 0%, #0b1120 52%, #050811 100%);
       color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", sans-serif;
-      font-size: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
       line-height: 1.45;
+      padding: 16px 12px 44px;
       min-height: 100vh;
     }
-    .wrap { max-width: 640px; margin: 0 auto; padding: 18px 14px 40px; }
+    .wrap { max-width: 780px; margin: 0 auto; }
+    .svg-ic { width: 25px; height: 25px; display: block; flex-shrink: 0; }
 
-    /* 1. ヒーローヘッダー（1行完結・途中改行ゼロ） */
-    .hero { text-align: center; margin-bottom: 16px; }
+    /* 1. 3Dダークガラス・ヒーローヘッダー */
+    .hero {
+      text-align: center;
+      margin-bottom: 14px;
+      padding: 15px 14px 13px;
+      background: linear-gradient(180deg, rgba(30, 41, 59, 0.92) 0%, rgba(15, 23, 42, 0.96) 100%);
+      border: 1.5px solid #475569;
+      border-top-color: #94a3b8;
+      border-radius: 20px;
+      box-shadow:
+        0 6px 0 #020617,
+        0 10px 24px rgba(0, 0, 0, 0.55),
+        inset 0 1.5px 1px rgba(255, 255, 255, 0.22);
+    }
     .hero-badge {
-      display: inline-flex; align-items: center; gap: 5px;
-      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
-      border: 1.5px solid #475569; border-top-color: #94a3b8;
-      border-radius: 999px; padding: 3px 12px;
-      font-size: 0.72rem; font-weight: 900; color: #38bdf8;
-      letter-spacing: 0.06em; margin-bottom: 6px;
-      box-shadow: 0 3px 0 #020617, inset 0 1px 1px rgba(255,255,255,0.25);
+      display: inline-block;
+      background: linear-gradient(180deg, #059669 0%, #065f46 100%);
+      border: 1px solid #6ee7b7;
+      color: #ecfdf5;
+      font-size: 0.68rem; font-weight: 900; padding: 2px 10px;
+      border-radius: 999px; margin-bottom: 5px; letter-spacing: 0.04em;
+      box-shadow: 0 2px 0 #022c22, inset 0 1px 1px rgba(255, 255, 255, 0.35);
     }
     .hero h1 {
-      font-size: 1.25rem; font-weight: 900; color: #ffffff;
-      letter-spacing: -0.01em; margin-bottom: 3px;
-      white-space: nowrap;
+      font-size: 1.24rem; font-weight: 900; letter-spacing: -0.01em;
+      color: #ffffff; margin-bottom: 3px;
       text-shadow: 0 2px 6px rgba(0, 0, 0, 0.65);
     }
-    .hero p { font-size: 0.84rem; color: var(--muted); font-weight: 600; white-space: nowrap; }
+    .hero p { font-size: 0.8rem; color: var(--muted); font-weight: 600; }
 
-    /* 2. 3Dダークガラス・カテゴリ切り替えタブ（2タブ構成） */
+    /* 2. 3Dグロス・2大ジャンル切替タブ */
     .tab-bar {
       display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;
       background: linear-gradient(180deg, #090d16 0%, #111827 100%);
       padding: 6px; border-radius: 16px;
       border: 2px solid #334155; border-bottom-color: #475569;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
       box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.8), 0 2px 0 rgba(255, 255, 255, 0.06);
     }
     .tab-btn {
@@ -70,29 +81,40 @@
         inset 0 2px 1px rgba(255, 255, 255, 0.75);
     }
     .tab-btn[data-tab="game"].active {
-      background: linear-gradient(180deg, #818cf8 0%, #6366f1 55%, #4f46e5 100%);
-      border-color: #c7d2fe; border-top-color: #ffffff;
+      background: linear-gradient(180deg, #60a5fa 0%, #3b82f6 55%, #1d4ed8 100%);
+      border-color: #bfdbfe; border-top-color: #ffffff;
       color: #ffffff; font-weight: 900;
       text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
       box-shadow:
-        0 4px 0 #312e81,
-        0 6px 14px rgba(99, 102, 241, 0.45),
+        0 4px 0 #1e3a8a,
+        0 6px 14px rgba(59, 130, 246, 0.45),
         inset 0 2px 1px rgba(255, 255, 255, 0.55);
     }
     .tab-btn:active { transform: translateY(2px); }
 
-    /* 3. 3Dタクタイル・カードリスト */
+    /* 3. 3Dタクタイル・カードリスト（全カード個別テーマカラー対応） */
     .tab-pane { display: none; }
     .tab-pane.active { display: block; }
-    .app-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    .app-grid { display: grid; grid-template-columns: 1fr; gap: 11px; }
     @media (min-width: 720px) {
       .app-grid { grid-template-columns: repeat(2, 1fr); }
     }
     .app-card {
+      --t-light: #34d399;
+      --t-mid: #10b981;
+      --t-dark: #059669;
+      --t-border: #a7f3d0;
+      --t-shadow: #064e3b;
+      --t-glow: rgba(16, 185, 129, 0.35);
+      --t-text: #042f2e;
+      --t-tshadow: rgba(255, 255, 255, 0.5);
+
       background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
-      border: 1.5px solid #334155; border-top-color: #64748b;
+      border: 1.5px solid #334155;
+      border-top-color: #64748b;
+      border-left: 5px solid var(--t-mid);
       border-radius: 16px;
-      padding: 12px 13px; display: flex; align-items: center; gap: 12px;
+      padding: 11px 12px; display: flex; align-items: center; gap: 12px;
       text-decoration: none; color: inherit; min-width: 0;
       box-shadow:
         0 5px 0 #050811,
@@ -100,37 +122,82 @@
         inset 0 1.5px 1px rgba(255, 255, 255, 0.16);
       transition: transform 0.08s ease, box-shadow 0.08s ease;
     }
-    .app-card.card-calc { border-left: 4px solid #10b981; }
-    .app-card.card-game { border-left: 4px solid #6366f1; }
     .app-card:active {
       transform: translateY(3px);
       box-shadow: 0 2px 0 #050811, 0 3px 8px rgba(0, 0, 0, 0.4);
     }
 
-    /* 3Dグロスアイコンボックス（計算ツール）＆ 3D実画像アイコン（脳トレゲーム） */
+    /* 個別テーマカラーパレット（全7計算機 ＆ 全6脳トレゲーム） */
+    .theme-amber {
+      --t-light: #fde047; --t-mid: #f59e0b; --t-dark: #d97706;
+      --t-border: #fef08a; --t-shadow: #78350f; --t-glow: rgba(245, 158, 11, 0.42);
+      --t-text: #090d16; --t-tshadow: rgba(255, 255, 255, 0.65);
+    }
+    .theme-cyan {
+      --t-light: #67e8f9; --t-mid: #06b6d4; --t-dark: #0284c7;
+      --t-border: #cffafe; --t-shadow: #0c4a6e; --t-glow: rgba(6, 182, 212, 0.42);
+      --t-text: #082f49; --t-tshadow: rgba(255, 255, 255, 0.6);
+    }
+    .theme-rose {
+      --t-light: #fb7185; --t-mid: #f43f5e; --t-dark: #be123c;
+      --t-border: #fecdd3; --t-shadow: #881337; --t-glow: rgba(244, 63, 94, 0.42);
+      --t-text: #ffffff; --t-tshadow: rgba(0, 0, 0, 0.6);
+    }
+    .theme-emerald {
+      --t-light: #34d399; --t-mid: #10b981; --t-dark: #047857;
+      --t-border: #a7f3d0; --t-shadow: #064e3b; --t-glow: rgba(16, 185, 129, 0.42);
+      --t-text: #042f2e; --t-tshadow: rgba(255, 255, 255, 0.55);
+    }
+    .theme-indigo {
+      --t-light: #818cf8; --t-mid: #6366f1; --t-dark: #4338ca;
+      --t-border: #c7d2fe; --t-shadow: #312e81; --t-glow: rgba(99, 102, 241, 0.45);
+      --t-text: #ffffff; --t-tshadow: rgba(0, 0, 0, 0.6);
+    }
+    .theme-violet {
+      --t-light: #c084fc; --t-mid: #a855f7; --t-dark: #7e22ce;
+      --t-border: #e9d5ff; --t-shadow: #581c87; --t-glow: rgba(168, 85, 247, 0.45);
+      --t-text: #ffffff; --t-tshadow: rgba(0, 0, 0, 0.6);
+    }
+    .theme-crimson {
+      --t-light: #fb7185; --t-mid: #ef4444; --t-dark: #b91c1c;
+      --t-border: #fecaca; --t-shadow: #7f1d1d; --t-glow: rgba(239, 68, 68, 0.45);
+      --t-text: #ffffff; --t-tshadow: rgba(0, 0, 0, 0.65);
+    }
+    .theme-royalblue {
+      --t-light: #60a5fa; --t-mid: #3b82f6; --t-dark: #1d4ed8;
+      --t-border: #bfdbfe; --t-shadow: #1e3a8a; --t-glow: rgba(59, 130, 246, 0.48);
+      --t-text: #ffffff; --t-tshadow: rgba(0, 0, 0, 0.6);
+    }
+    .theme-magenta {
+      --t-light: #e879f9; --t-mid: #d946ef; --t-dark: #9333ea;
+      --t-border: #f5d0fe; --t-shadow: #581c87; --t-glow: rgba(217, 70, 239, 0.48);
+      --t-text: #ffffff; --t-tshadow: rgba(0, 0, 0, 0.6);
+    }
+
+    /* 54px × 54px 3Dグロスアイコンボックス（計算機）＆ 3D実画像アプリアイコン（脳トレゲーム） */
     .app-icon {
-      flex-shrink: 0; width: 52px; height: 52px;
+      flex-shrink: 0; width: 54px; height: 54px;
       display: flex; align-items: center; justify-content: center;
       border-radius: 14px;
     }
-    .card-calc .app-icon {
-      background: linear-gradient(180deg, #34d399 0%, #10b981 55%, #047857 100%);
-      border: 1.5px solid #a7f3d0; border-top-color: #ffffff;
+    .app-icon-calc {
+      background: linear-gradient(180deg, var(--t-light) 0%, var(--t-mid) 55%, var(--t-dark) 100%);
+      border: 1.5px solid var(--t-border); border-top-color: #ffffff;
       box-shadow:
-        0 4px 0 #022c22,
-        0 6px 12px rgba(0, 0, 0, 0.45),
+        0 4px 0 var(--t-shadow),
+        0 6px 14px var(--t-glow),
         inset 0 2px 1px rgba(255, 255, 255, 0.65);
     }
-    .card-calc .app-icon svg {
-      filter: drop-shadow(0 1px 2px rgba(2, 44, 34, 0.65));
+    .app-icon-calc svg {
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.55));
     }
     .app-icon-3d-img {
       padding: 0; overflow: hidden;
-      border: 1.5px solid #818cf8; border-top-color: #e0e7ff;
+      border: 2px solid var(--t-mid); border-top-color: #ffffff;
       box-shadow:
-        0 4px 0 #1e1b4b,
-        0 6px 12px rgba(0, 0, 0, 0.5),
-        inset 0 1.5px 1px rgba(255, 255, 255, 0.5);
+        0 4px 0 var(--t-shadow),
+        0 0 14px var(--t-glow),
+        inset 0 1.5px 1px rgba(255, 255, 255, 0.6);
     }
     .app-icon-3d-img img {
       width: 100%; height: 100%; object-fit: cover; display: block;
@@ -138,41 +205,32 @@
 
     .app-info { min-width: 0; flex: 1; }
     .app-title {
-      font-size: 1.02rem; font-weight: 900; color: #ffffff;
+      font-size: 1.0rem; font-weight: 900; color: #ffffff;
       line-height: 1.3; margin-bottom: 3px;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.65);
     }
     .app-sub {
-      font-size: 0.8rem; color: #cbd5e1; font-weight: 600;
+      font-size: 0.78rem; color: #cbd5e1; font-weight: 600;
       line-height: 1.3;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
 
-    /* 右端の3Dグロス・アクションピルバッジ */
+    /* 右端の3Dグロス・アクションピルボタン（カードの固有テーマカラーに連動） */
     .app-badge {
       flex-shrink: 0; font-size: 0.78rem;
       font-weight: 900; padding: 7px 11px; border-radius: 999px;
       white-space: nowrap;
-    }
-    .badge-calc {
-      background: linear-gradient(180deg, #34d399 0%, #10b981 55%, #059669 100%);
-      border: 1.5px solid #a7f3d0; border-top-color: #ffffff;
-      color: #042f2e;
-      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-      box-shadow: 0 3px 0 #064e3b, inset 0 1.5px 1px rgba(255, 255, 255, 0.7);
-    }
-    .badge-game {
-      background: linear-gradient(180deg, #818cf8 0%, #6366f1 55%, #4f46e5 100%);
-      border: 1.5px solid #c7d2fe; border-top-color: #ffffff;
-      color: #ffffff;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.55);
-      box-shadow: 0 3px 0 #312e81, inset 0 1.5px 1px rgba(255, 255, 255, 0.5);
+      background: linear-gradient(180deg, var(--t-light) 0%, var(--t-mid) 55%, var(--t-dark) 100%);
+      border: 1.5px solid var(--t-border); border-top-color: #ffffff;
+      color: var(--t-text);
+      text-shadow: 0 1px 1px var(--t-tshadow);
+      box-shadow: 0 3px 0 var(--t-shadow), 0 4px 10px var(--t-glow), inset 0 1.5px 1px rgba(255, 255, 255, 0.65);
     }
 
     /* 4. タブ連動・3要素引き算の3DグロスPRセクション（2枠のみ） */
     .pr-sec {
-      margin-top: 22px; padding-top: 16px;
+      margin-top: 20px; padding-top: 15px;
       border-top: 1.5px solid rgba(71, 85, 105, 0.5);
     }
     .pr-sec-title {
@@ -212,8 +270,8 @@
     .pr-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #92400e; }
 
     footer {
-      margin-top: 24px; text-align: center; color: var(--subtle);
-      font-size: 0.76rem; padding-top: 14px; border-top: 1px solid rgba(51, 65, 85, 0.5);
+      margin-top: 22px; text-align: center; color: var(--subtle);
+      font-size: 0.75rem; padding-top: 14px; border-top: 1px solid rgba(51, 65, 85, 0.5);
     }
     footer a { color: var(--muted); text-decoration: underline; white-space: nowrap; }
   </style>
@@ -233,61 +291,61 @@
 
     <div id="pane-calc" class="tab-pane active">
       <div class="app-grid">
-      <a href="/furusato-tax/" class="app-card card-calc">
-        <div class="app-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13"/><path d="M3 12h18"/><path d="M12 8c-2-3-6-3-6 0s6 0 6 0z"/><path d="M12 8c2-3 6-3 6 0s-6 0-6 0z"/></svg></div>
+      <a href="/furusato-tax/?v=7.7" class="app-card card-calc theme-amber">
+        <div class="app-icon app-icon-calc"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13"/><path d="M3 12h18"/><path d="M12 8c-2-3-6-3-6 0s6 0 6 0z"/><path d="M12 8c2-3 6-3 6 0s-6 0-6 0z"/></svg></div>
         <div class="app-info">
-          <div class="app-title">ふるさと納税 控除上限</div>
-          <div class="app-sub">年収から上限と黒字額を1秒判定</div>
+          <div class="app-title">ふるさと納税 上限1秒計算</div>
+          <div class="app-sub">年収・家族構成から上限額を算出</div>
         </div>
-        <div class="app-badge badge-calc" aria-hidden="true">計算 ›</div>
+        <div class="app-badge" aria-hidden="true">計算 ›</div>
       </a>
-      <a href="/payback-calc/" class="app-card card-calc">
-        <div class="app-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+      <a href="/payback-calc/?v=7.7" class="app-card card-calc theme-emerald">
+        <div class="app-icon app-icon-calc"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
         <div class="app-info">
           <div class="app-title">家電・日用品 元取り計算</div>
-          <div class="app-sub">何ヶ月で黒字になるか1秒判定</div>
+          <div class="app-sub">時短家電・日用品の回収月数計算</div>
         </div>
-        <div class="app-badge badge-calc" aria-hidden="true">計算 ›</div>
+        <div class="app-badge" aria-hidden="true">計算 ›</div>
       </a>
-      <a href="/dishwasher-roi/" class="app-card card-calc">
-        <div class="app-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><line x1="4" y1="8" x2="20" y2="8"/><circle cx="12" cy="14" r="3.5"/></svg></div>
+      <a href="/dishwasher-roi/?v=7.7" class="app-card card-calc theme-indigo">
+        <div class="app-icon app-icon-calc"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="12" cy="15" r="2"/></svg></div>
         <div class="app-info">
-          <div class="app-title">食洗機 元取り1秒計算</div>
-          <div class="app-sub">水道代・時短の回収月数を判定</div>
+          <div class="app-title">食洗機「元取り月数」計算</div>
+          <div class="app-sub">水道ガス代と皿洗い時短から試算</div>
         </div>
-        <div class="app-badge badge-calc" aria-hidden="true">計算 ›</div>
+        <div class="app-badge" aria-hidden="true">計算 ›</div>
       </a>
-      <a href="/sim-savings/" class="app-card card-calc">
-        <div class="app-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+      <a href="/sim-savings/?v=7.7" class="app-card card-calc theme-violet">
+        <div class="app-icon app-icon-calc"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
         <div class="app-info">
-          <div class="app-title">格安SIM 10年差額計算</div>
-          <div class="app-sub">大手キャリア放置の損失額を算出</div>
+          <div class="app-title">格安SIM 10年損得計算</div>
+          <div class="app-sub">乗り換えで10年に浮く総額を試算</div>
         </div>
-        <div class="app-badge badge-calc" aria-hidden="true">計算 ›</div>
+        <div class="app-badge" aria-hidden="true">計算 ›</div>
       </a>
-      <a href="/winter-electricity/" class="app-card card-calc">
-        <div class="app-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c1 3 4 5 4 9a4 4 0 1 1-8 0c0-4 3-6 4-9z"/><path d="M12 14v7"/></svg></div>
+      <a href="/winter-electricity/?v=7.7" class="app-card card-calc theme-cyan">
+        <div class="app-icon app-icon-calc"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c1.5 3.5 4.5 5.5 4.5 9.5a4.5 4.5 0 0 1-9 0c0-1.8.8-3.4 2-4.5-.2 1.8 1.2 2.8 2 2.5C11 7 11 4.2 12 2z"/></svg></div>
         <div class="app-info">
-          <div class="app-title">冬の暖房費・節電比較</div>
-          <div class="app-sub">電気毛布で浮く暖房費を1秒診断</div>
+          <div class="app-title">冬の暖房費・節電1秒計算</div>
+          <div class="app-sub">エアコン＋電気毛布の節電額試算</div>
         </div>
-        <div class="app-badge badge-calc" aria-hidden="true">計算 ›</div>
+        <div class="app-badge" aria-hidden="true">計算 ›</div>
       </a>
-      <a href="/subscription-calc/" class="app-card card-calc">
-        <div class="app-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg></div>
+      <a href="/subscription-calc/?v=7.7" class="app-card card-calc theme-rose">
+        <div class="app-icon app-icon-calc"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg></div>
         <div class="app-info">
-          <div class="app-title">固定費・サブスク総額</div>
-          <div class="app-sub">毎月の隠れ出費の10年総額を算出</div>
+          <div class="app-title">固定費・サブスク10年総額</div>
+          <div class="app-sub">毎月の固定費・課金の10年総額</div>
         </div>
-        <div class="app-badge badge-calc" aria-hidden="true">計算 ›</div>
+        <div class="app-badge" aria-hidden="true">計算 ›</div>
       </a>
-      <a href="/rakuten-maximizer/" class="app-card card-calc">
-        <div class="app-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
+      <a href="/rakuten-maximizer/?v=7.7" class="app-card card-calc theme-crimson">
+        <div class="app-icon app-icon-calc"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
         <div class="app-info">
-          <div class="app-title">楽天マラソン 上限判定</div>
-          <div class="app-sub">上限枠と買い足しの損得を判定</div>
+          <div class="app-title">楽天マラソン 上限＆損得</div>
+          <div class="app-sub">買い回り上限と実質負担額を計算</div>
         </div>
-        <div class="app-badge badge-calc" aria-hidden="true">計算 ›</div>
+        <div class="app-badge" aria-hidden="true">計算 ›</div>
       </a>
       </div>
       <div class="pr-sec">
@@ -296,18 +354,18 @@
 
           <div class="pr-row">
             <div class="pr-info">
-              <div class="pr-tag-pill">相談完全無料・特典付（PR）</div>
-              <div class="pr-name">保険マンモス｜家計＆保険の無料相談</div>
+              <div class="pr-tag-pill">0円オンライン省エネ診断（PR）</div>
+              <div class="pr-name">再エネ補助金ナビ（0円オンライン診断）</div>
             </div>
-            <a href="https://af.moshimo.com/af/c/click?a_id=5880339&p_id=7778&pc_id=22539&pl_id=97004" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">無料相談 ↗</a>
+            <a href="https://af.moshimo.com/af/c/click?a_id=5880340&p_id=7507&pc_id=21688&pl_id=94219" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">無料診断 ↗</a>
           </div>
 
           <div class="pr-row">
             <div class="pr-info">
-              <div class="pr-tag-pill">0円オンライン省エネ診断（PR）</div>
-              <div class="pr-name">再エネ補助金ナビ｜電気代の無料診断</div>
+              <div class="pr-tag-pill">相談完全無料・特典付（PR）</div>
+              <div class="pr-name">保険マンモス（家計＆保険0円無料相談）</div>
             </div>
-            <a href="https://af.moshimo.com/af/c/click?a_id=5880340&p_id=7507&pc_id=21688&pl_id=94219" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">無料診断 ↗</a>
+            <a href="https://af.moshimo.com/af/c/click?a_id=5880339&p_id=7778&pc_id=22539&pl_id=97004" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">無料相談 ↗</a>
           </div>
         </div>
       </div>
@@ -315,81 +373,81 @@
 
     <div id="pane-game" class="tab-pane">
       <div class="app-grid">
-      <a href="/kanji-iq/" class="app-card card-game">
-        <div class="app-icon app-icon-3d-img"><img src="apk/icons/kanji_icon_512.png?v=7.4" alt="漢字間違い探しIQ"></div>
+      <a href="/kanji-iq/?v=7.7" class="app-card card-game theme-royalblue">
+        <div class="app-icon app-icon-3d-img"><img src="apk/icons/kanji_icon_512.png?v=7.7" alt="漢字間違い探しIQ"></div>
         <div class="app-info">
           <div class="app-title">漢字間違い探しIQ</div>
-          <div class="app-sub">5秒で見抜く瞬間観察力テスト</div>
+          <div class="app-sub">1つだけ違う漢字を瞬時に見抜く</div>
         </div>
-        <div class="app-badge badge-game" aria-hidden="true">遊ぶ ›</div>
+        <div class="app-badge" aria-hidden="true">遊ぶ ›</div>
       </a>
-      <a href="/color-sense/" class="app-card card-game">
-        <div class="app-icon app-icon-3d-img"><img src="apk/icons/color_icon_512.png?v=7.4" alt="色彩センス！絶対色感"></div>
+      <a href="/color-sense/?v=7.7" class="app-card card-game theme-magenta">
+        <div class="app-icon app-icon-3d-img"><img src="apk/icons/color_icon_512.png?v=7.7" alt="色彩センス！絶対色感"></div>
         <div class="app-info">
           <div class="app-title">色彩センス！絶対色感</div>
-          <div class="app-sub">1枚だけ違う色のパネル探し</div>
+          <div class="app-sub">微妙に色が違う1マスを見抜く</div>
         </div>
-        <div class="app-badge badge-game" aria-hidden="true">遊ぶ ›</div>
+        <div class="app-badge" aria-hidden="true">遊ぶ ›</div>
       </a>
-      <a href="/make-ten/" class="app-card card-game">
-        <div class="app-icon app-icon-3d-img"><img src="apk/icons/maketen_icon_512.png?v=7.4" alt="瞬間暗算！テンパズル"></div>
+      <a href="/make-ten/?v=7.7" class="app-card card-game theme-emerald">
+        <div class="app-icon app-icon-3d-img"><img src="apk/icons/maketen_icon_512.png?v=7.7" alt="瞬間暗算！テンパズル"></div>
         <div class="app-info">
           <div class="app-title">瞬間暗算！テンパズル</div>
-          <div class="app-sub">足して指定の数字を作る高速暗算</div>
+          <div class="app-sub">数字2枚を足して目標値を作る</div>
         </div>
-        <div class="app-badge badge-game" aria-hidden="true">遊ぶ ›</div>
+        <div class="app-badge" aria-hidden="true">遊ぶ ›</div>
       </a>
-      <a href="/flash-memory/" class="app-card card-game">
-        <div class="app-icon app-icon-3d-img"><img src="apk/icons/memory_icon_512.png?v=7.4" alt="1秒記憶！フラッシュ"></div>
+      <a href="/flash-memory/?v=7.7" class="app-card card-game theme-amber">
+        <div class="app-icon app-icon-3d-img"><img src="apk/icons/memory_icon_512.png?v=7.7" alt="1秒記憶！フラッシュ"></div>
         <div class="app-info">
           <div class="app-title">1秒記憶！フラッシュ</div>
-          <div class="app-sub">光るパネル配置を瞬時に記憶再現</div>
+          <div class="app-sub">一瞬光るパネル位置を記憶タップ</div>
         </div>
-        <div class="app-badge badge-game" aria-hidden="true">遊ぶ ›</div>
+        <div class="app-badge" aria-hidden="true">遊ぶ ›</div>
       </a>
-      <a href="/shape-mirror/" class="app-card card-game">
-        <div class="app-icon app-icon-3d-img"><img src="apk/icons/shape_icon_512.png?v=7.4" alt="直感回転！図形パズル"></div>
+      <a href="/shape-mirror/?v=7.7" class="app-card card-game theme-cyan">
+        <div class="app-icon app-icon-3d-img"><img src="apk/icons/shape_icon_512.png?v=7.7" alt="直感回転！図形パズル"></div>
         <div class="app-info">
           <div class="app-title">直感回転！図形パズル</div>
-          <div class="app-sub">裏返し図形を瞬時に見抜く空間IQ</div>
+          <div class="app-sub">回転した同じ図形を瞬時に見抜く</div>
         </div>
-        <div class="app-badge badge-game" aria-hidden="true">遊ぶ ›</div>
+        <div class="app-badge" aria-hidden="true">遊ぶ ›</div>
       </a>
-      <a href="/speed-number/" class="app-card card-game">
-        <div class="app-icon app-icon-3d-img"><img src="apk/icons/speed_icon_512.png?v=7.4" alt="爆速連打！数字タップ"></div>
+      <a href="/speed-number/?v=7.7" class="app-card card-game theme-crimson">
+        <div class="app-icon app-icon-3d-img"><img src="apk/icons/speed_icon_512.png?v=7.7" alt="爆速連打！数字タップ"></div>
         <div class="app-info">
           <div class="app-title">爆速連打！数字タップ</div>
-          <div class="app-sub">1から順番に押す反射＆周辺視野</div>
+          <div class="app-sub">順番・偶数・逆順に数字を連打</div>
         </div>
-        <div class="app-badge badge-game" aria-hidden="true">遊ぶ ›</div>
+        <div class="app-badge" aria-hidden="true">遊ぶ ›</div>
       </a>
       </div>
       <div class="pr-sec">
-        <div class="pr-sec-title"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:5px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>脳トレ・ポイント消化で人気の公式特集（PR）</div>
+        <div class="pr-sec-title"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:5px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>ポイント消化・節税で人気の公式特集（PR）</div>
         <div class="pr-list">
 
           <div class="pr-row">
             <div class="pr-info">
-              <div class="pr-tag-pill">全品送料無料・高還元（PR）</div>
-              <div class="pr-name">楽天ブックス｜脳トレ本＆ゲーム特集</div>
+              <div class="pr-tag-pill">ポイント消化・買い回り特選（PR）</div>
+              <div class="pr-name">楽天 1,000円ポッキリ＆楽券特集</div>
             </div>
-            <a href="https://af.moshimo.com/af/c/click?a_id=5880337&p_id=56&pc_id=56&pl_id=637" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">ブックス ↗</a>
+            <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F1000%25E5%2586%2586%25E3%2583%259D%25E3%2583%2583%25E3%2582%25AD%25E3%2583%25AA%2520%25E9%2580%2581%25E6%2596%2599%25E7%2584%25A1%25E6%2596%2599%2520%25E6%25A5%25BD%25E5%2588%25B8%2520%25E4%25BA%25BA%25E6%25B0%2597%25E3%2583%25A9%25E3%2583%25B3%25E3%2582%25AD%25E3%2583%25B3%25E3%2582%25B0%2F" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">楽天で見る ↗</a>
           </div>
 
           <div class="pr-row">
             <div class="pr-info">
-              <div class="pr-tag-pill">ポイント消化・買い回り特選（PR）</div>
-              <div class="pr-name">楽天市場｜1,000円ポッキリ特集</div>
+              <div class="pr-tag-pill">自己負担2,000円で食費削減（PR）</div>
+              <div class="pr-name">楽天ふるさと納税 総合人気ランキング</div>
             </div>
-            <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F1000%25E5%2586%2586%25E3%2583%259D%25E3%2583%2583%25E3%2582%25AD%25E3%2583%25AA%2520%25E9%2580%2581%25E6%2596%2599%25E7%2584%25A1%25E6%2596%2599%2520%25E3%2581%25B5%25E3%2582%258B%25E3%2581%2595%25E3%2581%25A8%25E7%25B4%258D%25E7%25A8%258E%2520%25E4%25BA%25BA%25E6%25B0%2597%25E3%2583%25A9%25E3%2583%25B3%25E3%2582%25AD%25E3%2583%25B3%25E3%2582%25B0%2F" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">楽天で見る ↗</a>
+            <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fevent.rakuten.co.jp%2Ffurusato%2F" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">返礼品 ↗</a>
           </div>
         </div>
       </div>
     </div>
 
     <footer>
-      <p>© 2026 Coreworks Studio ｜ <a href="/about/">運営者情報・ポリシー</a> ｜ <a href="/apk/">Androidアプリ版(APK)</a></p>
-      <p style="margin-top:5px; font-size:0.72rem; color:var(--subtle);">適格販売により収入を得ています。</p>
+      <p style="font-size:0.7rem; white-space:nowrap;">© 2026 Coreworks ｜ <a href="/about/">運営者情報</a> ｜ <a href="/apk/?v=7.7">Androidアプリ版(APK)</a></p>
+      <p style="margin-top:5px; font-size:0.63rem; letter-spacing:-0.02em; white-space:nowrap; color:var(--subtle);">Amazonのアソシエイトとして、Coreworksは適格販売により収入を得ています。</p>
       <img src="https://i.moshimo.com/af/i/impression?a_id=5876771&p_id=54&pc_id=54&pl_id=618" width="1" height="1" style="border:none;" loading="lazy" alt="">
     </footer>
   </div>
@@ -416,12 +474,12 @@
         var rootGames = ['speed-number', 'kanji-iq', 'color-sense', 'make-ten', 'flash-memory', 'shape-mirror'];
         for (var i = 0; i < rootGames.length; i++) {
           if (p === '/games/' + rootGames[i]) {
-            window.location.replace('/' + rootGames[i] + '/');
+            window.location.replace('/' + rootGames[i] + '/?v=7.7');
             return;
           }
         }
-        if (p === '/money-drop' || p === '/games/money-drop') { window.location.replace('/kanji-iq/'); return; }
-        if (p === '/strike-rpg') { window.location.replace('/games/strike-rpg/'); return; }
+        if (p === '/money-drop' || p === '/games/money-drop') { window.location.replace('/kanji-iq/?v=7.7'); return; }
+        if (p === '/strike-rpg') { window.location.replace('/games/strike-rpg/?v=7.7'); return; }
         var params = new URLSearchParams(window.location.search);
         var rawTab = params.get('tab') || (window.location.hash ? window.location.hash.replace('#', '') : '');
         switchTab(rawTab || 'tools');
