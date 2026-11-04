@@ -1608,19 +1608,19 @@
 
   // Mission Configurations (前半は余裕たっぷりで爽快、Mission 5は極限スピード！)
   const MISSION_CONFIG = {
-    1: { name: 'レベル 1/5（初級）',     normalSec: 12.0, bossSec: 8.0 },
-    2: { name: 'レベル 2/5（中級）',     normalSec: 10.5, bossSec: 7.0 },
-    3: { name: 'レベル 3/5（上級）',     normalSec: 9.0,  bossSec: 6.0 },
-    4: { name: 'レベル 4/5（達人）',     normalSec: 7.5,  bossSec: 5.0 },
-    5: { name: 'レベル 5/5（最高難度）', normalSec: 6.0,  bossSec: 4.0 }
+    1: { name: 'レベル 1/5（初級）',     normalSec: 12.0, bossSec: 12.0 },
+    2: { name: 'レベル 2/5（中級）',     normalSec: 11.0, bossSec: 11.0 },
+    3: { name: 'レベル 3/5（上級）',     normalSec: 10.0, bossSec: 10.0 },
+    4: { name: 'レベル 4/5（達人）',     normalSec: 9.0,  bossSec: 9.0 },
+    5: { name: 'レベル 5/5（最高難度）', normalSec: 8.0,  bossSec: 8.0 }
   };
 
   function getTitleForIQ(iqVal) {
     if (iqVal >= 140) return '🪐 神の領域';
-    if (iqVal >= 130) return '👑 瞬間認識の天才';
+    if (iqVal >= 130) return '👑 認識の天才';
     if (iqVal >= 120) return '🦅 鷹の目マスター';
     if (iqVal >= 112) return '💎 脳トレ名人';
-    if (iqVal >= 105) return '🔥 違和感ハンター';
+    if (iqVal >= 105) return '🔥 観察の達人';
     if (iqVal >= 98) return '✨ 観察プロ';
     return '🌱 観察ルーキー';
   }
@@ -1741,6 +1741,8 @@
     ['👉', CW_SVGS.play],
     ['👆', CW_SVGS.sparkle],
     ['👑', CW_SVGS.crown],
+    ['🪐', CW_SVGS.crown],
+    ['💎', CW_SVGS.medal],
     ['①', CW_SVGS.crown],
     ['②', CW_SVGS.gear],
     ['🏆', CW_SVGS.crown],
@@ -2535,11 +2537,11 @@
 
     // Map (missionNum, stageBracket) so early stages are breezy and late missions reach 72 cells!
     const MISSION_STAGE_GRIDS = {
-      1: [0, 1, 2, 3, 4], // M1 (初級):  9 -> 12 -> 16 -> 20 -> 25マス
-      2: [1, 2, 3, 4, 5], // M2 (中級): 12 -> 16 -> 20 -> 25 -> 30マス
-      3: [2, 3, 4, 6, 7], // M3 (上級): 16 -> 20 -> 25 -> 36 -> 42マス
-      4: [3, 5, 7, 8, 9], // M4 (達人): 20 -> 30 -> 42 -> 49 -> 56マス
-      5: [5, 7, 8, 9, 10] // M5 (最高): 30 -> 42 -> 49 -> 56 -> 72マス
+      1: [0, 1, 2, 2, 3], // M1 (初級):  9 -> 12 -> 16 -> 16 -> 20マス
+      2: [1, 2, 3, 3, 4], // M2 (中級): 12 -> 16 -> 20 -> 20 -> 25マス
+      3: [2, 3, 4, 4, 5], // M3 (上級): 16 -> 20 -> 25 -> 25 -> 30マス
+      4: [3, 4, 5, 5, 6], // M4 (達人): 20 -> 25 -> 30 -> 30 -> 36マス (6x6, 24px)
+      5: [4, 5, 6, 6, 7]  // M5 (最高): 25 -> 30 -> 36 -> 36 -> 42マス (6x7, 23px)
     };
     const indices = MISSION_STAGE_GRIDS[missionNum] || MISSION_STAGE_GRIDS[1];
     return TABLE[indices[Math.min(4, Math.max(0, stageBracket))]];

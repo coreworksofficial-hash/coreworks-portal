@@ -1555,19 +1555,19 @@
     document.documentElement.classList.add('android-apk');
   }
   const MISSION_CONFIG = {
-    1: { name: 'MISSION 1（初級：合計10）',     normalSec: 12.0, bossSec: 8.0, targets: [10, 10] },
-    2: { name: 'MISSION 2（中級：合計15・20）', normalSec: 10.5, bossSec: 7.0, targets: [15, 20] },
-    3: { name: 'MISSION 3（上級：合計20〜30）', normalSec: 9.5,  bossSec: 6.5, targets: [20, 25, 30] },
-    4: { name: 'MISSION 4（達人：端数ターゲット）', normalSec: 8.5, bossSec: 6.0, targets: [17, 23, 28, 34] },
-    5: { name: 'MISSION 5（最高難度：暗算極限）',   normalSec: 7.5, bossSec: 5.5, targets: [29, 37, 43, 50] }
+    1: { name: 'MISSION 1（初級：合計10）',         normalSec: 12.0, bossSec: 12.0, targets: [10, 10] },
+    2: { name: 'MISSION 2（中級：合計15・20）',     normalSec: 11.0, bossSec: 11.0, targets: [15, 20] },
+    3: { name: 'MISSION 3（上級：合計20〜30）',     normalSec: 10.0, bossSec: 10.0, targets: [20, 25, 30] },
+    4: { name: 'MISSION 4（達人：端数ターゲット）', normalSec: 9.0,  bossSec: 9.0,  targets: [17, 23, 28, 34] },
+    5: { name: 'MISSION 5（最高難度：暗算極限）',   normalSec: 8.5,  bossSec: 8.5,  targets: [29, 37, 43, 50] }
   };
 
   function getTitleForIQ(iqVal) {
     if (iqVal >= 140) return '🪐 人間スパコン';
-    if (iqVal >= 130) return '👑 瞬間暗算の天才';
+    if (iqVal >= 130) return '👑 暗算の天才';
     if (iqVal >= 120) return '⚡ 数学マスター';
     if (iqVal >= 112) return '💎 高速頭脳派';
-    if (iqVal >= 105) return '✨ ナンバーハンター';
+    if (iqVal >= 105) return '✨ 計算の達人';
     if (iqVal >= 98) return '🌱 暗算ルーキー';
     return '🌱 観察ルーキー';
   }
@@ -1691,6 +1691,8 @@
     ['👉', CW_SVGS.play],
     ['👆', CW_SVGS.sparkle],
     ['👑', CW_SVGS.crown],
+    ['🪐', CW_SVGS.crown],
+    ['💎', CW_SVGS.medal],
     ['①', CW_SVGS.crown],
     ['②', CW_SVGS.gear],
     ['🏆', CW_SVGS.crown],

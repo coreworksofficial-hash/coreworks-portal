@@ -1523,11 +1523,11 @@
   }
 
   const MISSION_CONFIG = {
-    1: { name: 'MISSION 1（初級：回転なし/90度）', normalSec: 12.0, bossSec: 8.0, maxRot: 1 },
-    2: { name: 'MISSION 2（中級：回転図形）',      normalSec: 11.0, bossSec: 7.5, maxRot: 2 },
-    3: { name: 'MISSION 3（上級：4方向回転）',     normalSec: 10.0, bossSec: 7.0, maxRot: 4 },
-    4: { name: 'MISSION 4（達人：高密度回転）',    normalSec: 9.0,  bossSec: 6.0, maxRot: 4 },
-    5: { name: 'MISSION 5（最高難度：極限空間IQ）', normalSec: 8.0, bossSec: 5.5, maxRot: 4 }
+    1: { name: 'MISSION 1（初級：回転なし/90度）',  normalSec: 14.0, bossSec: 14.0, maxRot: 1 },
+    2: { name: 'MISSION 2（中級：回転図形）',       normalSec: 12.5, bossSec: 12.5, maxRot: 2 },
+    3: { name: 'MISSION 3（上級：4方向回転）',      normalSec: 11.5, bossSec: 11.5, maxRot: 4 },
+    4: { name: 'MISSION 4（達人：高密度回転）',     normalSec: 10.5, bossSec: 10.5, maxRot: 4 },
+    5: { name: 'MISSION 5（最高難度：極限空間IQ）', normalSec: 9.5,  bossSec: 9.5,  maxRot: 4 }
   };
 
   const CHIRAL_SHAPES = [
@@ -1566,9 +1566,9 @@
 
   function getTitleForIQ(iqVal) {
     if (iqVal >= 140) return '🪐 次元超越マスター';
-    if (iqVal >= 130) return '👑 空間認識の天才';
-    if (iqVal >= 120) return '🔷 3D頭脳マイスター';
-    if (iqVal >= 112) return '💎 パズル建築家';
+    if (iqVal >= 130) return '👑 空間の天才';
+    if (iqVal >= 120) return '🔷 空間の達人';
+    if (iqVal >= 112) return '💎 図形の達人';
     if (iqVal >= 105) return '✨ 図形ハンター';
     if (iqVal >= 98) return '🌱 図形ルーキー';
     return '🌱 観察ルーキー';
@@ -1684,6 +1684,8 @@
     ['👉', CW_SVGS.play],
     ['👆', CW_SVGS.sparkle],
     ['👑', CW_SVGS.crown],
+    ['🪐', CW_SVGS.crown],
+    ['💎', CW_SVGS.medal],
     ['①', CW_SVGS.crown],
     ['②', CW_SVGS.gear],
     ['🏆', CW_SVGS.crown],
@@ -2432,41 +2434,42 @@
 
   function getGridSpec(st, missionNum) {
     const bracket = Math.floor((st - 1) / 2); // 0..4
+    // v7.5 Rebalanced: Cap at 3x3 (9 cards max) so mental rotation stays intuitive and fast!
     const MAP = {
       1: [
         { cols: 2, rows: 2 },
         { cols: 2, rows: 2 },
+        { cols: 2, rows: 2 },
         { cols: 2, rows: 3 },
-        { cols: 2, rows: 3 },
-        { cols: 3, rows: 3 }
+        { cols: 2, rows: 3 }
       ],
       2: [
         { cols: 2, rows: 2 },
+        { cols: 2, rows: 2 },
+        { cols: 2, rows: 3 },
+        { cols: 2, rows: 3 },
+        { cols: 3, rows: 3 }
+      ],
+      3: [
+        { cols: 2, rows: 2 },
+        { cols: 2, rows: 3 },
+        { cols: 2, rows: 3 },
+        { cols: 2, rows: 3 },
+        { cols: 3, rows: 3 }
+      ],
+      4: [
+        { cols: 2, rows: 3 },
+        { cols: 2, rows: 3 },
+        { cols: 2, rows: 3 },
+        { cols: 3, rows: 3 },
+        { cols: 3, rows: 3 }
+      ],
+      5: [
+        { cols: 2, rows: 3 },
         { cols: 2, rows: 3 },
         { cols: 3, rows: 3 },
         { cols: 3, rows: 3 },
         { cols: 3, rows: 3 }
-      ],
-      3: [
-        { cols: 2, rows: 3 },
-        { cols: 3, rows: 3 },
-        { cols: 3, rows: 3 },
-        { cols: 3, rows: 4 },
-        { cols: 3, rows: 4 }
-      ],
-      4: [
-        { cols: 3, rows: 3 },
-        { cols: 3, rows: 3 },
-        { cols: 3, rows: 4 },
-        { cols: 3, rows: 4 },
-        { cols: 4, rows: 4 }
-      ],
-      5: [
-        { cols: 3, rows: 3 },
-        { cols: 3, rows: 4 },
-        { cols: 4, rows: 4 },
-        { cols: 4, rows: 4 },
-        { cols: 4, rows: 4 }
       ]
     };
     return (MAP[missionNum] || MAP[1])[Math.min(4, Math.max(0, bracket))];

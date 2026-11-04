@@ -1514,18 +1514,18 @@
   }
 
   const MISSION_CONFIG = {
-    1: { name: 'レベル 1/5（初級）',     flashMs: 1250, answerSec: 12.0 },
-    2: { name: 'レベル 2/5（中級）',     flashMs: 1100, answerSec: 11.0 },
-    3: { name: 'レベル 3/5（上級）',     flashMs: 950,  answerSec: 10.0 },
-    4: { name: 'レベル 4/5（達人）',     flashMs: 820,  answerSec: 9.0 },
-    5: { name: 'レベル 5/5（最高難度）', flashMs: 700,  answerSec: 8.0 }
+    1: { name: 'レベル 1/5（初級）',     flashMs: 1300, answerSec: 12.0 },
+    2: { name: 'レベル 2/5（中級）',     flashMs: 1150, answerSec: 11.0 },
+    3: { name: 'レベル 3/5（上級）',     flashMs: 1100, answerSec: 10.5 },
+    4: { name: 'レベル 4/5（達人）',     flashMs: 970,  answerSec: 10.0 },
+    5: { name: 'レベル 5/5（最高難度）', flashMs: 850,  answerSec: 9.5 }
   };
 
   function getTitleForIQ(iqVal) {
     if (iqVal >= 140) return '🪐 超人カメラアイ';
-    if (iqVal >= 130) return '👑 瞬間記憶の天才';
-    if (iqVal >= 120) return '⚡ フラッシュ達人';
-    if (iqVal >= 112) return '💎 メモリーマスター';
+    if (iqVal >= 130) return '👑 記憶の天才';
+    if (iqVal >= 120) return '⚡ 閃光の達人';
+    if (iqVal >= 112) return '💎 記憶の達人';
     if (iqVal >= 105) return '✨ 記憶ハンター';
     if (iqVal >= 98) return '🌱 記憶ルーキー';
     return '🌱 観察ルーキー';
@@ -1641,6 +1641,8 @@
     ['👉', CW_SVGS.play],
     ['👆', CW_SVGS.sparkle],
     ['👑', CW_SVGS.crown],
+    ['🪐', CW_SVGS.crown],
+    ['💎', CW_SVGS.medal],
     ['①', CW_SVGS.crown],
     ['②', CW_SVGS.gear],
     ['🏆', CW_SVGS.crown],
@@ -2394,41 +2396,42 @@
 
   function getBoardSpec(st, missionNum) {
     const bracket = Math.floor((st - 1) / 2); // 0..4
+    // v7.5 Rebalanced: Keep simultaneous targets within human working memory (3..7 max)!
     const SPECS = {
       1: [
         { cols: 3, rows: 3, targets: 3 },
         { cols: 3, rows: 3, targets: 3 },
+        { cols: 3, rows: 4, targets: 3 },
         { cols: 3, rows: 4, targets: 4 },
-        { cols: 4, rows: 4, targets: 4 },
-        { cols: 4, rows: 4, targets: 5 }
+        { cols: 4, rows: 4, targets: 4 }
       ],
       2: [
+        { cols: 3, rows: 4, targets: 3 },
         { cols: 3, rows: 4, targets: 4 },
         { cols: 4, rows: 4, targets: 4 },
         { cols: 4, rows: 4, targets: 5 },
-        { cols: 4, rows: 5, targets: 5 },
-        { cols: 4, rows: 5, targets: 6 }
+        { cols: 4, rows: 5, targets: 5 }
       ],
       3: [
-        { cols: 4, rows: 4, targets: 5 },
+        { cols: 4, rows: 4, targets: 4 },
+        { cols: 4, rows: 4, targets: 4 },
         { cols: 4, rows: 5, targets: 5 },
-        { cols: 4, rows: 5, targets: 6 },
-        { cols: 5, rows: 5, targets: 6 },
-        { cols: 5, rows: 5, targets: 7 }
+        { cols: 4, rows: 5, targets: 5 },
+        { cols: 4, rows: 5, targets: 5 }
       ],
       4: [
-        { cols: 4, rows: 5, targets: 6 },
+        { cols: 4, rows: 4, targets: 4 },
+        { cols: 4, rows: 5, targets: 5 },
+        { cols: 4, rows: 5, targets: 5 },
         { cols: 5, rows: 5, targets: 6 },
-        { cols: 5, rows: 5, targets: 7 },
-        { cols: 5, rows: 6, targets: 7 },
-        { cols: 5, rows: 6, targets: 8 }
+        { cols: 5, rows: 5, targets: 6 }
       ],
       5: [
-        { cols: 5, rows: 5, targets: 7 },
-        { cols: 5, rows: 6, targets: 8 },
-        { cols: 6, rows: 6, targets: 8 },
-        { cols: 6, rows: 6, targets: 9 },
-        { cols: 6, rows: 6, targets: 10 }
+        { cols: 4, rows: 5, targets: 5 },
+        { cols: 5, rows: 5, targets: 5 },
+        { cols: 5, rows: 5, targets: 6 },
+        { cols: 5, rows: 5, targets: 6 },
+        { cols: 5, rows: 6, targets: 7 }
       ]
     };
     return (SPECS[missionNum] || SPECS[1])[Math.min(4, Math.max(0, bracket))];

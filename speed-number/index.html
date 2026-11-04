@@ -863,9 +863,21 @@
     border: 2px solid #10b981 !important;
     color: #6ee7b7 !important;
     text-shadow: none !important;
-    opacity: 0.38 !important;
+    opacity: 0.14 !important;
+    transform: scale(0.92) !important;
     box-shadow: none !important;
     pointer-events: none !important;
+  }
+  .num-tile.dummy-tile {
+    background: linear-gradient(180deg, #4c0519 0%, #1e1b4b 100%) !important;
+    border: 2.5px solid #f43f5e !important;
+    border-top-color: #fda4af !important;
+    color: #fda4af !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85) !important;
+    box-shadow:
+      0 5px 0 #1f030d,
+      0 7px 14px rgba(0, 0, 0, 0.5),
+      inset 0 1.5px 1px rgba(255, 255, 255, 0.25) !important;
   }
   .cell.dimmed, .num-card.dimmed, .color-tile.dimmed, .shape-card.dimmed {
     opacity: 0.2 !important;
@@ -1524,19 +1536,19 @@
   }
 
   const MISSION_CONFIG = {
-    1: { name: 'MISSION 1（初級：9〜20マス）',    timeScale: 1.00, minSec: 8.5 },
-    2: { name: 'MISSION 2（中級：12〜20マス）',   timeScale: 0.95, minSec: 9.0 },
-    3: { name: 'MISSION 3（上級：16〜20マス）',   timeScale: 0.90, minSec: 9.5 },
-    4: { name: 'MISSION 4（達人：16〜20マス）',   timeScale: 0.86, minSec: 10.0 },
-    5: { name: 'MISSION 5（神速：全20マス極限）', timeScale: 0.82, minSec: 10.5 }
+    1: { name: 'MISSION 1（初級：9〜16マス）',  timeScale: 1.00, minSec: 9.5 },
+    2: { name: 'MISSION 2（中級：9〜16マス）',  timeScale: 0.96, minSec: 9.5 },
+    3: { name: 'MISSION 3（上級：12〜16マス）', timeScale: 0.92, minSec: 10.0 },
+    4: { name: 'MISSION 4（達人：12〜20マス）', timeScale: 0.88, minSec: 10.5 },
+    5: { name: 'MISSION 5（神速：16〜20マス）', timeScale: 0.85, minSec: 11.0 }
   };
 
   function getTitleForIQ(iqVal) {
     if (iqVal >= 140) return '🪐 光速の視野神';
-    if (iqVal >= 130) return '👑 周辺視野の天才';
-    if (iqVal >= 120) return '⚡ 爆速連打マスター';
-    if (iqVal >= 112) return '💎 スピードハンター';
-    if (iqVal >= 105) return '🔥 反射ファイター';
+    if (iqVal >= 130) return '👑 視野の天才';
+    if (iqVal >= 120) return '⚡ 連打の達人';
+    if (iqVal >= 112) return '💎 高速ハンター';
+    if (iqVal >= 105) return '🔥 反射の達人';
     if (iqVal >= 98) return '🌱 連打ルーキー';
     return '🌱 観察ルーキー';
   }
@@ -1651,6 +1663,8 @@
     ['👉', CW_SVGS.play],
     ['👆', CW_SVGS.sparkle],
     ['👑', CW_SVGS.crown],
+    ['🪐', CW_SVGS.crown],
+    ['💎', CW_SVGS.medal],
     ['①', CW_SVGS.crown],
     ['②', CW_SVGS.gear],
     ['🏆', CW_SVGS.crown],
@@ -2408,41 +2422,52 @@
   function isBossStage(st) { return st === 5 || st === 10; }
 
   function getGridSpec(st, missionNum) {
-    // v6.5.0 Golden Difficulty Curve:
-    // Mission 1 Stage 1-2: 3x3 (9マス) -> Stage 3-4: 3x4 (12マス) -> Stage 5-8: 4x4 (16マス) -> Stage 9-10 & M2+: up to 4x5 (20マス)
+    // v7.5 Rebalanced Difficulty Curve:
+    // Keep new rule introductions (Stage 6-7 even/multiples of 5, Stage 8-9 reverse) on compact 3x3 (9マス) in Mission 1!
     if (missionNum === 1) {
-      if (st <= 2) return { cols: 3, rows: 3, font: 32 }; // STAGE 1〜2（全6問）: 3x3（9マス）固定
-      if (st <= 4) return { cols: 3, rows: 4, font: 28 }; // STAGE 3〜4: 3x4（12マス）
-      if (st <= 8) return { cols: 4, rows: 4, font: 25 }; // STAGE 5（中間テスト）＆ STAGE 6〜8: 4x4（16マス）
-      return { cols: 4, rows: 5, font: 22 };              // STAGE 9〜10（認定試験）: 4x5（20マス）
+      if (st <= 3) return { cols: 3, rows: 3, font: 32 }; // STAGE 1〜3: 3x3（9マス）
+      if (st <= 5) return { cols: 3, rows: 4, font: 28 }; // STAGE 4〜5（中間テスト）: 3x4（12マス）
+      if (st <= 9) return { cols: 3, rows: 3, font: 32 }; // STAGE 6〜9（偶数順・5とび・逆順）: 3x3（9マス）で新ルールを爽快体験！
+      return { cols: 4, rows: 4, font: 25 };              // STAGE 10（認定試験）: 4x4（16マス・シャッフルなし）
     }
     if (missionNum === 2) {
-      if (st <= 2) return { cols: 3, rows: 4, font: 28 }; // 12マス
-      if (st <= 6) return { cols: 4, rows: 4, font: 25 }; // 16マス
-      return { cols: 4, rows: 5, font: 22 };              // 20マス
+      if (st <= 3) return { cols: 3, rows: 3, font: 32 }; // 9マス
+      if (st <= 5) return { cols: 4, rows: 4, font: 25 }; // 16マス
+      if (st <= 9) return { cols: 3, rows: 4, font: 28 }; // 12マス
+      return { cols: 4, rows: 4, font: 25 };              // 16マス（シャッフルなし）
     }
     if (missionNum === 3) {
-      if (st <= 4) return { cols: 4, rows: 4, font: 25 }; // 16マス
-      return { cols: 4, rows: 5, font: 22 };              // 20マス
+      if (st <= 3) return { cols: 3, rows: 4, font: 28 }; // 12マス
+      if (st <= 5) return { cols: 4, rows: 4, font: 25 }; // 16マス
+      if (st <= 9) return { cols: 3, rows: 4, font: 28 }; // 12マス
+      return { cols: 4, rows: 4, font: 25 };              // 16マス
     }
     if (missionNum === 4) {
-      if (st <= 2) return { cols: 4, rows: 4, font: 25 }; // 16マス
+      if (st <= 3) return { cols: 3, rows: 4, font: 28 }; // 12マス
+      if (st <= 9) return { cols: 4, rows: 4, font: 25 }; // 16マス
       return { cols: 4, rows: 5, font: 22 };              // 20マス
     }
-    return { cols: 4, rows: 5, font: 22 };                // M5: 常時 4x5（20マス）で押しやすさと爽快感を両立
+    // Mission 5 (神速)
+    if (st <= 3) return { cols: 4, rows: 4, font: 25 };   // 16マス
+    if (st <= 5) return { cols: 4, rows: 5, font: 22 };   // 20マス
+    if (st <= 9) return { cols: 4, rows: 4, font: 25 };   // 16マス
+    return { cols: 4, rows: 5, font: 22 };                // 20マス
   }
 
   function buildStageRuleAndNumbers(st, missionNum, totalCells, qStep = 1) {
-    // v6.5.0 Progressive Gimmick Unlock:
-    // STAGE 1-3: Pure 1..N consecutive ascending only!
-    // STAGE 4: Consecutive on Q1-Q2, 1 dummy tile introduced on Q3 (final question of Stage 4)
-    // STAGE 5 (Mid-boss): 4x4 (16マス) with 1..15 consecutive + 1 dummy (or 2 dummies in M2+)
-    // STAGE 6-7: Stepping numbers (clean +2..+3 increments) & 1-2 dummy tiles
-    // STAGE 8-9: Reverse countdown (Largest -> Smallest)
-    // STAGE 10 (Final Boss): Special boss gimmick with mild interval shuffle (every 4 taps)
+    // v7.5 Predictable Fixed-Step Number Sequences & Clean Dummy Tiles:
+    // STAGE 1-3: Pure 1..N consecutive ascending
+    // STAGE 4: Consecutive on Q1-Q2, 1 dummy tile on Q3
+    // STAGE 5 (Mid-boss): 1..N consecutive + 1 dummy (or 2 dummies in M2+)
+    // STAGE 6: Fixed-step Even numbers (2, 4, 6, 8, 10...) so players predict in their head!
+    // STAGE 7: Fixed-step Multiples of 5 (5, 10, 15, 20...) in M1-M2, Odd numbers (1, 3, 5...) in M3-M4, Multiples of 3 (3, 6, 9...) in M5!
+    // STAGE 8-9: Reverse countdown (Largest -> 1)
+    // STAGE 10 (Final Boss): M1-M2 have NO shuffle; M3+ shuffle every 5 taps
     let mode = 'asc';
-    let shuffleInterval = 0; // 0 = no shuffle, N = shuffle every N taps
+    let shuffleInterval = 0;
     let dummyCount = 0;
+    let stepStart = 1;
+    let stepInc = 1;
     let badge = '⚡ 1から順番に爆速連打せよ！';
     let preLabel = '次は';
 
@@ -2455,7 +2480,7 @@
       if (qStep >= 3) {
         mode = 'asc_dummy';
         dummyCount = 1;
-        badge = '⚠️ 1から順番にタップ！（💀ダミー1枚は押すな）';
+        badge = '⚠️ 1から順番に連打！（✕ダミー1枚は押すな）';
         preLabel = '次は';
       } else {
         mode = 'asc';
@@ -2464,52 +2489,70 @@
         preLabel = '次は';
       }
     } else if (st === 5) {
-      // Mid-boss: 4x4 (16マス) consecutive 1..15 + 1 dummy (M2+: 1..14 + 2 dummies)
       mode = 'asc_dummy';
       dummyCount = missionNum === 1 ? 1 : 2;
-      badge = `🔥 中間テスト：💀ダミー${dummyCount}枚を避けて1から順番に連打せよ！`;
+      badge = `🔥 中間テスト：1から順番！（✕ダミー${dummyCount}枚注意）`;
       preLabel = '次は';
     } else if (st === 6) {
-      // Stage 6: Clean stepping numbers (+2..+3 increments)
+      // Stage 6: Fixed-step Even Numbers (2, 4, 6, 8, 10...)
       mode = missionNum >= 2 ? 'step_dummy' : 'step';
       dummyCount = missionNum >= 2 ? 1 : 0;
+      stepStart = 2;
+      stepInc = 2;
       badge = dummyCount > 0
-        ? '🔢 飛び石ナンバーを【小さい順】！（💀ダミー注意）'
-        : '🔢 飛び石ナンバー！盤面で【一番小さい数字】から順にタップ！';
-      preLabel = '最小は';
+        ? '⚡ 2ずつ増える【偶数（2→4→6…）】をタップ！'
+        : '⚡ 2ずつ増える【偶数（2→4→6…）】を順番にタップ！';
+      preLabel = '次は';
     } else if (st === 7) {
-      // Stage 7: Stepping numbers + 1-2 dummy tiles
+      // Stage 7: Fixed-step Multiples of 5 (M1-M2) / Odd Numbers (M3-M4) / Multiples of 3 (M5)
       mode = 'step_dummy';
-      dummyCount = missionNum === 1 ? 1 : 2;
-      badge = `🧠 飛び石の数字を【小さい順】にタップ！（💀ダミー${dummyCount}枚は押すな）`;
-      preLabel = '最小は';
+      dummyCount = missionNum <= 2 ? 1 : 2;
+      if (missionNum <= 2) {
+        stepStart = 5;
+        stepInc = 5;
+        badge = '⚡ 5ずつ増える【5の倍数（5→10→15…）】をタップ！';
+      } else if (missionNum <= 4) {
+        stepStart = 1;
+        stepInc = 2;
+        badge = '⚡ 2ずつ増える【奇数（1→3→5…）】を順番にタップ！';
+      } else {
+        stepStart = 3;
+        stepInc = 3;
+        badge = '⚡ 3ずつ増える【3の倍数（3→6→9…）】をタップ！';
+      }
+      preLabel = '次は';
     } else if (st === 8) {
       // Stage 8: Reverse Countdown (Largest -> 1)
       mode = missionNum >= 2 ? 'desc_dummy' : 'desc';
       dummyCount = missionNum >= 2 ? 1 : 0;
       badge = dummyCount > 0
-        ? '🔄 逆順カウントダウン！【大きい順】にタップ！（💀ダミー注意）'
+        ? '🔄 逆順カウントダウン！【大きい順】にタップ！'
         : '🔄 逆順カウントダウン！【大きい数字】から順番にタップ！';
-      preLabel = '最大は';
+      preLabel = '次は';
     } else if (st === 9) {
       // Stage 9: Reverse Countdown + 1-2 dummy tiles
       mode = 'desc_dummy';
-      dummyCount = missionNum === 1 ? 1 : 2;
-      badge = `🔄 逆順カウントダウン！【大きい順】にタップ！（💀ダミー${dummyCount}枚は押すな）`;
-      preLabel = '最大は';
+      dummyCount = missionNum <= 2 ? 1 : 2;
+      badge = `🔄 逆順！【大きい順】にタップ！（✕ダミー${dummyCount}枚注意）`;
+      preLabel = '次は';
     } else {
-      // Stage 10 (Final Boss): Mild interval shuffle (every 4 taps, or 3 taps in M4+)
-      shuffleInterval = missionNum >= 4 ? 3 : 4;
+      // Stage 10 (Final Boss): No shuffle in M1-M2! Shuffle every 5 taps only in M3+
+      shuffleInterval = missionNum >= 3 ? 5 : 0;
       if (missionNum === 1) {
         mode = 'asc_dummy';
         dummyCount = 1;
-        badge = `👑 認定試験：1から順番に連打！（${shuffleInterval}タップごとに配置シャッフル）`;
+        badge = '👑 認定試験：1から15まで順番！（✕ダミー1枚注意）';
+        preLabel = '次は';
+      } else if (missionNum === 2) {
+        mode = 'desc_dummy';
+        dummyCount = 1;
+        badge = '👑 認定試験：最大から1へ逆順！（✕ダミー1枚注意）';
         preLabel = '次は';
       } else {
         mode = 'desc_dummy';
         dummyCount = 2;
-        badge = `👑 認定試験：【最大から逆順】＆${shuffleInterval}タップごとにシャッフル！`;
-        preLabel = '最大は';
+        badge = `👑 認定試験：最大から逆順＆${shuffleInterval}回ごとシャッフル！`;
+        preLabel = '次は';
       }
     }
 
@@ -2518,10 +2561,8 @@
     if (mode === 'asc' || mode === 'asc_dummy' || mode === 'desc' || mode === 'desc_dummy') {
       for (let i = 1; i <= activeCount; i++) seq.push(i);
     } else {
-      let cur = 1 + Math.floor(Math.random() * 3); // start at 1..3
       for (let i = 0; i < activeCount; i++) {
-        seq.push(cur);
-        cur += 2 + Math.floor(Math.random() * 2); // readable step +2 or +3
+        seq.push(stepStart + i * stepInc);
       }
     }
 
@@ -2530,9 +2571,8 @@
     }
 
     const boardItems = seq.map(v => ({ val: v, isDummy: false }));
-    const dummySymbols = ['💀', '❌', '💣', '⚡'];
     for (let d = 0; d < dummyCount; d++) {
-      boardItems.push({ val: dummySymbols[d % dummySymbols.length], isDummy: true });
+      boardItems.push({ val: '✕', isDummy: true });
     }
 
     return {
@@ -2592,9 +2632,7 @@
       tile.className = 'num-tile';
       tile.style.fontSize = `${font}px`;
       if (it.isDummy) {
-        tile.style.backgroundColor = '#3b1520';
-        tile.style.borderColor = '#9f1239';
-        tile.style.color = '#fda4af';
+        tile.classList.add('dummy-tile');
       }
       tile.textContent = String(it.val);
       tile.addEventListener('pointerdown', () => onTileTap(it, tile));
@@ -2629,44 +2667,38 @@
 
   function computeStageTimeLimit(st, missionNum, totalCells, rule) {
     const mCfg = MISSION_CONFIG[missionNum] || MISSION_CONFIG[1];
-    let secPerCell = 0.80;
-    let baseGrace = 1.2;
+    let secPerCell = 0.85;
+    let baseGrace = 1.6;
 
-    if (st === 1) {
-      secPerCell = 0.88; // 9 * 0.88 + 1.5 = 9.4s
-      baseGrace = 1.5;
-    } else if (st === 2) {
-      secPerCell = 0.83; // 9 * 0.83 + 1.5 = 9.0s
-      baseGrace = 1.5;
-    } else if (st === 3) {
-      secPerCell = 0.80; // 12 * 0.80 + 1.2 = 10.8s
-      baseGrace = 1.2;
-    } else if (st === 4) {
-      secPerCell = 0.77; // 12 * 0.77 + 1.2 = 10.4s (+0.5s on Q3 dummy = 10.9s)
-      baseGrace = 1.2;
+    if (st <= 2) {
+      secPerCell = 0.90;
+      baseGrace = 1.8;
+    } else if (st <= 4) {
+      secPerCell = 0.85;
+      baseGrace = 1.6;
     } else if (st === 5) {
-      secPerCell = 0.78; // Mid-boss 16マス: 16 * 0.78 + 0.8 = 13.3s
-      baseGrace = 0.8;
-    } else if (st <= 8) {
-      secPerCell = 0.72; // Stage 6-8 16マス: base ~12.5s
-      baseGrace = 1.0;
+      secPerCell = 0.84;
+      baseGrace = 1.6;
+    } else if (st <= 9) {
+      secPerCell = 0.85;
+      baseGrace = 1.8;
     } else {
-      secPerCell = 0.74; // Stage 9-10 20マス: base ~15.8s
-      baseGrace = 1.0;
+      secPerCell = 0.82;
+      baseGrace = 1.8;
     }
 
     let baseSec = (totalCells * secPerCell + baseGrace) * (mCfg.timeScale || 1.0);
 
-    // Brain-conversion bonus time for stepping, reverse, dummy, and boss shuffle!
+    // Brain-conversion bonus time for even/multiple stepping, reverse, dummy, and boss shuffle!
     let bonusSec = 0;
     const isSteppingOrReverse = (rule.mode === 'step' || rule.mode === 'step_dummy' || rule.mode === 'desc' || rule.mode === 'desc_dummy' || rule.mode === 'desc_step');
     if (isSteppingOrReverse) {
-      bonusSec += (totalCells >= 20) ? 2.0 : 1.8; // +1.8s for 16マス, +2.0s for 20マス
-    } else if (st === 4 && rule.dummyCount > 0) {
-      bonusSec += 0.5;
+      bonusSec += (totalCells >= 16) ? 3.5 : 2.8;
+    } else if (rule.dummyCount > 0) {
+      bonusSec += 1.0;
     }
     if (rule.shuffleInterval && rule.shuffleInterval > 0) {
-      bonusSec += 2.0;
+      bonusSec += 2.8;
     }
 
     return Math.max(mCfg.minSec, Math.round((baseSec + bonusSec) * 10) / 10);
@@ -2692,7 +2724,7 @@
     targetIdx = 0;
     currentTarget = targetSequence[0];
 
-    if (ruleBadgeEl) ruleBadgeEl.textContent = currentRule.badge;
+    if (ruleBadgeEl) ruleBadgeEl.innerHTML = window.__cwIconify(currentRule.badge);
     if (nextPreLabelEl) nextPreLabelEl.textContent = currentRule.preLabel || '次は';
     nextNumEl.textContent = String(currentTarget);
 
