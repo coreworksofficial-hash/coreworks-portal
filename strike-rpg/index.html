@@ -279,16 +279,21 @@
   }
 
   .bottom-nav {
-    height: 60px;
-    background: rgba(255, 255, 255, 0.96);
+    height: 62px;
+    background: rgba(255, 255, 255, 0.97);
     backdrop-filter: blur(12px);
-    border-top: 1px solid #E2E8F0;
+    border-top: 1px solid #CBD5E1;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     align-items: center;
-    padding: 0 8px;
+    padding: 0 12px;
     z-index: 50;
     flex-shrink: 0;
+    box-shadow: 0 -4px 16px rgba(15, 23, 42, 0.06);
+  }
+
+  .bottom-nav.hidden {
+    display: none !important;
   }
 
   .nav-icon-btn {
@@ -296,8 +301,10 @@
     border: none;
     background: transparent;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 3px;
     color: #64748B;
     cursor: pointer;
     position: relative;
@@ -305,22 +312,28 @@
   }
 
   .nav-icon-btn:active {
-    transform: scale(0.9);
+    transform: scale(0.92);
   }
 
   .nav-icon-btn.active {
-    color: #334155;
+    color: #0284C7;
   }
 
   .nav-icon-btn svg {
-    width: 27px;
-    height: 27px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .nav-icon-label {
+    font-size: 10.5px;
+    font-weight: 900;
+    letter-spacing: 0.02em;
   }
 
   .nav-notif-dot {
     position: absolute;
-    top: 12px;
-    right: 22px;
+    top: 8px;
+    right: calc(50% - 18px);
     width: 8px;
     height: 8px;
     border-radius: 50%;
@@ -1595,162 +1608,650 @@
     border: 1.5px solid #FFFFFF;
   }
 
-  /* 3-Point Battle Arena Styles */
+  /* =========================================================================
+     NEW CLEAN BATTLE ARENA, DECK BUILDER & REAL FUNCTIONAL MODALS (v4.0)
+     ========================================================================= */
+  .mc-two-mode-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .mc-mode-tab-btn {
+    border: 2px solid #CBD5E1;
+    background: #FFFFFF;
+    border-radius: 14px;
+    padding: 10px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    font-size: 13px;
+    font-weight: 900;
+    color: #475569;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.06);
+    transition: all 0.15s ease;
+  }
+
+  .mc-mode-tab-btn.active {
+    background: linear-gradient(135deg, #0284C7, #2563EB);
+    border-color: #38BDF8;
+    color: #FFFFFF;
+    box-shadow: 0 6px 14px rgba(37, 99, 235, 0.28);
+  }
+
+  .deck-builder-panel {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 14px 28px;
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  .deck-builder-panel.active {
+    display: flex;
+  }
+
+  .deck-box-card {
+    background: #FFFFFF;
+    border-radius: 16px;
+    padding: 12px;
+    border: 2px solid #BAE6FD;
+    box-shadow: var(--neu-card);
+  }
+
+  .deck-slots-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .deck-mini-slot {
+    background: #F8FAFC;
+    border: 2px solid #93C5FD;
+    border-radius: 10px;
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .deck-mini-slot img {
+    width: 100%;
+    height: 46px;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+
+  .deck-mini-slot .dm-name {
+    font-size: 8.5px;
+    font-weight: 900;
+    color: #0F172A;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
+  .deck-mini-slot .dm-remove {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #EF4444;
+    color: #FFF;
+    font-size: 9px;
+    font-weight: 900;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid #FFF;
+  }
+
+  /* Stage Select Lobby */
+  .stage-select-page {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #F1F5F9;
+    overflow-y: auto;
+    padding-bottom: 20px;
+  }
+
+  .stage-hero-header {
+    background: linear-gradient(135deg, #E11D48 0%, #FB7185 52%, #FDE047 100%);
+    padding: max(18px, env(safe-area-inset-top, 18px)) 16px 16px;
+    color: #FFFFFF;
+    box-shadow: 0 6px 18px rgba(225, 29, 72, 0.22);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .stage-list-wrap {
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .stage-row-card {
+    background: #FFFFFF;
+    border-radius: 16px;
+    border: 2px solid #E2E8F0;
+    padding: 11px 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: var(--neu-card);
+    cursor: pointer;
+    transition: transform 0.12s ease, border-color 0.15s ease;
+  }
+
+  .stage-row-card:active {
+    transform: scale(0.98);
+  }
+
+  .stage-row-card:hover {
+    border-color: #F43F5E;
+  }
+
+  .stage-boss-thumb {
+    width: 58px;
+    height: 58px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 2px solid #FDA4AF;
+    flex-shrink: 0;
+  }
+
+  .stage-info-col {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .stage-badge-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 3px;
+  }
+
+  .stage-lv-tag {
+    font-size: 10px;
+    font-weight: 900;
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: #FFE4E6;
+    color: #E11D48;
+  }
+
+  .stage-clear-tag {
+    font-size: 9.5px;
+    font-weight: 900;
+    padding: 1px 7px;
+    border-radius: 999px;
+    background: #DCFCE7;
+    color: #15803D;
+    border: 1px solid #86EFAC;
+  }
+
+  .stage-title-txt {
+    font-size: 13px;
+    font-weight: 900;
+    color: #0F172A;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .stage-sub-txt {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #64748B;
+    white-space: nowrap;
+  }
+
+  .stage-go-btn {
+    background: linear-gradient(135deg, #F43F5E, #E11D48);
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 900;
+    padding: 9px 13px;
+    border-radius: 12px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 10px rgba(225, 29, 72, 0.28);
+  }
+
+  /* Redesigned 3-Point Battle Arena (Crystal Clear Enemy vs Player Field) */
   .battle-arena {
     flex: 1;
     width: 100%;
-    display: flex;
+    height: 100%;
+    display: none;
     flex-direction: column;
     justify-content: space-between;
-    padding: 8px 10px;
-    background: radial-gradient(circle at 50% 48%, #FFFFFF 0%, #E2E8F0 100%);
+    padding: max(8px, env(safe-area-inset-top, 8px)) 8px 8px;
+    background: #1E293B;
+    color: #0F172A;
+    gap: 5px;
+    overflow: hidden;
   }
 
   .bt-hud {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(255, 255, 255, 0.92);
-    border-radius: 14px;
+    background: #0F172A;
+    color: #FFFFFF;
+    border-radius: 12px;
     padding: 6px 10px;
-    box-shadow: var(--neu-pill);
+    border: 1px solid #334155;
+    flex-shrink: 0;
+  }
+
+  .bt-retire-btn {
+    background: #334155;
+    color: #F8FAFC;
+    border: 1px solid #64748B;
+    border-radius: 8px;
+    padding: 4px 9px;
+    font-size: 10.5px;
+    font-weight: 900;
+    cursor: pointer;
   }
 
   .bt-score-box {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
     font-size: 10.5px;
     font-weight: 900;
+    color: #F8FAFC;
   }
 
-  .pt-dots { display: flex; gap: 4px; }
+  .pt-dots { display: flex; gap: 3px; }
   .pt-dot {
-    width: 13px;
-    height: 13px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
-    background: #CBD5E1;
-    border: 1.5px solid #FFFFFF;
+    background: #475569;
+    border: 1.5px solid #94A3B8;
   }
-  .pt-dot.won-player { background: #2563EB; }
-  .pt-dot.won-enemy { background: #E11D48; }
+  .pt-dot.won-player { background: #38BDF8; border-color: #FFFFFF; box-shadow: 0 0 6px #38BDF8; }
+  .pt-dot.won-enemy { background: #FB7185; border-color: #FFFFFF; box-shadow: 0 0 6px #FB7185; }
 
   .bt-turn-pill {
-    background: #0F172A;
+    background: linear-gradient(90deg, #0284C7, #2563EB);
     color: #FFFFFF;
     padding: 3px 10px;
     border-radius: 999px;
-    font-size: 10px;
+    font-size: 10.5px;
     font-weight: 900;
+    border: 1px solid #7DD3FC;
+  }
+
+  /* Enemy Playmat (Top) */
+  .bt-enemy-mat {
+    background: linear-gradient(180deg, #FFE4E6 0%, #FFF1F2 100%);
+    border: 2px solid #FDA4AF;
+    border-radius: 14px;
+    padding: 6px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+    justify-content: space-between;
+    min-height: 0;
+  }
+
+  /* Step Guide Banner (Middle) */
+  .bt-step-guide {
+    background: linear-gradient(90deg, #FEF08A, #FDE047);
+    color: #0F172A;
+    border: 2px solid #F59E0B;
+    border-radius: 10px;
+    padding: 5px 10px;
+    font-size: 11px;
+    font-weight: 900;
+    text-align: center;
+    box-shadow: 0 3px 10px rgba(245, 158, 11, 0.25);
+    flex-shrink: 0;
+  }
+
+  /* Player Playmat (Bottom-Middle) */
+  .bt-player-mat {
+    background: linear-gradient(180deg, #E0F2FE 0%, #EFF6FF 100%);
+    border: 2px solid #7DD3FC;
+    border-radius: 14px;
+    padding: 6px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1.15;
+    justify-content: space-between;
+    min-height: 0;
+  }
+
+  .bt-mat-label {
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    white-space: nowrap;
   }
 
   .bt-bench-row {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    width: 100%;
   }
 
   .bt-bench-slot {
-    width: 84px;
-    height: 74px;
+    height: 62px;
     border-radius: 10px;
-    background: rgba(255, 255, 255, 0.72);
+    background: rgba(255, 255, 255, 0.65);
     border: 1.5px dashed #94A3B8;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    padding: 4px;
+    padding: 3px 4px;
     position: relative;
     cursor: pointer;
   }
 
   .bt-bench-slot.occupied {
     background: #FFFFFF;
-    border: 2px solid #CBD5E1;
+    border: 2px solid #64748B;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.1);
   }
 
-  .bench-art { width: 100%; height: 34px; object-fit: cover; border-radius: 4px; }
-  .bench-name { font-size: 8px; font-weight: 900; white-space: nowrap; }
-  .bench-hp-bar { width: 100%; height: 10px; background: #E2E8F0; border-radius: 999px; position: relative; overflow: hidden; }
+  .bt-bench-slot.selected-target {
+    border-color: #F59E0B;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.35);
+    background: #FFFBEB;
+  }
+
+  .bench-art { width: 100%; height: 26px; object-fit: cover; border-radius: 4px; }
+  .bench-name { font-size: 8px; font-weight: 900; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; color: #0F172A; }
+  .bench-hp-bar { width: 100%; height: 9px; background: #E2E8F0; border-radius: 999px; position: relative; overflow: hidden; }
   .bench-hp-fill { height: 100%; background: #10B981; }
-  .bench-hp-txt { position: absolute; inset: 0; font-size: 7.5px; font-weight: 900; display: flex; align-items: center; justify-content: center; }
+  .bench-hp-txt { position: absolute; inset: 0; font-size: 7px; font-weight: 900; display: flex; align-items: center; justify-content: center; color: #0F172A; }
 
-  .attached-en-row { position: absolute; top: -5px; left: 3px; display: flex; gap: 2px; z-index: 8; }
-  .attached-en-row .pk-type-orb { width: 14px; height: 14px; }
+  .attached-en-row { position: absolute; top: -5px; right: 3px; display: flex; gap: 2px; z-index: 8; }
+  .attached-en-row .pk-type-orb { width: 14px; height: 14px; border: 1px solid #FFF; }
 
-  .bt-active-zone { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .bt-active-zone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+  }
+
+  /* Card-Shaped Active Slot */
   .bt-active-card-slot {
-    width: 164px;
+    width: 158px;
     height: 118px;
-    border-radius: 14px;
+    border-radius: 12px;
     background: #FFFFFF;
-    border: 2.5px solid #94A3B8;
-    padding: 6px;
+    border: 3px solid #475569;
+    padding: 5px 6px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     position: relative;
+    box-shadow: 0 6px 14px rgba(15, 23, 42, 0.16);
+    flex-shrink: 0;
+    cursor: pointer;
   }
-  .bt-active-card-slot.is-ex { border-color: #F59E0B; background: #FFFBEB; }
-  .bt-active-top { display: flex; align-items: center; justify-content: space-between; font-size: 10px; font-weight: 900; }
-  .bt-active-art-wrap { width: 100%; height: 56px; border-radius: 7px; overflow: hidden; border: 1.5px solid #CBD5E1; }
+  .bt-active-card-slot.is-ex { border-color: #F59E0B; background: linear-gradient(180deg, #FFFBEB, #FFFFFF); }
+  .bt-active-card-slot.selected-target { box-shadow: 0 0 0 3px #F59E0B, 0 6px 14px rgba(15, 23, 42, 0.16); }
+  .bt-active-top { display: flex; align-items: center; justify-content: space-between; font-size: 10px; font-weight: 900; color: #0F172A; }
+  .bt-active-art-wrap { width: 100%; height: 50px; border-radius: 6px; overflow: hidden; border: 1.5px solid #CBD5E1; position: relative; }
   .bt-active-art-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
-  .bt-hp-pill { width: 100%; height: 14px; background: #E2E8F0; border-radius: 999px; position: relative; overflow: hidden; }
-  .bt-hp-fill { height: 100%; background: #16A34A; }
-  .bt-hp-text { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 900; }
+  .bt-hp-pill { width: 100%; height: 14px; background: #E2E8F0; border-radius: 999px; position: relative; overflow: hidden; border: 1px solid #CBD5E1; }
+  .bt-hp-fill { height: 100%; background: #16A34A; transition: width 0.25s ease; }
+  .bt-hp-text { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 900; color: #0F172A; }
 
-  .bt-command-panel { flex: 1; display: flex; flex-direction: column; gap: 5px; }
+  .bt-enemy-info-box {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.86);
+    border: 1.5px solid #FECDD3;
+    border-radius: 10px;
+    padding: 6px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 800;
+    color: #881337;
+  }
+
+  .bt-command-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
   .bt-atk-btn {
     width: 100%;
-    border: none;
+    border: 2px solid #FDE047;
     border-radius: 12px;
-    padding: 8px 9px;
-    background: linear-gradient(135deg, #0EA5E9, #4F46E5);
+    padding: 8px 10px;
+    background: linear-gradient(135deg, #EF4444, #D97706);
     color: #FFFFFF;
     font-weight: 900;
-    font-size: 10.5px;
+    font-size: 11.5px;
     cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 2px;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
   }
-  .bt-atk-btn.disabled { background: #CBD5E1; color: #64748B; }
-  .bt-atk-top { width: 100%; display: flex; justify-content: space-between; }
+  .bt-atk-btn.disabled {
+    background: #CBD5E1;
+    border-color: #94A3B8;
+    color: #475569;
+    box-shadow: none;
+  }
+  .bt-atk-top { width: 100%; display: flex; justify-content: space-between; align-items: center; }
   .bt-sub-actions { display: flex; gap: 5px; }
-  .bt-mini-btn { flex: 1; border: 1px solid #CBD5E1; background: #FFFFFF; border-radius: 9px; padding: 5px; font-size: 9.5px; font-weight: 900; cursor: pointer; }
-  .bt-log-banner { background: #0F172A; color: #FFFFFF; border-radius: 999px; padding: 4px 12px; font-size: 10px; font-weight: 800; text-align: center; }
-
-  .bt-bottom-dock { display: flex; align-items: center; justify-content: space-between; gap: 8px; background: rgba(255,255,255,0.88); border-radius: 16px; padding: 6px 8px; }
-  .bt-hand-scroll { flex: 1; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
-  .bt-hand-scroll::-webkit-scrollbar { display: none; }
-  .hand-card-chip { width: 68px; height: 80px; border-radius: 9px; background: #FFFFFF; border: 2px solid #94A3B8; padding: 3px; display: flex; flex-direction: column; justify-content: space-between; flex-shrink: 0; cursor: pointer; }
-  .hand-card-chip.support { border-color: #F97316; background: #FFF7ED; }
-  .hand-card-chip.goods { border-color: #2563EB; background: #EFF6FF; }
-  .hc-tag { font-size: 7px; font-weight: 900; padding: 1px 4px; border-radius: 999px; background: #E2E8F0; text-align: center; }
-  .hand-card-chip.support .hc-tag { background: #F97316; color: #FFF; }
-  .hand-card-chip.goods .hc-tag { background: #2563EB; color: #FFF; }
-  .hc-name { font-size: 7.5px; font-weight: 900; text-align: center; white-space: nowrap; letter-spacing: -0.04em; }
-  .hc-thumb { width: 100%; height: 34px; border-radius: 4px; object-fit: cover; }
-
-  .energy-zone-pod {
-    width: 78px;
-    height: 78px;
-    border-radius: 50%;
-    background: radial-gradient(circle, #FFFFFF, #CBD5E1);
-    border: 3px solid #38BDF8;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  .bt-mini-btn {
+    flex: 1;
+    border: 1.5px solid #93C5FD;
+    background: #FFFFFF;
+    color: #1E3A8A;
+    border-radius: 9px;
+    padding: 6px 6px;
+    font-size: 10px;
+    font-weight: 900;
     cursor: pointer;
+  }
+
+  /* Bottom Dock: Strictly Separated Left Hand (68%) & Right Energy+EndTurn Column (32%) */
+  .bt-bottom-dock {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 8px;
+    background: #0F172A;
+    border: 1px solid #334155;
+    border-radius: 14px;
+    padding: 6px 8px;
+    height: 92px;
     flex-shrink: 0;
   }
-  .ez-title { font-size: 7px; font-weight: 900; color: #334155; }
-  .ez-main-orb { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid #FFF; }
-  .ez-main-orb svg { width: 16px; height: 16px; }
-  .ez-sub { font-size: 7px; font-weight: 900; color: #0284C7; }
+
+  .bt-hand-wrap {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .bt-hand-label {
+    font-size: 8.5px;
+    font-weight: 900;
+    color: #94A3B8;
+  }
+
+  .bt-hand-scroll {
+    flex: 1;
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    align-items: center;
+  }
+  .bt-hand-scroll::-webkit-scrollbar { display: none; }
+
+  .hand-card-chip {
+    width: 64px;
+    height: 66px;
+    border-radius: 8px;
+    background: #FFFFFF;
+    border: 2px solid #94A3B8;
+    padding: 2px 3px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+  .hand-card-chip.support { border-color: #F97316; background: #FFF7ED; }
+  .hand-card-chip.goods { border-color: #2563EB; background: #EFF6FF; }
+  .hc-tag { font-size: 6.5px; font-weight: 900; padding: 1px 3px; border-radius: 999px; background: #10B981; color: #FFF; text-align: center; }
+  .hand-card-chip.support .hc-tag { background: #F97316; color: #FFF; }
+  .hand-card-chip.goods .hc-tag { background: #2563EB; color: #FFF; }
+  .hc-name { font-size: 7.5px; font-weight: 900; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #0F172A; }
+  .hc-thumb { width: 100%; height: 28px; border-radius: 4px; object-fit: cover; }
+
+  .bt-right-controls {
+    width: 114px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 5px;
+  }
+
+  .energy-zone-btn {
+    flex: 1;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #F59E0B, #EA580C);
+    border: 2px solid #FEF08A;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 10.5px;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 0 12px rgba(245, 158, 11, 0.5);
+  }
+
+  .energy-zone-btn.used {
+    background: #334155;
+    border-color: #475569;
+    color: #94A3B8;
+    box-shadow: none;
+  }
+
+  .end-turn-btn {
+    height: 30px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #0284C7, #2563EB);
+    border: 1.5px solid #7DD3FC;
+    color: #FFFFFF;
+    font-size: 10.5px;
+    font-weight: 900;
+    cursor: pointer;
+  }
+
+  /* Universal Modal Styles (Rules, Pack Rates, Card Exchange, Battle Result) */
+  .cw-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 120;
+    background: rgba(15, 23, 42, 0.72);
+    backdrop-filter: blur(8px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .cw-modal-backdrop.active {
+    display: flex;
+  }
+  .cw-modal-sheet {
+    width: 100%;
+    max-width: 390px;
+    max-height: 84dvh;
+    background: #FFFFFF;
+    border-radius: 22px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 20px 45px rgba(15, 23, 42, 0.38);
+    overflow: hidden;
+  }
+  .cw-modal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1.5px solid #E2E8F0;
+    padding-bottom: 8px;
+  }
+  .cw-modal-title {
+    font-size: 15px;
+    font-weight: 900;
+    color: #0F172A;
+  }
+  .cw-modal-body {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-right: 2px;
+  }
+  .rate-item-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    background: #F8FAFC;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 7px 10px;
+  }
+  .rate-item-row img {
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
 
 </style>
 </head>
@@ -1759,30 +2260,27 @@
 <div id="app-shell">
 
   <!-- =====================================================================
-       SCREEN 0: TITLE SCREEN (100% Faithful to Image 1)
+       SCREEN 0: TITLE SCREEN
        ===================================================================== -->
   <div id="title-screen" onclick="dismissTitleScreen()">
     <div class="title-top-bar">
       <div class="title-ver-info">
-        <div>Ver.1.8.1</div>
+        <div>Ver.2.0.0</div>
         <div>サポートID : CwPocket7X9p</div>
       </div>
-      <div class="title-menu-circle">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+      <div class="title-menu-circle" onclick="event.stopPropagation(); openRulesModal();" title="遊び方ガイド">
+        <span style="font-weight:900;font-size:16px;">?</span>
       </div>
     </div>
 
-    <!-- Floating Cards in 3D Depth (Populated by JS with real rendered cards) -->
     <div class="title-cards-field" id="title-cards-field"></div>
 
-    <!-- Center Logo -->
     <div class="title-center-logo">
       <div class="logo-main-word">CRYSTAL</div>
       <div class="logo-sub-ribbon">TRADING CARD GAME</div>
       <div class="logo-pocket-word">Pocket</div>
     </div>
 
-    <!-- Bottom "タップでスタート" & Legal -->
     <div class="title-bottom-area">
       <div class="tap-to-start-txt">タップでスタート</div>
       <div class="title-legal-row">
@@ -1792,45 +2290,40 @@
         </div>
         <div>
           <div>©2026 Coreworks Studio / Crystal Pocket Project</div>
-          <div>©Digital Card Engine v2</div>
+          <div>©Digital Card Engine v2.0</div>
         </div>
       </div>
     </div>
   </div>
 
   <!-- =====================================================================
-       MAIN VIEWPORT (5 TABS)
+       MAIN VIEWPORT (3 REAL WORKING TABS: PACK / CARDS & DECK / BATTLE)
        ===================================================================== -->
   <main class="tab-viewport">
 
     <!-- -------------------------------------------------------------------
-         TAB 1: HOME / EXPANSION PACK SELECT (100% Faithful to Image 2)
+         TAB 1: HOME / EXPANSION PACK SELECT
          ------------------------------------------------------------------- -->
     <section id="tab-home" class="tab-page active">
       <div class="home-pack-screen">
         <div class="home-pastel-sky" id="home-pastel-sky"></div>
 
-        <!-- Top-Right Pack Stamina HUD -->
+        <!-- Top-Right HUD: Pack Stamina + Exchange Points + Working Help Button -->
         <div class="home-top-right-hud">
           <div class="stamina-capsule-row">
-            <div class="stamina-circle-pack">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2.2"><rect x="5" y="3" width="14" height="18" rx="2"/><line x1="5" y1="7" x2="19" y2="7"/></svg>
-            </div>
-            <div class="stamina-main-pill">
+            <div class="stamina-main-pill" onclick="openPackCuttingOverlay()" style="cursor:pointer;" title="タップでパック開封">
               <svg width="16" height="20" viewBox="0 0 20 24" fill="#A855F7"><rect x="2" y="2" width="16" height="20" rx="2" fill="#C084FC" stroke="#FFF" stroke-width="1.5"/><circle cx="10" cy="12" r="4" fill="#FDE047"/></svg>
-              <svg width="16" height="20" viewBox="0 0 20 24" fill="#38BDF8"><rect x="2" y="2" width="16" height="20" rx="2" fill="#7DD3FC" stroke="#FFF" stroke-width="1.5"/><circle cx="10" cy="12" r="4" fill="#FDE047"/></svg>
-              <span class="stamina-max-tag">MAX</span>
+              <span style="font-size:11px;font-weight:900;color:#1E293B;">開封可能: ∞</span>
+              <span class="stamina-max-tag">FREE</span>
             </div>
-            <div class="stamina-hg-box">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.4"><path d="M6 2h12v4l-4 6 4 6v4H6v-4l4-6-4-6V2z"/></svg>
-              <span>99+</span>
-            </div>
-            <button class="help-circle-btn" title="ヘルプ">?</button>
+            <button class="help-circle-btn" onclick="openRulesModal()" title="遊び方・ルール解説" style="width:auto;padding:0 10px;border-radius:999px;background:rgba(255,255,255,0.92);font-size:11px;gap:3px;">
+              <span>? 遊び方</span>
+            </button>
           </div>
         </div>
 
-        <!-- Featured 5-Card Showcase Window with Triangle Pointer -->
-        <div class="featured-cards-bubble" onclick="openPackCuttingOverlay()">
+        <!-- Featured 5-Card Showcase Window (Tapping opens Pack Card List Modal!) -->
+        <div class="featured-cards-bubble" onclick="openPackRatesModal()" title="封入カード一覧を見る">
           <div class="featured-cards-strip" id="featured-cards-strip">
             <div class="feat-mini-slice"><img id="feat-img-1" src="assets/card_dragon.jpg" alt=""></div>
             <div class="feat-mini-slice"><img id="feat-img-2" src="assets/card_orion.jpg" alt=""></div>
@@ -1840,9 +2333,8 @@
           </div>
         </div>
 
-        <!-- Center Giant Pack + Right Secondary Pack + Floor Reflection -->
+        <!-- Center Giant Pack + Right Secondary Pack -->
         <div class="pack-carousel-stage">
-          <!-- Main Foreground Pack -->
           <div class="pack-card-model main-pack" id="main-pack-model" onclick="openPackCuttingOverlay()">
             <div class="pack-foil-crimp-top" id="main-pack-crimp-top"></div>
             <div class="pack-art-middle" id="main-pack-art" style="background-image:url('assets/card_dragon.jpg');">
@@ -1856,7 +2348,6 @@
             <div class="pack-floor-reflection" id="main-pack-reflect" style="background-image:url('assets/card_dragon.jpg');"></div>
           </div>
 
-          <!-- Secondary Background Pack on Right -->
           <div class="pack-card-model sub-pack" id="sub-pack-model" onclick="swapExpansionPack()">
             <div class="pack-foil-crimp-top" style="background:linear-gradient(90deg,#38BDF8,#E0F2FE,#0284C7);"></div>
             <div class="pack-art-middle" id="sub-pack-art" style="background-image:url('assets/card_orion.jpg');">
@@ -1870,23 +2361,21 @@
           </div>
         </div>
 
-        <!-- Floating Pack Point Button on Right -->
-        <div class="pack-pt-float-btn" onclick="openPackCuttingOverlay()">
+        <!-- Floating Pack Exchange Point Button on Right (Opens Real Card Exchange Shop!) -->
+        <div class="pack-pt-float-btn" onclick="openExchangeModal()" title="交換ptで好きなカードと交換">
           <div class="pack-pt-circle">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" stroke-width="2.2"><rect x="6" y="4" width="12" height="16" rx="2"/><circle cx="12" cy="13" r="2.5" fill="#0EA5E9"/><line x1="6" y1="8" x2="18" y2="8"/></svg>
             <span class="nav-notif-dot" style="top:2px;right:2px;"></span>
           </div>
-          <div class="pack-pt-badge">180pt</div>
+          <div class="pack-pt-badge" id="home-pack-pt-txt">交換 180pt</div>
         </div>
 
-        <!-- Bottom 3 Neumorphic Controls: 提供割合 | Flip (↩) | 他の拡張パックを選ぶ > -->
+        <!-- Bottom 3 Real Working Controls: 封入カード一覧 | パック開封 | パック切替 -->
         <div class="home-bottom-controls">
-          <button class="hb-pill-left" onclick="openPackCuttingOverlay()">提供割合</button>
-          <button class="hb-circle-flip" onclick="flipMainPack3D()" title="パックを裏返す">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5v0a5.5 5.5 0 0 1-5.5 5.5H11"/></svg>
-          </button>
-          <button class="hb-pill-right" onclick="swapExpansionPack()">
-            <span>他の拡張パック<br>を選ぶ</span>
+          <button class="hb-pill-left" id="btn-home-rates" onclick="openPackRatesModal()">封入カード一覧</button>
+          <button class="neu-btn primary" id="btn-home-open-pack" style="padding:10px 18px;font-size:13px;" onclick="openPackCuttingOverlay()">✨ パックを開封</button>
+          <button class="hb-pill-right" id="btn-home-swap-pack" onclick="swapExpansionPack()">
+            <span>パック切替</span>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
           </button>
         </div>
@@ -1894,8 +2383,8 @@
         <!-- OVERLAY A: Pack Foil Cutting Stage -->
         <div class="overlay-screen" id="ov-pack-cut">
           <div style="width:100%;display:flex;justify-content:space-between;align-items:center;">
-            <button class="neu-btn" style="padding:7px 14px;font-size:12px;" onclick="closeAllPackOverlays()">戻る</button>
-            <span style="font-size:13px;font-weight:900;color:#334155;">上部のカットラインを右へスワイプ</span>
+            <button class="neu-btn" style="padding:7px 14px;font-size:12px;" onclick="closeAllPackOverlays()">← 戻る</button>
+            <span style="font-size:13px;font-weight:900;color:#334155;">上部のカットラインをスワイプまたはボタンで開封</span>
             <span style="width:48px;"></span>
           </div>
           <div class="pack-3d-container" id="pack-3d-box">
@@ -1905,26 +2394,26 @@
             <div class="pack-laser-guide" id="pack-guide-line"></div>
             <canvas id="pack-cut-canvas" width="338" height="220"></canvas>
           </div>
-          <button class="neu-btn primary" onclick="triggerPackOpen()">横にスワイプしてパックをカット</button>
+          <button class="neu-btn primary" id="btn-trigger-cut" onclick="triggerPackOpen()">⚡ スワイプしてパックをカット開封！</button>
         </div>
 
         <!-- OVERLAY B: 5-Card Stack Flip (1/5 to 5/5) -->
         <div class="overlay-screen" id="ov-pack-stack">
           <div class="mc-total-pill" id="stack-counter-pill" style="font-size:14px;padding:6px 18px;">カードめくり  1 / 5</div>
           <div id="card-stack-stage" onclick="nextPackCard()" style="cursor:pointer;position:relative;"></div>
-          <button class="neu-btn primary" onclick="nextPackCard()">次のカードをめくる</button>
+          <button class="neu-btn primary" id="btn-next-pack-card" onclick="nextPackCard()">次のカードをめくる ▶</button>
         </div>
 
         <!-- OVERLAY C: Dex Empty Slot Snap-In Registration Animation -->
         <div class="overlay-screen" id="ov-dex-reg">
           <div style="text-align:center;">
-            <div class="mc-total-pill" id="reg-status-pill" style="margin-bottom:4px;">NEWカードを空きスロットへ登録中！</div>
-            <h2 style="font-size:16px;font-weight:900;color:#0F172A;">図鑑への登録演出（<span id="reg-counter-txt">9 / 15</span>）</h2>
+            <div class="mc-total-pill" id="reg-status-pill" style="margin-bottom:4px;">NEWカードを空きスロットへ登録中！（交換pt +20pt獲得）</div>
+            <h2 style="font-size:16px;font-weight:900;color:#0F172A;">図鑑への登録演出（<span id="reg-counter-txt">12 / 16</span>）</h2>
           </div>
           <div class="dex-reg-board" id="dex-reg-board"></div>
           <div style="display:flex;gap:10px;">
-            <button class="neu-btn" onclick="closePackFlowToDex()">自分のカードを見る</button>
-            <button class="neu-btn primary" onclick="closeAllPackOverlays()">ホームへ戻る</button>
+            <button class="neu-btn" id="btn-reg-to-dex" onclick="closePackFlowToDex()">カード図鑑を見る</button>
+            <button class="neu-btn primary" id="btn-reg-to-home" onclick="closeAllPackOverlays()">ホームへ戻る</button>
           </div>
         </div>
 
@@ -1932,64 +2421,71 @@
     </section>
 
     <!-- -------------------------------------------------------------------
-         TAB 2: MY CARDS ("自分のカード" — 100% Faithful to Image 3)
+         TAB 2: MY CARDS & DECK BUILDER ("カード・デッキ")
          ------------------------------------------------------------------- -->
     <section id="tab-dex" class="tab-page">
       <div class="mycards-top-header">
-        <span style="width:26px;"></span>
-        <h1>自分のカード</h1>
-        <button class="help-circle-btn">?</button>
+        <span style="width:52px;"></span>
+        <h1>カード・デッキ編成</h1>
+        <button class="help-circle-btn" onclick="openExchangeModal()" style="width:auto;padding:0 10px;border-radius:999px;font-size:10.5px;">💎 交換所</button>
       </div>
       <div class="rainbow-divider-line"></div>
 
-      <!-- Soft Ice-Blue Control Panel: 4 Square Buttons + Owned Pill + Dex Toggle + Search -->
+      <!-- Control Panel: 2 Real Working Mode Buttons (Collection vs Deck Builder) -->
       <div class="mycards-control-panel">
-        <div class="mc-four-btns">
-          <button class="mc-sq-btn" onclick="setDexMode(false)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><rect x="4" y="3" width="16" height="18" rx="2"/><rect x="8" y="7" width="8" height="10" rx="1"/></svg>
-            <span>ファイル</span>
+        <div class="mc-two-mode-tabs">
+          <button class="mc-mode-tab-btn active" id="btn-subtab-collection" onclick="setCardsSubTab('collection')">
+            <span>📖 図鑑コレクション</span>
           </button>
-          <button class="mc-sq-btn" onclick="openSingleCardViewer(1)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M3 21h18"/></svg>
-            <span>ボード</span>
-          </button>
-          <button class="mc-sq-btn" onclick="switchTab('battle')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><path d="M5 7h14v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7z"/><path d="M5 7l2-4h10l2 4"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            <span>デッキ</span>
-          </button>
-          <button class="mc-sq-btn" onclick="openSingleCardViewer(7)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><rect x="4" y="8" width="9" height="12" rx="1.5"/><circle cx="16.5" cy="7.5" r="3.5"/><path d="M13 4c2-1 5 0 6 2"/></svg>
-            <span>エフェクト</span>
+          <button class="mc-mode-tab-btn" id="btn-subtab-deck" onclick="setCardsSubTab('deck')">
+            <span>⚔️ バトルデッキ編成</span>
           </button>
         </div>
 
-        <div class="mc-filter-row">
+        <div class="mc-filter-row" id="mc-collection-toolbar">
           <div class="mc-total-pill">
             <svg width="14" height="16" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2.2"><rect x="5" y="3" width="14" height="18" rx="2"/></svg>
-            <span id="mc-total-owned-num">15</span>
+            <span>所持合計: <strong id="mc-total-owned-num">15</strong>枚（<span id="mc-unique-owned-num">12/16</span>種）</span>
           </div>
 
           <div class="mc-right-controls">
-            <div class="dex-toggle-wrap" onclick="toggleDexEmptySlotMode()" title="未所持スロット表示切替">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2.1"><rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="12" r="3.5"/></svg>
+            <div class="dex-toggle-wrap" onclick="toggleDexEmptySlotMode()" title="未所持スロット表示切替" style="cursor:pointer;">
+              <span style="font-size:10.5px;font-weight:900;color:#334155;">未所持枠表示</span>
               <div class="dex-toggle-track" id="dex-toggle-track">
                 <div class="dex-toggle-knob"></div>
               </div>
             </div>
-            <span style="width:1px;height:18px;background:#CBD5E1;"></span>
-            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2.3" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16.2" y2="16.2"/></svg>
           </div>
         </div>
       </div>
 
-      <!-- 3-Column Full-Color PokéPock Card Grid -->
+      <!-- SUB-VIEW 1: 3-Column Full-Color PokéPock Card Grid -->
       <div class="dex-grid" id="dex-grid"></div>
 
+      <!-- SUB-VIEW 2: Interactive Battle Deck Builder (8 Cards) -->
+      <div class="deck-builder-panel" id="dex-deck-builder-view">
+        <div class="deck-box-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-size:13.5px;font-weight:900;color:#0F172A;">⚔️ 現在のバトルデッキ（<span id="deck-count-label">8 / 8</span>枚）</div>
+              <div style="font-size:10.5px;font-weight:700;color:#64748B;">カードをタップして入れ替えできます</div>
+            </div>
+            <button class="neu-btn primary" style="padding:7px 12px;font-size:11px;" onclick="autoBuildBestDeck()">⚡ 最強自動編成</button>
+          </div>
+          <div class="deck-slots-grid" id="deck-active-slots"></div>
+        </div>
+
+        <div class="deck-box-card">
+          <div style="font-size:12.5px;font-weight:900;color:#0F172A;margin-bottom:6px;">📦 所持カードからデッキに追加（タップで追加）</div>
+          <div class="deck-slots-grid" id="deck-pool-slots"></div>
+        </div>
+      </div>
+
       <!-- Single 1-Card 3D Holographic Viewer Overlay -->
-      <div class="overlay-screen" id="single-viewer-modal" style="z-index:90;background:rgba(241,245,249,0.94);backdrop-filter:blur(16px);">
+      <div class="overlay-screen" id="single-viewer-modal" style="z-index:90;background:rgba(241,245,249,0.95);backdrop-filter:blur(16px);">
         <div style="width:100%;display:flex;justify-content:space-between;align-items:center;">
-          <div class="mc-total-pill" id="viewer-dex-badge">No.001 / 015</div>
-          <button class="neu-btn" style="padding:7px 16px;font-size:12px;" onclick="closeSingleCardViewer()">閉じる</button>
+          <div class="mc-total-pill" id="viewer-dex-badge">No.001 / 016</div>
+          <button class="neu-btn" id="btn-close-viewer" style="padding:7px 16px;font-size:12px;" onclick="closeSingleCardViewer()">✕ 閉じる</button>
         </div>
         <div id="viewer-stage" style="perspective:1000px;display:flex;align-items:center;justify-content:center;">
           <div id="viewer-card-mount" style="transform:scale(1.1);"></div>
@@ -2002,115 +2498,28 @@
     </section>
 
     <!-- -------------------------------------------------------------------
-         TAB 3: SOCIAL ("ソーシャル" — 100% Faithful to Image 4)
-         ------------------------------------------------------------------- -->
-    <section id="tab-social" class="tab-page">
-      <div class="skew-menu-page">
-        <div class="skew-hero-banner social-theme">
-          <div class="skew-ribbon-bar">
-            <span class="skew-ribbon-title">ソーシャル</span>
-          </div>
-          <div class="skew-stage-characters" id="social-stage-cards"></div>
-        </div>
-
-        <div class="protrude-menu-area">
-          <!-- Center Top Large Protruding Button -->
-          <div class="protrude-btn-card" onclick="switchTab('dex')">
-            <div class="protrude-top-icon">
-              <svg width="58" height="58" viewBox="0 0 64 64" fill="none">
-                <rect x="20" y="8" width="24" height="32" rx="4" fill="#FFFFFF" stroke="#10B981" stroke-width="3.5"/>
-                <path d="M14 46c12 5 24 5 36 0" stroke="#10B981" stroke-width="3.5" stroke-linecap="round"/>
-                <line x1="18" y1="40" x2="18" y2="54" stroke="#10B981" stroke-width="3.5" stroke-linecap="round"/>
-                <line x1="46" y1="40" x2="46" y2="54" stroke="#10B981" stroke-width="3.5" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <span class="protrude-btn-label">だれかのコレクション</span>
-          </div>
-
-          <!-- Two-Column Protruding Buttons: おすそわけ | トレード -->
-          <div class="protrude-two-col">
-            <div class="protrude-btn-card" onclick="openPackCuttingOverlay()">
-              <div class="protrude-top-icon">
-                <svg width="58" height="58" viewBox="0 0 64 64" fill="none">
-                  <rect x="22" y="8" width="20" height="26" rx="3" fill="#FFFFFF" stroke="#10B981" stroke-width="3.5"/>
-                  <path d="M14 34h36l-4 18H18l-4-18z" fill="#FFFFFF" stroke="#10B981" stroke-width="3.5" stroke-linejoin="round"/>
-                </svg>
-              </div>
-              <span class="protrude-btn-label">おすそわけ</span>
-            </div>
-
-            <div class="protrude-btn-card" onclick="switchTab('dex')">
-              <div class="protrude-top-icon">
-                <svg width="58" height="58" viewBox="0 0 64 64" fill="none">
-                  <rect x="14" y="24" width="18" height="24" rx="3" fill="#FFFFFF" stroke="#10B981" stroke-width="3.5"/>
-                  <rect x="32" y="10" width="18" height="24" rx="3" fill="#FFFFFF" stroke="#10B981" stroke-width="3.5"/>
-                  <path d="M18 18c2-6 8-8 12-8" stroke="#10B981" stroke-width="3.5" stroke-linecap="round"/>
-                  <path d="M46 40c-2 6-8 8-12 8" stroke="#10B981" stroke-width="3.5" stroke-linecap="round"/>
-                </svg>
-              </div>
-              <span class="protrude-btn-label">トレード</span>
-            </div>
-          </div>
-
-          <div class="friend-mini-sq">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2.2"><circle cx="9" cy="8" r="3.5"/><path d="M3 19c0-3 3-5 6-5s6 2 6 5"/><circle cx="17" cy="9" r="2.5"/><path d="M15 19c0-2 2-3.5 4.5-3.5"/></svg>
-            <span>フレンド</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- -------------------------------------------------------------------
-         TAB 4: BATTLE ("バトル" Large Menu + 3-Point Battle Arena)
+         TAB 3: BATTLE (5-Stage Solo Select Lobby + Clean 3-Point Battle Arena)
          ------------------------------------------------------------------- -->
     <section id="tab-battle" class="tab-page">
-      <!-- State 1: Large Readable Battle Menu (Image 4 Style) -->
-      <div class="skew-menu-page" id="battle-lobby-view" style="display:none;">
-        <div class="skew-hero-banner battle-theme">
-          <div class="skew-ribbon-bar">
-            <span class="skew-ribbon-title">バトル</span>
+      <!-- State 1: 5-Stage Solo Battle Select Lobby -->
+      <div class="stage-select-page" id="battle-lobby-view">
+        <div class="stage-hero-header">
+          <div>
+            <div style="font-size:11px;font-weight:900;opacity:0.9;">SOLO BATTLE ARENA</div>
+            <h1 style="font-size:18px;font-weight:900;white-space:nowrap;">⚔️ ひとりでバトル（全5ステージ）</h1>
+            <div style="font-size:10.5px;font-weight:700;margin-top:2px;">3ポイント先取で勝利！クリアで交換pt獲得</div>
           </div>
-          <div class="skew-stage-characters" id="battle-stage-cards"></div>
+          <button class="neu-btn" style="padding:7px 11px;font-size:11px;white-space:nowrap;flex-shrink:0;" onclick="switchTab('dex'); setCardsSubTab('deck');">デッキ編成</button>
         </div>
 
-        <div class="protrude-menu-area">
-          <div class="protrude-btn-card" onclick="enterBattleArena()">
-            <div class="protrude-top-icon">
-              <svg width="58" height="58" viewBox="0 0 64 64" fill="none">
-                <rect x="18" y="10" width="28" height="36" rx="4" fill="#FFFFFF" stroke="#F43F5E" stroke-width="3.5"/>
-                <polygon points="32 18 38 28 32 38 26 28" fill="#F43F5E"/>
-              </svg>
-            </div>
-            <span class="protrude-btn-label">ひとりでバトル</span>
-          </div>
-
-          <div class="protrude-two-col">
-            <div class="protrude-btn-card" onclick="enterBattleArena()">
-              <div class="protrude-top-icon">
-                <svg width="58" height="58" viewBox="0 0 64 64" fill="none">
-                  <rect x="14" y="14" width="20" height="28" rx="3" transform="rotate(-10 14 14)" fill="#FFFFFF" stroke="#F43F5E" stroke-width="3.5"/>
-                  <rect x="30" y="14" width="20" height="28" rx="3" transform="rotate(10 30 14)" fill="#FFFFFF" stroke="#F43F5E" stroke-width="3.5"/>
-                </svg>
-              </div>
-              <span class="protrude-btn-label">ランダムマッチ</span>
-            </div>
-
-            <div class="protrude-btn-card" onclick="enterBattleArena()">
-              <div class="protrude-top-icon">
-                <svg width="58" height="58" viewBox="0 0 64 64" fill="none">
-                  <circle cx="32" cy="28" r="16" fill="#FFFFFF" stroke="#F43F5E" stroke-width="3.5"/>
-                  <polygon points="32 18 36 28 32 38 28 28" fill="#F43F5E"/>
-                </svg>
-              </div>
-              <span class="protrude-btn-label">イベントマッチ</span>
-            </div>
-          </div>
-        </div>
+        <div class="stage-list-wrap" id="stage-list-wrap"></div>
       </div>
 
-      <!-- State 2: Live 3-Point Battle Arena (Active 1 + Bench 3 + Energy Zone + Hand) -->
+      <!-- State 2: Completely Redesigned, Crystal-Clear 3-Point Battle Arena -->
       <div class="battle-arena" id="battle-arena-view">
+        <!-- 1. Top HUD Bar -->
         <div class="bt-hud">
+          <button class="bt-retire-btn" id="btn-bt-retire" onclick="toggleBattleLobby(true)">← リタイア</button>
           <div class="bt-score-box">
             <span>相手</span>
             <div class="pt-dots" id="enemy-pt-dots">
@@ -2128,47 +2537,63 @@
           </div>
         </div>
 
-        <div class="bt-bench-row" id="enemy-bench-row"></div>
-
-        <div class="bt-active-zone" style="justify-content:center;">
-          <div id="enemy-active-mount"></div>
-          <div style="display:flex;flex-direction:column;gap:5px;">
-            <div class="mc-total-pill" style="font-size:10px;padding:4px 10px;">先に<strong>3PT先取</strong>で勝利</div>
-            <div class="mc-total-pill" style="font-size:9.5px;padding:4px 10px;">通常=<strong>1pt</strong> / ex=<strong>2pt</strong></div>
-            <div class="mc-total-pill" style="font-size:9.5px;padding:4px 10px;">山札残り: <strong id="bt-deck-count">11</strong>枚</div>
-            <button class="bt-mini-btn" onclick="toggleBattleLobby(true)">バトルメニューへ</button>
+        <!-- 2. Upper Enemy Playmat (Crimson/Rose Tint) -->
+        <div class="bt-enemy-mat">
+          <div class="bt-mat-label" style="color:#9F1239;">
+            <span id="bt-enemy-stage-title">🔥 相手フィールド（STAGE 1）</span>
+            <span>3PT先取で勝利（通常1pt / ex 2pt）</span>
           </div>
-        </div>
-
-        <div class="bt-log-banner" id="bt-log-banner">
-          「炎竜イグニス」にエネルギーを1個付与！ワザ発動可能！
-        </div>
-
-        <div class="bt-active-zone">
-          <div id="player-active-mount"></div>
-          <div class="bt-command-panel">
-            <button class="bt-atk-btn" id="btn-bt-attack" onclick="playerExecuteAttack()">
-              <div class="bt-atk-top">
-                <span id="bt-atk-name">紅蓮メテオ</span>
-                <span id="bt-atk-dmg">110</span>
-              </div>
-              <span style="font-size:8.5px;opacity:0.92;" id="bt-atk-cost-txt">エネルギー: 2 / 2個【発動可能！】</span>
-            </button>
-            <div class="bt-sub-actions">
-              <button class="bt-mini-btn" onclick="playerExecuteRetreat()">にげる</button>
-              <button class="bt-mini-btn" onclick="endPlayerTurn()">ターン終了</button>
+          <div class="bt-bench-row" id="enemy-bench-row"></div>
+          <div class="bt-active-zone">
+            <div id="enemy-active-mount"></div>
+            <div class="bt-enemy-info-box" id="enemy-intent-box">
+              <div style="font-size:10.5px;font-weight:900;color:#E11D48;">⚠️ 相手のバトル場</div>
+              <div id="enemy-next-move-txt">ワザ：フレイムクロー（40ダメージ）</div>
+              <div id="enemy-weakness-txt" style="color:#0284C7;">弱点タイプで攻撃すると +20ダメージ！</div>
             </div>
           </div>
         </div>
 
-        <div class="bt-bench-row" id="player-bench-row"></div>
+        <!-- 3. Center Step-by-Step Navigation Banner -->
+        <div class="bt-step-guide" id="bt-log-banner">
+          💡 Step 1：右下の「⚡エネルギー付与」をタップして場のカードに付けよう！
+        </div>
 
+        <!-- 4. Lower Player Playmat (Ice-Blue Tint) -->
+        <div class="bt-player-mat">
+          <div class="bt-mat-label" style="color:#1E40AF;">
+            <span>🛡️ 自分のバトル場（タップでエネルギー付与先に選択）</span>
+            <span>山札残り: <strong id="bt-deck-count">8</strong>枚</span>
+          </div>
+          <div class="bt-active-zone">
+            <div id="player-active-mount"></div>
+            <div class="bt-command-panel">
+              <button class="bt-atk-btn" id="btn-bt-attack" onclick="playerExecuteAttack()">
+                <div class="bt-atk-top">
+                  <span id="bt-atk-name">⚔️ 紅蓮メテオ</span>
+                  <span id="bt-atk-dmg">110ダメージ</span>
+                </div>
+                <span style="font-size:9px;opacity:0.95;" id="bt-atk-cost-txt">⚡エネルギー 2 / 2個【発動可能！】</span>
+              </button>
+              <div class="bt-sub-actions">
+                <button class="bt-mini-btn" id="btn-bt-retreat" onclick="playerExecuteRetreat()">⇄ ベンチと交代（にげる）</button>
+              </div>
+            </div>
+          </div>
+          <div class="bt-bench-row" id="player-bench-row"></div>
+        </div>
+
+        <!-- 5. Bottom Dock: Left Hand (68%) + Right Energy & Turn End Column (32%) -->
         <div class="bt-bottom-dock">
-          <div class="bt-hand-scroll" id="bt-hand-scroll"></div>
-          <div class="energy-zone-pod" id="energy-zone-pod" onclick="attachTurnEnergy()">
-            <span class="ez-title">エネルギーゾーン</span>
-            <div class="ez-main-orb orb-fire" id="ez-main-orb"></div>
-            <span class="ez-sub" id="ez-status-txt">タップで付与(1)</span>
+          <div class="bt-hand-wrap">
+            <div class="bt-hand-label">手札（タップでベンチ召喚・グッズ即時発動）</div>
+            <div class="bt-hand-scroll" id="bt-hand-scroll"></div>
+          </div>
+          <div class="bt-right-controls">
+            <button class="energy-zone-btn" id="energy-zone-pod" onclick="attachTurnEnergy()">
+              <span id="ez-status-txt">⚡ エネルギー付与(1)</span>
+            </button>
+            <button class="end-turn-btn" id="btn-end-turn" onclick="endPlayerTurn()">ターン終了 ▶</button>
           </div>
         </div>
       </div>
@@ -2177,48 +2602,101 @@
   </main>
 
   <!-- =====================================================================
-       BOTTOM NAVIGATION BAR: 5 THICK-LINE ICONS ONLY (Zero Text Labels!)
+       UNIVERSAL MODALS (Rules, Pack Card List, Exchange Shop, Battle Result)
        ===================================================================== -->
-  <nav class="bottom-nav">
-    <!-- 1. Home -->
-    <button class="nav-icon-btn active" data-tab="home" onclick="switchTab('home')" aria-label="ホーム">
+  <!-- MODAL 1: 遊び方・30秒ルール解説 -->
+  <div class="cw-modal-backdrop" id="modal-rules" onclick="closeModal('modal-rules')">
+    <div class="cw-modal-sheet" onclick="event.stopPropagation()">
+      <div class="cw-modal-head">
+        <span class="cw-modal-title">📖 クリスタル・ポケッツ 遊び方ガイド</span>
+        <button class="neu-btn" style="padding:5px 12px;font-size:11px;" onclick="closeModal('modal-rules')">閉じる</button>
+      </div>
+      <div class="cw-modal-body" style="font-size:12px;line-height:1.55;color:#334155;">
+        <div style="background:#EFF6FF;border-radius:12px;padding:10px;border:1px solid #BFDBFE;">
+          <strong style="color:#1D4ED8;">① パック開封＆図鑑コレクション</strong><br>
+          ホーム画面で「✨ パックを開封」を押して上部をスワイプカット！1パック5枚のカードが手に入り、1パックごとに<strong>交換pt（+20pt）</strong>も貯まります。
+        </div>
+        <div style="background:#FEF3C7;border-radius:12px;padding:10px;border:1px solid #FDE68A;">
+          <strong style="color:#B45309;">② 交換ptで未所持カードを確実ゲット</strong><br>
+          ホーム右下の「交換pt」ボタンを押すと、貯まったポイントで欲しいカード（exカード含む）を直接交換できます。
+        </div>
+        <div style="background:#FFE4E6;border-radius:12px;padding:10px;border:1px solid #FECDD3;">
+          <strong style="color:#BE123C;">③ 3ポイント先取スピードバトル！</strong><br>
+          ・毎ターン右下の<strong>「⚡エネルギー付与」</strong>を1回タップして場のカードにエネルギーを付けます。<br>
+          ・エネルギーが足りたら中央の<strong>「⚔️ ワザで攻撃！」</strong>をタップ！<br>
+          ・相手モンスターを倒すと<strong>通常＝1pt、ex＝2pt</strong>獲得。先に<strong>3ポイント先取</strong>した方の勝利です！
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: 封入カード一覧＆提供割合 -->
+  <div class="cw-modal-backdrop" id="modal-pack-rates" onclick="closeModal('modal-pack-rates')">
+    <div class="cw-modal-sheet" onclick="event.stopPropagation()">
+      <div class="cw-modal-head">
+        <span class="cw-modal-title" id="rates-modal-title">📋 封入カード一覧＆提供割合</span>
+        <button class="neu-btn" style="padding:5px 12px;font-size:11px;" onclick="closeModal('modal-pack-rates')">閉じる</button>
+      </div>
+      <div style="font-size:11px;font-weight:800;color:#0284C7;background:#F0F9FF;padding:6px 10px;border-radius:8px;">
+        提供割合：♦♦♦♦(ex) 15% ／ ★(アートex) 15% ／ ♦♦♦ 25% ／ ♦♦・♦ 45%（タップで3D拡大）
+      </div>
+      <div class="cw-modal-body" id="rates-card-list"></div>
+    </div>
+  </div>
+
+  <!-- MODAL 3: カード交換所（交換pt消費） -->
+  <div class="cw-modal-backdrop" id="modal-exchange" onclick="closeModal('modal-exchange')">
+    <div class="cw-modal-sheet" onclick="event.stopPropagation()">
+      <div class="cw-modal-head">
+        <span class="cw-modal-title">💎 パック交換pt カード交換所</span>
+        <button class="neu-btn" style="padding:5px 12px;font-size:11px;" onclick="closeModal('modal-exchange')">閉じる</button>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;background:#0F172A;color:#FFF;padding:8px 12px;border-radius:10px;font-size:12px;font-weight:900;">
+        <span>現在の所持ポイント</span>
+        <span style="color:#38BDF8;font-size:14px;" id="exchange-modal-pt">180 pt</span>
+      </div>
+      <div class="cw-modal-body" id="exchange-card-list"></div>
+    </div>
+  </div>
+
+  <!-- MODAL 4: バトル勝敗結果モーダル -->
+  <div class="cw-modal-backdrop" id="modal-battle-result">
+    <div class="cw-modal-sheet" style="text-align:center;align-items:center;">
+      <div id="bt-res-badge" style="background:#FEF08A;color:#B45309;font-size:12px;font-weight:900;padding:4px 14px;border-radius:999px;">STAGE CLEAR!</div>
+      <h2 id="bt-res-title" style="font-size:22px;font-weight:900;color:#0F172A;">🏆 あなたの勝利！</h2>
+      <p id="bt-res-desc" style="font-size:12.5px;font-weight:700;color:#475569;">3ポイントを先取して見事バトルに勝利しました！</p>
+      <div id="bt-res-reward" style="width:100%;background:#F0FDF4;border:1.5px solid #86EFAC;color:#15803D;border-radius:12px;padding:10px;font-size:13px;font-weight:900;">
+        🎁 勝利報酬：交換pt +40pt 獲得！
+      </div>
+      <div style="display:flex;gap:10px;width:100%;margin-top:4px;">
+        <button class="neu-btn" style="flex:1;" onclick="closeModal('modal-battle-result'); toggleBattleLobby(true);">ステージ選択へ</button>
+        <button class="neu-btn primary" style="flex:1;" onclick="closeModal('modal-battle-result'); startBattleStage(currentStageId);">もう一度戦う</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       BOTTOM NAVIGATION BAR: 3 REAL WORKING TABS (パック / カード・デッキ / バトル)
+       ===================================================================== -->
+  <nav class="bottom-nav" id="main-bottom-nav">
+    <button class="nav-icon-btn active" data-tab="home" onclick="switchTab('home')" aria-label="パック">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M4 10.5L12 4l8 6.5V20a1 1 0 0 1-1 1h-4.5v-5.5h-5V21H5a1 1 0 0 1-1-1v-9.5z"/>
+        <rect x="5" y="3" width="14" height="18" rx="2.5"/><line x1="5" y1="8" x2="19" y2="8"/><circle cx="12" cy="14" r="2.5"/>
       </svg>
+      <span class="nav-icon-label">パック</span>
     </button>
-    <!-- 2. My Cards -->
-    <button class="nav-icon-btn" data-tab="dex" onclick="switchTab('dex')" aria-label="自分のカード">
+    <button class="nav-icon-btn" data-tab="dex" onclick="switchTab('dex')" aria-label="カード・デッキ">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="5" y="3" width="14" height="18" rx="2.5"/>
-        <rect x="9" y="7" width="6" height="4" rx="1"/>
+        <rect x="4" y="3" width="16" height="18" rx="2.5"/><rect x="8" y="7" width="8" height="5" rx="1"/>
       </svg>
+      <span class="nav-icon-label">カード・デッキ</span>
     </button>
-    <!-- 3. Social -->
-    <button class="nav-icon-btn" data-tab="social" onclick="switchTab('social')" aria-label="ソーシャル">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="6" r="2.5"/>
-        <path d="M8.5 12c0-1.8 1.6-3 3.5-3s3.5 1.2 3.5 3"/>
-        <circle cx="6.5" cy="15.5" r="2.2"/>
-        <path d="M3.5 20.5c0-1.5 1.3-2.5 3-2.5s3 1 3 2.5"/>
-        <circle cx="17.5" cy="15.5" r="2.2"/>
-        <path d="M14.5 20.5c0-1.5 1.3-2.5 3-2.5s3 1 3 2.5"/>
-      </svg>
-    </button>
-    <!-- 4. Battle -->
     <button class="nav-icon-btn" data-tab="battle" onclick="switchTab('battle')" aria-label="バトル">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="4" y="7" width="9" height="13" rx="1.5" transform="rotate(-8 4 7)"/>
-        <rect x="11" y="4" width="9" height="13" rx="1.5" transform="rotate(8 11 4)"/>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="13 2 4 14 11 14 10 22 20 10 13 10"/>
       </svg>
+      <span class="nav-icon-label">バトル</span>
       <span class="nav-notif-dot"></span>
-    </button>
-    <!-- 5. Menu -->
-    <button class="nav-icon-btn" data-tab="menu" onclick="reopenTitleScreen()" aria-label="メニュー">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
-        <line x1="4" y1="7" x2="20" y2="7"/>
-        <line x1="4" y1="12" x2="20" y2="12"/>
-        <line x1="4" y1="17" x2="20" y2="17"/>
-      </svg>
     </button>
   </nav>
 
@@ -2245,31 +2723,41 @@ const TYPE_META = {
 };
 
 const MASTER_CARDS = [
-  { id: 1, dex: '001', kind: 'monster', isEx: false, name: '聖女エララ', type: 'grass', hp: 70, moveName: 'やどりぎのアロー', moveCost: 2, moveDmg: 30, moveDesc: 'このキャラのHPを10回復。', weakness: 'fire', retreat: 1, rarity: '♦', art: 'assets/card_elara.jpg', filter: 'none' },
-  { id: 2, dex: '002', kind: 'monster', isEx: false, name: '風弓シルフィ', type: 'grass', hp: 90, moveName: 'ウインドエッジ', moveCost: 2, moveDmg: 50, moveDesc: '風の刃で素早く切り裂く。', weakness: 'fire', retreat: 1, rarity: '♦♦', art: 'assets/card_elara.jpg', filter: 'hue-rotate(-18deg) saturate(1.2)' },
-  { id: 3, dex: '003', kind: 'monster', isEx: false, name: '翠鹿セレス', type: 'grass', hp: 80, moveName: 'リーフステップ', moveCost: 1, moveDmg: 30, moveDesc: '森の魔力をまとって突撃する。', weakness: 'fire', retreat: 1, rarity: '♦', art: 'assets/card_liam.jpg', filter: 'hue-rotate(-35deg) saturate(1.25)' },
-  { id: 4, dex: '004', kind: 'monster', isEx: true,  name: '精霊姫エララ', type: 'grass', hp: 140, moveName: 'エメラルドノヴァ', moveCost: 2, moveDmg: 100, moveDesc: '世界樹の魔力を解放して攻撃する。', weakness: 'fire', retreat: 1, rarity: '★', art: 'assets/card_elara.jpg', filter: 'saturate(1.25)' },
-  { id: 5, dex: '005', kind: 'monster', isEx: false, name: '森羅スタッグ', type: 'grass', hp: 60, moveName: 'つのでつく', moveCost: 1, moveDmg: 20, moveDesc: '鋭い大角で相手を突き刺す。', weakness: 'fire', retreat: 1, rarity: '♦', art: 'assets/card_liam.jpg', filter: 'none' },
-  { id: 6, dex: '006', kind: 'monster', isEx: false, name: '翡竜ヴァルキア', type: 'grass', hp: 110, moveName: 'フォレストビーム', moveCost: 3, moveDmg: 70, moveDesc: '翠緑の閃光で相手を貫く。', weakness: 'fire', retreat: 2, rarity: '♦♦♦', art: 'assets/card_aurora.jpg', filter: 'hue-rotate(-55deg) saturate(1.3)' },
-  { id: 7, dex: '007', kind: 'monster', isEx: true,  name: '太陽神オリオン', type: 'lightning', hp: 140, moveName: 'サンダーカリバー', moveCost: 2, moveDmg: 100, moveDesc: '雷光を纏った聖剣で一閃する。', weakness: 'grass', retreat: 1, rarity: '★', art: 'assets/card_orion.jpg', filter: 'none' },
-  { id: 8, dex: '008', kind: 'monster', isEx: false, name: '雷帝ストライク', type: 'lightning', hp: 90, moveName: 'スパークラッシュ', moveCost: 1, moveDmg: 40, moveDesc: '電光石火の連撃を叩き込む。', weakness: 'grass', retreat: 1, rarity: '♦♦', art: 'assets/card_orion.jpg', filter: 'hue-rotate(15deg)' },
-  { id: 9, dex: '009', kind: 'monster', isEx: true,  name: '炎竜イグニス', type: 'fire', hp: 150, moveName: '紅蓮メテオ', moveCost: 2, moveDmg: 110, moveDesc: '圧倒的な蒼炎で相手バトル場を焼き尽くす。', weakness: 'water', retreat: 2, rarity: '♦♦♦♦', art: 'assets/card_dragon.jpg', filter: 'none' },
-  { id: 10, dex: '010', kind: 'monster', isEx: false, name: '紅蓮ワイバーン', type: 'fire', hp: 90, moveName: 'フレイムクロー', moveCost: 1, moveDmg: 40, moveDesc: '素早い炎の爪で切り裂く速攻ワザ。', weakness: 'water', retreat: 1, rarity: '♦', art: 'assets/boss_ignis.jpg', filter: 'saturate(1.2)' },
-  { id: 11, dex: '011', kind: 'monster', isEx: true,  name: '海神リヴァイア', type: 'water', hp: 160, moveName: 'アビスタイダル', moveCost: 2, moveDmg: 120, moveDesc: '深海の激流で相手を飲み込む大技。', weakness: 'lightning', retreat: 2, rarity: '♦♦♦♦', art: 'assets/boss_leviathan.jpg', filter: 'none' },
-  { id: 12, dex: '012', kind: 'monster', isEx: false, name: '星竜オーロラ', type: 'water', hp: 100, moveName: 'クリスタルランス', moveCost: 1, moveDmg: 50, moveDesc: '氷結の槍で急所を正確に貫く。', weakness: 'lightning', retreat: 1, rarity: '♦♦♦', art: 'assets/card_aurora.jpg', filter: 'none' },
-  { id: 13, dex: '013', kind: 'monster', isEx: true,  name: '氷晶クリサリス', type: 'psychic', hp: 150, moveName: 'コズミックノヴァ', moveCost: 2, moveDmg: 110, moveDesc: '時空を歪める超重力で粉砕する。', weakness: 'lightning', retreat: 2, rarity: '★', art: 'assets/boss_crysalis.jpg', filter: 'none' },
-  { id: 14, dex: '014', kind: 'support', isEx: false, name: '大賢者の研究', type: 'support', effect: '自分の山札を2枚引く。', rule: 'サポートは自分の番に1枚使える。', rarity: '♦♦', svgType: 'sage' },
-  { id: 15, dex: '015', kind: 'goods',   isEx: false, name: '召喚クリスタル', type: 'goods', effect: '山札から「たね」を1枚手札に加える。', rule: 'グッズは何枚でも使える。', rarity: '♦', svgType: 'crystal' },
-  { id: 16, dex: '016', kind: 'goods',   isEx: false, name: '聖なるポーション', type: 'goods', effect: '自分のキャラ1体のHPを20回復。', rule: 'グッズは何枚でも使える。', rarity: '♦', svgType: 'potion' }
+  { id: 1, dex: '001', kind: 'monster', isEx: false, name: '聖女エララ', type: 'grass', hp: 70, moveName: 'やどりぎのアロー', moveCost: 1, moveDmg: 30, moveDesc: '森の魔矢で攻撃する。', weakness: 'fire', retreat: 1, rarity: '♦', costPt: 40, art: 'assets/card_elara.jpg', filter: 'none' },
+  { id: 2, dex: '002', kind: 'monster', isEx: false, name: '風弓シルフィ', type: 'grass', hp: 90, moveName: 'ウインドエッジ', moveCost: 2, moveDmg: 50, moveDesc: '風の刃で素早く切り裂く。', weakness: 'fire', retreat: 1, rarity: '♦♦', costPt: 60, art: 'assets/card_elara.jpg', filter: 'hue-rotate(-18deg) saturate(1.2)' },
+  { id: 3, dex: '003', kind: 'monster', isEx: false, name: '翠鹿セレス', type: 'grass', hp: 80, moveName: 'リーフステップ', moveCost: 1, moveDmg: 30, moveDesc: '森の魔力をまとって突撃する。', weakness: 'fire', retreat: 1, rarity: '♦', costPt: 40, art: 'assets/card_liam.jpg', filter: 'hue-rotate(-35deg) saturate(1.25)' },
+  { id: 4, dex: '004', kind: 'monster', isEx: true,  name: '精霊姫エララ', type: 'grass', hp: 140, moveName: 'エメラルドノヴァ', moveCost: 2, moveDmg: 100, moveDesc: '世界樹の魔力を解放して攻撃する。', weakness: 'fire', retreat: 1, rarity: '★', costPt: 100, art: 'assets/card_elara.jpg', filter: 'saturate(1.25)' },
+  { id: 5, dex: '005', kind: 'monster', isEx: false, name: '森羅スタッグ', type: 'grass', hp: 60, moveName: 'つのでつく', moveCost: 1, moveDmg: 20, moveDesc: '鋭い大角で相手を突き刺す。', weakness: 'fire', retreat: 1, rarity: '♦', costPt: 40, art: 'assets/card_liam.jpg', filter: 'none' },
+  { id: 6, dex: '006', kind: 'monster', isEx: false, name: '翡竜ヴァルキア', type: 'grass', hp: 110, moveName: 'フォレストビーム', moveCost: 2, moveDmg: 70, moveDesc: '翠緑の閃光で相手を貫く。', weakness: 'fire', retreat: 2, rarity: '♦♦♦', costPt: 80, art: 'assets/card_aurora.jpg', filter: 'hue-rotate(-55deg) saturate(1.3)' },
+  { id: 7, dex: '007', kind: 'monster', isEx: true,  name: '太陽神オリオン', type: 'lightning', hp: 140, moveName: 'サンダーカリバー', moveCost: 2, moveDmg: 100, moveDesc: '雷光を纏った聖剣で一閃する。', weakness: 'grass', retreat: 1, rarity: '★', costPt: 100, art: 'assets/card_orion.jpg', filter: 'none' },
+  { id: 8, dex: '008', kind: 'monster', isEx: false, name: '雷帝ストライク', type: 'lightning', hp: 90, moveName: 'スパークラッシュ', moveCost: 1, moveDmg: 40, moveDesc: '電光石火の連撃を叩き込む。', weakness: 'grass', retreat: 1, rarity: '♦♦', costPt: 60, art: 'assets/card_orion.jpg', filter: 'hue-rotate(15deg)' },
+  { id: 9, dex: '009', kind: 'monster', isEx: true,  name: '炎竜イグニス', type: 'fire', hp: 150, moveName: '紅蓮メテオ', moveCost: 2, moveDmg: 110, moveDesc: '圧倒的な蒼炎で相手バトル場を焼き尽くす。', weakness: 'water', retreat: 2, rarity: '♦♦♦♦', costPt: 100, art: 'assets/card_dragon.jpg', filter: 'none' },
+  { id: 10, dex: '010', kind: 'monster', isEx: false, name: '紅蓮ワイバーン', type: 'fire', hp: 90, moveName: 'フレイムクロー', moveCost: 1, moveDmg: 40, moveDesc: '素早い炎の爪で切り裂く速攻ワザ。', weakness: 'water', retreat: 1, rarity: '♦', costPt: 40, art: 'assets/boss_ignis.jpg', filter: 'saturate(1.2)' },
+  { id: 11, dex: '011', kind: 'monster', isEx: true,  name: '海神リヴァイア', type: 'water', hp: 160, moveName: 'アビスタイダル', moveCost: 2, moveDmg: 120, moveDesc: '深海の激流で相手を飲み込む大技。', weakness: 'lightning', retreat: 2, rarity: '♦♦♦♦', costPt: 100, art: 'assets/boss_leviathan.jpg', filter: 'none' },
+  { id: 12, dex: '012', kind: 'monster', isEx: false, name: '星竜オーロラ', type: 'water', hp: 100, moveName: 'クリスタルランス', moveCost: 1, moveDmg: 50, moveDesc: '氷結の槍で急所を正確に貫く。', weakness: 'lightning', retreat: 1, rarity: '♦♦♦', costPt: 80, art: 'assets/card_aurora.jpg', filter: 'none' },
+  { id: 13, dex: '013', kind: 'monster', isEx: true,  name: '氷晶クリサリス', type: 'psychic', hp: 150, moveName: 'コズミックノヴァ', moveCost: 2, moveDmg: 110, moveDesc: '時空を歪める超重力で粉砕する。', weakness: 'lightning', retreat: 2, rarity: '★', costPt: 100, art: 'assets/boss_crysalis.jpg', filter: 'none' },
+  { id: 14, dex: '014', kind: 'support', isEx: false, name: '大賢者の研究', type: 'support', effect: '自分の山札を2枚引く。', rule: 'サポートは自分の番に1枚使える。', rarity: '♦♦', costPt: 50, svgType: 'sage' },
+  { id: 15, dex: '015', kind: 'goods',   isEx: false, name: '召喚クリスタル', type: 'goods', effect: '山札から「たね」を1枚手札に加える。', rule: 'グッズは何枚でも使える。', rarity: '♦', costPt: 40, svgType: 'crystal' },
+  { id: 16, dex: '016', kind: 'goods',   isEx: false, name: '聖なるポーション', type: 'goods', effect: '自分のキャラ1体のHPを30回復。', rule: 'グッズは何枚でも使える。', rarity: '♦', costPt: 40, svgType: 'potion' }
 ];
 
-/* Owned counts: 12 cards owned initially (with realistic duplicate counts 1, 2, 4, 3 like Image 3), 4 unowned slots (4, 8, 11, 13) */
+const BATTLE_STAGES = [
+  { id: 1, lv: '初級', name: 'STAGE 1：森の守護者エララ', sub: '相手：草デッキ（弱点：🔥炎タイプ）', rewardPt: 30, bossArt: 'assets/card_elara.jpg', enemyIds: [3, 5, 1, 4] },
+  { id: 2, lv: '中級', name: 'STAGE 2：紅蓮の竜使いワイバーン', sub: '相手：炎デッキ（弱点：💧水タイプ）', rewardPt: 40, bossArt: 'assets/boss_ignis.jpg', enemyIds: [10, 3, 9, 10] },
+  { id: 3, lv: '上級', name: 'STAGE 3：深海の覇者リヴァイア', sub: '相手：水デッキ（弱点：⚡雷タイプ）', rewardPt: 50, bossArt: 'assets/boss_leviathan.jpg', enemyIds: [12, 11, 12, 6] },
+  { id: 4, lv: '特級', name: 'STAGE 4：雷帝オリオンの試練', sub: '相手：雷デッキ（弱点：🌿草タイプ）', rewardPt: 60, bossArt: 'assets/card_orion.jpg', enemyIds: [8, 7, 8, 12] },
+  { id: 5, lv: '神級', name: 'STAGE 5：創世の氷晶クリサリス', sub: '相手：超＆全属性exデッキ（弱点：⚡雷）', rewardPt: 100, bossArt: 'assets/boss_crysalis.jpg', enemyIds: [13, 9, 11, 7] }
+];
+
 let collection = {
   1: 1, 2: 2, 3: 4, 5: 3, 6: 2, 7: 1, 9: 4, 10: 2, 12: 2, 14: 2, 15: 3, 16: 2
 };
+let packPoints = 180;
+let playerDeckIds = [9, 7, 12, 10, 6, 14, 15, 16];
+let clearedStages = { 1: true };
+let currentStageId = 1;
 let dexEmptySlotMode = false;
 let currentPackTheme = 0;
-let packFlipped = false;
 
 function getArtUrl(p) {
   if (!p) return '';
@@ -2294,6 +2782,101 @@ function playTone(kind) {
   } catch (e) {}
 }
 
+function updatePackPointsUI() {
+  const el1 = document.getElementById('home-pack-pt-txt');
+  if (el1) el1.textContent = '交換 ' + packPoints + 'pt';
+  const el2 = document.getElementById('exchange-modal-pt');
+  if (el2) el2.textContent = packPoints + ' pt';
+}
+
+function openModal(id) {
+  playTone('flip');
+  const m = document.getElementById(id);
+  if (m) m.classList.add('active');
+}
+
+function closeModal(id) {
+  const m = document.getElementById(id);
+  if (m) m.classList.remove('active');
+}
+
+function openRulesModal() {
+  openModal('modal-rules');
+}
+
+function openPackRatesModal() {
+  const listEl = document.getElementById('rates-card-list');
+  const titleEl = document.getElementById('rates-modal-title');
+  if (titleEl) {
+    titleEl.textContent = currentPackTheme === 0
+      ? '📋 紅蓮の咆哮（イグニスex）封入一覧'
+      : '📋 創世の雷光（オリオンex）封入一覧';
+  }
+  if (listEl) {
+    listEl.innerHTML = MASTER_CARDS.map(c => {
+      const cnt = collection[c.id] || 0;
+      const thumb = c.art
+        ? `<img src="${getArtUrl(c.art)}" alt="${c.name}" style="filter:${c.filter||'none'}">`
+        : `<div style="width:38px;height:38px;border-radius:8px;overflow:hidden;flex-shrink:0;">${renderTrainerSVG(c.svgType)}</div>`;
+      const desc = c.kind === 'monster'
+        ? `${TYPE_META[c.type].name} / HP ${c.hp} / ワザ: ${c.moveName}(${c.moveDmg})`
+        : c.effect;
+      return `
+        <div class="rate-item-row" onclick="closeModal('modal-pack-rates'); openSingleCardViewer(${c.id});" style="cursor:pointer;">
+          ${thumb}
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:12px;font-weight:900;color:#0F172A;">No.${c.dex} ${c.name}${c.isEx ? ' ex' : ''} <span style="color:#D97706;">${c.rarity}</span></div>
+            <div style="font-size:10px;color:#64748B;font-weight:700;">${desc}</div>
+          </div>
+          <span style="font-size:10.5px;font-weight:900;color:${cnt > 0 ? '#0284C7' : '#94A3B8'};">${cnt > 0 ? '所持 ×' + cnt : '未所持'}</span>
+        </div>
+      `;
+    }).join('');
+  }
+  openModal('modal-pack-rates');
+}
+
+function openExchangeModal() {
+  updatePackPointsUI();
+  renderExchangeList();
+  openModal('modal-exchange');
+}
+
+function renderExchangeList() {
+  const listEl = document.getElementById('exchange-card-list');
+  if (!listEl) return;
+  listEl.innerHTML = MASTER_CARDS.map(c => {
+    const cnt = collection[c.id] || 0;
+    const canBuy = packPoints >= c.costPt;
+    const thumb = c.art
+      ? `<img src="${getArtUrl(c.art)}" alt="${c.name}" style="filter:${c.filter||'none'}">`
+      : `<div style="width:38px;height:38px;border-radius:8px;overflow:hidden;flex-shrink:0;">${renderTrainerSVG(c.svgType)}</div>`;
+    return `
+      <div class="rate-item-row">
+        ${thumb}
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:12px;font-weight:900;color:#0F172A;">No.${c.dex} ${c.name}${c.isEx ? ' ex' : ''} <span style="font-size:10px;color:#0284C7;">(所持 ×${cnt})</span></div>
+          <div style="font-size:10px;color:#64748B;font-weight:700;">必要ポイント: <strong>${c.costPt} pt</strong></div>
+        </div>
+        <button class="neu-btn ${canBuy ? 'primary' : ''}" style="padding:6px 10px;font-size:10.5px;opacity:${canBuy ? '1' : '0.45'};" onclick="exchangeCardById(${c.id})">
+          ${canBuy ? '交換する' : 'pt不足'}
+        </button>
+      </div>
+    `;
+  }).join('');
+}
+
+function exchangeCardById(cardId) {
+  const card = MASTER_CARDS.find(c => c.id === cardId);
+  if (!card || packPoints < card.costPt) return;
+  playTone('snap');
+  packPoints -= card.costPt;
+  collection[card.id] = (collection[card.id] || 0) + 1;
+  updatePackPointsUI();
+  renderExchangeList();
+  renderDexGrid();
+}
+
 function renderTrainerSVG(svgType) {
   if (svgType === 'sage') {
     return '<svg viewBox="0 0 200 130" width="100%" height="100%"><rect width="200" height="130" fill="#312E81"/><circle cx="100" cy="65" r="44" fill="none" stroke="#FDE047" stroke-width="2" stroke-dasharray="4 3"/><rect x="64" y="34" width="72" height="62" rx="6" fill="#FEF3C7" stroke="#F59E0B" stroke-width="3"/><line x1="100" y1="34" x2="100" y2="96" stroke="#B45309" stroke-width="3"/><polygon points="100 46 112 65 100 84 88 65" fill="#38BDF8"/></svg>';
@@ -2304,29 +2887,26 @@ function renderTrainerSVG(svgType) {
   return '<svg viewBox="0 0 200 130" width="100%" height="100%"><rect width="200" height="130" fill="#064E3B"/><rect x="86" y="22" width="28" height="12" rx="4" fill="#CBD5E1"/><path d="M76 42 L124 42 L136 96 A12 12 0 0 1 124 108 L76 108 A12 12 0 0 1 64 96 Z" fill="#10B981" stroke="#A7F3D0" stroke-width="3"/><path d="M100 56 L100 88 M84 72 L116 72" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/></svg>';
 }
 
-/* =========================================================================
-   UNIFIED POKEPOCK FULL-LAYOUT CARD RENDERER (Used in Title, Grid, Viewer, Pack)
-   ========================================================================= */
 function renderCardHTML(card) {
   const exClass = card.isEx ? 'is-ex' : '';
-  if (card.kind === 'support' || card.kind === 'goods') {
-    const badgeLabel = card.kind === 'support' ? 'サポート' : 'グッズ';
+  if (card.kind !== 'monster') {
+    const kindLabel = card.kind === 'support' ? 'サポート' : 'グッズ';
     return `
-      <div class="pk-card" data-type="${card.kind}">
-        <div class="pk-card-inner">
+      <div class="pk-card type-${card.kind}">
+        <div class="pk-inner">
           <div class="pk-header">
             <div class="pk-header-left">
-              <span class="pk-stage-badge">${badgeLabel}</span>
+              <span class="pk-stage-pill">${kindLabel}</span>
               <span class="pk-name">${card.name}</span>
             </div>
-            <span style="font-size:8px;font-weight:900;color:#0F172A;">TRAINER</span>
           </div>
-          <div class="pk-art-frame">${renderTrainerSVG(card.svgType)}</div>
-          <div class="pk-art-caption-strip">Crystal Pocket Trainer Card</div>
+          <div class="pk-art-frame">
+            ${renderTrainerSVG(card.svgType)}
+            <div class="pk-holo-sheen"></div>
+          </div>
           <div class="pk-body">
-            <div style="background:rgba(255,255,255,0.85);border-radius:6px;padding:6px;font-size:9.5px;font-weight:800;color:#0F172A;">
-              <div>${card.effect}</div>
-              <div style="font-size:8px;color:#475569;margin-top:2px;">${card.rule}</div>
+            <div class="pk-trainer-box">
+              <strong>${card.effect}</strong><br>${card.rule}
             </div>
           </div>
           <div class="pk-footer">
@@ -2348,43 +2928,44 @@ function renderCardHTML(card) {
   }
   let retreatOrbs = '';
   for (let i = 0; i < card.retreat; i++) {
-    retreatOrbs += `<span class="pk-type-orb orb-colorless">${TYPE_META.colorless.svg}</span>`;
+    retreatOrbs += `<span class="pk-type-orb orb-colorless">${ELEMENT_SVGS.colorless}</span>`;
   }
 
   return `
-    <div class="pk-card ${exClass}" data-type="${card.type}">
-      <div class="pk-card-inner">
+    <div class="pk-card type-${card.type} ${exClass}">
+      <div class="pk-inner">
         <div class="pk-header">
           <div class="pk-header-left">
-            <span class="pk-stage-badge">たね</span>
+            <span class="pk-stage-pill">たね</span>
             <span class="pk-name">${card.name}${card.isEx ? '<span class="pk-ex-tag">ex</span>' : ''}</span>
           </div>
-          <div class="pk-header-right">
+          <div class="pk-hp-group">
             <span class="pk-hp-label">HP</span>
             <span class="pk-hp-val">${card.hp}</span>
             <span class="pk-type-orb ${tMeta.orbClass}">${tMeta.svg}</span>
           </div>
         </div>
-
         <div class="pk-art-frame">
-          <img class="pk-art-img" src="${getArtUrl(card.art)}" alt="${card.name}" style="filter:${card.filter};">
+          <img src="${getArtUrl(card.art)}" alt="${card.name}" style="filter:${card.filter || 'none'};">
+          <div class="pk-holo-sheen"></div>
         </div>
-        <div class="pk-art-caption-strip">NO.${card.dex}  Crystal Monster  HT:1.8m  WT:48.0kg</div>
-
         <div class="pk-body">
-          <div class="pk-move-row">
-            <div class="pk-move-cost">${costOrbs}</div>
-            <div class="pk-move-name">${card.moveName}</div>
-            <div class="pk-move-dmg">${card.moveDmg}</div>
+          <div class="pk-move-block">
+            <div class="pk-move-row">
+              <div class="pk-move-cost">${costOrbs}</div>
+              <div class="pk-move-name">${card.moveName}</div>
+              <div class="pk-move-dmg">${card.moveDmg}</div>
+            </div>
+            <div class="pk-move-desc">${card.moveDesc}</div>
           </div>
-          <div class="pk-move-desc">${card.moveDesc}</div>
+          ${card.isEx ? '<div class="pk-ex-rule-box">exルール：きぜつしたとき、相手は2ポイントをとる。</div>' : ''}
         </div>
-
         <div class="pk-footer">
-          <div class="pk-stats-bar">
+          <div class="pk-stat-bar">
             <div class="pk-stat-pill">
               <span>弱点</span>
-              <span style="display:inline-flex;align-items:center;gap:2px;"><span class="pk-type-orb ${wMeta.orbClass}">${wMeta.svg}</span>+20</span>
+              <span class="pk-type-orb ${wMeta.orbClass}">${wMeta.svg}</span>
+              <span>+20</span>
             </div>
             <div class="pk-stat-pill">
               <span>にげる</span>
@@ -2401,31 +2982,23 @@ function renderCardHTML(card) {
   `;
 }
 
-/* =========================================================================
-   SCREEN 0: TITLE SCREEN FLOATING CARDS (Image 1 Exact Composition!)
-   ========================================================================= */
 function renderTitleFloatingCards() {
   const field = document.getElementById('title-cards-field');
   if (!field) return;
-
   const placements = [
-    // Background small cards (upper sky, outer edges, lower sky - completely clear of center logo!)
     { id: 1,  cls: 'bg-depth',  style: 'top:5%; right:20%; --sc:0.24;' },
     { id: 6,  cls: 'bg-depth',  style: 'top:8%; left:27%; --sc:0.25;' },
     { id: 2,  cls: 'bg-depth',  style: 'top:28%; left:-9%; --sc:0.29;' },
     { id: 10, cls: 'bg-depth',  style: 'top:31%; right:-9%; --sc:0.27;' },
     { id: 3,  cls: 'bg-depth',  style: 'top:71%; left:24%; --sc:0.24;' },
     { id: 8,  cls: 'bg-depth',  style: 'top:72%; right:22%; --sc:0.25;' },
-    // Midground cards
     { id: 4,  cls: 'mid-depth', style: 'top:11%; left:4%; --sc:0.31;' },
     { id: 5,  cls: 'mid-depth', style: 'top:57%; left:-6%; --sc:0.31;' },
-    // 4 Main Foreground Cards (Positioned cleanly above & below the Center Logo with zero overlap!)
     { id: 7,  cls: 'fg-depth',  style: 'top:16%; left:13%; --sc:0.40;' },
     { id: 12, cls: 'fg-depth',  style: 'top:19%; right:10%; --sc:0.39;' },
     { id: 1,  cls: 'fg-depth',  style: 'top:59.5%; left:11%; --sc:0.40;' },
     { id: 13, cls: 'fg-depth',  style: 'top:61.5%; right:10%; --sc:0.39;' }
   ];
-
   field.innerHTML = placements.map(p => {
     const c = MASTER_CARDS.find(m => m.id === p.id) || MASTER_CARDS[0];
     return `<div class="t-float-card ${p.cls}" style="${p.style}">${renderCardHTML(c)}</div>`;
@@ -2433,41 +3006,12 @@ function renderTitleFloatingCards() {
 }
 
 function renderFeaturedAndStageCards() {
-  // 1. Home Screen Top 5-Card Showcase Window (5 Tilted Full-Color PokéPock Cards: Fire, Lightning, Psychic, Water, Grass)
   const strip = document.getElementById('featured-cards-strip');
   if (strip) {
     const featIds = currentPackTheme === 1 ? [7, 12, 4, 9, 13] : [9, 7, 13, 12, 4];
     strip.innerHTML = featIds.map(id => {
       const c = MASTER_CARDS.find(m => m.id === id) || MASTER_CARDS[0];
       return `<div class="feat-mini-slice">${renderCardHTML(c)}</div>`;
-    }).join('');
-  }
-
-  // 2. Social Screen 3D Stage Showcase Cards
-  const socStage = document.getElementById('social-stage-cards');
-  if (socStage) {
-    const socCards = [
-      { id: 12, style: 'transform:rotate(-8deg) translateY(12px);' },
-      { id: 9,  style: 'transform:scale(1.08);z-index:3;' },
-      { id: 4,  style: 'transform:rotate(8deg) translateY(12px);' }
-    ];
-    socStage.innerHTML = socCards.map(s => {
-      const c = MASTER_CARDS.find(m => m.id === s.id) || MASTER_CARDS[0];
-      return `<div class="stage-char-card" style="${s.style}">${renderCardHTML(c)}</div>`;
-    }).join('');
-  }
-
-  // 3. Battle Screen 3D Stage Showcase Cards
-  const batStage = document.getElementById('battle-stage-cards');
-  if (batStage) {
-    const batCards = [
-      { id: 10, style: 'transform:rotate(-8deg) translateY(12px);' },
-      { id: 7,  style: 'transform:scale(1.08);z-index:3;' },
-      { id: 11, style: 'transform:rotate(8deg) translateY(12px);' }
-    ];
-    batStage.innerHTML = batCards.map(s => {
-      const c = MASTER_CARDS.find(m => m.id === s.id) || MASTER_CARDS[0];
-      return `<div class="stage-char-card" style="${s.style}">${renderCardHTML(c)}</div>`;
     }).join('');
   }
 }
@@ -2477,13 +3021,6 @@ function dismissTitleScreen() {
   document.getElementById('title-screen').classList.add('hidden');
 }
 
-function reopenTitleScreen() {
-  document.getElementById('title-screen').classList.remove('hidden');
-}
-
-/* =========================================================================
-   TAB 1: HOME / EXPANSION PACK CAROUSEL & PACK FOIL CUTTING
-   ========================================================================= */
 function swapExpansionPack() {
   playTone('flip');
   currentPackTheme = currentPackTheme === 0 ? 1 : 0;
@@ -2512,24 +3049,14 @@ function swapExpansionPack() {
   renderFeaturedAndStageCards();
 }
 
-function flipMainPack3D() {
-  playTone('flip');
-  packFlipped = !packFlipped;
-  const el = document.getElementById('main-pack-model');
-  el.style.transform = packFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)';
-}
-
 let cutProgress = 0;
 let isPackOpened = false;
-let isDraggingPack = false;
-let sparks = [];
 let currentPackCards = [];
 let currentPackIndex = 0;
 
 function openPackCuttingOverlay() {
   playTone('flip');
   isPackOpened = false;
-  sparks = [];
   document.getElementById('ov-pack-cut').classList.add('active');
   const packTopFoil = document.getElementById('pack-top-foil');
   const packBottomPart = document.getElementById('pack-bottom-part');
@@ -2584,16 +3111,6 @@ function renderCutVisuals(progress) {
     cutCtx.moveTo(startX, seamY);
     cutCtx.lineTo(endX, seamY);
     cutCtx.stroke();
-
-    const grad = cutCtx.createRadialGradient(endX, seamY, 1, endX, seamY, 26);
-    grad.addColorStop(0, 'rgba(255,255,255,1)');
-    grad.addColorStop(0.35, 'rgba(253,224,71,0.95)');
-    grad.addColorStop(0.7, 'rgba(56,189,248,0.55)');
-    grad.addColorStop(1, 'rgba(56,189,248,0)');
-    cutCtx.fillStyle = grad;
-    cutCtx.beginPath();
-    cutCtx.arc(endX, seamY, 26, 0, Math.PI * 2);
-    cutCtx.fill();
     cutCtx.restore();
   }
 }
@@ -2625,6 +3142,8 @@ function triggerPackOpen() {
   isPackOpened = true;
   playTone('slice');
   renderCutVisuals(1);
+  packPoints += 20;
+  updatePackPointsUI();
 
   currentPackCards = generatePack5Cards();
   currentPackIndex = 0;
@@ -2633,7 +3152,7 @@ function triggerPackOpen() {
     document.getElementById('ov-pack-cut').classList.remove('active');
     document.getElementById('ov-pack-stack').classList.add('active');
     renderCurrentPackCard();
-  }, 320);
+  }, 300);
 }
 
 function renderCurrentPackCard() {
@@ -2664,8 +3183,8 @@ function startDexRegistrationSequence() {
 
   const board = document.getElementById('dex-reg-board');
   const first15 = MASTER_CARDS.slice(0, 15);
-  const ownedBefore = first15.filter(c => collection[c.id] > 0).length;
-  document.getElementById('reg-counter-txt').textContent = `${ownedBefore} / 15`;
+  const ownedBefore = MASTER_CARDS.filter(c => collection[c.id] > 0).length;
+  document.getElementById('reg-counter-txt').textContent = `${ownedBefore} / 16`;
 
   board.innerHTML = first15.map(card => {
     const alreadyOwned = collection[card.id] > 0;
@@ -2689,12 +3208,13 @@ function startDexRegistrationSequence() {
         slotEl.className = 'reg-slot filled snap-highlight';
         slotEl.innerHTML = renderRegSlotInnerHTML(entry.card, true);
         runningCount++;
-        document.getElementById('reg-counter-txt').textContent = `${runningCount} / 15`;
+        document.getElementById('reg-counter-txt').textContent = `${runningCount} / 16`;
         document.getElementById('reg-status-pill').textContent = `No.${entry.card.dex}「${entry.card.name}」が図鑑にパチッ！と登録されました！`;
         renderDexGrid();
       }
-    }, 280 + idx * 450);
+    }, 260 + idx * 420);
   });
+  renderDexGrid();
 }
 
 function renderRegSlotInnerHTML(card, showPachi) {
@@ -2717,20 +3237,27 @@ function renderRegSlotInnerHTML(card, showPachi) {
 function closePackFlowToDex() {
   closeAllPackOverlays();
   switchTab('dex');
+  setCardsSubTab('collection');
 }
 
 /* =========================================================================
-   TAB 2: MY CARDS ("自分のカード" — 3-Column Full-Color Cards + Slanted Badge!)
+   TAB 2: COLLECTION GRID & INTERACTIVE DECK BUILDER
    ========================================================================= */
+function setCardsSubTab(mode) {
+  playTone('flip');
+  const isCol = mode === 'collection';
+  document.getElementById('btn-subtab-collection').classList.toggle('active', isCol);
+  document.getElementById('btn-subtab-deck').classList.toggle('active', !isCol);
+  document.getElementById('mc-collection-toolbar').style.display = isCol ? 'flex' : 'none';
+  document.getElementById('dex-grid').style.display = isCol ? 'grid' : 'none';
+  document.getElementById('dex-deck-builder-view').classList.toggle('active', !isCol);
+  if (isCol) renderDexGrid();
+  else renderDeckBuilder();
+}
+
 function toggleDexEmptySlotMode() {
   playTone('flip');
   dexEmptySlotMode = !dexEmptySlotMode;
-  document.getElementById('dex-toggle-track').classList.toggle('on', dexEmptySlotMode);
-  renderDexGrid();
-}
-
-function setDexMode(val) {
-  dexEmptySlotMode = val;
   document.getElementById('dex-toggle-track').classList.toggle('on', dexEmptySlotMode);
   renderDexGrid();
 }
@@ -2740,8 +3267,11 @@ function renderDexGrid() {
   if (!grid) return;
 
   const totalOwnedCards = Object.values(collection).reduce((a, b) => a + b, 0);
+  const uniqueOwned = MASTER_CARDS.filter(c => (collection[c.id] || 0) > 0).length;
   const totEl = document.getElementById('mc-total-owned-num');
   if (totEl) totEl.textContent = totalOwnedCards.toLocaleString();
+  const uniEl = document.getElementById('mc-unique-owned-num');
+  if (uniEl) uniEl.textContent = `${uniqueOwned}/16`;
 
   const cardsToShow = dexEmptySlotMode
     ? MASTER_CARDS
@@ -2758,20 +3288,93 @@ function renderDexGrid() {
       `;
     } else {
       return `
-        <div class="dex-empty-slot">
+        <div class="dex-empty-slot" onclick="openExchangeModal()" style="cursor:pointer;" title="タップでカード交換所を開く">
           <span class="slot-no">${card.dex}</span>
-          <span style="font-size:9px;font-weight:800;">未所持</span>
+          <span style="font-size:9px;font-weight:800;color:#0284C7;">未所持(交換可)</span>
         </div>
       `;
     }
   }).join('');
 }
 
+function renderDeckBuilder() {
+  const activeEl = document.getElementById('deck-active-slots');
+  const poolEl = document.getElementById('deck-pool-slots');
+  const countLbl = document.getElementById('deck-count-label');
+  if (!activeEl || !poolEl) return;
+
+  countLbl.textContent = `${playerDeckIds.length} / 8`;
+
+  activeEl.innerHTML = playerDeckIds.map((cid, idx) => {
+    const c = MASTER_CARDS.find(m => m.id === cid) || MASTER_CARDS[0];
+    const thumb = c.art
+      ? `<img src="${getArtUrl(c.art)}" alt="${c.name}" style="filter:${c.filter||'none'}">`
+      : `<div style="width:100%;height:46px;border-radius:6px;overflow:hidden;">${renderTrainerSVG(c.svgType)}</div>`;
+    return `
+      <div class="deck-mini-slot" onclick="removeCardFromDeck(${idx})" title="タップでデッキから外す">
+        <span class="dm-remove">−</span>
+        ${thumb}
+        <span class="dm-name">${c.name}${c.isEx ? ' ex' : ''}</span>
+      </div>
+    `;
+  }).join('');
+
+  const ownedCards = MASTER_CARDS.filter(c => (collection[c.id] || 0) > 0);
+  poolEl.innerHTML = ownedCards.map(c => {
+    const inDeckCount = playerDeckIds.filter(id => id === c.id).length;
+    const ownedCount = collection[c.id] || 0;
+    const canAdd = playerDeckIds.length < 8 && inDeckCount < Math.min(2, ownedCount);
+    const thumb = c.art
+      ? `<img src="${getArtUrl(c.art)}" alt="${c.name}" style="filter:${c.filter||'none'}">`
+      : `<div style="width:100%;height:46px;border-radius:6px;overflow:hidden;">${renderTrainerSVG(c.svgType)}</div>`;
+    return `
+      <div class="deck-mini-slot" style="opacity:${canAdd ? '1' : '0.45'};border-color:${canAdd ? '#10B981' : '#CBD5E1'};" onclick="addCardToDeck(${c.id})">
+        ${thumb}
+        <span class="dm-name">${c.name}${c.isEx ? ' ex' : ''}</span>
+        <span style="font-size:8px;font-weight:900;color:#475569;">編成 ${inDeckCount}/${ownedCount}</span>
+      </div>
+    `;
+  }).join('');
+}
+
+function removeCardFromDeck(deckIdx) {
+  if (playerDeckIds.length <= 4) return;
+  playTone('flip');
+  playerDeckIds.splice(deckIdx, 1);
+  renderDeckBuilder();
+}
+
+function addCardToDeck(cardId) {
+  const ownedCount = collection[cardId] || 0;
+  const inDeckCount = playerDeckIds.filter(id => id === cardId).length;
+  if (playerDeckIds.length >= 8 || inDeckCount >= Math.min(2, ownedCount)) return;
+  playTone('snap');
+  playerDeckIds.push(cardId);
+  renderDeckBuilder();
+}
+
+function autoBuildBestDeck() {
+  playTone('snap');
+  const ownedMonsters = MASTER_CARDS.filter(c => c.kind === 'monster' && (collection[c.id] || 0) > 0)
+    .sort((a, b) => (b.isEx ? 1000 : 0) + b.hp - ((a.isEx ? 1000 : 0) + a.hp));
+  const newDeck = [];
+  for (const m of ownedMonsters) {
+    if (newDeck.length < 6) newDeck.push(m.id);
+  }
+  if ((collection[14] || 0) > 0 && newDeck.length < 8) newDeck.push(14);
+  if ((collection[16] || 0) > 0 && newDeck.length < 8) newDeck.push(16);
+  while (newDeck.length < 8 && ownedMonsters.length > 0) {
+    newDeck.push(ownedMonsters[0].id);
+  }
+  playerDeckIds = newDeck.slice(0, 8);
+  renderDeckBuilder();
+}
+
 function openSingleCardViewer(cardId) {
   const card = MASTER_CARDS.find(c => c.id === cardId) || MASTER_CARDS[0];
   playTone('flip');
   document.getElementById('viewer-card-mount').innerHTML = renderCardHTML(card);
-  document.getElementById('viewer-dex-badge').textContent = `No.${card.dex} / 016 （所持 ×${collection[card.id] || 1}）`;
+  document.getElementById('viewer-dex-badge').textContent = `No.${card.dex} / 016 （所持 ×${collection[card.id] || 0}）`;
   document.getElementById('viewer-card-title').textContent = card.name + (card.isEx ? ' ex' : '');
   document.getElementById('viewer-card-desc').textContent =
     card.kind === 'monster'
@@ -2785,18 +3388,38 @@ function closeSingleCardViewer() {
 }
 
 /* =========================================================================
-   TAB 4: BATTLE MENU & 3-POINT BATTLE ARENA
+   TAB 3: 5-STAGE SOLO BATTLE LOBBY & REDESIGNED 3-POINT BATTLE ARENA
    ========================================================================= */
 let btState = null;
+
+function renderStageList() {
+  const wrap = document.getElementById('stage-list-wrap');
+  if (!wrap) return;
+  wrap.innerHTML = BATTLE_STAGES.map(st => {
+    const isCleared = !!clearedStages[st.id];
+    return `
+      <div class="stage-row-card" id="stage-card-${st.id}" onclick="startBattleStage(${st.id})">
+        <img class="stage-boss-thumb" src="${getArtUrl(st.bossArt)}" alt="${st.name}">
+        <div class="stage-info-col">
+          <div class="stage-badge-row">
+            <span class="stage-lv-tag">難易度：${st.lv}</span>
+            ${isCleared ? '<span class="stage-clear-tag">✓ CLEAR済</span>' : '<span style="font-size:9.5px;font-weight:900;color:#D97706;">★ 初回報酬あり</span>'}
+          </div>
+          <div class="stage-title-txt">${st.name}</div>
+          <div class="stage-sub-txt">${st.sub} ｜ 報酬: <strong>+${st.rewardPt}pt</strong></div>
+        </div>
+        <button class="stage-go-btn">出撃 ▶</button>
+      </div>
+    `;
+  }).join('');
+}
 
 function toggleBattleLobby(showLobby) {
   document.getElementById('battle-lobby-view').style.display = showLobby ? 'flex' : 'none';
   document.getElementById('battle-arena-view').style.display = showLobby ? 'none' : 'flex';
-}
-
-function enterBattleArena() {
-  playTone('flip');
-  toggleBattleLobby(false);
+  const nav = document.getElementById('main-bottom-nav');
+  if (nav) nav.classList.toggle('hidden', !showLobby);
+  if (showLobby) renderStageList();
 }
 
 function cloneBattleUnit(card) {
@@ -2818,40 +3441,62 @@ function cloneBattleUnit(card) {
   };
 }
 
-function initBattleGame() {
-  const dragon  = MASTER_CARDS.find(c => c.id === 9);
-  const orion   = MASTER_CARDS.find(c => c.id === 7);
-  const aurora  = MASTER_CARDS.find(c => c.id === 12);
-  const wyvern  = MASTER_CARDS.find(c => c.id === 10);
-  const elara   = MASTER_CARDS.find(c => c.id === 4);
-  const celes   = MASTER_CARDS.find(c => c.id === 3);
-  const sage    = MASTER_CARDS.find(c => c.id === 14);
-  const crystal = MASTER_CARDS.find(c => c.id === 15);
-  const potion  = MASTER_CARDS.find(c => c.id === 16);
+function startBattleStage(stageId) {
+  playTone('flip');
+  currentStageId = stageId || 1;
+  const stageCfg = BATTLE_STAGES.find(s => s.id === currentStageId) || BATTLE_STAGES[0];
 
-  const playerActive = cloneBattleUnit(dragon);
-  playerActive.energy = 2;
+  const deckCards = playerDeckIds.map(id => MASTER_CARDS.find(c => c.id === id) || MASTER_CARDS[8]);
+  const monsters = deckCards.filter(c => c.kind === 'monster');
+  const others = deckCards.filter(c => c.kind !== 'monster');
+
+  const pActiveCard = monsters[0] || MASTER_CARDS.find(c => c.id === 9);
+  const pBench1 = monsters[1] || MASTER_CARDS.find(c => c.id === 7);
+  const pBench2 = monsters[2] || MASTER_CARDS.find(c => c.id === 12);
+
+  const playerActive = cloneBattleUnit(pActiveCard);
+  playerActive.energy = 1; // Starts with 1 energy so attaching 1 energy on Turn 1 enables immediate attack!
+
+  const eCards = stageCfg.enemyIds.map(id => MASTER_CARDS.find(c => c.id === id) || MASTER_CARDS[9]);
+  const enemyActive = cloneBattleUnit(eCards[0]);
+  enemyActive.energy = 1;
 
   btState = {
+    stage: stageCfg,
     turn: 1,
     isPlayerTurn: true,
     playerPoints: 0,
     enemyPoints: 0,
     energyAvailable: 1,
+    energyTarget: 'active', // 'active' or bench index 0..2
     usedSupportThisTurn: false,
-    enemyActive: cloneBattleUnit(wyvern),
-    enemyBench: [cloneBattleUnit(MASTER_CARDS.find(c => c.id === 11)), cloneBattleUnit(celes), null],
+    enemyActive,
+    enemyBench: [
+      eCards[1] ? cloneBattleUnit(eCards[1]) : null,
+      eCards[2] ? cloneBattleUnit(eCards[2]) : null,
+      eCards[3] ? cloneBattleUnit(eCards[3]) : null
+    ],
     playerActive,
-    playerBench: [cloneBattleUnit(aurora), cloneBattleUnit(orion), null],
-    hand: [sage, crystal, potion, elara],
-    deck: [celes, wyvern, sage, potion, crystal, aurora, orion, elara, dragon, potion, celes],
-    log: '「炎竜イグニス」にエネルギーを付与済み！ワザ発動可能！'
+    playerBench: [cloneBattleUnit(pBench1), cloneBattleUnit(pBench2), null],
+    hand: [
+      MASTER_CARDS.find(c => c.id === 16), // 聖なるポーション
+      MASTER_CARDS.find(c => c.id === 14), // 大賢者の研究
+      monsters[3] || MASTER_CARDS.find(c => c.id === 4)
+    ],
+    deck: [...others, ...monsters.slice(4), MASTER_CARDS.find(c => c.id === 15), MASTER_CARDS.find(c => c.id === 10)],
+    customLog: ''
   };
 
+  toggleBattleLobby(false);
   renderBattleScreen();
 }
 
-function renderActiveSlotHTML(unit) {
+function initBattleGame() {
+  renderStageList();
+  toggleBattleLobby(true);
+}
+
+function renderActiveSlotHTML(unit, isPlayer) {
   if (!unit) return '<div class="bt-active-card-slot"></div>';
   const tMeta = TYPE_META[unit.type];
   const wMeta = TYPE_META[unit.weakness];
@@ -2860,8 +3505,9 @@ function renderActiveSlotHTML(unit) {
   for (let i = 0; i < unit.energy; i++) {
     enOrbs += `<span class="pk-type-orb ${tMeta.orbClass}">${tMeta.svg}</span>`;
   }
+  const isTarget = isPlayer && btState && btState.energyTarget === 'active';
   return `
-    <div class="bt-active-card-slot ${unit.isEx ? 'is-ex' : ''}">
+    <div class="bt-active-card-slot ${unit.isEx ? 'is-ex' : ''} ${isTarget ? 'selected-target' : ''}" onclick="${isPlayer ? "selectEnergyTarget('active')" : ''}">
       <div class="attached-en-row">${enOrbs}</div>
       <div class="bt-active-top">
         <span>${unit.name}${unit.isEx ? '<span class="pk-ex-tag">ex</span>' : ''}</span>
@@ -2870,9 +3516,9 @@ function renderActiveSlotHTML(unit) {
       <div class="bt-active-art-wrap">
         <img src="${getArtUrl(unit.art)}" alt="${unit.name}" style="filter:${unit.filter||'none'};">
       </div>
-      <div style="display:flex;justify-content:space-between;font-size:8px;font-weight:800;color:#475569;">
-        <span>${unit.moveName}(${unit.moveDmg})</span>
-        <span>弱点:${wMeta.name}+20</span>
+      <div style="display:flex;justify-content:space-between;font-size:8.5px;font-weight:900;color:#334155;">
+        <span>⚡${unit.energy}/${unit.moveCost} ${unit.moveName}(${unit.moveDmg})</span>
+        <span>弱点:${wMeta.name}</span>
       </div>
       <div class="bt-hp-pill">
         <div class="bt-hp-fill" style="width:${hpPct}%;"></div>
@@ -2885,7 +3531,7 @@ function renderActiveSlotHTML(unit) {
 function renderBenchRowHTML(benchArr, isPlayer) {
   return benchArr.map((unit, idx) => {
     if (!unit) {
-      return `<div class="bt-bench-slot" onclick="${isPlayer ? `onBenchSlotClick(${idx})` : ''}"><span style="font-size:8.5px;font-weight:800;color:#94A3B8;margin:auto;">ベンチ ${idx + 1}</span></div>`;
+      return `<div class="bt-bench-slot"><span style="font-size:8.5px;font-weight:800;color:#94A3B8;margin:auto;">空きベンチ ${idx + 1}</span></div>`;
     }
     const tMeta = TYPE_META[unit.type];
     const hpPct = Math.max(0, Math.round((unit.hp / unit.maxHp) * 100));
@@ -2893,49 +3539,98 @@ function renderBenchRowHTML(benchArr, isPlayer) {
     for (let i = 0; i < unit.energy; i++) {
       enOrbs += `<span class="pk-type-orb ${tMeta.orbClass}">${tMeta.svg}</span>`;
     }
+    const isTarget = isPlayer && btState && btState.energyTarget === idx;
     return `
-      <div class="bt-bench-slot occupied" onclick="${isPlayer ? `onBenchSlotClick(${idx})` : ''}">
+      <div class="bt-bench-slot occupied ${isTarget ? 'selected-target' : ''}" onclick="${isPlayer ? `onBenchSlotClick(${idx})` : ''}">
         <div class="attached-en-row">${enOrbs}</div>
         <img class="bench-art" src="${getArtUrl(unit.art)}" alt="${unit.name}" style="filter:${unit.filter||'none'};">
         <div class="bench-name">${unit.name}${unit.isEx ? ' ex' : ''}</div>
         <div class="bench-hp-bar">
           <div class="bench-hp-fill" style="width:${hpPct}%;"></div>
-          <div class="bench-hp-txt">${unit.hp}/${unit.maxHp}</div>
+          <div class="bench-hp-txt">HP ${unit.hp}/${unit.maxHp}</div>
         </div>
       </div>
     `;
   }).join('');
 }
 
+function selectEnergyTarget(target) {
+  if (!btState || !btState.isPlayerTurn) return;
+  btState.energyTarget = target;
+  renderBattleScreen();
+}
+
 function renderBattleScreen() {
   if (!btState) return;
+  const pAct = btState.playerActive;
+  const eAct = btState.enemyActive;
+
   document.getElementById('player-pt-txt').textContent = `${btState.playerPoints}/3`;
   document.getElementById('enemy-pt-txt').textContent = `${btState.enemyPoints}/3`;
   document.getElementById('player-pt-dots').innerHTML = [0, 1, 2].map(i => `<span class="pt-dot ${i < btState.playerPoints ? 'won-player' : ''}"></span>`).join('');
   document.getElementById('enemy-pt-dots').innerHTML = [0, 1, 2].map(i => `<span class="pt-dot ${i < btState.enemyPoints ? 'won-enemy' : ''}"></span>`).join('');
   document.getElementById('bt-turn-pill').textContent = `TURN ${btState.turn} - ${btState.isPlayerTurn ? 'あなたの番' : '相手の番'}`;
   document.getElementById('bt-deck-count').textContent = btState.deck.length;
-  document.getElementById('bt-log-banner').textContent = btState.log;
+  document.getElementById('bt-enemy-stage-title').textContent = `🔥 相手フィールド（${btState.stage.name}）`;
 
   document.getElementById('enemy-bench-row').innerHTML = renderBenchRowHTML(btState.enemyBench, false);
   document.getElementById('player-bench-row').innerHTML = renderBenchRowHTML(btState.playerBench, true);
-  document.getElementById('enemy-active-mount').innerHTML = renderActiveSlotHTML(btState.enemyActive);
-  document.getElementById('player-active-mount').innerHTML = renderActiveSlotHTML(btState.playerActive);
+  document.getElementById('enemy-active-mount').innerHTML = renderActiveSlotHTML(eAct, false);
+  document.getElementById('player-active-mount').innerHTML = renderActiveSlotHTML(pAct, true);
 
-  const pAct = btState.playerActive;
-  const activeType = pAct ? TYPE_META[pAct.type] : TYPE_META.fire;
-  const ezOrb = document.getElementById('ez-main-orb');
-  if (ezOrb) {
-    ezOrb.className = `ez-main-orb ${activeType.orbClass}`;
-    ezOrb.innerHTML = activeType.svg;
+  if (eAct) {
+    const wMeta = TYPE_META[eAct.weakness];
+    document.getElementById('enemy-next-move-txt').textContent = `次ワザ：${eAct.moveName}（${eAct.moveDmg}ダメージ）`;
+    document.getElementById('enemy-weakness-txt').textContent = `弱点：${wMeta.name}タイプで攻撃すると +20ダメージ！`;
   }
 
+  // Attack Button & Step Guide update
+  const atkBtn = document.getElementById('btn-bt-attack');
+  if (pAct && eAct) {
+    const isWeak = eAct.weakness === pAct.type;
+    const totalDmg = pAct.moveDmg + (isWeak ? 20 : 0);
+    const canAtk = btState.isPlayerTurn && pAct.energy >= pAct.moveCost;
+    atkBtn.classList.toggle('disabled', !canAtk);
+    document.getElementById('bt-atk-name').textContent = `⚔️ ${pAct.moveName}`;
+    document.getElementById('bt-atk-dmg').textContent = `${totalDmg}ダメージ`;
+    document.getElementById('bt-atk-cost-txt').textContent = canAtk
+      ? `⚡${pAct.energy}/${pAct.moveCost}個 発動可能！${isWeak ? '（弱点+20!）' : ''}`
+      : `🔒 あとエネルギー ${Math.max(0, pAct.moveCost - pAct.energy)}個 必要`;
+
+    const guideEl = document.getElementById('bt-log-banner');
+    if (btState.customLog) {
+      guideEl.textContent = btState.customLog;
+    } else if (!btState.isPlayerTurn) {
+      guideEl.textContent = '🛡️ 相手のターン進行中...';
+    } else if (btState.energyAvailable > 0) {
+      guideEl.textContent = '💡 Step 1：右下の「⚡エネルギー付与(1)」をタップしてカードに付けよう！';
+    } else if (canAtk) {
+      guideEl.textContent = `🔥 Step 2：「⚔️ ${pAct.moveName} で攻撃！」ボタンを押して相手を攻撃しよう！`;
+    } else {
+      guideEl.textContent = '👉 Step 2：右下の「ターン終了 ▶」を押して次のターンへ進もう！';
+    }
+  }
+
+  // Energy Zone Button
+  const ezBtn = document.getElementById('energy-zone-pod');
+  const ezTxt = document.getElementById('ez-status-txt');
+  if (ezBtn && ezTxt) {
+    if (btState.energyAvailable > 0 && btState.isPlayerTurn) {
+      ezBtn.classList.remove('used');
+      ezTxt.textContent = '⚡ エネルギー付与(1)';
+    } else {
+      ezBtn.classList.add('used');
+      ezTxt.textContent = '⚡ 付与済み ✓';
+    }
+  }
+
+  // Hand Cards
   const handEl = document.getElementById('bt-hand-scroll');
   handEl.innerHTML = btState.hand.map((card, idx) => {
-    const tag = card.kind === 'monster' ? 'たね' : (card.kind === 'support' ? 'サポート' : 'グッズ');
+    const tag = card.kind === 'monster' ? 'ベンチ召喚' : (card.kind === 'support' ? 'サポート' : 'グッズ');
     const thumb = card.art
       ? `<img class="hc-thumb" src="${getArtUrl(card.art)}" alt="${card.name}">`
-      : `<div style="height:34px;border-radius:4px;overflow:hidden;">${renderTrainerSVG(card.svgType)}</div>`;
+      : `<div style="height:28px;border-radius:4px;overflow:hidden;">${renderTrainerSVG(card.svgType)}</div>`;
     return `
       <div class="hand-card-chip ${card.kind}" onclick="playHandCard(${idx})">
         <span class="hc-tag">${tag}</span>
@@ -2949,9 +3644,13 @@ function renderBattleScreen() {
 function attachTurnEnergy() {
   if (!btState || !btState.isPlayerTurn || btState.energyAvailable <= 0) return;
   playTone('snap');
-  btState.playerActive.energy += 1;
+  let targetUnit = btState.playerActive;
+  if (typeof btState.energyTarget === 'number' && btState.playerBench[btState.energyTarget]) {
+    targetUnit = btState.playerBench[btState.energyTarget];
+  }
+  targetUnit.energy += 1;
   btState.energyAvailable = 0;
-  btState.log = `「${btState.playerActive.name}」にエネルギーを1個付与！ワザ発動可能！`;
+  btState.customLog = `⚡「${targetUnit.name}」にエネルギーを付与！中央の「⚔️ 攻撃！」ボタンでワザを放とう！`;
   renderBattleScreen();
 }
 
@@ -2965,80 +3664,172 @@ function playHandCard(handIdx) {
     if (emptyIdx !== -1) {
       btState.playerBench[emptyIdx] = cloneBattleUnit(card);
       btState.hand.splice(handIdx, 1);
-      btState.log = `手札から「${card.name}」をベンチに出しました！`;
+      btState.customLog = `✨ 手札から「${card.name}」をベンチに召喚しました！`;
+    } else {
+      btState.customLog = '⚠️ ベンチが満員（3体）のため出せません';
     }
-  } else if (card.kind === 'support' && !btState.usedSupportThisTurn) {
-    btState.usedSupportThisTurn = true;
-    btState.hand.splice(handIdx, 1);
-    for (let i = 0; i < 2; i++) if (btState.deck.length > 0) btState.hand.push(btState.deck.shift());
-    btState.log = 'サポート『大賢者の研究』発動！山札から2枚ドロー！';
+  } else if (card.kind === 'support') {
+    if (btState.usedSupportThisTurn) {
+      btState.customLog = '⚠️ サポートカードは1ターンに1枚しか使えません';
+    } else {
+      btState.usedSupportThisTurn = true;
+      btState.hand.splice(handIdx, 1);
+      for (let i = 0; i < 2; i++) if (btState.deck.length > 0) btState.hand.push(btState.deck.shift());
+      btState.customLog = '📖 サポート『大賢者の研究』発動！山札からカードを2枚引きました！';
+    }
   } else if (card.kind === 'goods') {
     btState.hand.splice(handIdx, 1);
     if (card.svgType === 'crystal') {
       const mIdx = btState.deck.findIndex(c => c.kind === 'monster');
       if (mIdx !== -1) btState.hand.push(btState.deck.splice(mIdx, 1)[0]);
-      btState.log = 'グッズ『召喚クリスタル』発動！たねカードをサーチ！';
+      btState.customLog = '💎 グッズ『召喚クリスタル』発動！山札からモンスターを手札に加えました！';
     } else {
-      btState.playerActive.hp = Math.min(btState.playerActive.maxHp, btState.playerActive.hp + 20);
-      btState.log = 'グッズ『聖なるポーション』発動！HPを20回復！';
+      btState.playerActive.hp = Math.min(btState.playerActive.maxHp, btState.playerActive.hp + 30);
+      btState.customLog = `🧪 グッズ『聖なるポーション』発動！「${btState.playerActive.name}」のHPを30回復！`;
     }
   }
   renderBattleScreen();
 }
 
 function onBenchSlotClick(idx) {
-  if (!btState || !btState.isPlayerTurn || btState.energyAvailable <= 0) return;
-  if (btState.playerBench[idx]) {
-    playTone('snap');
-    btState.playerBench[idx].energy += 1;
+  if (!btState || !btState.isPlayerTurn) return;
+  const unit = btState.playerBench[idx];
+  if (!unit) return;
+  playTone('flip');
+  btState.energyTarget = idx;
+  if (btState.energyAvailable > 0) {
+    unit.energy += 1;
     btState.energyAvailable = 0;
-    renderBattleScreen();
+    btState.customLog = `⚡ ベンチの「${unit.name}」にエネルギーを1個付与しました！`;
+  } else {
+    btState.customLog = `🎯 ベンチの「${unit.name}」を選択中（「ベンチと交代」でバトル場へ出せます）`;
   }
+  renderBattleScreen();
 }
 
 function playerExecuteRetreat() {
   if (!btState || !btState.isPlayerTurn) return;
-  const bIdx = btState.playerBench.findIndex(b => b !== null);
-  if (bIdx !== -1 && btState.playerActive.energy >= btState.playerActive.retreat) {
-    playTone('flip');
-    btState.playerActive.energy -= btState.playerActive.retreat;
-    const next = btState.playerBench[bIdx];
-    btState.playerBench[bIdx] = btState.playerActive;
-    btState.playerActive = next;
-    btState.log = `「${next.name}」がバトル場に出ました！`;
+  let bIdx = typeof btState.energyTarget === 'number' && btState.playerBench[btState.energyTarget]
+    ? btState.energyTarget
+    : btState.playerBench.findIndex(b => b !== null);
+  if (bIdx === -1 || !btState.playerBench[bIdx]) {
+    btState.customLog = '⚠️ 交代できる控えモンスターがベンチにいません';
     renderBattleScreen();
+    return;
   }
+  playTone('flip');
+  if (btState.playerActive.energy > 0) btState.playerActive.energy -= 1;
+  const next = btState.playerBench[bIdx];
+  btState.playerBench[bIdx] = btState.playerActive;
+  btState.playerActive = next;
+  btState.energyTarget = 'active';
+  btState.customLog = `⇄「${next.name}」がバトル場に出ました！`;
+  renderBattleScreen();
+}
+
+function finishBattleWithResult(isWin) {
+  const badge = document.getElementById('bt-res-badge');
+  const title = document.getElementById('bt-res-title');
+  const desc = document.getElementById('bt-res-desc');
+  const rew = document.getElementById('bt-res-reward');
+  if (isWin) {
+    playTone('snap');
+    const pt = btState.stage.rewardPt || 40;
+    packPoints += pt;
+    clearedStages[btState.stage.id] = true;
+    updatePackPointsUI();
+    badge.textContent = 'STAGE CLEAR!';
+    badge.style.background = '#FEF08A';
+    title.textContent = '🏆 あなたの勝利！';
+    desc.textContent = `「${btState.stage.name}」を制覇しました！`;
+    rew.textContent = `🎁 勝利報酬：交換pt +${pt}pt 獲得！（所持 ${packPoints}pt）`;
+  } else {
+    badge.textContent = 'DEFEAT...';
+    badge.style.background = '#FECDD3';
+    title.textContent = '💥 敗北...';
+    desc.textContent = 'デッキを編成し直して再挑戦しましょう！';
+    rew.textContent = '🎁 参加報酬：交換pt +10pt 獲得！';
+    packPoints += 10;
+    updatePackPointsUI();
+  }
+  openModal('modal-battle-result');
 }
 
 function playerExecuteAttack() {
   if (!btState || !btState.isPlayerTurn) return;
   const pAct = btState.playerActive;
   const eAct = btState.enemyActive;
-  if (!pAct || !eAct || pAct.energy < pAct.moveCost) return;
+  if (!pAct || !eAct || pAct.energy < pAct.moveCost) {
+    btState.customLog = '⚠️ エネルギーが足りません！先に右下の「⚡エネルギー付与」を押してください';
+    renderBattleScreen();
+    return;
+  }
   playTone('slice');
   const isWeak = eAct.weakness === pAct.type;
   const dmg = pAct.moveDmg + (isWeak ? 20 : 0);
   eAct.hp = Math.max(0, eAct.hp - dmg);
-  btState.log = `${pAct.name}の「${pAct.moveName}」！${dmg}ダメージ！`;
+  btState.customLog = `💥 ${pAct.name}の「${pAct.moveName}」！相手に ${dmg}ダメージ！`;
+
   if (eAct.hp <= 0) {
-    btState.playerPoints = Math.min(3, btState.playerPoints + (eAct.isEx ? 2 : 1));
+    const ptsEarned = eAct.isEx ? 2 : 1;
+    btState.playerPoints = Math.min(3, btState.playerPoints + ptsEarned);
+    btState.customLog = `🎉 相手の「${eAct.name}」を撃破！ +${ptsEarned}ポイント獲得！`;
     const nIdx = btState.enemyBench.findIndex(b => b !== null);
-    if (nIdx !== -1) {
-      btState.enemyActive = btState.enemyBench[nIdx];
-      btState.enemyBench[nIdx] = null;
+    if (btState.playerPoints >= 3 || nIdx === -1) {
+      renderBattleScreen();
+      setTimeout(() => finishBattleWithResult(true), 450);
+      return;
     }
+    btState.enemyActive = btState.enemyBench[nIdx];
+    btState.enemyBench[nIdx] = null;
   }
   renderBattleScreen();
+  setTimeout(() => endPlayerTurn(), 650);
 }
 
 function endPlayerTurn() {
-  if (!btState) return;
-  btState.turn += 1;
-  btState.energyAvailable = 1;
-  btState.usedSupportThisTurn = false;
-  if (btState.deck.length > 0) btState.hand.push(btState.deck.shift());
-  btState.log = `TURN ${btState.turn}：山札から1枚ドロー！エネルギーが1個発生！`;
+  if (!btState || !btState.isPlayerTurn) return;
+  btState.isPlayerTurn = false;
+  btState.customLog = '🛡️ 相手のターン：相手が攻撃準備をしています...';
   renderBattleScreen();
+
+  setTimeout(() => {
+    if (!btState) return;
+    const eAct = btState.enemyActive;
+    const pAct = btState.playerActive;
+    if (eAct && pAct) {
+      eAct.energy += 1;
+      const isWeak = pAct.weakness === eAct.type;
+      const eDmg = eAct.moveDmg + (isWeak ? 20 : 0);
+      pAct.hp = Math.max(0, pAct.hp - eDmg);
+      playTone('flip');
+      btState.customLog = `⚡ 相手「${eAct.name}」の${eAct.moveName}！ ${eDmg}ダメージを受けた！`;
+
+      if (pAct.hp <= 0) {
+        const lostPts = pAct.isEx ? 2 : 1;
+        btState.enemyPoints = Math.min(3, btState.enemyPoints + lostPts);
+        const nIdx = btState.playerBench.findIndex(b => b !== null);
+        if (btState.enemyPoints >= 3 || nIdx === -1) {
+          renderBattleScreen();
+          setTimeout(() => finishBattleWithResult(false), 450);
+          return;
+        }
+        btState.playerActive = btState.playerBench[nIdx];
+        btState.playerBench[nIdx] = null;
+      }
+    }
+
+    // Start next Player Turn
+    btState.turn += 1;
+    btState.isPlayerTurn = true;
+    btState.energyAvailable = 1;
+    btState.usedSupportThisTurn = false;
+    if (btState.deck.length > 0 && btState.hand.length < 6) {
+      btState.hand.push(btState.deck.shift());
+    }
+    btState.customLog = '';
+    renderBattleScreen();
+  }, 550);
 }
 
 function switchTab(tabId) {
@@ -3050,7 +3841,10 @@ function switchTab(tabId) {
   if (targetPage) targetPage.classList.add('active');
   const targetBtn = document.querySelector(`.nav-icon-btn[data-tab="${tabId}"]`);
   if (targetBtn) targetBtn.classList.add('active');
+  const nav = document.getElementById('main-bottom-nav');
+  if (nav) nav.classList.remove('hidden');
   if (tabId === 'dex') renderDexGrid();
+  if (tabId === 'battle') toggleBattleLobby(true);
 }
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -3070,6 +3864,7 @@ window.addEventListener('DOMContentLoaded', () => {
     if (pt) pt.style.backgroundImage = `url('${getArtUrl('assets/card_pack.jpg')}')`;
     if (pb) pb.style.backgroundImage = `url('${getArtUrl('assets/card_pack.jpg')}')`;
   }
+  updatePackPointsUI();
   renderTitleFloatingCards();
   renderFeaturedAndStageCards();
   renderDexGrid();
