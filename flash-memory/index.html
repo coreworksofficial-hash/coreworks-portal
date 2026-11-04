@@ -2355,6 +2355,9 @@
     } catch (e) {}
 
     selectPrCard(currentPrIdx + 1);
+    document.querySelectorAll('#adPrList .ad-pr-title, #adPrList .ad-pr-cta').forEach(el => {
+      if (el.querySelectorAll('svg').length === 0) el.innerHTML = window.__cwIconify(el.innerHTML);
+    });
     const AD_DURATION = 5.0;
     const initCopy = getAdCopyForType(currentAdType, 5);
     adModalBadgeEl.innerHTML = window.__cwIconify(initCopy.badgeWait);
@@ -2752,7 +2755,7 @@
     if (tEl) tEl.innerHTML = window.__cwIconify('💡 ヒントがありません');
     if (modalReviveBtnEl) {
       modalReviveBtnEl.style.display = 'block';
-      modalReviveBtnEl.innerHTML = window.__cwIconify('▶️ 5秒動画でヒント +2 回復');
+      modalReviveBtnEl.innerHTML = window.__cwIconify('▶️ 5秒動画でヒント +3 回復');
     }
     if (actBtn) {
       actBtn.classList.add('cw-sub-btn');
