@@ -26,27 +26,45 @@
   }
 
   html, body {
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100dvh;
+    margin: 0;
+    padding: 0;
     overflow: hidden;
-    background: #CBD5E1;
+    background: #F4F8FC;
     color: var(--text-main);
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 
   #app-shell {
-    position: relative;
-    width: 100%;
-    max-width: 430px;
-    height: 100%;
-    max-height: 932px;
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100dvh;
+    max-width: 100%;
+    max-height: 100%;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
     background: #F4F8FC;
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.25);
+  }
+
+  @media (min-width: 769px) {
+    html, body {
+      background: #CBD5E1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #app-shell {
+      position: relative;
+      max-width: 430px;
+      max-height: 932px;
+      border-radius: 24px;
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.25);
+    }
   }
 
   /* =========================================================================
@@ -74,7 +92,7 @@
 
   .title-top-bar {
     width: 100%;
-    padding: 42px 18px 0;
+    padding: max(20px, env(safe-area-inset-top, 20px)) 18px 0;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -326,10 +344,12 @@
   /* Pastel Lavender Top Sky with Diagonal Cut (-6deg) */
   .home-pastel-sky {
     position: absolute;
-    top: -50px;
-    left: -20px;
-    right: -20px;
-    height: 365px;
+    top: -6dvh;
+    left: -24px;
+    right: -24px;
+    height: 44dvh;
+    min-height: 310px;
+    max-height: 460px;
     background: linear-gradient(135deg, #B59DFA 0%, #C4AFFB 48%, #F3C6F9 100%);
     transform: rotate(-6deg);
     z-index: 1;
@@ -341,11 +361,12 @@
     background: linear-gradient(135deg, #7DD3FC 0%, #93C5FD 50%, #FDE68A 100%);
   }
 
-  /* Top-Right Pack Power & Stamina Bar */
+  /* Top-Right Pack Power & Stamina Bar (Safe-area aware, never clips at top) */
   .home-top-right-hud {
     position: relative;
     z-index: 10;
-    padding: 36px 14px 0;
+    padding: max(18px, env(safe-area-inset-top, 18px)) 16px 4px;
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -487,17 +508,18 @@
     position: relative;
     z-index: 10;
     width: 100%;
-    height: 375px;
+    flex: 1;
+    min-height: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 4px;
+    margin-top: 2px;
   }
 
   .pack-card-model {
     position: relative;
-    width: 182px;
-    height: 326px;
+    width: min(192px, calc(41dvh * 0.558));
+    height: min(344px, 41dvh);
     border-radius: 10px;
     cursor: pointer;
     transition: transform 0.35s cubic-bezier(0.2, 0.85, 0.3, 1);
@@ -511,10 +533,11 @@
 
   .pack-card-model.sub-pack {
     position: absolute;
-    right: 26px;
-    top: 38px;
-    width: 148px;
-    height: 266px;
+    right: 6%;
+    top: 50%;
+    transform: translateY(-44%);
+    width: min(154px, calc(33dvh * 0.558));
+    height: min(276px, 33dvh);
     z-index: 4;
     opacity: 0.94;
     box-shadow: 0 12px 24px rgba(15, 23, 42, 0.18);
@@ -589,7 +612,8 @@
   }
 
   .pack-series-title {
-    font-size: 18px;
+    font-size: clamp(14px, 4.2vw, 18px);
+    white-space: nowrap;
     font-weight: 900;
     font-style: italic;
     color: #FDE047;
@@ -727,7 +751,7 @@
      ========================================================================= */
   .mycards-top-header {
     background: #FFFFFF;
-    padding: 34px 16px 10px;
+    padding: max(18px, env(safe-area-inset-top, 18px)) 16px 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1207,7 +1231,9 @@
   .skew-hero-banner {
     position: relative;
     width: 100%;
-    height: 528px;
+    height: 64dvh;
+    min-height: 440px;
+    max-height: 650px;
     flex-shrink: 0;
     overflow: hidden;
     clip-path: polygon(0 0, 100% 0, 100% 87%, 0 98%);
