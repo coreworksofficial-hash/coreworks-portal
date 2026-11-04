@@ -677,6 +677,701 @@
     color: #052e16;
     box-shadow: 0 4px 18px rgba(16, 185, 129, 0.5);
   }
+
+  /* === v7 Premium Visual Polish: 3D Bevel Tiles, Royal Exam Theme, Custom SVG Icons, Particle Burst & Seamless Stage Banner === */
+  .svg-ic {
+    width: 1.14em;
+    height: 1.14em;
+    vertical-align: -0.19em;
+    display: inline-block;
+    margin-right: 3px;
+    flex-shrink: 0;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.45));
+  }
+  body.boss-mode {
+    background: radial-gradient(circle at 50% 18%, #3b0764 0%, #1e1b4b 55%, #090d16 100%) !important;
+  }
+  .top-badge.boss, .step-pill.boss {
+    background: linear-gradient(135deg, rgba(250, 204, 21, 0.28) 0%, rgba(168, 85, 247, 0.32) 100%) !important;
+    border-color: #facc15 !important;
+    color: #fef08a !important;
+    box-shadow: 0 0 14px rgba(250, 204, 21, 0.35) !important;
+  }
+  .modal-card.boss-alert {
+    background: linear-gradient(180deg, #1e1b4b 0%, #3b0764 100%) !important;
+    border: 3px solid #facc15 !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 28px rgba(250, 204, 21, 0.45) !important;
+  }
+  .modal-card.boss-alert .modal-badge {
+    background: linear-gradient(90deg, #facc15 0%, #f59e0b 100%) !important;
+    color: #052e16 !important;
+    border: 1px solid #fef08a !important;
+  }
+  .modal-card.boss-alert .modal-iq {
+    color: #fde047 !important;
+  }
+  .modal-card.boss-alert .primary-btn {
+    background: linear-gradient(180deg, #fde047 0%, #f59e0b 100%) !important;
+    color: #052e16 !important;
+    box-shadow: 0 4px 18px rgba(250, 204, 21, 0.5) !important;
+  }
+  .cell, .color-tile, .num-card, .panel, .choice-card {
+    box-shadow:
+      0 5px 0 rgba(2, 6, 23, 0.78),
+      0 8px 16px rgba(0, 0, 0, 0.38),
+      inset 0 2px 1px rgba(255, 255, 255, 0.26),
+      inset 0 -2px 3px rgba(0, 0, 0, 0.35) !important;
+    border-top-color: rgba(255, 255, 255, 0.28) !important;
+  }
+  .cell:active, .color-tile:active, .num-card:active, .panel:active, .choice-card:active {
+    transform: translateY(3px) scale(0.95) !important;
+    box-shadow:
+      0 2px 0 rgba(2, 6, 23, 0.78),
+      0 3px 6px rgba(0, 0, 0, 0.35),
+      inset 0 1px 2px rgba(255, 255, 255, 0.18) !important;
+  }
+  .cw-particle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    border-radius: 50%;
+    will-change: transform, opacity;
+  }
+  .cw-combo-popup {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, #fde047 0%, #f59e0b 100%);
+    color: #052e16;
+    border: 2px solid #ffffff;
+    border-radius: 999px;
+    padding: 5px 14px;
+    font-size: 15px;
+    font-weight: 900;
+    white-space: nowrap;
+    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.65);
+    animation: cwComboFloat 0.78s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+  }
+  @keyframes cwComboFloat {
+    0%   { opacity: 0; transform: translate(-50%, -20%) scale(0.5); }
+    25%  { opacity: 1; transform: translate(-50%, -70%) scale(1.12); }
+    55%  { opacity: 1; transform: translate(-50%, -95%) scale(1.0); }
+    100% { opacity: 0; transform: translate(-50%, -140%) scale(0.92); }
+  }
+  .cw-seamless-banner {
+    position: fixed;
+    left: 50%;
+    top: 48%;
+    transform: translate(-50%, -50%);
+    z-index: 9500;
+    pointer-events: none;
+    width: min(88vw, 350px);
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.97) 0%, rgba(6, 78, 59, 0.97) 100%);
+    border: 2.5px solid #34d399;
+    border-radius: 22px;
+    padding: 16px 18px;
+    text-align: center;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75), 0 0 28px rgba(16, 185, 129, 0.45);
+    animation: cwSeamlessPop 1.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  @keyframes cwSeamlessPop {
+    0%   { opacity: 0; transform: translate(-50%, -42%) scale(0.78); }
+    18%  { opacity: 1; transform: translate(-50%, -50%) scale(1.04); }
+    32%  { opacity: 1; transform: translate(-50%, -50%) scale(1.0); }
+    82%  { opacity: 1; transform: translate(-50%, -50%) scale(1.0); }
+    100% { opacity: 0; transform: translate(-50%, -58%) scale(0.94); }
+  }
+
+
+  /* === v7.1 Single-Line Header/Footer & No-Wrap Polish === */
+  .header-row, .top-bar {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    flex-wrap: nowrap !important;
+    gap: 6px !important;
+  }
+  #stageBadge, .top-badge {
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 3px !important;
+    font-size: 12.5px !important;
+    padding: 6px 10px !important;
+    line-height: 1.2 !important;
+    flex-shrink: 1 !important;
+    min-width: 0 !important;
+  }
+  #stepPill, .step-pill {
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 2px !important;
+    font-size: 12.5px !important;
+    padding: 6px 10px !important;
+    line-height: 1.2 !important;
+    flex-shrink: 0 !important;
+  }
+  #settingsBtn, .settings-btn, .icon-btn {
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 3px !important;
+    font-size: 12.5px !important;
+    padding: 6px 10px !important;
+    line-height: 1.2 !important;
+    flex-shrink: 0 !important;
+  }
+  #rankText, .rank-info, .rank-box {
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 3px !important;
+    font-size: 13px !important;
+    line-height: 1.2 !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  #hintBtn, .hint-btn {
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 3px !important;
+    font-size: 13.5px !important;
+    padding: 8px 12px !important;
+    flex-shrink: 0 !important;
+  }
+  .target-card {
+    white-space: nowrap !important;
+    font-size: 15px !important;
+    padding: 8px 12px !important;
+  }
+  /* Color-sense high-contrast timer icon on white banner */
+  #status-banner .svg-ic path, #status-banner .svg-ic circle {
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.35));
+  }
+
+
+  /* === v7.3 Complete 3D Glossy Tactile UI Unification + Subtractive 3-Element Modals === */
+  .svg-ic {
+    width: 1.15em;
+    height: 1.15em;
+    vertical-align: -0.18em;
+    display: inline-block;
+    flex-shrink: 0;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.45));
+  }
+
+  /* 1. Top Header Bar: 3D Metallic Pill Badges & 3D Glossy Settings Button */
+  #top-progress-wrap { display: none !important; }
+  #stageBadge, .stage-badge {
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
+    border: 1.5px solid #475569 !important;
+    border-top-color: #94a3b8 !important;
+    box-shadow: 0 3px 0 #020617, inset 0 1px 1px rgba(255, 255, 255, 0.28) !important;
+    color: #f8fafc !important;
+  }
+  #stepPill, .step-pill {
+    background: linear-gradient(180deg, #059669 0%, #065f46 100%) !important;
+    border: 1.5px solid #34d399 !important;
+    border-top-color: #a7f3d0 !important;
+    box-shadow: 0 3px 0 #022c22, inset 0 1px 1px rgba(255, 255, 255, 0.4) !important;
+    color: #ecfdf5 !important;
+  }
+  #settingsBtn {
+    background: linear-gradient(180deg, #475569 0%, #1e293b 100%) !important;
+    border: 1.5px solid #94a3b8 !important;
+    border-top-color: #e2e8f0 !important;
+    color: #f8fafc !important;
+    box-shadow:
+      0 4px 0 #090d16,
+      0 6px 12px rgba(0, 0, 0, 0.5),
+      inset 0 1.5px 1px rgba(255, 255, 255, 0.4) !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.65) !important;
+    transition: transform 0.08s ease, box-shadow 0.08s ease !important;
+  }
+  #settingsBtn:active {
+    transform: translateY(3px) scale(0.96) !important;
+    box-shadow:
+      0 1px 0 #090d16,
+      0 2px 4px rgba(0, 0, 0, 0.4),
+      inset 0 1px 2px rgba(0, 0, 0, 0.35) !important;
+  }
+
+  /* 2. 3D Dark Glass Board Frames & 3D Glossy Tiles Across All 6 Apps */
+  #grid-frame, #board-area, .board-frame, .mirror-arena {
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.96) 0%, rgba(2, 6, 23, 0.99) 100%) !important;
+    border: 2.5px solid #334155 !important;
+    border-top-color: #64748b !important;
+    border-radius: 22px !important;
+    box-shadow:
+      0 7px 0 #020617,
+      0 12px 26px rgba(0, 0, 0, 0.65),
+      inset 0 2px 3px rgba(255, 255, 255, 0.16),
+      inset 0 -3px 6px rgba(0, 0, 0, 0.55) !important;
+  }
+  body.boss-mode #grid-frame,
+  body.boss-mode #board-area,
+  body.boss-mode .board-frame {
+    border-color: #f43f5e !important;
+    border-top-color: #fda4af !important;
+    box-shadow:
+      0 7px 0 #4c0519,
+      0 12px 28px rgba(244, 63, 94, 0.35),
+      inset 0 2px 3px rgba(255, 255, 255, 0.22) !important;
+  }
+
+  /* 3D Tactile Beveled Game Tiles (Kanji, Make-10, Flash Memory, Shape Mirror, Speed Number) */
+  .cell:not(.color-tile), .num-card, .mem-cell, .choice-btn, .shape-card, .num-tile {
+    background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 82%, #dbeafe 100%) !important;
+    border: 2px solid #cbd5e1 !important;
+    border-top-color: #ffffff !important;
+    box-shadow:
+      0 5px 0 #475569,
+      0 7px 14px rgba(0, 0, 0, 0.38),
+      inset 0 2px 1px rgba(255, 255, 255, 0.95) !important;
+    transition: transform 0.07s cubic-bezier(0.2, 0.9, 0.3, 1.2), box-shadow 0.07s ease !important;
+  }
+  .cell:not(.color-tile):active, .num-card:active, .mem-cell:active, .choice-btn:active, .shape-card:active, .num-tile:active {
+    transform: translateY(3px) scale(0.95) !important;
+    box-shadow:
+      0 1px 0 #334155,
+      0 2px 5px rgba(0, 0, 0, 0.3),
+      inset 0 1px 2px rgba(0, 0, 0, 0.15) !important;
+  }
+  .target-card, .next-card {
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
+    border: 2px solid #facc15 !important;
+    border-top-color: #fef08a !important;
+    border-radius: 18px !important;
+    box-shadow:
+      0 5px 0 #020617,
+      0 8px 18px rgba(0, 0, 0, 0.48),
+      inset 0 1.5px 1px rgba(255, 255, 255, 0.28) !important;
+  }
+  .target-num, .next-num {
+    background: linear-gradient(180deg, #fef047 0%, #f59e0b 100%) !important;
+    color: #052e16 !important;
+    border: 1.5px solid #ffffff !important;
+    box-shadow: 0 3px 0 #92400e, inset 0 1.5px 1px rgba(255, 255, 255, 0.75) !important;
+  }
+
+  /* 3. Bottom 3D Dark Glass Capsule Dock & 3D Sapphire/Gold Hint Button */
+  #footer-bar, .footer {
+    background: linear-gradient(180deg, rgba(30, 41, 59, 0.96) 0%, rgba(15, 23, 42, 0.98) 100%) !important;
+    border: 2px solid #facc15 !important;
+    border-top-color: #fef08a !important;
+    border-radius: 20px !important;
+    padding: 8px 12px !important;
+    box-shadow:
+      0 5px 0 #020617,
+      0 8px 20px rgba(0, 0, 0, 0.58),
+      inset 0 1.5px 1px rgba(255, 255, 255, 0.28) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+  }
+  #rankText, .rank-info, .rank-box {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    height: auto !important;
+    padding: 2px 4px !important;
+    color: #fef08a !important;
+    font-size: 13.5px !important;
+    font-weight: 900 !important;
+    justify-content: flex-start !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.85), 0 0 10px rgba(250, 204, 21, 0.35) !important;
+  }
+  #hintBtn, .hint-btn {
+    height: 42px !important;
+    padding: 0 14px !important;
+    border-radius: 13px !important;
+    background: linear-gradient(180deg, #38bdf8 0%, #0284c7 58%, #0369a1 100%) !important;
+    border: 1.5px solid #bae6fd !important;
+    border-top-color: #ffffff !important;
+    color: #ffffff !important;
+    font-size: 13.5px !important;
+    font-weight: 900 !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7) !important;
+    box-shadow:
+      0 4px 0 #075985,
+      0 6px 14px rgba(2, 132, 199, 0.48),
+      inset 0 2px 1px rgba(255, 255, 255, 0.58) !important;
+    transition: transform 0.08s ease, box-shadow 0.08s ease !important;
+  }
+  #hintBtn:active, .hint-btn:active {
+    transform: translateY(3px) scale(0.96) !important;
+    box-shadow:
+      0 1px 0 #075985,
+      0 2px 6px rgba(0, 0, 0, 0.4),
+      inset 0 1px 2px rgba(255, 255, 255, 0.3) !important;
+  }
+  #hintBtn.ad-reward, .hint-btn.ad-reward {
+    background: linear-gradient(180deg, #fde047 0%, #f59e0b 58%, #d97706 100%) !important;
+    border: 1.5px solid #fef08a !important;
+    border-top-color: #ffffff !important;
+    color: #052e16 !important;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55) !important;
+    box-shadow:
+      0 4px 0 #92400e,
+      0 6px 16px rgba(245, 158, 11, 0.55),
+      inset 0 2px 1px rgba(255, 255, 255, 0.75) !important;
+  }
+  #hintBtn.ad-reward:active, .hint-btn.ad-reward:active {
+    transform: translateY(3px) scale(0.96) !important;
+    box-shadow: 0 1px 0 #92400e !important;
+  }
+
+  /* 4. 3D Capsule Recessed Timer Gauge (#status-banner) */
+  #status-banner {
+    position: relative !important;
+    overflow: hidden !important;
+    z-index: 1 !important;
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%) !important;
+    border: 2px solid rgba(148, 163, 184, 0.45) !important;
+    border-radius: 999px !important;
+    box-shadow:
+      inset 0 3px 6px rgba(0, 0, 0, 0.78),
+      0 3px 0 #020617,
+      0 4px 12px rgba(0, 0, 0, 0.38) !important;
+    color: #ffffff !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85) !important;
+  }
+  #status-banner::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    bottom: 2px;
+    width: calc(var(--cw-timer-pct, 1) * (100% - 4px));
+    border-radius: 999px;
+    background: linear-gradient(180deg, #34d399 0%, #10b981 55%, #059669 100%);
+    box-shadow: inset 0 2px 2px rgba(255, 255, 255, 0.55), 0 0 12px rgba(16, 185, 129, 0.45);
+    z-index: -1;
+    transition: width 0.06s linear, background 0.25s ease;
+  }
+  #status-banner.cw-timer-mid::before {
+    background: linear-gradient(180deg, #fde047 0%, #f59e0b 55%, #d97706 100%);
+    box-shadow: inset 0 2px 2px rgba(255, 255, 255, 0.6), 0 0 12px rgba(245, 158, 11, 0.5);
+  }
+  #status-banner.cw-timer-low::before {
+    background: linear-gradient(180deg, #fb7185 0%, #ef4444 55%, #b91c1c 100%);
+    box-shadow: inset 0 2px 2px rgba(255, 255, 255, 0.65), 0 0 16px rgba(239, 68, 68, 0.7);
+  }
+  #status-banner.cw-timer-low {
+    border-color: #f87171 !important;
+    animation: cwUrgentPulse 0.45s ease-in-out infinite alternate !important;
+  }
+  @keyframes cwUrgentPulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.028); }
+  }
+
+  /* 5. Settings Modal (#settingsModal) Full 3D Tactile Overhaul */
+  #settingsModal .modal-card {
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
+    border: 2.5px solid #475569 !important;
+    border-top-color: #94a3b8 !important;
+    border-radius: 26px !important;
+    box-shadow:
+      0 10px 0 #020617,
+      0 22px 48px rgba(0, 0, 0, 0.85),
+      inset 0 2px 1px rgba(255, 255, 255, 0.22) !important;
+    color: #f8fafc !important;
+  }
+  #settingsBadge {
+    background: linear-gradient(180deg, #334155 0%, #0f172a 100%) !important;
+    border: 1.5px solid #64748b !important;
+    border-top-color: #cbd5e1 !important;
+    color: #f8fafc !important;
+    box-shadow: 0 3px 0 #020617, inset 0 1px 1px rgba(255, 255, 255, 0.25) !important;
+  }
+  .setting-group {
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.85) 0%, rgba(2, 6, 23, 0.92) 100%) !important;
+    border: 1.5px solid #334155 !important;
+    border-radius: 16px !important;
+    padding: 12px 14px !important;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.65), 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  }
+  .setting-label {
+    color: #f8fafc !important;
+  }
+  .toggle-btn {
+    border-radius: 12px !important;
+    padding: 7px 16px !important;
+    font-size: 13px !important;
+    font-weight: 900 !important;
+    transition: transform 0.08s ease, box-shadow 0.08s ease !important;
+  }
+  .toggle-btn.on {
+    background: linear-gradient(180deg, #34d399 0%, #10b981 58%, #059669 100%) !important;
+    border: 1.5px solid #a7f3d0 !important;
+    border-top-color: #ffffff !important;
+    color: #052e16 !important;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.45) !important;
+    box-shadow:
+      0 4px 0 #064e3b,
+      0 5px 12px rgba(16, 185, 129, 0.4),
+      inset 0 1.5px 1px rgba(255, 255, 255, 0.65) !important;
+  }
+  .toggle-btn.off {
+    background: linear-gradient(180deg, #475569 0%, #1e293b 100%) !important;
+    border: 1.5px solid #64748b !important;
+    border-top-color: #94a3b8 !important;
+    color: #cbd5e1 !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6) !important;
+    box-shadow:
+      0 4px 0 #090d16,
+      inset 0 1px 1px rgba(255, 255, 255, 0.22) !important;
+  }
+  .toggle-btn:active {
+    transform: translateY(3px) !important;
+    box-shadow: 0 1px 0 #020617 !important;
+  }
+  .vol-slider {
+    height: 11px !important;
+    border-radius: 999px !important;
+    border: 1px solid #475569 !important;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.8), 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+  }
+  .vol-slider::-webkit-slider-thumb {
+    width: 24px !important;
+    height: 24px !important;
+    border-radius: 50% !important;
+    background: radial-gradient(circle at 35% 30%, #ffffff 0%, #e2e8f0 45%, #94a3b8 100%) !important;
+    border: 2px solid #059669 !important;
+    box-shadow: 0 3px 0 #022c22, 0 4px 8px rgba(0, 0, 0, 0.6), inset 0 1px 1px #ffffff !important;
+  }
+  .mission-btn {
+    padding: 11px 14px !important;
+    border-radius: 14px !important;
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
+    border: 1.5px solid #475569 !important;
+    border-top-color: #64748b !important;
+    color: #f8fafc !important;
+    box-shadow:
+      0 4px 0 #020617,
+      0 5px 10px rgba(0, 0, 0, 0.4),
+      inset 0 1px 1px rgba(255, 255, 255, 0.18) !important;
+    transition: transform 0.08s ease, box-shadow 0.08s ease !important;
+  }
+  .mission-btn.active {
+    background: linear-gradient(180deg, #065f46 0%, #064e3b 100%) !important;
+    border: 2px solid #34d399 !important;
+    border-top-color: #a7f3d0 !important;
+    color: #ecfdf5 !important;
+    box-shadow:
+      0 4px 0 #022c22,
+      0 6px 14px rgba(16, 185, 129, 0.35),
+      inset 0 1.5px 1px rgba(255, 255, 255, 0.38) !important;
+  }
+  .mission-btn:disabled {
+    background: linear-gradient(180deg, #0f172a 0%, #090d16 100%) !important;
+    border: 1.5px solid #1e293b !important;
+    color: #64748b !important;
+    opacity: 0.72 !important;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6) !important;
+  }
+  .mission-btn:not(:disabled):active {
+    transform: translateY(3px) !important;
+    box-shadow: 0 1px 0 #020617 !important;
+  }
+  #closeSettingsBtn {
+    background: linear-gradient(180deg, #34d399 0%, #10b981 55%, #059669 100%) !important;
+    border: 2px solid #a7f3d0 !important;
+    border-top-color: #ffffff !important;
+    color: #052e16 !important;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+    border-radius: 16px !important;
+    box-shadow:
+      0 5px 0 #064e3b,
+      0 8px 18px rgba(16, 185, 129, 0.45),
+      inset 0 2px 1px rgba(255, 255, 255, 0.65) !important;
+  }
+  #closeSettingsBtn:active {
+    transform: translateY(4px) !important;
+    box-shadow: 0 1px 0 #064e3b !important;
+  }
+  #settingsPortalBtn {
+    background: linear-gradient(180deg, #334155 0%, #1e293b 100%) !important;
+    border: 1.5px solid #64748b !important;
+    border-top-color: #94a3b8 !important;
+    color: #e2e8f0 !important;
+    border-radius: 14px !important;
+    box-shadow:
+      0 4px 0 #090d16,
+      0 6px 12px rgba(0, 0, 0, 0.45),
+      inset 0 1.5px 1px rgba(255, 255, 255, 0.25) !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.65) !important;
+  }
+  #settingsPortalBtn:active {
+    transform: translateY(3px) !important;
+    box-shadow: 0 1px 0 #090d16 !important;
+  }
+
+  /* 6. Pop-Up Modal (#modalCard) Subtractive 3-Element Layout & 3D Gloss Buttons */
+  #modalCard {
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
+    border: 2.5px solid #facc15 !important;
+    border-top-color: #fef08a !important;
+    border-radius: 26px !important;
+    padding: 22px 18px !important;
+    box-shadow:
+      0 10px 0 #020617,
+      0 22px 50px rgba(0, 0, 0, 0.85),
+      inset 0 2px 2px rgba(255, 255, 255, 0.25) !important;
+    color: #f8fafc !important;
+  }
+  /* Hide cross-promo link clutter inside Fail/Clear modalCard so only the 3 core elements appear! */
+  #modalCard > div[style*="border-top"] {
+    display: none !important;
+  }
+  #modalTitle {
+    color: #ffffff !important;
+    font-size: 24px !important;
+    font-weight: 900 !important;
+    margin-bottom: 10px !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7) !important;
+  }
+  #modalIQ[style*="display: none"], #modalIQ[style*="display:none"] { display: none !important; }
+  #modalIQ {
+    display: inline-flex;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.92) 0%, rgba(2, 6, 23, 0.96) 100%) !important;
+    border: 1.5px solid rgba(250, 204, 21, 0.55) !important;
+    border-radius: 999px !important;
+    padding: 7px 18px !important;
+    font-size: 16px !important;
+    font-weight: 900 !important;
+    color: #fde047 !important;
+    margin-bottom: 16px !important;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.7), 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+  }
+  /* Main 3D Gold Reward Button (#modalReviveBtn) */
+  #modalReviveBtn {
+    width: 100% !important;
+    padding: 15px 14px !important;
+    border-radius: 16px !important;
+    background: linear-gradient(180deg, #fde047 0%, #f59e0b 55%, #d97706 100%) !important;
+    border: 2px solid #fef08a !important;
+    border-top-color: #ffffff !important;
+    color: #052e16 !important;
+    font-size: 17px !important;
+    font-weight: 900 !important;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) !important;
+    box-shadow:
+      0 5px 0 #92400e,
+      0 8px 20px rgba(245, 158, 11, 0.5),
+      inset 0 2px 1px rgba(255, 255, 255, 0.8) !important;
+    margin-bottom: 10px !important;
+    cursor: pointer !important;
+    transition: transform 0.08s ease, box-shadow 0.08s ease !important;
+  }
+  #modalReviveBtn:active {
+    transform: translateY(4px) !important;
+    box-shadow: 0 1px 0 #92400e !important;
+  }
+  /* Primary 3D Emerald Button (#modalActionBtn default) & Sub 3D Dark Slate Button (.cw-sub-btn) */
+  #modalActionBtn {
+    width: 100% !important;
+    padding: 15px 14px !important;
+    border-radius: 16px !important;
+    background: linear-gradient(180deg, #34d399 0%, #10b981 55%, #059669 100%) !important;
+    border: 2px solid #a7f3d0 !important;
+    border-top-color: #ffffff !important;
+    color: #052e16 !important;
+    font-size: 17px !important;
+    font-weight: 900 !important;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+    box-shadow:
+      0 5px 0 #064e3b,
+      0 8px 18px rgba(16, 185, 129, 0.45),
+      inset 0 2px 1px rgba(255, 255, 255, 0.65) !important;
+    cursor: pointer !important;
+    transition: transform 0.08s ease, box-shadow 0.08s ease !important;
+  }
+  #modalActionBtn.cw-sub-btn {
+    padding: 12px 14px !important;
+    background: linear-gradient(180deg, #475569 0%, #1e293b 100%) !important;
+    border: 1.5px solid #64748b !important;
+    border-top-color: #94a3b8 !important;
+    color: #cbd5e1 !important;
+    font-size: 14px !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.65) !important;
+    box-shadow:
+      0 4px 0 #090d16,
+      0 5px 12px rgba(0, 0, 0, 0.4),
+      inset 0 1.5px 1px rgba(255, 255, 255, 0.22) !important;
+  }
+  #modalActionBtn:active {
+    transform: translateY(3px) !important;
+    box-shadow: 0 1px 0 #020617 !important;
+  }
+
+  /* Particle Burst & Floating Combo Badge + Seamless Stage Clear Banner */
+  .cw-particle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    border-radius: 50%;
+    will-change: transform, opacity;
+  }
+  .cw-combo-popup {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    font-size: 17px;
+    font-weight: 900;
+    color: #fef08a;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.85), 0 0 12px rgba(250,204,21,0.65);
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.92);
+    border: 1.5px solid #facc15;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    animation: cwComboFloat 0.78s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes cwComboFloat {
+    0%   { transform: translate(-50%, 6px) scale(0.75); opacity: 0; }
+    22%  { transform: translate(-50%, -8px) scale(1.08); opacity: 1; }
+    100% { transform: translate(-50%, -32px) scale(0.96); opacity: 0; }
+  }
+  .cw-seamless-banner {
+    position: fixed;
+    left: 50%;
+    top: 46%;
+    transform: translate(-50%, -50%);
+    z-index: 9500;
+    pointer-events: none;
+    width: min(88vw, 355px);
+    padding: 18px 20px;
+    border-radius: 24px;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.98), rgba(6, 78, 59, 0.98));
+    border: 2.5px solid #34d399;
+    border-top-color: #a7f3d0;
+    box-shadow:
+      0 8px 0 #022c22,
+      0 18px 42px rgba(0, 0, 0, 0.8),
+      inset 0 2px 1px rgba(255, 255, 255, 0.35);
+    text-align: center;
+    animation: cwBannerPop 1.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes cwBannerPop {
+    0%   { transform: translate(-50%, -40%) scale(0.82); opacity: 0; }
+    16%  { transform: translate(-50%, -50%) scale(1.03); opacity: 1; }
+    82%  { transform: translate(-50%, -50%) scale(1.0); opacity: 1; }
+    100% { transform: translate(-50%, -58%) scale(0.94); opacity: 0; }
+  }
 </style>
 </head>
 <body>
@@ -703,7 +1398,7 @@
 
   <div class="footer">
     <div class="rank-box" id="rankText">🎨 色感IQ 100 ｜ 見習いカラーリスト</div>
-    <button class="hint-btn" id="hintBtn">💡 ヒント (3)</button>
+    <button class="hint-btn" id="hintBtn">💡 ヒント (2)</button>
   </div>
 
   <!-- Stage Clear / Fail / Boss Alert Modal -->
@@ -713,7 +1408,7 @@
       <div class="modal-title" id="modalTitle">ステージクリア！</div>
       <div class="modal-iq" id="modalIQ">色感IQ 110</div>
       <div class="modal-comment" id="modalComment">素晴らしい色彩感覚です！</div>
-      <button class="primary-btn" id="modalReviveBtn" style="display:none; margin-bottom:6px; background:linear-gradient(180deg, #f59e0b 0%, #d97706 100%); color:#052e16; box-shadow:0 4px 15px rgba(245,158,11,0.4);">🎬 動画を見て【同じ問題】に再挑戦</button>
+      <button class="primary-btn" id="modalReviveBtn" style="display:none;">🎬 動画を見て【同じ問題】に再挑戦</button>
       <button class="primary-btn" id="modalActionBtn">▶️ 次へ進む</button>
 <!-- Coreworks In-Game Monetization & Nav -->
       <div style="width:100%; margin-top:12px; padding-top:12px; border-top:1px solid rgba(148,163,184,0.2); display:flex; flex-direction:column; gap:8px;">
@@ -767,10 +1462,10 @@
         <button class="toggle-btn off" id="toggleDevBtn">OFF</button>
       </div>
 
-      <div class="modal-title" style="font-size:16px; margin-top:4px;">① ミッション選択（1〜5）</div>
+      <div class="modal-title" style="font-size:16px; margin-top:4px;">① レベル選択（全5レベル）</div>
       <div class="mission-list" id="missionList"></div>
 
-      <div class="modal-title" id="stageSelectTitle" style="font-size:16px; margin-top:4px;">② ステージ直接ジャンプ（STAGE 1〜10）</div>
+      <div class="modal-title" id="stageSelectTitle" style="font-size:16px; margin-top:4px;">② ステージ直接移動（開発テスト用）</div>
       <div id="stageJumpGrid" style="width:100%; display:grid; grid-template-columns:repeat(5, 1fr); gap:6px; margin-bottom:4px;"></div>
 
       <button class="primary-btn" id="closeSettingsBtn">✅ 閉じてゲームに戻る</button>
@@ -812,11 +1507,11 @@
     document.documentElement.classList.add('android-apk');
   }
   const MISSION_CONFIG = {
-    1: { name: 'MISSION 1（初級）',     normalSec: 12.0, bossSec: 8.0, baseDelta: 17 },
-    2: { name: 'MISSION 2（中級）',     normalSec: 10.5, bossSec: 7.0, baseDelta: 13 },
-    3: { name: 'MISSION 3（上級）',     normalSec: 9.0,  bossSec: 6.0, baseDelta: 9.5 },
-    4: { name: 'MISSION 4（達人）',     normalSec: 7.5,  bossSec: 5.0, baseDelta: 6.5 },
-    5: { name: 'MISSION 5（最高難度）', normalSec: 6.5,  bossSec: 4.5, baseDelta: 4.0 }
+    1: { name: 'レベル 1/5（初級）',     normalSec: 12.0, bossSec: 8.0, baseDelta: 17 },
+    2: { name: 'レベル 2/5（中級）',     normalSec: 10.5, bossSec: 7.0, baseDelta: 13 },
+    3: { name: 'レベル 3/5（上級）',     normalSec: 9.0,  bossSec: 6.0, baseDelta: 9.5 },
+    4: { name: 'レベル 4/5（達人）',     normalSec: 7.5,  bossSec: 5.0, baseDelta: 6.5 },
+    5: { name: 'レベル 5/5（最高難度）', normalSec: 6.5,  bossSec: 4.5, baseDelta: 4.0 }
   };
 
   // Curated vibrant base HSL palettes (Hue, Saturation, Lightness)
@@ -828,12 +1523,13 @@
   ];
 
   function getTitleForIQ(iqVal) {
-    if (iqVal >= 170) return '🌈 絶対色感の神';
-    if (iqVal >= 150) return '👑 色彩マイスター';
-    if (iqVal >= 135) return '🎨 アートディレクター級';
-    if (iqVal >= 120) return '✨ プロデザイナー級';
-    if (iqVal >= 108) return '🖌️ 色彩ハンター';
-    return '🌱 見習いカラーリスト';
+    if (iqVal >= 140) return '🌈 絶対色感の神';
+    if (iqVal >= 130) return '👑 色彩マイスター';
+    if (iqVal >= 120) return '🎨 アートディレクター級';
+    if (iqVal >= 112) return '✨ プロデザイナー級';
+    if (iqVal >= 105) return '🖌️ 色彩ハンター';
+    if (iqVal >= 98) return '🌱 見習いカラーリスト';
+    return '🌱 観察ルーキー';
   }
 
   // ============================================================================
@@ -846,7 +1542,7 @@
     maxUnlockedMission: 1,
     clearedMissions: [],
     iq: 100,
-    hints: 3,
+    hints: 2,
     bgmOn: true,
     bgmEnabled: true,
     bgmVolume: 0.7,
@@ -905,6 +1601,315 @@
 
   loadProgress();
 
+  // === v7 Custom Inline SVG Icon Engine + Particle Burst + Seamless Stage Banner ===
+  const CW_SVGS = {
+    brain: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M9.5 3A4.5 4.5 0 0 0 5 7.5c0 .6.12 1.18.34 1.7A4.5 4.5 0 0 0 3 13.2c0 2.13 1.48 3.92 3.47 4.38A4 4 0 0 0 10.5 21H11V3H9.5Zm5 0H13v18h.5a4 4 0 0 0 4.03-3.42A4.5 4.5 0 0 0 21 13.2a4.5 4.5 0 0 0-2.34-4c.22-.52.34-1.1.34-1.7A4.5 4.5 0 0 0 14.5 3Z" fill="#f472b6" stroke="#fbcfe8" stroke-width="1.2"/></svg>',
+    palette: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 0 0 0 20c1.66 0 3-1.34 3-3 0-.78-.3-1.48-.78-2.01-.47-.52-.72-1.2-.47-1.86.26-.68.96-1.13 1.69-1.13H17a5 5 0 0 0 5-5c0-3.87-4.48-7-10-7Z" fill="#c084fc" stroke="#f5d0fe" stroke-width="1.3"/><circle cx="7.5" cy="10.5" r="1.6" fill="#fde047"/><circle cx="12" cy="7.5" r="1.6" fill="#38bdf8"/><circle cx="16.5" cy="10.5" r="1.6" fill="#34d399"/></svg>',
+    plus: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" fill="#10b981" stroke="#a7f3d0" stroke-width="1.5"/><path d="M12 7v10M7 12h10" stroke="#fff" stroke-width="2.8" stroke-linecap="round"/></svg>',
+    bolt: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8Z" fill="#facc15" stroke="#fef08a" stroke-width="1.2" stroke-linejoin="round"/></svg>',
+    refresh: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M20 11a8 8 0 1 0 2 5.3M20 4v7h-7" stroke="#38bdf8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    gear: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3.5" fill="#38bdf8"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.6.77 1.02 1.41 1.09H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z" stroke="#cbd5e1" stroke-width="1.7"/></svg>',
+    timer: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="13" r="8" fill="rgba(248,113,113,0.2)" stroke="#fca5a5" stroke-width="2"/><path d="M12 9v4l2.5 2.5M9 2h6" stroke="#fef08a" stroke-width="2.2" stroke-linecap="round"/></svg>',
+    medal: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M7 2h10l-2 6H9L7 2Z" fill="#38bdf8"/><circle cx="12" cy="15" r="6" fill="#facc15" stroke="#fef08a" stroke-width="1.5"/><path d="M12 11.8l1 2.1 2.3.3-1.7 1.6.4 2.3-2-1.1-2 1.1.4-2.3-1.7-1.6 2.3-.3 1-2.1Z" fill="#7c2d12"/></svg>',
+    bulb: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M9 18h6M10 21h4M12 2a7 7 0 0 0-4 12.74V16a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-1.26A7 7 0 0 0 12 2Z" fill="#fde047" stroke="#b45309" stroke-width="1.6" stroke-linecap="round"/></svg>',
+    sparkle: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8L12 2Z" fill="#fde047" stroke="#fff" stroke-width="1.2"/></svg>',
+    fire: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M12 2c1.5 3.5 4.5 5.5 4.5 9.5a4.5 4.5 0 0 1-9 0c0-1.8.8-3.4 2-4.5-.2 1.8 1.2 2.8 2 2.5C11 7 11 4.2 12 2Z" fill="#f97316" stroke="#fde047" stroke-width="1.4"/></svg>',
+    play: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" fill="#38bdf8" stroke="#e0f2fe" stroke-width="1.5"/><path d="M10 8.5l6 3.5-6 3.5v-7Z" fill="#0f172a"/></svg>',
+    crown: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M3 18h18l-2-11-5 4-2-6-2 6-5-4-2 11Z" fill="#facc15" stroke="#fef08a" stroke-width="1.5" stroke-linejoin="round"/></svg>',
+    warn: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M12 3L2 20h20L12 3Z" fill="#f59e0b" stroke="#fef08a" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 9v5M12 17h.01" stroke="#0f172a" stroke-width="2.4" stroke-linecap="round"/></svg>',
+    cross: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" fill="#ef4444" stroke="#fecaca" stroke-width="1.5"/><path d="M15 9l-6 6M9 9l6 6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg>',
+    check: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" fill="#10b981" stroke="#a7f3d0" stroke-width="1.5"/><path d="M8 12.5l2.8 2.8L16.5 9.5" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    lock: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="3" fill="#f59e0b" stroke="#fef08a" stroke-width="1.5"/><path d="M8 11V7a4 4 0 1 1 8 0v4" stroke="#fde047" stroke-width="2"/><circle cx="12" cy="16" r="1.6" fill="#451a03"/></svg>',
+    music: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M9 18V5l12-2v13" stroke="#a855f7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="18" r="3" fill="#c084fc"/><circle cx="18" cy="16" r="3" fill="#c084fc"/></svg>',
+    speaker: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M11 5L6 9H2v6h4l5 4V5Z" fill="#38bdf8"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14" stroke="#7dd3fc" stroke-width="2" stroke-linecap="round"/></svg>',
+    home: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5Z" fill="#818cf8" stroke="#e0e7ff" stroke-width="1.5"/></svg>',
+    thumb: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M7 11v9H4a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h3Zm2 9h7.3a2 2 0 0 0 1.96-1.6l1.2-6A2 2 0 0 0 17.5 10H13V5.5A2.5 2.5 0 0 0 10.5 3L9 11v9Z" fill="#38bdf8" stroke="#e0f2fe" stroke-width="1.4" stroke-linejoin="round"/></svg>',
+    skull: '<svg class="svg-ic" viewBox="0 0 24 24" fill="none"><path d="M12 2a8 8 0 0 0-8 8c0 3.1 1.8 5.8 4.4 7v3h7.2v-3c2.6-1.2 4.4-3.9 4.4-7a8 8 0 0 0-8-8Z" fill="#94a3b8" stroke="#e2e8f0" stroke-width="1.5"/><circle cx="9" cy="10" r="1.8" fill="#0f172a"/><circle cx="15" cy="10" r="1.8" fill="#0f172a"/></svg>'
+  };
+
+  const EMOJI_TO_SVG_MAP = [
+    ['🧠', CW_SVGS.brain],
+    ['🎨', CW_SVGS.palette],
+    ['➕', CW_SVGS.plus],
+    ['🔷', CW_SVGS.sparkle],
+    ['🔢', CW_SVGS.bolt],
+    ['⚡', CW_SVGS.bolt],
+    ['🔄', CW_SVGS.refresh],
+    ['⚙️', CW_SVGS.gear],
+    ['⚙',  CW_SVGS.gear],
+    ['⏱️', CW_SVGS.timer],
+    ['⏱',  CW_SVGS.timer],
+    ['⏰', CW_SVGS.timer],
+    ['⏳', CW_SVGS.timer],
+    ['🏅', CW_SVGS.medal],
+    ['💡', CW_SVGS.bulb],
+    ['🎉', CW_SVGS.sparkle],
+    ['✨', CW_SVGS.sparkle],
+    ['🔥', CW_SVGS.fire],
+    ['🎬', CW_SVGS.play],
+    ['📺', CW_SVGS.play],
+    ['▶️', CW_SVGS.play],
+    ['▶',  CW_SVGS.play],
+    ['🚀', CW_SVGS.play],
+    ['👉', CW_SVGS.play],
+    ['👆', CW_SVGS.sparkle],
+    ['👑', CW_SVGS.crown],
+    ['①', CW_SVGS.crown],
+    ['②', CW_SVGS.gear],
+    ['🏆', CW_SVGS.crown],
+    ['🎁', CW_SVGS.sparkle],
+    ['⚠️', CW_SVGS.warn],
+    ['⚠',  CW_SVGS.warn],
+    ['❌', CW_SVGS.cross],
+    ['✅', CW_SVGS.check],
+    ['🔒', CW_SVGS.lock],
+    ['🎵', CW_SVGS.music],
+    ['🔊', CW_SVGS.speaker],
+    ['🛠️', CW_SVGS.gear],
+    ['🛠',  CW_SVGS.gear],
+    ['🏠', CW_SVGS.home],
+    ['🚿', CW_SVGS.sparkle],
+    ['💬', CW_SVGS.sparkle],
+    ['🌱', CW_SVGS.sparkle],
+    ['🔍', CW_SVGS.sparkle],
+    ['🦅', CW_SVGS.crown],
+    ['🦉', CW_SVGS.crown],
+    ['🌈', CW_SVGS.palette],
+    ['👁️', CW_SVGS.sparkle],
+    ['🧮', CW_SVGS.plus],
+    ['📸', CW_SVGS.bolt],
+    ['📐', CW_SVGS.sparkle],
+    ['🐆', CW_SVGS.bolt],
+    ['👍', CW_SVGS.thumb],
+    ['💀', CW_SVGS.skull]
+  ];
+
+  window.__cwIconify = function(str) {
+    let out = String(str ?? '');
+    for (const [emo, svg] of EMOJI_TO_SVG_MAP) {
+      if (out.includes(emo)) out = out.split(emo).join(svg);
+    }
+    return out;
+  };
+
+  window.__cwComboCount = 0;
+  window.__cwTriggerBurst = function(targetEl) {
+    window.__cwComboCount = (window.__cwComboCount || 0) + 1;
+    const rect = (targetEl && targetEl.getBoundingClientRect)
+      ? targetEl.getBoundingClientRect()
+      : { left: window.innerWidth / 2 - 20, top: window.innerHeight / 2 - 20, width: 40, height: 40 };
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const colors = ['#facc15', '#34d399', '#38bdf8', '#f472b6', '#ffffff'];
+
+    for (let i = 0; i < 14; i++) {
+      const p = document.createElement('div');
+      p.className = 'cw-particle';
+      const size = 6 + (i % 4) * 2;
+      p.style.width = size + 'px';
+      p.style.height = size + 'px';
+      p.style.left = (cx - size / 2) + 'px';
+      p.style.top = (cy - size / 2) + 'px';
+      const col = colors[i % colors.length];
+      p.style.background = col;
+      p.style.boxShadow = '0 0 8px ' + col;
+      document.body.appendChild(p);
+
+      const angle = (Math.PI * 2 * i) / 14 + (Math.random() * 0.25 - 0.12);
+      const dist = 42 + Math.random() * 48;
+      const dx = Math.cos(angle) * dist;
+      const dy = Math.sin(angle) * dist - 14;
+
+      if (p.animate) {
+        const anim = p.animate([
+          { transform: 'translate(0, 0) scale(1.15)', opacity: 1 },
+          { transform: `translate(${dx.toFixed(1)}px, ${dy.toFixed(1)}px) scale(0.1)`, opacity: 0 }
+        ], { duration: 520, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' });
+        anim.onfinish = () => p.remove();
+      } else {
+        setTimeout(() => p.remove(), 520);
+      }
+    }
+
+    if (window.__cwComboCount >= 2) {
+      const badge = document.createElement('div');
+      badge.className = 'cw-combo-popup';
+      badge.style.left = Math.min(window.innerWidth - 90, Math.max(90, cx)) + 'px';
+      badge.style.top = Math.max(70, cy - 18) + 'px';
+      badge.innerHTML = window.__cwIconify(`🔥 ${window.__cwComboCount}連続コンボ！`);
+      document.body.appendChild(badge);
+      setTimeout(() => badge.remove(), 800);
+    }
+  };
+
+  window.__cwStageRatios = [];
+  window.__cwStageElapsedSecs = [];
+  window.__cwStageHintUsed = false;
+  window.__cwLastSpeedEval = null;
+
+  window.__cwSyncTimerGauge = function(rem, denom) {
+    const bEl = document.getElementById('status-banner');
+    if (!bEl) return;
+    const pct = (denom > 0) ? Math.max(0, Math.min(1, rem / denom)) : 1;
+    bEl.style.setProperty('--cw-timer-pct', pct.toFixed(4));
+    bEl.classList.toggle('cw-timer-mid', pct < 0.50 && pct >= 0.25);
+    bEl.classList.toggle('cw-timer-low', pct < 0.25 && pct > 0);
+  };
+
+  window.__cwRecordQuestionSpeed = function(remSec, limSec) {
+    const lim = (typeof limSec === 'number' && limSec > 0) ? limSec : 10.0;
+    const rem = (typeof remSec === 'number' && remSec >= 0) ? remSec : lim * 0.65;
+    const r = Math.max(0, Math.min(1, rem / lim));
+    const elap = Math.max(0.1, lim - rem);
+    if (!Array.isArray(window.__cwStageRatios)) window.__cwStageRatios = [];
+    if (!Array.isArray(window.__cwStageElapsedSecs)) window.__cwStageElapsedSecs = [];
+    window.__cwStageRatios.push(r);
+    window.__cwStageElapsedSecs.push(elap);
+  };
+
+  // Automatic normalization of legacy inflated save data (130..200) to the max targetIQ of the unlocked stage
+  window.__cwNormalizeIQ = function() {
+    const maxM = Math.max(1, Math.min(5, state.maxUnlockedMission || state.mission || 1));
+    const curM = Math.max(1, Math.min(5, state.mission || 1));
+    const curSt = Math.max(1, Math.min(10, state.stage || 1));
+    const highestGlobal = (maxM > curM)
+      ? ((maxM - 1) * 10 + 1)
+      : ((curM - 1) * 10 + curSt);
+    const maxAllowedTarget = Math.min(148, Math.round(98 + highestGlobal * 0.7 + 14));
+    if (state.iqVersion !== 75 || typeof state.iq !== 'number' || isNaN(state.iq) || state.iq > maxAllowedTarget || state.iq < 88) {
+      if (highestGlobal <= 1) {
+        state.iq = 100;
+        state.iqSamples = 0;
+      } else {
+        state.iq = Math.min(maxAllowedTarget, Math.max(100, Math.round(98 + (highestGlobal - 1) * 0.7 + 10)));
+      }
+      state.iqLastDiff = 0;
+      state.iqVersion = 75;
+      saveProgress();
+    }
+    state.iq = Math.max(88, Math.min(148, Math.round(state.iq || 100)));
+  };
+
+  window.__cwEvaluateStageSpeed = function(isBoss) {
+    const ratios = (Array.isArray(window.__cwStageRatios) && window.__cwStageRatios.length > 0)
+      ? window.__cwStageRatios
+      : [0.72];
+    const elapsedArr = (Array.isArray(window.__cwStageElapsedSecs) && window.__cwStageElapsedSecs.length > 0)
+      ? window.__cwStageElapsedSecs
+      : [1.4];
+    const avgRatio = Math.max(0, Math.min(1, ratios.reduce((a, b) => a + b, 0) / ratios.length));
+    const avgElapsed = Math.max(0.1, elapsedArr.reduce((a, b) => a + b, 0) / elapsedArr.length);
+    const elapsedStr = avgElapsed.toFixed(1);
+    const hintUsed = !!window.__cwStageHintUsed;
+    window.__cwStageRatios = [];
+    window.__cwStageElapsedSecs = [];
+    window.__cwStageHintUsed = false;
+
+    const mission = Math.max(1, Math.min(5, state.mission || 1));
+    // On Stage 1..9 clear, state.stage was just incremented by 1; on Stage 10 clear, state.stage is still 10
+    const clearedSt = (isBoss && state.stage === 10) ? 10 : Math.max(1, (state.stage || 2) - 1);
+    const globalStage = Math.max(1, Math.min(50, (mission - 1) * 10 + clearedSt));
+
+    // 1. Difficulty Base IQ (baseIQ = 98 + globalStage * 0.7)
+    const baseIQ = 98 + globalStage * 0.7;
+
+    // 2. Speed Bonus (S: +12/+14, A: +6/+8, B: +0)
+    let speedBonus = 0;
+    let rank = 'B';
+    let badgeHead = '👍 B判定';
+
+    if (!hintUsed && avgRatio >= 0.60) {
+      speedBonus = isBoss ? 14 : 12;
+      rank = 'S';
+      badgeHead = '⚡ S判定';
+    } else if (!hintUsed && avgRatio >= 0.30) {
+      speedBonus = isBoss ? 8 : 6;
+      rank = 'A';
+      badgeHead = '✨ A判定';
+    } else {
+      speedBonus = 0;
+      rank = 'B';
+      badgeHead = '👍 B判定';
+    }
+
+    // 3. Stage Target IQ (Stage 1 S-rank -> 111, B-rank -> 99; Stage 10 S-rank -> 119; Stage 30 S-rank -> 133; Stage 50 S-rank -> 147)
+    const targetIQ = Math.min(148, Math.max(88, Math.round(baseIQ + speedBonus)));
+    const maxStageCap = Math.min(148, Math.round(baseIQ + (isBoss ? 14 : 12)));
+
+    // 4. Smooth Growth & Anti-Farming Update
+    const prevIQ = (typeof state.iq === 'number' && !isNaN(state.iq)) ? state.iq : 100;
+    const samples = state.iqSamples || 0;
+    let newIQ = prevIQ;
+    if (samples < 1 && globalStage === 1) {
+      // First stage clear immediately reflects Stage 1 targetIQ (e.g. 111 on S-rank, 105 on A-rank, 99 on B-rank)
+      newIQ = targetIQ;
+    } else if (prevIQ < targetIQ) {
+      newIQ = Math.min(targetIQ, Math.max(prevIQ + 1, Math.round(prevIQ * 0.35 + targetIQ * 0.65)));
+    } else {
+      // Already at or above targetIQ (e.g. replaying an early stage or slower clear on a later stage): cap at maxStageCap if replaying early stage, or hold steady
+      const maxUnlockedM = Math.max(mission, state.maxUnlockedMission || 1);
+      if (mission < maxUnlockedM) {
+        newIQ = prevIQ;
+      } else {
+        newIQ = Math.min(maxStageCap, prevIQ);
+      }
+    }
+    newIQ = Math.max(88, Math.min(148, newIQ));
+    const diff = newIQ - prevIQ;
+
+    state.iq = newIQ;
+    state.iqSamples = samples + 1;
+    state.iqLastDiff = diff;
+    state.iqVersion = 75;
+
+    const diffLabel = diff > 0 ? ` ▲+${diff}` : '';
+    const ev = {
+      rank,
+      gain: 0, // already applied to state.iq above
+      targetIQ,
+      diff,
+      elapsedStr,
+      badgeHead,
+      prefix: `${badgeHead}`,
+      diffLabel
+    };
+    window.__cwLastSpeedEval = ev;
+    return ev;
+  };
+
+  window.__cwShowSeamlessBanner = function(clearedStage, nextStage, iqVal, onDone, customEval) {
+    const existing = document.querySelector('.cw-seamless-banner');
+    if (existing) existing.remove();
+    const ev = customEval || window.__cwLastSpeedEval || { badgeHead: '⚡ S判定', elapsedStr: '1.2', diffLabel: '' };
+    const line1Text = window.__cwIconify(`✨ ステージ ${clearedStage} クリア！（${ev.elapsedStr || '1.2'}秒）`);
+    const line2Text = window.__cwIconify(`${ev.badgeHead || '⚡ S判定'} ｜ 推定IQ ${iqVal}${ev.diffLabel || ''}`);
+    const b = document.createElement('div');
+    b.className = 'cw-seamless-banner';
+    b.innerHTML = `
+      <div style="font-size:21px; font-weight:900; color:#ffffff; margin-bottom:5px; letter-spacing:0.01em;">${line1Text}</div>
+      <div style="font-size:15px; font-weight:900; color:#fde047;">${line2Text}</div>
+    `;
+    document.body.appendChild(b);
+    setTimeout(() => {
+      b.remove();
+      if (typeof onDone === 'function') onDone();
+    }, 1350);
+  };
+
+  function adjustIQ(delta) {
+    if (delta < 0) {
+      const prevIQ = (typeof state.iq === 'number' && !isNaN(state.iq)) ? state.iq : 100;
+      const newIQ = Math.max(88, prevIQ - 2);
+      state.iqLastDiff = newIQ - prevIQ;
+      state.iq = newIQ;
+      state.iqVersion = 75;
+    }
+    state.iq = Math.max(88, Math.min(148, Math.round(state.iq || 100)));
+  }
+  window.__cwNormalizeIQ();
+  state.hints = Math.max(0, Math.min(3, typeof state.hints === 'number' ? state.hints : 2));
+
+
   // ============================================================================
   // WEB AUDIO SYNTH (BGM Loop + SE + Real-Time Volume Gain Control!)
   // ============================================================================
@@ -923,7 +1928,7 @@
         bgmMasterGain.connect(audioCtx.destination);
       }
     }
-    if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    if (audioCtx && audioCtx.state === 'suspended' && !document.hidden) { try { audioCtx.resume(); } catch (e) {} }
     updateBgmMasterGain();
     syncBgmLoop();
   }
@@ -939,57 +1944,94 @@
       clearInterval(bgmTimer);
       bgmTimer = null;
     }
-    if (!state.bgmOn || state.bgmVolume <= 0 || !audioCtx) return;
+    if (document.hidden || !state.bgmOn || state.bgmVolume <= 0 || !audioCtx) return;
 
     const boss = isBossStage(state.stage);
-    const intervalMs = boss ? 250 : 360;
-    const normalNotes = [523.25, 659.25, 783.99, 659.25, 587.33, 698.46, 880.0, 698.46];
-    const bossNotes   = [220.00, 246.94, 261.63, 220.00, 196.00, 246.94, 220.00, 174.61];
+    const intervalMs = boss ? 220 : 280;
+    // Warm Electric-Piano Chords + Pleasant Bell Melody (Uplifting Royal Progression on Special Exams!)
+    const normalChords = [
+      [261.63, 329.63, 392.00], // Cmaj
+      [293.66, 369.99, 440.00], // Dmaj/G
+      [246.94, 329.63, 392.00], // Em
+      [220.00, 261.63, 329.63]  // Am
+    ];
+    const normalMelody = [
+      523.25, 0, 659.25, 587.33,
+      493.88, 0, 587.33, 659.25,
+      523.25, 0, 392.00, 440.00,
+      523.25, 587.33, 523.25, 0
+    ];
+    const bossChords = [
+      [349.23, 440.00, 523.25], // Fmaj
+      [392.00, 493.88, 587.33], // Gmaj
+      [329.63, 392.00, 493.88], // Em7
+      [349.23, 440.00, 523.25]  // Fmaj
+    ];
+    const bossMelody = [
+      587.33, 659.25, 783.99, 659.25,
+      587.33, 0, 783.99, 880.00,
+      783.99, 659.25, 587.33, 659.25,
+      783.99, 880.00, 1046.50, 0
+    ];
 
     bgmTimer = setInterval(() => {
-      if (!state.bgmOn || state.bgmVolume <= 0 || !audioCtx) return;
+      if (document.hidden || !state.bgmOn || state.bgmVolume <= 0 || !audioCtx) return;
       const settingsOpen = document.getElementById('settingsModal')?.classList.contains('show');
       if (!isQuestionActive && !settingsOpen) return;
-      try {
-        const now = audioCtx.currentTime;
+
+      const now = audioCtx.currentTime;
+      const isBoss = isBossStage(state.stage);
+      const step = bgmStep % 16;
+      bgmStep++;
+
+      const dest = bgmMasterGain || audioCtx.destination;
+
+      // 1. Warm Low-Pass Filtered Electric Piano Chord on beats 0, 4, 8, 12
+      if (step % 4 === 0) {
+        const chordList = isBoss ? bossChords : normalChords;
+        const chord = chordList[Math.floor(step / 4) % chordList.length];
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(1150, now);
+        filter.connect(dest);
+
+        chord.forEach((cFreq) => {
+          const osc = audioCtx.createOscillator();
+          const g = audioCtx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(cFreq, now);
+          g.gain.setValueAtTime(0.001, now);
+          g.gain.linearRampToValueAtTime(0.032, now + 0.025);
+          g.gain.exponentialRampToValueAtTime(0.0008, now + (intervalMs / 1000) * 3.6);
+          osc.connect(g);
+          g.connect(filter);
+          osc.start(now);
+          osc.stop(now + (intervalMs / 1000) * 3.7);
+        });
+      }
+
+      // 2. Soft Bell Melody
+      const melList = isBoss ? bossMelody : normalMelody;
+      const mFreq = melList[step];
+      if (mFreq > 0) {
         const osc = audioCtx.createOscillator();
-        const noteGain = audioCtx.createGain();
-        const notes = isBossStage(state.stage) ? bossNotes : normalNotes;
-        osc.type = isBossStage(state.stage) ? 'sawtooth' : 'sine';
-        osc.frequency.setValueAtTime(notes[bgmStep % notes.length], now);
-        bgmStep++;
-        const baseVol = isBossStage(state.stage) ? 0.065 : 0.085;
-        noteGain.gain.setValueAtTime(baseVol, now);
-        noteGain.gain.exponentialRampToValueAtTime(0.0008, now + (intervalMs / 1000) * 0.85);
-        osc.connect(noteGain);
-        noteGain.connect(bgmMasterGain || audioCtx.destination);
+        const g = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(mFreq, now);
+        g.gain.setValueAtTime(0.001, now);
+        g.gain.linearRampToValueAtTime(isBoss ? 0.06 : 0.065, now + 0.015);
+        g.gain.exponentialRampToValueAtTime(0.0008, now + (intervalMs / 1000) * 1.45);
+        osc.connect(g);
+        g.connect(dest);
         osc.start(now);
-        osc.stop(now + (intervalMs / 1000) * 0.9);
-      } catch (e) {}
+        osc.stop(now + (intervalMs / 1000) * 1.5);
+      }
     }, intervalMs);
   }
 
-  function getSeGain(baseGain) {
+    function getSeGain(baseGain) {
     if (!state.seOn || state.seVolume <= 0) return 0;
     return Math.max(0.001, baseGain * state.seVolume);
-  }
-
-  function playSePreviewTone() {
-    if (!state.seOn || state.seVolume <= 0) return;
-    initAudio();
-    if (!audioCtx) return;
-    const now = audioCtx.currentTime;
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(659.25, now);
-    osc.frequency.setValueAtTime(880.00, now + 0.06);
-    gain.gain.setValueAtTime(getSeGain(0.24), now);
-    gain.gain.exponentialRampToValueAtTime(0.0008, now + 0.16);
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    osc.start(now);
-    osc.stop(now + 0.17);
   }
 
   function playTone(freq, type, dur, vol = 0.18, delay = 0) {
@@ -1011,26 +2053,164 @@
     } catch (e) {}
   }
 
-  function playHintSound() {
-    playTone(523.25, 'sine', 0.16, 0.18, 0);
-    playTone(783.99, 'sine', 0.18, 0.20, 0.07);
-  }
-  function playTickSound() { playTone(980, 'sine', 0.04, 0.07, 0); }
+  // Sparkling 4-Note Rising Arpeggio Chime (D5 -> F#5 -> A5 -> D6) - Identical Across All 6 Apps!
   function playCorrectSound() {
-    playTone(587.33, 'triangle', 0.11, 0.22, 0);
-    playTone(880.0, 'triangle', 0.22, 0.24, 0.07);
+    if (!state.seOn || state.seVolume <= 0) return;
+    initAudio();
+    if (!audioCtx) return;
+    const now = audioCtx.currentTime;
+    [587.33, 739.99, 880.00, 1174.66].forEach((freq, idx) => {
+      const t0 = now + idx * 0.045;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = idx === 3 ? 'triangle' : 'sine';
+      osc.frequency.setValueAtTime(freq, t0);
+      gain.gain.setValueAtTime(getSeGain(idx === 3 ? 0.30 : 0.22), t0);
+      gain.gain.exponentialRampToValueAtTime(0.0008, t0 + (idx === 3 ? 0.36 : 0.22));
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(t0);
+      osc.stop(t0 + (idx === 3 ? 0.38 : 0.24));
+    });
   }
+
+  function playSePreviewTone() {
+    playCorrectSound();
+  }
+
+  // Crisp Dual-Harmonic Crystal Tap Chime for Panel Selection (make-ten, flash-memory, speed-number)
+  function playCrystalTap(baseFreq) {
+    if (!state.seOn || state.seVolume <= 0) return;
+    initAudio();
+    if (!audioCtx) return;
+    const now = audioCtx.currentTime;
+    [baseFreq, baseFreq * 1.5].forEach((freq, idx) => {
+      const t0 = now + idx * 0.028;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = idx === 1 ? 'triangle' : 'sine';
+      osc.frequency.setValueAtTime(freq, t0);
+      gain.gain.setValueAtTime(getSeGain(idx === 1 ? 0.22 : 0.20), t0);
+      gain.gain.exponentialRampToValueAtTime(0.0008, t0 + 0.16);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(t0);
+      osc.stop(t0 + 0.18);
+    });
+  }
+
+  function playSelectSound() {
+    playCrystalTap(659.25);
+  }
+
+  function playTapHitSound(combo = 1) {
+    playCrystalTap(Math.min(1046.5, 523.25 + combo * 55));
+  }
+
+  function playNumberHitSound(num = 1) {
+    playCrystalTap(Math.min(1174.66, 493.88 + num * 36));
+  }
+
+  function playFlashSound() {
+    if (!state.seOn || state.seVolume <= 0) return;
+    initAudio();
+    if (!audioCtx) return;
+    const now = audioCtx.currentTime;
+    [523.25, 659.25, 987.77].forEach((freq, idx) => {
+      playTone(freq, 'sine', 0.18, 0.18, idx * 0.045);
+    });
+  }
+
+  function playHintSound() {
+    if (!state.seOn || state.seVolume <= 0) return;
+    initAudio();
+    if (!audioCtx) return;
+    const now = audioCtx.currentTime;
+    [523.25, 659.25, 1046.50].forEach((freq, idx) => {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now + idx * 0.055);
+      gain.gain.setValueAtTime(getSeGain(0.20), now + idx * 0.055);
+      gain.gain.exponentialRampToValueAtTime(0.0008, now + idx * 0.055 + 0.20);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now + idx * 0.055);
+      osc.stop(now + idx * 0.055 + 0.22);
+    });
+  }
+
+  function playTickSound() {
+    if (!state.seOn || state.seVolume <= 0 || !audioCtx) return;
+    const now = audioCtx.currentTime;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(440, now);
+    gain.gain.setValueAtTime(getSeGain(0.06), now);
+    gain.gain.exponentialRampToValueAtTime(0.0008, now + 0.06);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start(now);
+    osc.stop(now + 0.07);
+  }
+
   function playStageClearFanfare() {
-    [523.25, 659.25, 783.99, 1046.5].forEach((f, idx) => playTone(f, 'triangle', 0.24, 0.24, idx * 0.08));
+    if (!state.seOn || state.seVolume <= 0) return;
+    initAudio();
+    if (!audioCtx) return;
+    const now = audioCtx.currentTime;
+    [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, now + idx * 0.075);
+      gain.gain.setValueAtTime(getSeGain(0.28), now + idx * 0.075);
+      gain.gain.exponentialRampToValueAtTime(0.0008, now + idx * 0.075 + 0.36);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now + idx * 0.075);
+      osc.stop(now + idx * 0.075 + 0.38);
+    });
   }
+
   function playBossApproachingSound() {
-    playTone(392, 'sawtooth', 0.18, 0.22, 0);
-    playTone(277.18, 'sawtooth', 0.18, 0.22, 0.18);
-    playTone(392, 'sawtooth', 0.28, 0.26, 0.36);
+    if (!state.seOn || state.seVolume <= 0) return;
+    initAudio();
+    if (!audioCtx) return;
+    const now = audioCtx.currentTime;
+    [523.25, 659.25, 783.99, 987.77, 1046.50].forEach((freq, idx) => {
+      const t0 = now + idx * 0.075;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, t0);
+      gain.gain.setValueAtTime(getSeGain(0.26), t0);
+      gain.gain.exponentialRampToValueAtTime(0.0008, t0 + 0.42);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(t0);
+      osc.stop(t0 + 0.44);
+    });
   }
+
   function playWrongSound() {
-    playTone(210, 'sawtooth', 0.18, 0.20, 0);
-    playTone(155, 'sawtooth', 0.28, 0.22, 0.12);
+    if (!state.seOn || state.seVolume <= 0) return;
+    initAudio();
+    if (!audioCtx) return;
+    const now = audioCtx.currentTime;
+    [190, 135].forEach((freq, idx) => {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(freq, now + idx * 0.12);
+      gain.gain.setValueAtTime(getSeGain(0.20), now + idx * 0.12);
+      gain.gain.exponentialRampToValueAtTime(0.0008, now + idx * 0.12 + 0.22);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now + idx * 0.12);
+      osc.stop(now + idx * 0.12 + 0.24);
+    });
   }
 
   // ============================================================================
@@ -1108,8 +2288,7 @@
       if (adType === 'interstitial') {
         lastInterstitialAt = performance.now();
         questionsSinceLastAd = 0;
-        state.hints = (state.hints || 0) + 1;
-        saveProgress();
+                saveProgress();
         updateHintButton();
       }
       if (rawCb) rawCb();
@@ -1169,17 +2348,17 @@
     const initialSec = Math.ceil(AD_DURATION);
 
     if (adType === 'rewarded_hint') {
-      adModalBadgeEl.textContent = '💡 ヒント補充';
+      adModalBadgeEl.innerHTML = window.__cwIconify('💡 ヒント補充');
       adModalTitleEl.textContent = '5秒後にヒントが3回分増えます';
-      adCompleteBtnEl.textContent = `あと ${initialSec} 秒でヒントが増えます`;
+      adCompleteBtnEl.innerHTML = window.__cwIconify(`あと ${initialSec} 秒でヒントが増えます`);
     } else if (adType === 'rewarded_revive') {
-      adModalBadgeEl.textContent = '🔥 同じ問題に再挑戦';
+      adModalBadgeEl.innerHTML = window.__cwIconify('🔥 同じ問題に再挑戦');
       adModalTitleEl.textContent = '5秒後に同じ問題へそのまま再挑戦できます';
-      adCompleteBtnEl.textContent = `あと ${initialSec} 秒で再挑戦できます`;
+      adCompleteBtnEl.innerHTML = window.__cwIconify(`あと ${initialSec} 秒で再挑戦できます`);
     } else {
-      adModalBadgeEl.textContent = '🎁 ステージクリアボーナス';
+      adModalBadgeEl.innerHTML = window.__cwIconify('🎁 ステージクリアボーナス');
       adModalTitleEl.textContent = '少し待つと次のステージへ進めます';
-      adCompleteBtnEl.textContent = `あと ${initialSec} 秒で次へ進めます`;
+      adCompleteBtnEl.innerHTML = window.__cwIconify(`あと ${initialSec} 秒で次へ進めます`);
     }
 
     adProgressBarEl.style.width = '0%';
@@ -1197,24 +2376,24 @@
       if (rem > 0) {
         const remaining = Math.ceil(rem);
         if (adType === 'rewarded_hint') {
-          adCompleteBtnEl.textContent = `あと ${remaining} 秒でヒントが増えます`;
+          adCompleteBtnEl.innerHTML = window.__cwIconify(`あと ${remaining} 秒でヒントが増えます`);
         } else if (adType === 'rewarded_revive') {
-          adCompleteBtnEl.textContent = `あと ${remaining} 秒で再挑戦できます`;
+          adCompleteBtnEl.innerHTML = window.__cwIconify(`あと ${remaining} 秒で再挑戦できます`);
         } else {
-          adCompleteBtnEl.textContent = `あと ${remaining} 秒で次へ進めます`;
+          adCompleteBtnEl.innerHTML = window.__cwIconify(`あと ${remaining} 秒で次へ進めます`);
         }
       } else {
         clearInterval(adTimerId);
         adProgressBarEl.style.width = '100%';
-        adModalBadgeEl.textContent = (adType === 'interstitial') ? '🎁 準備完了！' : '✅ ボーナス獲得完了！';
+        adModalBadgeEl.innerHTML = window.__cwIconify((adType === 'interstitial') ? '🎁 準備完了！' : '✅ ボーナス獲得完了！');
         adCompleteBtnEl.disabled = false;
         adCompleteBtnEl.classList.add('ready');
         if (adType === 'rewarded_hint') {
-          adCompleteBtnEl.textContent = '💡 ヒント＋3回を受け取る';
+          adCompleteBtnEl.innerHTML = window.__cwIconify('💡 ヒント＋3回を受け取る');
         } else if (adType === 'rewarded_revive') {
-          adCompleteBtnEl.textContent = '🔥 同じ問題に再挑戦する';
+          adCompleteBtnEl.innerHTML = window.__cwIconify('🔥 同じ問題に再挑戦する');
         } else {
-          adCompleteBtnEl.textContent = '▶ 次のステージへ進む';
+          adCompleteBtnEl.innerHTML = window.__cwIconify('▶ 次のステージへ進む');
         }
       }
     }, 80);
@@ -1269,7 +2448,7 @@
     const remainingWrongCount = tiles.length > 0 ? getRemainingWrongTiles().length : 1;
 
     if (tiles.length > 0 && remainingWrongCount === 0) {
-      hintBtnEl.textContent = '💡 残り1枚';
+      hintBtnEl.innerHTML = window.__cwIconify('💡 残り1枚');
       hintBtnEl.classList.remove('ad-reward');
       hintBtnEl.style.background = '';
       hintBtnEl.style.color = '';
@@ -1283,16 +2462,15 @@
     hintBtnEl.style.pointerEvents = '';
 
     if (state.hints > 0) {
-      hintBtnEl.textContent = `💡 ヒント (${state.hints})`;
+      hintBtnEl.innerHTML = window.__cwIconify(`💡 ヒント (${state.hints})`);
       hintBtnEl.classList.remove('ad-reward');
       hintBtnEl.style.background = '';
       hintBtnEl.style.color = '';
       hintBtnEl.disabled = !isQuestionActive;
     } else {
-      hintBtnEl.textContent = '🎬 ヒント+3';
+      hintBtnEl.innerHTML = window.__cwIconify('🎬 ヒント+3');
       hintBtnEl.classList.add('ad-reward');
-      hintBtnEl.style.background = '#f59e0b';
-      hintBtnEl.style.color = '#052e16';
+      
       hintBtnEl.disabled = !isQuestionActive;
     }
   }
@@ -1304,18 +2482,18 @@
     stepPillEl.classList.toggle('boss', boss);
 
     if (boss) {
-      stageBadgeEl.textContent = `🔥 MISSION ${state.mission} - BOSS ${state.stage}`;
-      stepPillEl.textContent = `⚡ 1問一発勝負！`;
-      headline1El.textContent = `🔥 ${MISSION_CONFIG[state.mission].bossSec.toFixed(1)}秒で見極めろ！`;
-      headline2El.textContent = '極限カラーボス戦！';
+      stageBadgeEl.innerHTML = window.__cwIconify((state.stage === 10 ? `👑 レベル ${state.mission}/5 ｜ 認定試験 10/10` : `🏅 レベル ${state.mission}/5 ｜ 中間テスト 5/10`));
+      stepPillEl.innerHTML = window.__cwIconify(`第 ${stepInStage} / ${NORMAL_QUESTIONS_PER_STAGE} 問`);
+      headline1El.innerHTML = window.__cwIconify(`🔥 ${MISSION_CONFIG[state.mission].bossSec.toFixed(1)}秒で見極めろ！`);
+      headline2El.innerHTML = window.__cwIconify(state.stage === 10 ? '👑 レベル認定試験（全3問）！' : '🏅 中間テスト（全3問）！');
     } else {
-      stageBadgeEl.textContent = `🎨 MISSION ${state.mission} - STAGE ${state.stage}`;
-      stepPillEl.textContent = `第 ${stepInStage} / ${NORMAL_QUESTIONS_PER_STAGE} 問`;
-      headline1El.textContent = '1つだけ色が違うパネルを';
-      headline2El.textContent = '直感でタップ！';
+      stageBadgeEl.innerHTML = window.__cwIconify(`🎨 レベル ${state.mission}/5 ｜ ステージ ${state.stage}/10`);
+      stepPillEl.innerHTML = window.__cwIconify(`第 ${stepInStage} / ${NORMAL_QUESTIONS_PER_STAGE} 問`);
+      headline1El.innerHTML = window.__cwIconify('1つだけ色が違うパネルを');
+      headline2El.innerHTML = window.__cwIconify('直感でタップ！');
     }
 
-    rankTextEl.textContent = `🎨 色感IQ ${state.iq} ｜ ${getTitleForIQ(state.iq)}`;
+    rankTextEl.innerHTML = window.__cwIconify(`🎨 色感IQ ${state.iq} ｜ ${getTitleForIQ(state.iq)}`);
     updateHintButton();
   }
 
@@ -1335,6 +2513,7 @@
 
       const ratio = Math.min(100, (timeRemaining / denom) * 100);
       progBarEl.style.width = `${ratio}%`;
+      if (window.__cwSyncTimerGauge) window.__cwSyncTimerGauge(timeRemaining, denom);
       if (timeRemaining <= 2.5) {
         progBarEl.style.backgroundColor = '#ef4444';
       } else {
@@ -1346,7 +2525,7 @@
         lastTickSec = secInt;
         playTickSound();
       }
-      bannerEl.textContent = `⏱️ 残り ${timeRemaining.toFixed(1)} 秒！`;
+      bannerEl.innerHTML = window.__cwIconify(`⏱️ 残り ${timeRemaining.toFixed(1)} 秒！`);
       if (timeRemaining <= 0) {
         lastWrongIndex = null;
         onFail('timeup');
@@ -1355,6 +2534,9 @@
   }
 
   function startQuestion() {
+    if (!document.hidden) initAudio();
+    if (window.__cwNormalizeIQ) window.__cwNormalizeIQ();
+    if (stepInStage === 1) { window.__cwStageRatios = []; window.__cwStageElapsedSecs = []; window.__cwStageHintUsed = false; }
     clearInterval(timerId);
     clearTimeout(transitionTimeoutId);
     transitionTimeoutId = null;
@@ -1385,8 +2567,9 @@
     lastTickSec = Math.ceil(timeRemaining);
 
     bannerEl.className = '';
-    bannerEl.textContent = `⏱️ 残り ${timeRemaining.toFixed(1)} 秒！`;
+    bannerEl.innerHTML = window.__cwIconify(`⏱️ 残り ${timeRemaining.toFixed(1)} 秒！`);
     progBarEl.style.width = '100%';
+    if (window.__cwSyncTimerGauge) window.__cwSyncTimerGauge(1, 1);
     progBarEl.style.backgroundColor = '#f43f5e';
 
     gridEl.style.gridTemplateColumns = `repeat(${n}, 1fr)`;
@@ -1417,13 +2600,14 @@
       tileEl.textContent = '✓';
 
       const boss = isBossStage(state.stage);
-      const totalQuestions = boss ? 1 : NORMAL_QUESTIONS_PER_STAGE;
+      const totalQuestions = NORMAL_QUESTIONS_PER_STAGE;
       const clearSec = Math.max(0.2, timeLimit - timeRemaining).toFixed(1);
-      state.iq += timeRemaining >= timeLimit * 0.6 ? 2 : 1;
+      window.__cwRecordQuestionSpeed(timeRemaining, timeLimit);
       questionsSinceLastAd++;
+      if (window.__cwTriggerBurst) window.__cwTriggerBurst(tileEl);
 
       bannerEl.className = 'correct';
-      bannerEl.textContent = `🎉 正解！ ${clearSec}秒で識別！`;
+      bannerEl.innerHTML = window.__cwIconify(`🎉 正解！ ${clearSec}秒で識別！`);
       updateHUD();
 
       if (stepInStage < totalQuestions) {
@@ -1437,8 +2621,8 @@
 
         if (clearedStage >= STAGES_PER_MISSION) {
           playStageClearFanfare();
-          state.iq += 5;
-          state.hints = Math.min(5, state.hints + 2);
+          const __spEval10 = window.__cwEvaluateStageSpeed(true); adjustIQ(__spEval10.gain);
+          state.hints = Math.min(3, (state.hints || 0) + 1);
           if (!state.clearedMissions.includes(clearedMission)) state.clearedMissions.push(clearedMission);
           if (clearedMission < 5) {
             state.maxUnlockedMission = Math.max(state.maxUnlockedMission, clearedMission + 1);
@@ -1455,17 +2639,17 @@
             showModal({
               isBossAlert: false,
               showRevive: false,
-              badge: `🏆 MISSION ${clearedMission} 完全制覇！`,
-              title: clearedMission < 5 ? `MISSION ${clearedMission + 1} 解放！` : `全5ミッション制覇！`,
+              badge: `🏆 レベル ${clearedMission}/5 完全制覇！`,
+              title: clearedMission < 5 ? `レベル ${clearedMission + 1}/5 解放！` : `全5レベル完全制覇！`,
               iqText: `色感IQ ${state.iq}`,
               comment: `${getTitleForIQ(state.iq)}<br>⚙️設定からいつでも再挑戦できます`,
-              btnText: clearedMission < 5 ? `🚀 MISSION ${state.mission} へ進む` : `👑 もう一度挑戦する`
+              btnText: clearedMission < 5 ? `🚀 レベル ${state.mission}/5（ステージ 1/10）へ進む` : `👑 もう一度挑戦する`
             });
           }, 850);
         } else {
           state.stage++;
-          state.iq += boss ? 4 : 2;
-          state.hints = Math.min(5, state.hints + (boss ? 2 : 1));
+          const __spEvalSt = window.__cwEvaluateStageSpeed(boss); adjustIQ(__spEvalSt.gain);
+          /* hint recovery only on stage 10 */
           saveProgress();
           updateHUD();
           const nextIsBoss = isBossStage(state.stage);
@@ -1478,11 +2662,11 @@
               showModal({
                 isBossAlert: true,
                 showRevive: false,
-                badge: '⚠️ WARNING：BOSS STAGE 出現！',
-                title: `次はBOSS STAGE ${state.stage}！`,
-                iqText: `制限時間 ${MISSION_CONFIG[state.mission].bossSec.toFixed(1)} 秒・1発勝負`,
-                comment: `STAGE ${clearedStage} クリア！<br>次は1問だけの超接近カラー勝負です！`,
-                btnText: `🔥 BOSS STAGE ${state.stage} に挑む！`
+                badge: state.stage === 10 ? '👑 レベル認定試験（最終ステージ）！' : '🏅 中間テスト（特別ステージ）！',
+                title: state.stage === 10 ? '次はレベル認定試験（ステージ 10/10）！' : '次は中間テスト（ステージ 5/10）！',
+                iqText: '全3問・高密度グリッド特別試験',
+                comment: `ステージ ${clearedStage}/10 クリア！<br>次はマス目が1段階広がる全3問の特別テストです！`,
+                btnText: state.stage === 10 ? '👑 レベル認定試験（10/10）に挑む！' : '🏅 中間テスト（5/10）に挑む！'
               });
             }, 850);
           } else {
@@ -1490,15 +2674,22 @@
             clearTimeout(transitionTimeoutId);
             transitionTimeoutId = setTimeout(() => {
               transitionTimeoutId = null;
+              if (boss) {
               showModal({
                 isBossAlert: false,
                 showRevive: false,
-                badge: boss ? '👑 BOSS 撃破！！' : '🎉 STAGE CLEAR!',
-                title: `STAGE ${clearedStage} クリア！`,
+                badge: boss ? '🏅 中間テスト合格！！' : '🎉 ステージクリア！',
+                title: `ステージ ${clearedStage}/10 クリア！`,
                 iqText: `色感IQ ${state.iq}`,
-                comment: `${getTitleForIQ(state.iq)}<br>💡ヒントが${boss ? 2 : 1}個回復しました！`,
-                btnText: `▶️ STAGE ${state.stage} へ進む`
+                comment: `${getTitleForIQ(state.iq)}`,
+                btnText: `▶️ ステージ ${state.stage}/10 へ進む`
               });
+            } else {
+              window.__cwShowSeamlessBanner(clearedStage, state.stage, state.iq, () => {
+                stepInStage = 1;
+                startQuestion();
+              });
+            }
             }, 850);
           }
         }
@@ -1512,13 +2703,15 @@
   }
 
   function onFail(reason) {
+    adjustIQ(-2);
+    saveProgress();
     isQuestionActive = false;
     clearInterval(timerId);
     pendingInterstitialAfterModal = false;
     playWrongSound();
 
     bannerEl.className = 'reveal';
-    bannerEl.textContent = reason === 'wrong' ? '❌ お手つき！' : '⏰ 時間切れ！';
+    bannerEl.innerHTML = window.__cwIconify(reason === 'wrong' ? '❌ お手つき！' : '⏰ 時間切れ！');
     updateHUD();
 
     const boss = isBossStage(state.stage);
@@ -1537,27 +2730,101 @@
         showRevive: canRevive,
         reviveBtnText: reviveText,
         badge: reason === 'wrong' ? '❌ お手つき！' : '⏰ 時間切れ！',
-        title: boss ? `BOSS STAGE ${state.stage} 失敗` : `STAGE ${state.stage}（第${stepInStage}問でミス）`,
+        title: boss ? `${state.stage === 10 ? 'レベル認定試験' : '中間テスト'}（第${stepInStage}問でミス）` : `ステージ ${state.stage}/10（第${stepInStage}問でミス）`,
         iqText: `色感IQ ${state.iq}`,
         comment: failComment,
-        btnText: (stepInStage === 1 || boss)
+        btnText: (stepInStage === 1)
           ? `🔄 別の問題でやり直す`
           : `🔄 1問目からやり直す`
       });
     }, 900);
   }
 
-  function showModal({ isBossAlert, showRevive, reviveBtnText, badge, title, iqText, comment, btnText }) {
-    modalCardEl.classList.toggle('boss-alert', !!isBossAlert);
-    document.getElementById('modalBadge').textContent = badge;
-    document.getElementById('modalTitle').textContent = title;
-    document.getElementById('modalIQ').textContent = iqText;
-    document.getElementById('modalComment').innerHTML = comment;
-    document.getElementById('modalActionBtn').textContent = btnText;
+    window.__cwModalMode = 'normal';
+  window.__cwHintPausedRem = null;
+  window.__cwHintRewardCb = null;
+
+  window.__cwOpenHintEmptyModal = function(pausedRem, onRewardDone) {
+    window.__cwModalMode = 'hint_empty';
+    window.__cwHintPausedRem = pausedRem;
+    window.__cwHintRewardCb = onRewardDone;
+    modalCardEl.classList.remove('boss-alert');
+    const bEl = document.getElementById('modalBadge');
+    const tEl = document.getElementById('modalTitle');
+    const iqEl = document.getElementById('modalIQ');
+    const cEl = document.getElementById('modalComment');
+    const actBtn = document.getElementById('modalActionBtn');
+    if (bEl) bEl.style.display = 'none';
+    if (cEl) cEl.style.display = 'none';
+    if (iqEl) iqEl.style.display = 'none';
+    if (tEl) tEl.innerHTML = window.__cwIconify('💡 ヒントがありません');
     if (modalReviveBtnEl) {
-      modalReviveBtnEl.style.display = showRevive ? 'block' : 'none';
-      if (reviveBtnText) {
-        modalReviveBtnEl.textContent = reviveBtnText;
+      modalReviveBtnEl.style.display = 'block';
+      modalReviveBtnEl.innerHTML = window.__cwIconify('▶️ 5秒動画でヒント +2 回復');
+    }
+    if (actBtn) {
+      actBtn.classList.add('cw-sub-btn');
+      actBtn.innerHTML = window.__cwIconify('閉じる');
+    }
+    modalEl.classList.add('show');
+  };
+
+  function showModal({ isBossAlert, showRevive, reviveText, reviveBtnText, badge, title, iqText, comment, btnText }) {
+    window.__cwModalMode = showRevive ? 'fail' : 'normal';
+    modalCardEl.classList.toggle('boss-alert', !!isBossAlert);
+    const bEl = document.getElementById('modalBadge');
+    const tEl = document.getElementById('modalTitle');
+    const iqEl = document.getElementById('modalIQ');
+    const cEl = document.getElementById('modalComment');
+    const actBtn = document.getElementById('modalActionBtn');
+
+    // Subtractive 3-Element Layout: Hide redundant top badge and long paragraph comments!
+    if (bEl) bEl.style.display = 'none';
+    if (cEl) cEl.style.display = 'none';
+    if (iqEl) iqEl.style.display = 'inline-flex';
+
+    if (showRevive) {
+      // 1. Fail Modal (Time-up / Wrong Tap): 3 Elements Only!
+      const isTimeUp = String(badge || '').includes('時間切れ') || String(badge || '').includes('TIME');
+      const diff = (typeof state.iqLastDiff === 'number' && state.iqLastDiff < 0) ? ` (${state.iqLastDiff})` : ' (-2)';
+      tEl.innerHTML = window.__cwIconify(isTimeUp ? '⏰ タイムアップ！' : '❌ お手つきミス！');
+      iqEl.innerHTML = window.__cwIconify(`ステージ ${state.stage}/10 ｜ 推定IQ ${state.iq}${diff}`);
+      if (modalReviveBtnEl) {
+        modalReviveBtnEl.style.display = 'block';
+        modalReviveBtnEl.innerHTML = window.__cwIconify('▶️ 5秒動画でここから復活');
+      }
+      if (actBtn) {
+        actBtn.classList.add('cw-sub-btn');
+        actBtn.innerHTML = window.__cwIconify('ステージ1からやり直す');
+      }
+    } else if (String(badge || '').includes('完全制覇')) {
+      // 2A. Stage 10 Level Certification Exam Clear: 3 Elements Only!
+      const sp = window.__cwLastSpeedEval || { badgeHead: '⚡ S判定', elapsedStr: '1.2', diffLabel: '' };
+      tEl.innerHTML = window.__cwIconify(`👑 レベル${Math.max(1, (state.mission || 1))} 認定合格！`);
+      iqEl.innerHTML = window.__cwIconify(`${sp.badgeHead || '⚡ S判定'}（${sp.elapsedStr || '1.2'}秒）｜ 推定IQ ${state.iq}${sp.diffLabel || ''}`);
+      if (modalReviveBtnEl) modalReviveBtnEl.style.display = 'none';
+      if (actBtn) {
+        actBtn.classList.remove('cw-sub-btn');
+        actBtn.innerHTML = window.__cwIconify('▶️ 次のレベルへ進む');
+      }
+    } else if (!isBossAlert) {
+      // 2B. Stage 5 Mid-Boss Exam Clear: 3 Elements Only!
+      const sp = window.__cwLastSpeedEval || { badgeHead: '⚡ S判定', elapsedStr: '1.2', diffLabel: '' };
+      tEl.innerHTML = window.__cwIconify('🏆 中間テスト突破！');
+      iqEl.innerHTML = window.__cwIconify(`${sp.badgeHead || '⚡ S判定'}（${sp.elapsedStr || '1.2'}秒）｜ 推定IQ ${state.iq}${sp.diffLabel || ''}`);
+      if (modalReviveBtnEl) modalReviveBtnEl.style.display = 'none';
+      if (actBtn) {
+        actBtn.classList.remove('cw-sub-btn');
+        actBtn.innerHTML = window.__cwIconify('▶️ 次のステージへ進む');
+      }
+    } else {
+      // 2C. Pre-Exam Alert (Stage 5 or Stage 10 Approaching): 3 Elements Only!
+      tEl.innerHTML = window.__cwIconify(state.stage === 10 ? '👑 レベル認定試験（10/10）' : '🏅 中間テスト（5/10）');
+      iqEl.innerHTML = window.__cwIconify('全3問・特別試験ステージ');
+      if (modalReviveBtnEl) modalReviveBtnEl.style.display = 'none';
+      if (actBtn) {
+        actBtn.classList.remove('cw-sub-btn');
+        actBtn.innerHTML = window.__cwIconify('▶️ 特別試験に挑む！');
       }
     }
     modalEl.classList.add('show');
@@ -1567,6 +2834,11 @@
   modalReviveBtnEl.addEventListener('click', () => {
     initAudio();
     modalEl.classList.remove('show');
+    if (window.__cwModalMode === 'hint_empty') {
+      window.__cwModalMode = 'normal';
+      if (typeof window.__cwHintRewardCb === 'function') window.__cwHintRewardCb();
+      return;
+    }
     showAdModal('rewarded_revive', () => {
       const boss = isBossStage(state.stage);
       const mCfg = MISSION_CONFIG[state.mission] || MISSION_CONFIG[1];
@@ -1580,8 +2852,9 @@
       timeLimit = boss ? mCfg.bossSec : mCfg.normalSec;
       timeRemaining = timeLimit;
       bannerEl.className = '';
-      bannerEl.textContent = `🔥 同じ問題に再挑戦！残り ${timeRemaining.toFixed(1)} 秒！`;
+      bannerEl.innerHTML = window.__cwIconify(`🔥 同じ問題に再挑戦！残り ${timeRemaining.toFixed(1)} 秒！`);
       progBarEl.style.width = '100%';
+    if (window.__cwSyncTimerGauge) window.__cwSyncTimerGauge(1, 1);
       progBarEl.style.backgroundColor = boss ? '#fb7185' : '#f43f5e';
       syncBgmLoop();
       runQuestionTimer(timeRemaining);
@@ -1590,6 +2863,15 @@
 
   document.getElementById('modalActionBtn').addEventListener('click', () => {
     initAudio();
+    if (window.__cwModalMode === 'hint_empty') {
+      window.__cwModalMode = 'normal';
+      modalEl.classList.remove('show');
+      const rem = window.__cwHintPausedRem;
+      if (typeof runQuestionTimer === 'function' && rem > 0) runQuestionTimer(rem);
+      else if (typeof runAnswerTimer === 'function' && rem > 0) runAnswerTimer(rem);
+      else startQuestion();
+      return;
+    }
     if (pendingInterstitialAfterModal) {
       pendingInterstitialAfterModal = false;
       modalEl.classList.remove('show');
@@ -1618,7 +2900,8 @@
       const pausedRemaining = timeRemaining;
       isQuestionActive = false;
       clearInterval(timerId);
-      showAdModal('rewarded_hint', () => {
+      window.__cwOpenHintEmptyModal(pausedRemaining, () => {
+        showAdModal('rewarded_hint', () => {
         state.hints += 3;
         saveProgress();
         playHintSound();
@@ -1626,15 +2909,17 @@
         timeLimit = Math.max(timeLimit, resumedSec);
         timeRemaining = resumedSec;
         bannerEl.className = '';
-        bannerEl.textContent = `💡 ヒント＋3回！残り ${timeRemaining.toFixed(1)} 秒！`;
+        bannerEl.innerHTML = window.__cwIconify(`💡 ヒント＋3回！残り ${timeRemaining.toFixed(1)} 秒！`);
         syncBgmLoop();
         runQuestionTimer(timeRemaining);
+      });
       });
       return;
     }
 
     playHintSound();
     state.hints--;
+    window.__cwStageHintUsed = true;
     saveProgress();
     remainingWrong.sort(() => Math.random() - 0.5);
     const count = Math.max(1, Math.floor(remainingWrong.length * 0.5));
@@ -1713,21 +2998,21 @@
     toggleDevBtn.className = 'toggle-btn ' + (state.devMode ? 'on' : 'off');
 
     missionListEl.innerHTML = [1, 2, 3, 4, 5].map(m => {
-      const unlocked = true;
+      const unlocked = state.devMode || m <= (state.maxUnlockedMission || 1);
       const cleared = state.clearedMissions.includes(m);
       const isCurrent = (m === state.mission);
       const cfg = MISSION_CONFIG[m];
       const statusText = state.devMode
-        ? (isCurrent ? `▶️ 選択中 (STAGE ${state.stage})` : '🛠️ テスト解放中')
-        : (cleared ? '🏆 制覇済（再挑戦OK）' : (unlocked ? (isCurrent ? `▶️ 挑戦中 (STAGE ${state.stage})` : '挑戦可能') : '🔒 未解放'));
+        ? (isCurrent ? `▶️ 選択中 (${state.stage}/10)` : '🛠️ テスト解放中')
+        : (cleared ? '🏆 制覇済' : (unlocked ? (isCurrent ? `▶️ 挑戦中 (${state.stage}/10)` : '挑戦可能') : '🔒 未解放'));
       return `<button class="mission-btn ${isCurrent ? 'active' : ''}" data-mission="${m}" ${unlocked ? '' : 'disabled'}>
-        <span>${cfg.name}（${cfg.normalSec}秒）</span>
-        <span style="font-size:13px;">${statusText}</span>
+        <span style="font-size:13px;">${cfg.name}（${cfg.normalSec}秒）</span><span style="font-size:12px;">${window.__cwIconify(statusText)}</span>
       </button>`;
     }).join('');
 
     missionListEl.querySelectorAll('.mission-btn[data-mission]').forEach(btn => {
       btn.addEventListener('click', () => {
+        if (btn.disabled) return;
         const m = Number(btn.getAttribute('data-mission'));
         state.mission = m;
         state.stage = 1;
@@ -1739,7 +3024,8 @@
       });
     });
 
-    stageSelectTitleEl.style.display = 'block';
+    if (state.devMode) {
+      stageSelectTitleEl.style.display = 'block';
       stageJumpGridEl.style.display = 'grid';
       stageJumpGridEl.innerHTML = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(st => {
         const isBoss = (st === 5 || st === 10);
@@ -1748,7 +3034,7 @@
         const col = active ? '#ffffff' : (isBoss ? '#be123c' : '#292524');
         const bdr = active ? '#e11d48' : (isBoss ? '#f43f5e' : '#e7e0d6');
         return `<button data-stage="${st}" style="padding:10px 4px; border-radius:10px; border:2px solid ${bdr}; background:${bg}; color:${col}; font-size:14px; font-weight:900; cursor:pointer;">
-          ${isBoss ? '🔥B' + st : 'S' + st}
+          ${window.__cwIconify(isBoss ? '🏅T' + st : 'S' + st)}
         </button>`;
       }).join('');
 
@@ -1763,6 +3049,11 @@
           startQuestion();
         });
       });
+    } else {
+      stageSelectTitleEl.style.display = 'none';
+      stageJumpGridEl.style.display = 'none';
+      stageJumpGridEl.innerHTML = '';
+    }
     
   }
 
@@ -1780,7 +3071,7 @@
     clearInterval(timerId);
     renderSettingsModal();
     settingsModalEl.classList.add('show');
-    initAudio();
+    if (!document.hidden) initAudio();
   }
 
   function closeSettingsAndResume() {
@@ -1874,6 +3165,58 @@
   document.getElementById('closeSettingsBtn').addEventListener('click', () => {
     closeSettingsAndResume();
   });
+
+  // Immediate BGM unlock on any first touch/click anywhere
+  ['pointerdown', 'touchstart', 'click'].forEach(ev => {
+    document.addEventListener(ev, () => {
+      if (!document.hidden && (!audioCtx || audioCtx.state === 'suspended')) {
+        initAudio();
+      }
+    }, { passive: true });
+  });
+
+  // Complete Pause (Timer & BGM) when app goes to background or loses focus
+  function handleAppBackground() {
+    if (bgmTimer) {
+      clearInterval(bgmTimer);
+      bgmTimer = null;
+    }
+    if (audioCtx && audioCtx.state === 'running') {
+      try { audioCtx.suspend(); } catch (e) {}
+    }
+    if (!settingsModalEl.classList.contains('show') && !modalEl.classList.contains('show') && !adOverlayModalEl.classList.contains('show')) {
+      openSettingsModal();
+    }
+  }
+
+  function handleAppForeground() {
+    if (!document.hidden && state.bgmOn && state.bgmVolume > 0 && audioCtx) {
+      try { audioCtx.resume(); } catch (e) {}
+      syncBgmLoop();
+    }
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) handleAppBackground();
+    else handleAppForeground();
+  });
+  window.addEventListener('blur', handleAppBackground);
+  window.addEventListener('pagehide', handleAppBackground);
+  window.addEventListener('focus', handleAppForeground);
+
+
+  
+  // Replace all static emojis in buttons/badges with inline SVGs on startup
+  (function cwIconifyStaticDom() {
+    const selectors = ['#stageBadge', '#settingsBtn', '#status-banner', '#rankText', '#hintBtn', '#modalBadge', '#modalTitle', '#modalReviveBtn', '#modalActionBtn', '#settingsBadge', '.setting-label', '#settingsModal .modal-title', '#settingsModal div[style*="font-weight:900"]', '#closeSettingsBtn', '#settingsPortalBtn', '#adModalBadge', '.ad-pr-title', '.ad-pr-cta', '#adCompleteBtn', '#app a'];
+    selectors.forEach(sel => {
+      document.querySelectorAll(sel).forEach(el => {
+        if (el.children.length === 0) {
+          el.innerHTML = window.__cwIconify(el.innerHTML);
+        }
+      });
+    });
+  })();
 
   startQuestion();
 })();
