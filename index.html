@@ -479,7 +479,7 @@
           }
         }
         if (p === '/money-drop' || p === '/games/money-drop') { window.location.replace('/kanji-iq/?v=8.2'); return; }
-        if (p === '/strike-rpg') { window.location.replace('/games/strike-rpg/?v=8.2'); return; }
+        if (p === '/strike-rpg' || p === '/games/strike-rpg') { window.location.replace('/?tab=games&v=8.2'); return; }
         var params = new URLSearchParams(window.location.search);
         var rawTab = params.get('tab') || (window.location.hash ? window.location.hash.replace('#', '') : '');
         switchTab(rawTab || 'tools');
