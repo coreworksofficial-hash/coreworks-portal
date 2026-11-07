@@ -284,12 +284,12 @@
         </div>
         <span class="action-btn">楽天で見る ↗</span>
       </a>
-      <a id="dwAmazonLink" href="https://www.amazon.co.jp/s?k=%E9%A3%9F%E6%B4%97%E6%A9%9F%20%E5%B7%A5%E4%BA%8B%E4%B8%8D%E8%A6%81%20%E3%82%BF%E3%83%B3%E3%82%AF%E5%BC%8F&tag=coreworks06-22" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
+      <a id="dwYahooLink" href="https://af.moshimo.com/af/c/click?a_id=5880336&p_id=1225&pc_id=1925&pl_id=18502&url=https%3A%2F%2Fshopping.yahoo.co.jp%2Fsearch%3Fp%3D%25E9%25A3%259F%25E6%25B4%2597%25E6%25A9%259F%2520%25E5%25B7%25A5%25E4%25BA%258B%25E4%25B8%258D%25E8%25A6%2581%2520%25E3%2582%25BF%25E3%2583%25B3%25E3%2582%25AF%25E5%25BC%258F" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
         <div class="action-info">
-          <span class="action-badge">Amazon ベストセラー</span>
-          <div class="action-name" id="dwAmazonTitle">タンク式食洗機 Amazon口コミ・最安値</div>
+          <span class="action-badge">Yahoo!ショッピング PayPay還元</span>
+          <div class="action-name" id="dwYahooTitle">タンク式食洗機 Yahoo!最安値・口コミ</div>
         </div>
-        <span class="action-btn">Amazonで見る ↗</span>
+        <span class="action-btn">Yahoo!で見る ↗</span>
       </a>
       <a href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+BPIX2Q+2W92+NVHCY" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
         <div class="action-info">
@@ -338,9 +338,10 @@
         if (kw && lbl) {
           const rTarget = 'https://search.rakuten.co.jp/search/mall/' + encodeURIComponent(kw) + '/';
           document.getElementById('dwRakutenLink').href = 'https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=' + encodeURIComponent(rTarget);
-          document.getElementById('dwAmazonLink').href = 'https://www.amazon.co.jp/s?k=' + encodeURIComponent(kw) + '&tag=coreworks06-22';
+          const yTarget = 'https://shopping.yahoo.co.jp/search?p=' + encodeURIComponent(kw);
+          document.getElementById('dwYahooLink').href = 'https://af.moshimo.com/af/c/click?a_id=5880336&p_id=1225&pc_id=1925&pl_id=18502&url=' + encodeURIComponent(yTarget);
           document.getElementById('dwRakutenTitle').textContent = lbl + ' 楽天売れ筋ランキング';
-          document.getElementById('dwAmazonTitle').textContent = lbl + ' Amazon口コミ・最安値';
+          document.getElementById('dwYahooTitle').textContent = lbl + ' Yahoo!最安値・口コミ';
         }
         update();
       });
@@ -358,7 +359,7 @@
     <span style="margin: 0 8px; color: #475569;">｜</span>
     <a href="/about/" style="color: #94a3b8; text-decoration: none;">運営者情報</a>
   </div>
-  <div style="font-size:0.63rem; letter-spacing:-0.02em; white-space:nowrap;">Amazonのアソシエイトとして、Coreworksは適格販売により収入を得ています。</div>
+  <div style="font-size:0.63rem; letter-spacing:-0.02em; white-space:nowrap;">※本サイトはアフィリエイト広告（A8.net・もしもアフィリエイト等）を利用しています。</div>
   <div style="margin-top:3px; font-size:0.68rem;">© 2026 Coreworks Studio</div>
   <img src="https://i.moshimo.com/af/i/impression?a_id=5876771&p_id=54&pc_id=54&pl_id=618" width="1" height="1" style="border:none;" loading="lazy" alt="">
 </footer>
