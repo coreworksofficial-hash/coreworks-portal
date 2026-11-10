@@ -216,7 +216,95 @@
       border-color: var(--light);
       box-shadow: 0 3px 0 #020617, inset 0 1px 1px rgba(255,255,255,0.35);
     }
+  
+    /* === SEO Guide Table & FAQ Accordion (Below the Fold) === */
+    .seo-guide-sec {
+      max-width: 580px; margin: 18px auto 0; padding: 0 12px;
+    }
+    .seo-card {
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.96) 0%, rgba(9, 13, 22, 0.99) 100%);
+      border: 1.5px solid rgba(148, 163, 184, 0.24);
+      border-top-color: rgba(255, 255, 255, 0.22);
+      border-radius: 16px; padding: 14px 12px; margin-bottom: 12px;
+      box-shadow: 0 4px 0 #020617, 0 8px 20px rgba(0,0,0,0.45);
+    }
+    .seo-sec-title {
+      font-size: 0.84rem; font-weight: 900; color: #f8fafc;
+      margin: 0 0 10px; line-height: 1.35; display: flex; align-items: center; gap: 6px;
+    }
+    .seo-table-wrap {
+      width: 100%; overflow-x: hidden; border-radius: 10px;
+      border: 1px solid rgba(148, 163, 184, 0.22); background: rgba(2, 6, 23, 0.65);
+    }
+    .seo-table {
+      width: 100%; border-collapse: collapse; font-size: 0.72rem; text-align: left;
+    }
+    .seo-table th {
+      background: rgba(30, 41, 59, 0.92); color: #cbd5e1; font-weight: 800;
+      padding: 7px 6px; border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+      font-size: 0.68rem; white-space: nowrap;
+    }
+    .seo-table td {
+      padding: 7px 6px; border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+      color: #e2e8f0; font-weight: 700; line-height: 1.25;
+    }
+    .seo-table tr:last-child td { border-bottom: none; }
+    .seo-table td:last-child { color: var(--light, #fde047); font-weight: 900; }
+    .seo-note {
+      font-size: 0.68rem; color: #94a3b8; margin: 8px 0 0; line-height: 1.45;
+    }
+    .faq-list { display: flex; flex-direction: column; gap: 7px; }
+    .faq-item {
+      background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(148, 163, 184, 0.22);
+      border-radius: 11px; overflow: hidden;
+    }
+    .faq-item summary {
+      padding: 10px 11px; font-size: 0.76rem; font-weight: 800; color: #f1f5f9;
+      cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 8px;
+      line-height: 1.35;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after {
+      content: '＋'; font-size: 0.85rem; font-weight: 900; color: var(--light, #38bdf8); flex-shrink: 0;
+    }
+    .faq-item[open] summary::after { content: '－'; }
+    .faq-ans {
+      padding: 0 11px 10px; font-size: 0.72rem; color: #cbd5e1; line-height: 1.55;
+      border-top: 1px solid rgba(148, 163, 184, 0.14); padding-top: 8px;
+    }
   </style>
+  <script type="application/ld+json" id="faqJsonLd">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "ふるさと納税の控除上限額を超えるとどうなりますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "控除上限額を超えた寄附分は自己負担（純粋な寄附）となり、2,000円の負担だけでは済まなくなります。迷った場合は上の計算機で算出した目安の9割程度に収めると安全です。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "ワンストップ特例制度と確定申告はどちらがお得ですか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "寄附先が5自治体以内で会社員の方なら、マイナンバーカードでスマホ完結する「ワンストップ特例制度」が手間ゼロでおすすめです。控除される税金総額はどちらでも同じです。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "楽天ふるさと納税でポイントを二重取りする裏ワザはありますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "寄附する前に登録0円のポイントサイト「ハピタス」を経由して楽天市場を開くと、クレジットカード還元とは別にハピタスポイントが二重取りできて非常にお得です。"
+      }
+    }
+  ]
+}
+  </script>
 </head>
 <body>
   <div class="container">
@@ -334,6 +422,44 @@
     incomeSlider.addEventListener('input', update);
     update();
   </script>
+  <section class="seo-guide-sec" id="seoGuideSec">
+    <div class="seo-card">
+      <h2 class="seo-sec-title">📊 家族構成・年収別「ふるさと納税 控除上限額」早見表（2026年目安）</h2>
+      <div class="seo-table-wrap">
+        <table class="seo-table">
+          <thead>
+            <tr><th>額面年収</th><th>独身・共働き</th><th>夫婦（片働き）</th><th>共働き＋高校生</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>300万円</td><td>約28,000円</td><td>約19,000円</td><td>約19,000円</td></tr>
+            <tr><td>400万円</td><td>約42,000円</td><td>約33,000円</td><td>約33,000円</td></tr>
+            <tr><td>500万円</td><td>約61,000円</td><td>約49,000円</td><td>約49,000円</td></tr>
+            <tr><td>600万円</td><td>約77,000円</td><td>約69,000円</td><td>約69,000円</td></tr>
+            <tr><td>700万円</td><td>約108,000円</td><td>約86,000円</td><td>約86,000円</td></tr>
+            <tr><td>800万円</td><td>約129,000円</td><td>約120,000円</td><td>約120,000円</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="seo-note">※自己負担2,000円を除いた金額が翌年の住民税・所得税から控除されます。住宅ローン控除や医療費控除がある場合は上限が変動します。</p>
+    </div>
+    <div class="seo-card">
+      <h2 class="seo-sec-title">❓ よくある質問（Q&amp;A）</h2>
+      <div class="faq-list">
+        <details class="faq-item" open>
+          <summary>Q. ふるさと納税の控除上限額を超えるとどうなりますか？</summary>
+          <div class="faq-ans">控除上限額を超えた寄附分は自己負担（純粋な寄附）となり、2,000円の負担だけでは済まなくなります。迷った場合は上の計算機で算出した目安の9割程度に収めると安全です。</div>
+        </details>
+        <details class="faq-item">
+          <summary>Q. ワンストップ特例制度と確定申告はどちらがお得ですか？</summary>
+          <div class="faq-ans">寄附先が5自治体以内で会社員の方なら、マイナンバーカードでスマホ完結する「ワンストップ特例制度」が手間ゼロでおすすめです。控除される税金総額はどちらでも同じです。</div>
+        </details>
+        <details class="faq-item">
+          <summary>Q. 楽天ふるさと納税でポイントを二重取りする裏ワザはありますか？</summary>
+          <div class="faq-ans">寄附する前に登録0円のポイントサイト「ハピタス」を経由して楽天市場を開くと、クレジットカード還元とは別にハピタスポイントが二重取りできて非常にお得です。</div>
+        </details>
+      </div>
+    </div>
+  </section>
 <!-- Moshimo Official Rakuten Sponsor -->
 <footer style="max-width: 580px; margin: 28px auto 16px; padding: 14px 16px 0; border-top: 1px solid rgba(148,163,184,0.18); text-align: center; font-size: 0.74rem; color: #64748b;">
   <div style="margin-bottom: 6px;">

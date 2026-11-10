@@ -216,7 +216,95 @@
       border-color: var(--light);
       box-shadow: 0 3px 0 #020617, inset 0 1px 1px rgba(255,255,255,0.35);
     }
+  
+    /* === SEO Guide Table & FAQ Accordion (Below the Fold) === */
+    .seo-guide-sec {
+      max-width: 580px; margin: 18px auto 0; padding: 0 12px;
+    }
+    .seo-card {
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.96) 0%, rgba(9, 13, 22, 0.99) 100%);
+      border: 1.5px solid rgba(148, 163, 184, 0.24);
+      border-top-color: rgba(255, 255, 255, 0.22);
+      border-radius: 16px; padding: 14px 12px; margin-bottom: 12px;
+      box-shadow: 0 4px 0 #020617, 0 8px 20px rgba(0,0,0,0.45);
+    }
+    .seo-sec-title {
+      font-size: 0.84rem; font-weight: 900; color: #f8fafc;
+      margin: 0 0 10px; line-height: 1.35; display: flex; align-items: center; gap: 6px;
+    }
+    .seo-table-wrap {
+      width: 100%; overflow-x: hidden; border-radius: 10px;
+      border: 1px solid rgba(148, 163, 184, 0.22); background: rgba(2, 6, 23, 0.65);
+    }
+    .seo-table {
+      width: 100%; border-collapse: collapse; font-size: 0.72rem; text-align: left;
+    }
+    .seo-table th {
+      background: rgba(30, 41, 59, 0.92); color: #cbd5e1; font-weight: 800;
+      padding: 7px 6px; border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+      font-size: 0.68rem; white-space: nowrap;
+    }
+    .seo-table td {
+      padding: 7px 6px; border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+      color: #e2e8f0; font-weight: 700; line-height: 1.25;
+    }
+    .seo-table tr:last-child td { border-bottom: none; }
+    .seo-table td:last-child { color: var(--light, #fde047); font-weight: 900; }
+    .seo-note {
+      font-size: 0.68rem; color: #94a3b8; margin: 8px 0 0; line-height: 1.45;
+    }
+    .faq-list { display: flex; flex-direction: column; gap: 7px; }
+    .faq-item {
+      background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(148, 163, 184, 0.22);
+      border-radius: 11px; overflow: hidden;
+    }
+    .faq-item summary {
+      padding: 10px 11px; font-size: 0.76rem; font-weight: 800; color: #f1f5f9;
+      cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 8px;
+      line-height: 1.35;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after {
+      content: '＋'; font-size: 0.85rem; font-weight: 900; color: var(--light, #38bdf8); flex-shrink: 0;
+    }
+    .faq-item[open] summary::after { content: '－'; }
+    .faq-ans {
+      padding: 0 11px 10px; font-size: 0.72rem; color: #cbd5e1; line-height: 1.55;
+      border-top: 1px solid rgba(148, 163, 184, 0.14); padding-top: 8px;
+    }
   </style>
+  <script type="application/ld+json" id="faqJsonLd">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "食洗機と手洗いでは、なぜ食洗機の方が水道代・ガス代が安いのですか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "手洗いはすすぎでお湯を流しっぱなしにするため1回あたり約50〜60Lの水とお湯を使いますが、食洗機は庫内で約9〜11Lの少量のお湯を循環させて洗うため、水道代・給湯ガス代ともに大幅に安くなります。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "賃貸マンションで分岐水栓の工事ができなくても使えますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "はい、「工事不要タンク式食洗機」なら届いたその日にコンセントを挿して上から給水するだけで使え、退去時の原状回復も一切不要です。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "給湯のガス代が高い場合、他に見直せるポイントはありますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "特にプロパンガスや冬場の都市ガス代が高いご家庭は、「エネピ」の0円ガス料金比較で適正価格のガス会社・プランへ見直すだけで、食洗機以上の節約効果（年2〜3万円削減）が出るケースが多くあります。"
+      }
+    }
+  ]
+}
+  </script>
 </head>
 <body>
   <div class="container">
@@ -350,6 +438,42 @@
     minSlider.addEventListener('input', update);
     update();
   </script>
+  <section class="seo-guide-sec" id="seoGuideSec">
+    <div class="seo-card">
+      <h2 class="seo-sec-title">📊 食洗機タイプ別「水道・ガス代節約額 ＆ 浮く時間」比較早見表</h2>
+      <div class="seo-table-wrap">
+        <table class="seo-table">
+          <thead>
+            <tr><th>食洗機タイプ</th><th>本体価格目安</th><th>年間光熱費節約</th><th>1年で浮く時間</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1〜2人用コンパクト</td><td>約28,000円</td><td>約12,400円/年</td><td>約121時間（5.0日分）</td></tr>
+            <tr><td>工事不要タンク式（賃貸OK）</td><td>約36,000円</td><td>約18,600円/年</td><td>約183時間（7.6日分）</td></tr>
+            <tr><td>ファミリー卓上大型</td><td>約68,000円</td><td>約27,900円/年</td><td>約274時間（11.4日分）</td></tr>
+            <tr><td>ビルトイン大容量（深型）</td><td>約124,000円</td><td>約31,000円/年</td><td>約304時間（12.6日分）</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="seo-note">※手洗い（給湯流し洗い）と比較した場合、食洗機は使用水量を約1/6に削減でき、冬場の給湯ガス代も大幅に節約できます。</p>
+    </div>
+    <div class="seo-card">
+      <h2 class="seo-sec-title">❓ よくある質問（Q&amp;A）</h2>
+      <div class="faq-list">
+        <details class="faq-item" open>
+          <summary>Q. 食洗機と手洗いでは、なぜ食洗機の方が水道代・ガス代が安いのですか？</summary>
+          <div class="faq-ans">手洗いはすすぎでお湯を流しっぱなしにするため1回あたり約50〜60Lの水とお湯を使いますが、食洗機は庫内で約9〜11Lの少量のお湯を循環させて洗うため、水道代・給湯ガス代ともに大幅に安くなります。</div>
+        </details>
+        <details class="faq-item">
+          <summary>Q. 賃貸マンションで分岐水栓の工事ができなくても使えますか？</summary>
+          <div class="faq-ans">はい、「工事不要タンク式食洗機」なら届いたその日にコンセントを挿して上から給水するだけで使え、退去時の原状回復も一切不要です。</div>
+        </details>
+        <details class="faq-item">
+          <summary>Q. 給湯のガス代が高い場合、他に見直せるポイントはありますか？</summary>
+          <div class="faq-ans">特にプロパンガスや冬場の都市ガス代が高いご家庭は、「エネピ」の0円ガス料金比較で適正価格のガス会社・プランへ見直すだけで、食洗機以上の節約効果（年2〜3万円削減）が出るケースが多くあります。</div>
+        </details>
+      </div>
+    </div>
+  </section>
 <!-- Moshimo Official Rakuten Sponsor -->
 <footer style="max-width: 580px; margin: 28px auto 16px; padding: 14px 16px 0; border-top: 1px solid rgba(148,163,184,0.18); text-align: center; font-size: 0.74rem; color: #64748b;">
   <div style="margin-bottom: 6px;">

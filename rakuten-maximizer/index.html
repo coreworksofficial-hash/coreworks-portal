@@ -216,7 +216,95 @@
       border-color: var(--light);
       box-shadow: 0 3px 0 #020617, inset 0 1px 1px rgba(255,255,255,0.35);
     }
+  
+    /* === SEO Guide Table & FAQ Accordion (Below the Fold) === */
+    .seo-guide-sec {
+      max-width: 580px; margin: 18px auto 0; padding: 0 12px;
+    }
+    .seo-card {
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.96) 0%, rgba(9, 13, 22, 0.99) 100%);
+      border: 1.5px solid rgba(148, 163, 184, 0.24);
+      border-top-color: rgba(255, 255, 255, 0.22);
+      border-radius: 16px; padding: 14px 12px; margin-bottom: 12px;
+      box-shadow: 0 4px 0 #020617, 0 8px 20px rgba(0,0,0,0.45);
+    }
+    .seo-sec-title {
+      font-size: 0.84rem; font-weight: 900; color: #f8fafc;
+      margin: 0 0 10px; line-height: 1.35; display: flex; align-items: center; gap: 6px;
+    }
+    .seo-table-wrap {
+      width: 100%; overflow-x: hidden; border-radius: 10px;
+      border: 1px solid rgba(148, 163, 184, 0.22); background: rgba(2, 6, 23, 0.65);
+    }
+    .seo-table {
+      width: 100%; border-collapse: collapse; font-size: 0.72rem; text-align: left;
+    }
+    .seo-table th {
+      background: rgba(30, 41, 59, 0.92); color: #cbd5e1; font-weight: 800;
+      padding: 7px 6px; border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+      font-size: 0.68rem; white-space: nowrap;
+    }
+    .seo-table td {
+      padding: 7px 6px; border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+      color: #e2e8f0; font-weight: 700; line-height: 1.25;
+    }
+    .seo-table tr:last-child td { border-bottom: none; }
+    .seo-table td:last-child { color: var(--light, #fde047); font-weight: 900; }
+    .seo-note {
+      font-size: 0.68rem; color: #94a3b8; margin: 8px 0 0; line-height: 1.45;
+    }
+    .faq-list { display: flex; flex-direction: column; gap: 7px; }
+    .faq-item {
+      background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(148, 163, 184, 0.22);
+      border-radius: 11px; overflow: hidden;
+    }
+    .faq-item summary {
+      padding: 10px 11px; font-size: 0.76rem; font-weight: 800; color: #f1f5f9;
+      cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 8px;
+      line-height: 1.35;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after {
+      content: '＋'; font-size: 0.85rem; font-weight: 900; color: var(--light, #38bdf8); flex-shrink: 0;
+    }
+    .faq-item[open] summary::after { content: '－'; }
+    .faq-ans {
+      padding: 0 11px 10px; font-size: 0.72rem; color: #cbd5e1; line-height: 1.55;
+      border-top: 1px solid rgba(148, 163, 184, 0.14); padding-top: 8px;
+    }
   </style>
+  <script type="application/ld+json" id="faqJsonLd">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "お買い物マラソンで「1,000円買い足した方が得」になるのはどんな時ですか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "すでに合計4〜5万円以上の高額商品やふるさと納税を購入している場合、1,000円ポッキリ商品を1店舗買い足すだけで全体のポイント倍率が+1%上がるため、400〜800ポイント以上戻ってきて実質数百円で商品が手に入ります。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "10店舗完走した時の購入上限額が77,700円なのはなぜですか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "お買い物マラソンの特典ポイント上限が「7,000ポイント」に設定されているため、10店舗（特典+9%）の場合は「7,000P ÷ 0.09 ＝ 約77,777円（税抜）」で上限に達するためです。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "楽天お買い物マラソンの還元率をさらに+1%上乗せする裏ワザは？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "楽天市場アプリで決済する前に、登録0円のポイントサイト「ハピタス」を経由して楽天市場へ移動すると、楽天ポイントとは別にハピタスポイントが+1%二重取りできます。"
+      }
+    }
+  ]
+}
+  </script>
 </head>
 <body>
   <div class="container">
@@ -362,6 +450,44 @@
     spendSlider.addEventListener('input', update);
     update();
   </script>
+  <section class="seo-guide-sec" id="seoGuideSec">
+    <div class="seo-card">
+      <h2 class="seo-sec-title">📊 楽天お買い物マラソン「店舗数別の獲得上限金額（7,000P上限）」早見表</h2>
+      <div class="seo-table-wrap">
+        <table class="seo-table">
+          <thead>
+            <tr><th>買い回り店舗数</th><th>特典倍率</th><th>7,000P到達の購入上限額</th><th>1,000円買い足し実質</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>3店舗</td><td>+2%</td><td>350,000円（税抜）</td><td>実質700円前後</td></tr>
+            <tr><td>5店舗</td><td>+4%</td><td>175,000円（税抜）</td><td>実質600円前後</td></tr>
+            <tr><td>6店舗</td><td>+5%</td><td>140,000円（税抜）</td><td>実質500円前後</td></tr>
+            <tr><td>7店舗</td><td>+6%</td><td>116,600円（税抜）</td><td>実質400円前後</td></tr>
+            <tr><td>8店舗</td><td>+7%</td><td>100,000円（税抜）</td><td>実質300円前後</td></tr>
+            <tr><td>10店舗（完走）</td><td>+9%</td><td>77,700円（税抜）</td><td>最大倍率到達！</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="seo-note">※1ショップ1,000円（税込）以上の購入が買い回りカウント対象です。ふるさと納税の寄附も1自治体＝1店舗としてカウントされます。</p>
+    </div>
+    <div class="seo-card">
+      <h2 class="seo-sec-title">❓ よくある質問（Q&amp;A）</h2>
+      <div class="faq-list">
+        <details class="faq-item" open>
+          <summary>Q. お買い物マラソンで「1,000円買い足した方が得」になるのはどんな時ですか？</summary>
+          <div class="faq-ans">すでに合計4〜5万円以上の高額商品やふるさと納税を購入している場合、1,000円ポッキリ商品を1店舗買い足すだけで全体のポイント倍率が+1%上がるため、400〜800ポイント以上戻ってきて実質数百円で商品が手に入ります。</div>
+        </details>
+        <details class="faq-item">
+          <summary>Q. 10店舗完走した時の購入上限額が77,700円なのはなぜですか？</summary>
+          <div class="faq-ans">お買い物マラソンの特典ポイント上限が「7,000ポイント」に設定されているため、10店舗（特典+9%）の場合は「7,000P ÷ 0.09 ＝ 約77,777円（税抜）」で上限に達するためです。</div>
+        </details>
+        <details class="faq-item">
+          <summary>Q. 楽天お買い物マラソンの還元率をさらに+1%上乗せする裏ワザは？</summary>
+          <div class="faq-ans">楽天市場アプリで決済する前に、登録0円のポイントサイト「ハピタス」を経由して楽天市場へ移動すると、楽天ポイントとは別にハピタスポイントが+1%二重取りできます。</div>
+        </details>
+      </div>
+    </div>
+  </section>
 <!-- Moshimo Official Rakuten Sponsor -->
 <footer style="max-width: 580px; margin: 28px auto 16px; padding: 14px 16px 0; border-top: 1px solid rgba(148,163,184,0.18); text-align: center; font-size: 0.74rem; color: #64748b;">
   <div style="margin-bottom: 6px;">

@@ -216,7 +216,95 @@
       border-color: var(--light);
       box-shadow: 0 3px 0 #020617, inset 0 1px 1px rgba(255,255,255,0.35);
     }
+  
+    /* === SEO Guide Table & FAQ Accordion (Below the Fold) === */
+    .seo-guide-sec {
+      max-width: 580px; margin: 18px auto 0; padding: 0 12px;
+    }
+    .seo-card {
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.96) 0%, rgba(9, 13, 22, 0.99) 100%);
+      border: 1.5px solid rgba(148, 163, 184, 0.24);
+      border-top-color: rgba(255, 255, 255, 0.22);
+      border-radius: 16px; padding: 14px 12px; margin-bottom: 12px;
+      box-shadow: 0 4px 0 #020617, 0 8px 20px rgba(0,0,0,0.45);
+    }
+    .seo-sec-title {
+      font-size: 0.84rem; font-weight: 900; color: #f8fafc;
+      margin: 0 0 10px; line-height: 1.35; display: flex; align-items: center; gap: 6px;
+    }
+    .seo-table-wrap {
+      width: 100%; overflow-x: hidden; border-radius: 10px;
+      border: 1px solid rgba(148, 163, 184, 0.22); background: rgba(2, 6, 23, 0.65);
+    }
+    .seo-table {
+      width: 100%; border-collapse: collapse; font-size: 0.72rem; text-align: left;
+    }
+    .seo-table th {
+      background: rgba(30, 41, 59, 0.92); color: #cbd5e1; font-weight: 800;
+      padding: 7px 6px; border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+      font-size: 0.68rem; white-space: nowrap;
+    }
+    .seo-table td {
+      padding: 7px 6px; border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+      color: #e2e8f0; font-weight: 700; line-height: 1.25;
+    }
+    .seo-table tr:last-child td { border-bottom: none; }
+    .seo-table td:last-child { color: var(--light, #fde047); font-weight: 900; }
+    .seo-note {
+      font-size: 0.68rem; color: #94a3b8; margin: 8px 0 0; line-height: 1.45;
+    }
+    .faq-list { display: flex; flex-direction: column; gap: 7px; }
+    .faq-item {
+      background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(148, 163, 184, 0.22);
+      border-radius: 11px; overflow: hidden;
+    }
+    .faq-item summary {
+      padding: 10px 11px; font-size: 0.76rem; font-weight: 800; color: #f1f5f9;
+      cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 8px;
+      line-height: 1.35;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after {
+      content: '＋'; font-size: 0.85rem; font-weight: 900; color: var(--light, #38bdf8); flex-shrink: 0;
+    }
+    .faq-item[open] summary::after { content: '－'; }
+    .faq-ans {
+      padding: 0 11px 10px; font-size: 0.72rem; color: #cbd5e1; line-height: 1.55;
+      border-top: 1px solid rgba(148, 163, 184, 0.14); padding-top: 8px;
+    }
   </style>
+  <script type="application/ld+json" id="faqJsonLd">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "買い物で「元が取れるか」を判断する基準は何ヶ月ですか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "日用品・小型家電であれば「6ヶ月以内」、大型の時短家電（食洗機・ロボット掃除機など）であれば「1年半〜2年以内」に回収できるものは非常に投資対効果が高いと言えます。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "節水シャワーヘッドは本当にガス代・水道代が下がりますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "マイクロナノバブル式の節水シャワーは水圧を保ったまま使用水量を約30〜50%カットできるため、特に給湯にかかる都市ガス・プロパンガス代が毎月大きく下がります。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "楽天市場やYahoo!ショッピングでさらに安く買うコツは？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "購入前に無料ポイントサイト「ハピタス」を経由してショップへ移動するだけで、ショップのポイントとは別に+1%前後のポイントが二重取りでき、元取り期間をさらに短縮できます。"
+      }
+    }
+  ]
+}
+  </script>
 </head>
 <body>
   <div class="container">
@@ -348,6 +436,44 @@
     saveSlider.addEventListener('input', update);
     update();
   </script>
+  <section class="seo-guide-sec" id="seoGuideSec">
+    <div class="seo-card">
+      <h2 class="seo-sec-title">📊 買ってすぐ元が取れる「時短・節約アイテム」回収期間早見表</h2>
+      <div class="seo-table-wrap">
+        <table class="seo-table">
+          <thead>
+            <tr><th>アイテム名</th><th>購入価格目安</th><th>月間の節約・時短</th><th>元取り期間目安</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>パッキン一体型 断熱水筒</td><td>約2,500円</td><td>月3,500円（飲料代）</td><td>約0.7ヶ月（21日）</td></tr>
+            <tr><td>省エネ洗える電気毛布</td><td>約5,000円</td><td>月2,300円（暖房費）</td><td>約2.2ヶ月（65日）</td></tr>
+            <tr><td>節水ナノバブルシャワー</td><td>約7,000円</td><td>月1,800円（ガス水道）</td><td>約3.9ヶ月（117日）</td></tr>
+            <tr><td>炭酸水メーカー</td><td>約15,000円</td><td>月4,500円（ペット代）</td><td>約3.3ヶ月（100日）</td></tr>
+            <tr><td>工事不要タンク式食洗機</td><td>約36,000円</td><td>月4,500円（光熱＋時短）</td><td>約8.0ヶ月</td></tr>
+            <tr><td>水拭きロボット掃除機</td><td>約40,000円</td><td>月6,000円（時短換算）</td><td>約6.7ヶ月</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="seo-note">※毎日使う日用品・時短家電は「本体価格 ÷ 毎月浮く金額」で計算すると、数ヶ月で購入代金を回収し、その後はずっとプラスの黒字資産になります。</p>
+    </div>
+    <div class="seo-card">
+      <h2 class="seo-sec-title">❓ よくある質問（Q&amp;A）</h2>
+      <div class="faq-list">
+        <details class="faq-item" open>
+          <summary>Q. 買い物で「元が取れるか」を判断する基準は何ヶ月ですか？</summary>
+          <div class="faq-ans">日用品・小型家電であれば「6ヶ月以内」、大型の時短家電（食洗機・ロボット掃除機など）であれば「1年半〜2年以内」に回収できるものは非常に投資対効果が高いと言えます。</div>
+        </details>
+        <details class="faq-item">
+          <summary>Q. 節水シャワーヘッドは本当にガス代・水道代が下がりますか？</summary>
+          <div class="faq-ans">マイクロナノバブル式の節水シャワーは水圧を保ったまま使用水量を約30〜50%カットできるため、特に給湯にかかる都市ガス・プロパンガス代が毎月大きく下がります。</div>
+        </details>
+        <details class="faq-item">
+          <summary>Q. 楽天市場やYahoo!ショッピングでさらに安く買うコツは？</summary>
+          <div class="faq-ans">購入前に無料ポイントサイト「ハピタス」を経由してショップへ移動するだけで、ショップのポイントとは別に+1%前後のポイントが二重取りでき、元取り期間をさらに短縮できます。</div>
+        </details>
+      </div>
+    </div>
+  </section>
 <!-- Moshimo Official Rakuten Sponsor -->
 <footer style="max-width: 580px; margin: 28px auto 16px; padding: 14px 16px 0; border-top: 1px solid rgba(148,163,184,0.18); text-align: center; font-size: 0.74rem; color: #64748b;">
   <div style="margin-bottom: 6px;">

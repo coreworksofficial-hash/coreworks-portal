@@ -216,7 +216,95 @@
       border-color: var(--light);
       box-shadow: 0 3px 0 #020617, inset 0 1px 1px rgba(255,255,255,0.35);
     }
+  
+    /* === SEO Guide Table & FAQ Accordion (Below the Fold) === */
+    .seo-guide-sec {
+      max-width: 580px; margin: 18px auto 0; padding: 0 12px;
+    }
+    .seo-card {
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.96) 0%, rgba(9, 13, 22, 0.99) 100%);
+      border: 1.5px solid rgba(148, 163, 184, 0.24);
+      border-top-color: rgba(255, 255, 255, 0.22);
+      border-radius: 16px; padding: 14px 12px; margin-bottom: 12px;
+      box-shadow: 0 4px 0 #020617, 0 8px 20px rgba(0,0,0,0.45);
+    }
+    .seo-sec-title {
+      font-size: 0.84rem; font-weight: 900; color: #f8fafc;
+      margin: 0 0 10px; line-height: 1.35; display: flex; align-items: center; gap: 6px;
+    }
+    .seo-table-wrap {
+      width: 100%; overflow-x: hidden; border-radius: 10px;
+      border: 1px solid rgba(148, 163, 184, 0.22); background: rgba(2, 6, 23, 0.65);
+    }
+    .seo-table {
+      width: 100%; border-collapse: collapse; font-size: 0.72rem; text-align: left;
+    }
+    .seo-table th {
+      background: rgba(30, 41, 59, 0.92); color: #cbd5e1; font-weight: 800;
+      padding: 7px 6px; border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+      font-size: 0.68rem; white-space: nowrap;
+    }
+    .seo-table td {
+      padding: 7px 6px; border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+      color: #e2e8f0; font-weight: 700; line-height: 1.25;
+    }
+    .seo-table tr:last-child td { border-bottom: none; }
+    .seo-table td:last-child { color: var(--light, #fde047); font-weight: 900; }
+    .seo-note {
+      font-size: 0.68rem; color: #94a3b8; margin: 8px 0 0; line-height: 1.45;
+    }
+    .faq-list { display: flex; flex-direction: column; gap: 7px; }
+    .faq-item {
+      background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(148, 163, 184, 0.22);
+      border-radius: 11px; overflow: hidden;
+    }
+    .faq-item summary {
+      padding: 10px 11px; font-size: 0.76rem; font-weight: 800; color: #f1f5f9;
+      cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 8px;
+      line-height: 1.35;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after {
+      content: '＋'; font-size: 0.85rem; font-weight: 900; color: var(--light, #38bdf8); flex-shrink: 0;
+    }
+    .faq-item[open] summary::after { content: '－'; }
+    .faq-ans {
+      padding: 0 11px 10px; font-size: 0.72rem; color: #cbd5e1; line-height: 1.55;
+      border-top: 1px solid rgba(148, 163, 184, 0.14); padding-top: 8px;
+    }
   </style>
+  <script type="application/ld+json" id="faqJsonLd">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "格安SIMに乗り換えると電話番号やLINEは消えませんか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "MNP（携帯電話番号ポータビリティ）を利用するため、今の電話番号もLINEのトーク履歴・友だちリストも100%そのまま引き継がれます。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "自宅のWi-Fi（光回線）も一緒に見直すとどれくらい安くなりますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "契約期間の縛りがない「GMO光アクセス（とくとくBB光）」などの低価格な光回線へまとめると、自宅ネット代も月1,000〜1,500円下がり、スマホも低容量プラン（月495〜1,080円）で十分足ります。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "通信費以外の固定費もまとめて把握する簡単な方法は？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "無料家計簿アプリ「マネーフォワード ME」にクレジットカードや銀行口座を連携すると、毎月の通信費や忘れているサブスク引き落としが0円で自動一覧化されます。"
+      }
+    }
+  ]
+}
+  </script>
 </head>
 <body>
   <div class="container">
@@ -334,6 +422,44 @@
     nextSlider.addEventListener('input', update);
     update();
   </script>
+  <section class="seo-guide-sec" id="seoGuideSec">
+    <div class="seo-card">
+      <h2 class="seo-sec-title">📊 スマホ料金プラン別「1年間・10年間の支払総額」比較早見表</h2>
+      <div class="seo-table-wrap">
+        <table class="seo-table">
+          <thead>
+            <tr><th>契約プラン</th><th>月額目安</th><th>1年間の総額</th><th>10年間の総額</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>大手キャリア無制限（1人）</td><td>月8,500円</td><td>102,000円</td><td>1,020,000円</td></tr>
+            <tr><td>大手キャリア標準（1人）</td><td>月7,000円</td><td>84,000円</td><td>840,000円</td></tr>
+            <tr><td>オンライン専用（20〜30GB）</td><td>月2,980円</td><td>35,760円</td><td>357,600円</td></tr>
+            <tr><td>格安SIM中容量（10〜20GB）</td><td>月1,980円</td><td>23,760円</td><td>237,600円</td></tr>
+            <tr><td>格安SIM低容量（3〜5GB）</td><td>月1,080円</td><td>12,960円</td><td>129,600円</td></tr>
+            <tr><td>夫婦2人で大手➔格安SIM</td><td>月16,000➔3,960円</td><td>年14.4万円得</td><td>10年で144万円得</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="seo-note">※電話番号そのまま（MNPワンストップ対応）でオンライン乗り換えが可能。夫婦2人で乗り換えると10年間で車1台分（約130〜140万円）の現金が手元に残ります。</p>
+    </div>
+    <div class="seo-card">
+      <h2 class="seo-sec-title">❓ よくある質問（Q&amp;A）</h2>
+      <div class="faq-list">
+        <details class="faq-item" open>
+          <summary>Q. 格安SIMに乗り換えると電話番号やLINEは消えませんか？</summary>
+          <div class="faq-ans">MNP（携帯電話番号ポータビリティ）を利用するため、今の電話番号もLINEのトーク履歴・友だちリストも100%そのまま引き継がれます。</div>
+        </details>
+        <details class="faq-item">
+          <summary>Q. 自宅のWi-Fi（光回線）も一緒に見直すとどれくらい安くなりますか？</summary>
+          <div class="faq-ans">契約期間の縛りがない「GMO光アクセス（とくとくBB光）」などの低価格な光回線へまとめると、自宅ネット代も月1,000〜1,500円下がり、スマホも低容量プラン（月495〜1,080円）で十分足ります。</div>
+        </details>
+        <details class="faq-item">
+          <summary>Q. 通信費以外の固定費もまとめて把握する簡単な方法は？</summary>
+          <div class="faq-ans">無料家計簿アプリ「マネーフォワード ME」にクレジットカードや銀行口座を連携すると、毎月の通信費や忘れているサブスク引き落としが0円で自動一覧化されます。</div>
+        </details>
+      </div>
+    </div>
+  </section>
 <!-- Moshimo Official Rakuten Sponsor -->
 <footer style="max-width: 580px; margin: 28px auto 16px; padding: 14px 16px 0; border-top: 1px solid rgba(148,163,184,0.18); text-align: center; font-size: 0.74rem; color: #64748b;">
   <div style="margin-bottom: 6px;">

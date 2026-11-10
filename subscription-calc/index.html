@@ -242,7 +242,95 @@
       white-space: nowrap; flex-shrink: 0;
     }
     .sub-tile.active .sub-price { background: var(--c1); color: #ffffff; }
+  
+    /* === SEO Guide Table & FAQ Accordion (Below the Fold) === */
+    .seo-guide-sec {
+      max-width: 580px; margin: 18px auto 0; padding: 0 12px;
+    }
+    .seo-card {
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.96) 0%, rgba(9, 13, 22, 0.99) 100%);
+      border: 1.5px solid rgba(148, 163, 184, 0.24);
+      border-top-color: rgba(255, 255, 255, 0.22);
+      border-radius: 16px; padding: 14px 12px; margin-bottom: 12px;
+      box-shadow: 0 4px 0 #020617, 0 8px 20px rgba(0,0,0,0.45);
+    }
+    .seo-sec-title {
+      font-size: 0.84rem; font-weight: 900; color: #f8fafc;
+      margin: 0 0 10px; line-height: 1.35; display: flex; align-items: center; gap: 6px;
+    }
+    .seo-table-wrap {
+      width: 100%; overflow-x: hidden; border-radius: 10px;
+      border: 1px solid rgba(148, 163, 184, 0.22); background: rgba(2, 6, 23, 0.65);
+    }
+    .seo-table {
+      width: 100%; border-collapse: collapse; font-size: 0.72rem; text-align: left;
+    }
+    .seo-table th {
+      background: rgba(30, 41, 59, 0.92); color: #cbd5e1; font-weight: 800;
+      padding: 7px 6px; border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+      font-size: 0.68rem; white-space: nowrap;
+    }
+    .seo-table td {
+      padding: 7px 6px; border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+      color: #e2e8f0; font-weight: 700; line-height: 1.25;
+    }
+    .seo-table tr:last-child td { border-bottom: none; }
+    .seo-table td:last-child { color: var(--light, #fde047); font-weight: 900; }
+    .seo-note {
+      font-size: 0.68rem; color: #94a3b8; margin: 8px 0 0; line-height: 1.45;
+    }
+    .faq-list { display: flex; flex-direction: column; gap: 7px; }
+    .faq-item {
+      background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(148, 163, 184, 0.22);
+      border-radius: 11px; overflow: hidden;
+    }
+    .faq-item summary {
+      padding: 10px 11px; font-size: 0.76rem; font-weight: 800; color: #f1f5f9;
+      cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 8px;
+      line-height: 1.35;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after {
+      content: '＋'; font-size: 0.85rem; font-weight: 900; color: var(--light, #38bdf8); flex-shrink: 0;
+    }
+    .faq-item[open] summary::after { content: '－'; }
+    .faq-ans {
+      padding: 0 11px 10px; font-size: 0.72rem; color: #cbd5e1; line-height: 1.55;
+      border-top: 1px solid rgba(148, 163, 184, 0.14); padding-top: 8px;
+    }
   </style>
+  <script type="application/ld+json" id="faqJsonLd">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "自分が何のサブスクに課金しているか一発で調べる方法は？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "クレジットカード明細を1つずつ見るのは大変なため、無料アプリ「マネーフォワード ME」を連携させるのが一番確実です。毎月自動引き落としされている固定費が自動でリストアップされます。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "サブスク以外に一番大きく削れる「隠れ固定費」は何ですか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "住宅ローンや毎月払っている生命保険・医療保険の重複保障です。「保険マンモス」などの0円無料FP相談を使うと、保障を落とさずに毎月5,000〜10,000円下げる見直し案を無料で作成してもらえます。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "解約と同時にすぐ現金を増やす方法はありますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "使っていないブランドバッグや時計・小物を「ブランドオフ」の無料宅配買取キット（送料・査定0円）で査定に出すと、クローゼットの整理と同時にまとまった現金化が可能です。"
+      }
+    }
+  ]
+}
+  </script>
 </head>
 <body>
   <div class="container">
@@ -367,6 +455,44 @@
     });
     update();
   </script>
+  <section class="seo-guide-sec" id="seoGuideSec">
+    <div class="seo-card">
+      <h2 class="seo-sec-title">📊 見落としがちな「隠れ固定費・サブスク」10年累計流出額の早見表</h2>
+      <div class="seo-table-wrap">
+        <table class="seo-table">
+          <thead>
+            <tr><th>固定費・習慣項目</th><th>月額目安</th><th>1年間の出費</th><th>10年間の累計出費</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>クラウド容量・保証オプション</td><td>月950円</td><td>11,400円</td><td>114,000円</td></tr>
+            <tr><td>見ていない動画・音楽サブスク</td><td>月2,280円</td><td>27,360円</td><td>273,600円</td></tr>
+            <tr><td>アプリ・ゲーム・推し活課金</td><td>月3,000円</td><td>36,000円</td><td>360,000円</td></tr>
+            <tr><td>毎日のペットボトル・カフェ代</td><td>月4,800円</td><td>57,600円</td><td>576,000円</td></tr>
+            <tr><td>通っていないジム・習い事</td><td>月8,500円</td><td>102,000円</td><td>1,020,000円</td></tr>
+            <tr><td>昔の割高な保険・オプション</td><td>月12,000円</td><td>144,000円</td><td>1,440,000円</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="seo-note">※毎月3,000円の使っていないサブスクや不要オプションを解約するだけで、10年間で36万円の現金がそのまま貯金に残ります。</p>
+    </div>
+    <div class="seo-card">
+      <h2 class="seo-sec-title">❓ よくある質問（Q&amp;A）</h2>
+      <div class="faq-list">
+        <details class="faq-item" open>
+          <summary>Q. 自分が何のサブスクに課金しているか一発で調べる方法は？</summary>
+          <div class="faq-ans">クレジットカード明細を1つずつ見るのは大変なため、無料アプリ「マネーフォワード ME」を連携させるのが一番確実です。毎月自動引き落としされている固定費が自動でリストアップされます。</div>
+        </details>
+        <details class="faq-item">
+          <summary>Q. サブスク以外に一番大きく削れる「隠れ固定費」は何ですか？</summary>
+          <div class="faq-ans">住宅ローンや毎月払っている生命保険・医療保険の重複保障です。「保険マンモス」などの0円無料FP相談を使うと、保障を落とさずに毎月5,000〜10,000円下げる見直し案を無料で作成してもらえます。</div>
+        </details>
+        <details class="faq-item">
+          <summary>Q. 解約と同時にすぐ現金を増やす方法はありますか？</summary>
+          <div class="faq-ans">使っていないブランドバッグや時計・小物を「ブランドオフ」の無料宅配買取キット（送料・査定0円）で査定に出すと、クローゼットの整理と同時にまとまった現金化が可能です。</div>
+        </details>
+      </div>
+    </div>
+  </section>
 <!-- Moshimo Official Rakuten Sponsor -->
 <footer style="max-width: 580px; margin: 28px auto 16px; padding: 14px 16px 0; border-top: 1px solid rgba(148,163,184,0.18); text-align: center; font-size: 0.74rem; color: #64748b;">
   <div style="margin-bottom: 6px;">
