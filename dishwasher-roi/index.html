@@ -191,14 +191,15 @@
     }
     .action-info { flex: 1; min-width: 0; }
     .action-badge {
-      display: inline-block; font-size: 0.62rem; font-weight: 900;
+      display: inline-block; font-size: 0.59rem; font-weight: 900;
       color: var(--light); background: var(--soft-bg);
       border: 1px solid var(--theme-border);
-      padding: 1px 7px; border-radius: 999px; margin-bottom: 3px;
+      padding: 1px 6px; border-radius: 999px; margin-bottom: 3px;
+      letter-spacing: -0.02em; white-space: nowrap;
     }
     .action-name {
-      font-size: 0.8rem; font-weight: 900; color: #ffffff;
-      line-height: 1.25; white-space: nowrap;
+      font-size: 0.77rem; font-weight: 900; color: #ffffff;
+      line-height: 1.25; letter-spacing: -0.02em; white-space: nowrap;
     }
     .action-btn {
       flex-shrink: 0;
@@ -367,21 +368,21 @@
     <div class="action-list">
       <a id="dwGasMadoLink" href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+BQ4COI+3SDQ+5YJRM" target="_blank" rel="nofollow sponsored noopener" class="action-card">
         <div class="action-info">
-          <span class="action-badge" id="dwBadge1">年18,600円の給湯ガス代を根本から0円見直し（PR）</span>
-          <div class="action-name">ガス屋の窓口（プロパン最安会社0円診断）</div>
+          <span class="action-badge" id="dwBadge1">年18,600円削減｜電話・検針票なし60秒診断（PR）</span>
+          <div class="action-name">ガス屋の窓口｜しつこい電話なし最安0円診断</div>
         </div>
         <span class="action-btn">0円診断 ↗</span>
       </a>
       <a id="dwEnepiGasLink" href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+BPIX2Q+2W92+NVHCY" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
         <div class="action-info">
-          <span class="action-badge" id="dwBadge2">5年93,000円の光熱費枠＋東証プライム比較（PR）</span>
-          <div class="action-name">エネピ（都市ガス・LPガス最安0円WEB比較）</div>
+          <span class="action-badge" id="dwBadge2">5年93,000円枠｜電話・検針票なし60秒比較（PR）</span>
+          <div class="action-name">エネピ｜しつこい電話なしガスWEB相場比較</div>
         </div>
         <span class="action-btn">無料比較 ↗</span>
       </a>
       <a id="dwRakutenLink" href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E9%25A3%259F%25E6%25B4%2597%25E6%25A9%259F%2520%25E5%25B7%25A5%25E4%25BA%258B%25E4%25B8%258D%25E8%25A6%2581%2520%25E3%2582%25BF%25E3%2583%25B3%25E3%2582%25AF%25E5%25BC%258F%2F" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
         <div class="action-info">
-          <span class="action-badge" id="dwBadge3">約23.2ヶ月で元取り・年183時間の家事消滅</span>
+          <span class="action-badge" id="dwBadge3">約23.2ヶ月で元取り・年183時間の家事ゼロ</span>
           <div class="action-name" id="dwRakutenTitle">タンク式食洗機 楽天売れ筋ランキング</div>
         </div>
         <span class="action-btn">楽天で見る ↗</span>
@@ -419,8 +420,8 @@
       freeTimeVal.textContent = '年 ' + yearlyHours + ' 時間（' + yearlyDays + '日分）';
 
       dwActionSecTitle.textContent = '▼ 年間 ' + yearlyCashSave.toLocaleString() + '円の給湯ガス・水道代を取り戻す（PR）';
-      dwBadge1.textContent = '年' + yearlyCashSave.toLocaleString() + '円の給湯ガス代を0円診断で削減（PR）';
-      dwBadge2.textContent = '5年' + save5y.toLocaleString() + '円の光熱費枠＋最安プラン比較（PR）';
+      dwBadge1.textContent = '年' + yearlyCashSave.toLocaleString() + '円削減｜電話・検針票なし60秒診断（PR）';
+      dwBadge2.textContent = '5年' + save5y.toLocaleString() + '円枠｜電話・検針票なし60秒比較（PR）';
       dwBadge3.textContent = '約' + months.toFixed(1) + 'ヶ月で元取り・年' + yearlyHours + '時間の家事ゼロ';
     }
 

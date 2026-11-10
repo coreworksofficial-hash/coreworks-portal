@@ -191,14 +191,15 @@
     }
     .action-info { flex: 1; min-width: 0; }
     .action-badge {
-      display: inline-block; font-size: 0.62rem; font-weight: 900;
+      display: inline-block; font-size: 0.59rem; font-weight: 900;
       color: var(--light); background: var(--soft-bg);
       border: 1px solid var(--theme-border);
-      padding: 1px 7px; border-radius: 999px; margin-bottom: 3px;
+      padding: 1px 6px; border-radius: 999px; margin-bottom: 3px;
+      letter-spacing: -0.02em; white-space: nowrap;
     }
     .action-name {
-      font-size: 0.8rem; font-weight: 900; color: #ffffff;
-      line-height: 1.25; white-space: nowrap;
+      font-size: 0.77rem; font-weight: 900; color: #ffffff;
+      line-height: 1.25; letter-spacing: -0.02em; white-space: nowrap;
     }
     .action-btn {
       flex-shrink: 0;
@@ -367,8 +368,8 @@
       </a>
       <a href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+C6720I+1LP8+BWVTE" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
         <div class="action-info">
-          <span class="action-badge" id="ftBadge2">61,000円寄附の前に0円経由でWポイント（PR）</span>
-          <div class="action-name">ハピタス（ふるさと納税＆楽天でW還元）</div>
+          <span class="action-badge" id="ftBadge2">クレカ・住所不要｜メアドのみで30秒無料登録＆特典（PR）</span>
+          <div class="action-name" id="ftName2">ハピタス｜61,000円寄附の前に経由でW還元</div>
         </div>
         <span class="action-btn">無料登録 ↗</span>
       </a>
@@ -390,6 +391,7 @@
     const ftActionSecTitle = document.getElementById('ftActionSecTitle');
     const ftBadge1 = document.getElementById('ftBadge1');
     const ftBadge2 = document.getElementById('ftBadge2');
+    const ftName2 = document.getElementById('ftName2');
     const ftBadge3 = document.getElementById('ftBadge3');
     let deductMan = 0;
 
@@ -417,7 +419,8 @@
 
       ftActionSecTitle.textContent = '▼ 実質 ' + netBen.toLocaleString() + '円分の節税枠を最大化する（PR）';
       ftBadge1.textContent = '控除上限 約' + lim.toLocaleString() + '円内で選べる公式特集';
-      ftBadge2.textContent = lim.toLocaleString() + '円寄附の前に0円経由でWポイント（PR）';
+      ftBadge2.textContent = 'クレカ・住所不要｜メアドのみで30秒無料登録＆特典（PR）';
+      if (ftName2) ftName2.textContent = 'ハピタス｜' + lim.toLocaleString() + '円寄附の前に経由でW還元';
       ftBadge3.textContent = '年収' + inc.toLocaleString() + '万円世帯の家計・控除0円診断（PR）';
     }
 

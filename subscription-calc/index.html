@@ -192,14 +192,15 @@
     }
     .action-info { flex: 1; min-width: 0; }
     .action-badge {
-      display: inline-block; font-size: 0.62rem; font-weight: 900;
+      display: inline-block; font-size: 0.59rem; font-weight: 900;
       color: var(--light); background: var(--soft-bg);
       border: 1px solid var(--theme-border);
-      padding: 1px 7px; border-radius: 999px; margin-bottom: 3px;
+      padding: 1px 6px; border-radius: 999px; margin-bottom: 3px;
+      letter-spacing: -0.02em; white-space: nowrap;
     }
     .action-name {
-      font-size: 0.8rem; font-weight: 900; color: #ffffff;
-      line-height: 1.25; white-space: nowrap;
+      font-size: 0.77rem; font-weight: 900; color: #ffffff;
+      line-height: 1.25; letter-spacing: -0.02em; white-space: nowrap;
     }
     .action-btn {
       flex-shrink: 0;
@@ -406,15 +407,15 @@
     <div class="action-list">
       <a href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+CBJYGI+56WW+5YJRM" target="_blank" rel="nofollow sponsored noopener" class="action-card">
         <div class="action-info">
-          <span class="action-badge" id="subBadge1">10年 345,600円の出費を不用品で一括回収（PR）</span>
-          <div class="action-name">ブランドオフ（送料・査定0円宅配買取キット）</div>
+          <span class="action-badge" id="subBadge1">10年345,600円回収｜査定後の返送料・キャンセル0円（PR）</span>
+          <div class="action-name">ブランドオフ｜箱に詰めて送るだけ0円宅配買取</div>
         </div>
         <span class="action-btn">0円申込 ↗</span>
       </a>
       <a href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+C506SY+5NTS+5YJRM" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
         <div class="action-info">
-          <span class="action-badge" id="subBadge2">年 34,560円の固定費を眠る旧スマホで回収（PR）</span>
-          <div class="action-name">モバゾウ（不要スマホ・iPhone0円高価買取）</div>
+          <span class="action-badge" id="subBadge2">年34,560円回収｜査定後の返送料・キャンセル0円（PR）</span>
+          <div class="action-name">モバゾウ｜箱に詰めて送るだけ旧スマホ高価買取</div>
         </div>
         <span class="action-btn">無料査定 ↗</span>
       </a>
@@ -453,8 +454,8 @@
       total10yVal.textContent = y10.toLocaleString() + ' 円';
 
       subActionSecTitle.textContent = '▼ 年間 ' + y1.toLocaleString() + '円の流出を止めて0円即現金化（PR）';
-      subBadge1.textContent = '10年 ' + y10.toLocaleString() + '円の出費を不用品で一括回収（PR）';
-      subBadge2.textContent = '年 ' + y1.toLocaleString() + '円の固定費を眠る旧スマホで回収（PR）';
+      subBadge1.textContent = '10年' + y10.toLocaleString() + '円回収｜査定後の返送料・キャンセル0円（PR）';
+      subBadge2.textContent = '年' + y1.toLocaleString() + '円回収｜査定後の返送料・キャンセル0円（PR）';
       subBadge3.textContent = count + '件（月' + sum.toLocaleString() + '円）の無意識課金を0円検出（PR）';
     }
 

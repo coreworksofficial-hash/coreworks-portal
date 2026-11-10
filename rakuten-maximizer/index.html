@@ -191,14 +191,15 @@
     }
     .action-info { flex: 1; min-width: 0; }
     .action-badge {
-      display: inline-block; font-size: 0.62rem; font-weight: 900;
+      display: inline-block; font-size: 0.59rem; font-weight: 900;
       color: var(--light); background: var(--soft-bg);
       border: 1px solid var(--theme-border);
-      padding: 1px 7px; border-radius: 999px; margin-bottom: 3px;
+      padding: 1px 6px; border-radius: 999px; margin-bottom: 3px;
+      letter-spacing: -0.02em; white-space: nowrap;
     }
     .action-name {
-      font-size: 0.8rem; font-weight: 900; color: #ffffff;
-      line-height: 1.25; white-space: nowrap;
+      font-size: 0.77rem; font-weight: 900; color: #ffffff;
+      line-height: 1.25; letter-spacing: -0.02em; white-space: nowrap;
     }
     .action-btn {
       flex-shrink: 0;
@@ -374,8 +375,8 @@
       </a>
       <a href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+C6720I+1LP8+BWVTE" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
         <div class="action-info">
-          <span class="action-badge" id="rkBadge2">購入額35,000円に+1%ポイント二重取り（PR）</span>
-          <div class="action-name">ハピタス（0円登録で楽天ポイントW獲得）</div>
+          <span class="action-badge" id="rkBadge2">クレカ・住所不要｜メアドのみで30秒無料登録＆特典（PR）</span>
+          <div class="action-name" id="rkName2">ハピタス｜購入額35,000円に+1%W還元</div>
         </div>
         <span class="action-btn">無料登録 ↗</span>
       </a>
@@ -400,6 +401,7 @@
     const rkActionSecTitle = document.getElementById('rkActionSecTitle');
     const rkBadge1 = document.getElementById('rkBadge1');
     const rkBadge2 = document.getElementById('rkBadge2');
+    const rkName2 = document.getElementById('rkName2');
     const rkBadge3 = document.getElementById('rkBadge3');
     const CAP = 7000;
 
@@ -424,7 +426,8 @@
       }
 
       curPointsVal.textContent = curPts.toLocaleString() + ' P' + (rawPts > CAP ? '（上限到達）' : '（上限内）');
-      rkBadge2.textContent = '購入額' + spend.toLocaleString() + '円に+1%ポイント二重取り（PR）';
+      rkBadge2.textContent = 'クレカ・住所不要｜メアドのみで30秒無料登録＆特典（PR）';
+      if (rkName2) rkName2.textContent = 'ハピタス｜購入額' + spend.toLocaleString() + '円に+1%W還元';
       rkBadge3.textContent = '獲得予定' + curPts.toLocaleString() + 'P＆カード明細を0円管理（PR）';
 
       if (shops >= 10) {

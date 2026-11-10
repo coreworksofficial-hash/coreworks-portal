@@ -191,14 +191,15 @@
     }
     .action-info { flex: 1; min-width: 0; }
     .action-badge {
-      display: inline-block; font-size: 0.62rem; font-weight: 900;
+      display: inline-block; font-size: 0.59rem; font-weight: 900;
       color: var(--light); background: var(--soft-bg);
       border: 1px solid var(--theme-border);
-      padding: 1px 7px; border-radius: 999px; margin-bottom: 3px;
+      padding: 1px 6px; border-radius: 999px; margin-bottom: 3px;
+      letter-spacing: -0.02em; white-space: nowrap;
     }
     .action-name {
-      font-size: 0.8rem; font-weight: 900; color: #ffffff;
-      line-height: 1.25; white-space: nowrap;
+      font-size: 0.77rem; font-weight: 900; color: #ffffff;
+      line-height: 1.25; letter-spacing: -0.02em; white-space: nowrap;
     }
     .action-btn {
       flex-shrink: 0;
@@ -374,15 +375,15 @@
       </a>
       <a id="pbHighTicketLink" href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+BQ4COI+3SDQ+5YJRM" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
         <div class="action-info">
-          <span class="action-badge" id="pbBadge2">月1,800円節水＋給湯ガス代も0円診断（PR）</span>
-          <div class="action-name" id="pbHighTicketTitle">ガス屋の窓口（プロパン最安会社0円診断）</div>
+          <span class="action-badge" id="pbBadge2">月1,800円節水＋電話・検針票なし60秒診断（PR）</span>
+          <div class="action-name" id="pbHighTicketTitle">ガス屋の窓口｜しつこい電話なし最安0円診断</div>
         </div>
         <span class="action-btn" id="pbHighTicketBtn">0円診断 ↗</span>
       </a>
       <a href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+C6720I+1LP8+BWVTE" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
         <div class="action-info">
-          <span class="action-badge" id="pbBadge3">7,000円購入の前に0円経由でWポイント（PR）</span>
-          <div class="action-name">ハピタス（楽天・Yahoo買物で+1%還元）</div>
+          <span class="action-badge" id="pbBadge3">クレカ・住所不要｜メアドのみで30秒無料登録＆特典（PR）</span>
+          <div class="action-name" id="pbName3">ハピタス｜7,000円購入の前に経由でW還元</div>
         </div>
         <span class="action-btn">無料登録 ↗</span>
       </a>
@@ -403,6 +404,7 @@
     const pbBadge1 = document.getElementById('pbBadge1');
     const pbBadge2 = document.getElementById('pbBadge2');
     const pbBadge3 = document.getElementById('pbBadge3');
+    const pbName3 = document.getElementById('pbName3');
     const pbHighTicketLink = document.getElementById('pbHighTicketLink');
     const pbHighTicketTitle = document.getElementById('pbHighTicketTitle');
     const pbHighTicketBtn = document.getElementById('pbHighTicketBtn');
@@ -423,27 +425,28 @@
 
       pbActionSecTitle.textContent = '▼ 約' + days.toLocaleString() + '日で回収！3年で' + netStr + '円得する選択（PR）';
       pbBadge1.textContent = '約' + m.toFixed(1) + 'ヶ月で元取り・楽天市場ポイント高還元';
-      pbBadge3.textContent = p.toLocaleString() + '円購入の前に0円経由でWポイント（PR）';
+      pbBadge3.textContent = 'クレカ・住所不要｜メアドのみで30秒無料登録＆特典（PR）';
+      if (pbName3) pbName3.textContent = 'ハピタス｜' + p.toLocaleString() + '円購入の前に経由でW還元';
 
       if (currentPresetIdx === 0) {
         pbHighTicketLink.href = 'https://px.a8.net/svt/ejp?a8mat=4BGFJD+BQ4COI+3SDQ+5YJRM';
-        pbBadge2.textContent = '月' + s.toLocaleString() + '円節水＋給湯ガス代も0円診断（PR）';
-        pbHighTicketTitle.textContent = 'ガス屋の窓口（プロパン最安会社0円診断）';
+        pbBadge2.textContent = '月' + s.toLocaleString() + '円節水＋電話・検針票なし60秒診断（PR）';
+        pbHighTicketTitle.textContent = 'ガス屋の窓口｜しつこい電話なし最安0円診断';
         pbHighTicketBtn.textContent = '0円診断 ↗';
       } else if (currentPresetIdx === 1) {
         pbHighTicketLink.href = 'https://px.a8.net/svt/ejp?a8mat=4BGFJD+BOXHGY+2W92+1NJK7M';
-        pbBadge2.textContent = '月' + s.toLocaleString() + '円節電＋電気料金プラン0円比較（PR）';
-        pbHighTicketTitle.textContent = 'エネピ（電気・ガス最安プラン0円診断）';
+        pbBadge2.textContent = '月' + s.toLocaleString() + '円節電＋電話・検針票なし60秒比較（PR）';
+        pbHighTicketTitle.textContent = 'エネピ｜しつこい電話なし電気ガスWEB比較';
         pbHighTicketBtn.textContent = '無料比較 ↗';
       } else if (currentPresetIdx === 2) {
         pbHighTicketLink.href = 'https://px.a8.net/svt/ejp?a8mat=4BGFJD+CBJYGI+56WW+5YJRM';
-        pbBadge2.textContent = '本体代' + p.toLocaleString() + '円を家の不用品0円査定で回収（PR）';
-        pbHighTicketTitle.textContent = 'ブランドオフ（送料・査定0円宅配買取キット）';
+        pbBadge2.textContent = '本体' + p.toLocaleString() + '円回収｜査定後の返送料・キャンセル0円（PR）';
+        pbHighTicketTitle.textContent = 'ブランドオフ｜箱に詰めて送るだけ0円宅配買取';
         pbHighTicketBtn.textContent = '0円申込 ↗';
       } else {
         pbHighTicketLink.href = 'https://px.a8.net/svt/ejp?a8mat=4BGFJD+CC5E2A+5ASC+5YRHE';
         pbBadge2.textContent = '月' + s.toLocaleString() + '円の飲料代を削減・2ヶ月無料お試し（PR）';
-        pbHighTicketTitle.textContent = 'マルチピュア（高性能浄水器2ヶ月0円体験）';
+        pbHighTicketTitle.textContent = 'マルチピュア｜高性能浄水器2ヶ月0円体験';
         pbHighTicketBtn.textContent = '無料体験 ↗';
       }
     }

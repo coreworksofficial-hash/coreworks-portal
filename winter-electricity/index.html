@@ -191,14 +191,15 @@
     }
     .action-info { flex: 1; min-width: 0; }
     .action-badge {
-      display: inline-block; font-size: 0.62rem; font-weight: 900;
+      display: inline-block; font-size: 0.59rem; font-weight: 900;
       color: var(--light); background: var(--soft-bg);
       border: 1px solid var(--theme-border);
-      padding: 1px 7px; border-radius: 999px; margin-bottom: 3px;
+      padding: 1px 6px; border-radius: 999px; margin-bottom: 3px;
+      letter-spacing: -0.02em; white-space: nowrap;
     }
     .action-name {
-      font-size: 0.8rem; font-weight: 900; color: #ffffff;
-      line-height: 1.25; white-space: nowrap;
+      font-size: 0.77rem; font-weight: 900; color: #ffffff;
+      line-height: 1.25; letter-spacing: -0.02em; white-space: nowrap;
     }
     .action-btn {
       flex-shrink: 0;
@@ -367,21 +368,21 @@
     <div class="action-list">
       <a id="weCard1" href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+BOXHGY+2W92+1NJK7M" target="_blank" rel="nofollow sponsored noopener" class="action-card">
         <div class="action-info">
-          <span class="action-badge" id="weBadge1">1冬 約14,500円の暖房費を0円見直し（PR）</span>
-          <div class="action-name" id="weName1">エネピ（電気・ガス最安プラン0円比較）</div>
+          <span class="action-badge" id="weBadge1">1冬14,500円削減｜電話・検針票なし60秒診断（PR）</span>
+          <div class="action-name" id="weName1">エネピ｜しつこい電話なし・電気ガスWEB比較</div>
         </div>
         <span class="action-btn" id="weBtn1">0円比較 ↗</span>
       </a>
       <a id="weCard2" href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+BQ4COI+3SDQ+5YJRM" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
         <div class="action-info">
-          <span class="action-badge" id="weBadge2">冬の給湯・プロパンガス代が年3万円安くなる（PR）</span>
-          <div class="action-name" id="weName2">ガス屋の窓口（最安ガス会社0円診断）</div>
+          <span class="action-badge" id="weBadge2">しつこい電話・検針票なし｜60秒WEB相場診断（PR）</span>
+          <div class="action-name" id="weName2">ガス屋の窓口｜プロパン最安会社0円診断</div>
         </div>
         <span class="action-btn" id="weBtn2">0円診断 ↗</span>
       </a>
       <a id="weCard3" href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E9%259B%25BB%25E6%25B0%2597%25E6%25AF%259B%25E5%25B8%2583%2520%25E6%25B4%2597%25E3%2581%2588%25E3%2582%258B%2F" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
         <div class="action-info">
-          <span class="action-badge" id="weBadge3">1冬わずか1,100円！約13,400円浮く神寝具</span>
+          <span class="action-badge" id="weBadge3">1冬約1,100円！約13,400円浮く節電寝具</span>
           <div class="action-name" id="weName3">洗える省エネ電気毛布 楽天人気ランキング</div>
         </div>
         <span class="action-btn" id="weBtn3">楽天で見る ↗</span>
@@ -429,18 +430,18 @@
 
       if (isGasMode) {
         weCard1.href = 'https://px.a8.net/svt/ejp?a8mat=4BGFJD+BQ4COI+3SDQ+5YJRM';
-        weBadge1.textContent = '1冬 約' + curCost.toLocaleString() + '円のガス・給湯費を0円診断（PR）';
-        weName1.textContent = 'ガス屋の窓口（プロパン最安会社0円診断）';
+        weBadge1.textContent = '1冬' + curCost.toLocaleString() + '円削減｜電話・検針票なし60秒診断（PR）';
+        weName1.textContent = 'ガス屋の窓口｜しつこい電話なし最安0円診断';
         weCard2.href = 'https://px.a8.net/svt/ejp?a8mat=4BGFJD+BPIX2Q+2W92+NVHCY';
-        weBadge2.textContent = '東証プライム上場・年3万円以上の削減事例（PR）';
-        weName2.textContent = 'エネピ（プロパン・都市ガス最安0円比較）';
+        weBadge2.textContent = 'しつこい電話・検針票なし｜60秒WEB相場診断（PR）';
+        weName2.textContent = 'エネピ｜プロパン・都市ガス最安WEB比較';
       } else {
         weCard1.href = 'https://px.a8.net/svt/ejp?a8mat=4BGFJD+BOXHGY+2W92+1NJK7M';
-        weBadge1.textContent = '1冬 約' + curCost.toLocaleString() + '円の電気・ガス代を0円比較（PR）';
-        weName1.textContent = 'エネピ（電気・ガス最安プラン0円診断）';
+        weBadge1.textContent = '1冬' + curCost.toLocaleString() + '円削減｜電話・検針票なし60秒診断（PR）';
+        weName1.textContent = 'エネピ｜しつこい電話なし・電気ガスWEB比較';
         weCard2.href = 'https://px.a8.net/svt/ejp?a8mat=4BGFJD+BQ4COI+3SDQ+5YJRM';
-        weBadge2.textContent = '冬場の給湯・プロパンガス代もまとめて削減（PR）';
-        weName2.textContent = 'ガス屋の窓口（プロパン最安会社0円診断）';
+        weBadge2.textContent = 'しつこい電話・検針票なし｜60秒WEB相場診断（PR）';
+        weName2.textContent = 'ガス屋の窓口｜プロパン最安会社0円診断';
       }
     }
 
