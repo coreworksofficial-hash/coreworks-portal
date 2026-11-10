@@ -362,26 +362,26 @@
       </div>
     </div>
 
-    <!-- ③ 厳選2枚の解決策カード -->
-    <div class="action-sec-title">▼ 店舗数稼ぎに一番人気の1,000円ポッキリ＆返礼品（PR）</div>
+    <!-- ③ 厳選3枚の解決策カード -->
+    <div class="action-sec-title" id="rkActionSecTitle">▼ 実質 630円で1店舗買い足して倍率UP（PR）</div>
     <div class="action-list">
       <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F1000%25E5%2586%2586%25E3%2583%259D%25E3%2583%2583%25E3%2582%25AD%25E3%2583%25AA%2520%25E9%2580%2581%25E6%2596%2599%25E7%2584%25A1%25E6%2596%2599%2520%25E3%2582%25B0%25E3%2583%25AB%25E3%2583%25A1%2F" target="_blank" rel="nofollow sponsored noopener" class="action-card">
         <div class="action-info">
-          <span class="action-badge">あと1店舗の買い足し定番</span>
+          <span class="action-badge" id="rkBadge1">1,000円追加で+370P還元（実質630円）</span>
           <div class="action-name">楽天 1,000円ポッキリ＆楽券特集</div>
         </div>
         <span class="action-btn">楽天で見る ↗</span>
       </a>
       <a href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+C6720I+1LP8+BWVTE" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
         <div class="action-info">
-          <span class="action-badge">楽天購入前に経由で+1%二重取り（PR）</span>
+          <span class="action-badge" id="rkBadge2">購入額35,000円に+1%ポイント二重取り（PR）</span>
           <div class="action-name">ハピタス（0円登録で楽天ポイントW獲得）</div>
         </div>
         <span class="action-btn">無料登録 ↗</span>
       </a>
       <a href="https://af.moshimo.com/af/c/click?a_id=5880342&p_id=5568&pc_id=15316&pl_id=71981" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
         <div class="action-info">
-          <span class="action-badge">楽天ポイント＆カード連携（PR）</span>
+          <span class="action-badge" id="rkBadge3">獲得予定1,400P＆カード明細を0円管理（PR）</span>
           <div class="action-name">マネーフォワード ME（0円自動家計簿アプリ）</div>
         </div>
         <span class="action-btn">無料で使う ↗</span>
@@ -397,6 +397,10 @@
     const remainCapVal = document.getElementById('remainCapVal');
     const nextShopNetVal = document.getElementById('nextShopNetVal');
     const curPointsVal = document.getElementById('curPointsVal');
+    const rkActionSecTitle = document.getElementById('rkActionSecTitle');
+    const rkBadge1 = document.getElementById('rkBadge1');
+    const rkBadge2 = document.getElementById('rkBadge2');
+    const rkBadge3 = document.getElementById('rkBadge3');
     const CAP = 7000;
 
     function update() {
@@ -420,9 +424,13 @@
       }
 
       curPointsVal.textContent = curPts.toLocaleString() + ' P' + (rawPts > CAP ? '（上限到達）' : '（上限内）');
+      rkBadge2.textContent = '購入額' + spend.toLocaleString() + '円に+1%ポイント二重取り（PR）';
+      rkBadge3.textContent = '獲得予定' + curPts.toLocaleString() + 'P＆カード明細を0円管理（PR）';
 
       if (shops >= 10) {
         nextShopNetVal.textContent = '10店舗完走済み（最大+9%）';
+        rkActionSecTitle.textContent = '▼ 完走+9%達成！ポイント二重取りで還元最大化（PR）';
+        rkBadge1.textContent = '10店舗完走・送料無料の定番リピート品';
       } else {
         const nextShops = shops + 1;
         const nextBonusRate = nextShops - 1;
@@ -431,8 +439,12 @@
         const netCost = 1000 - gainedPts;
         if (netCost <= 0) {
           nextShopNetVal.textContent = '実質 0 円（+' + Math.abs(netCost).toLocaleString() + 'P黒字！）';
+          rkActionSecTitle.textContent = '▼ 1,000円買い足しで+' + Math.abs(netCost).toLocaleString() + 'P黒字確定！（PR）';
+          rkBadge1.textContent = '1,000円追加で+' + gainedPts.toLocaleString() + 'P還元（実質タダ以上！）';
         } else {
           nextShopNetVal.textContent = '実質 ' + netCost.toLocaleString() + ' 円（+' + gainedPts.toLocaleString() + 'P得）';
+          rkActionSecTitle.textContent = '▼ 実質 ' + netCost.toLocaleString() + '円で1店舗買い足して倍率UP（PR）';
+          rkBadge1.textContent = '1,000円追加で+' + gainedPts.toLocaleString() + 'P還元（実質' + netCost.toLocaleString() + '円）';
         }
       }
     }

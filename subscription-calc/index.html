@@ -402,28 +402,28 @@
     </div>
 
     <!-- ③ 厳選3枚の解決策カード -->
-    <div class="action-sec-title">▼ 毎月の固定費をゼロにする無料診断＆買い切り特集（PR）</div>
+    <div class="action-sec-title" id="subActionSecTitle">▼ 年間 34,560円の流出を止めて0円即現金化（PR）</div>
     <div class="action-list">
-      <a href="https://af.moshimo.com/af/c/click?a_id=5880342&p_id=5568&pc_id=15316&pl_id=71981" target="_blank" rel="nofollow sponsored noopener" class="action-card">
+      <a href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+CBJYGI+56WW+5YJRM" target="_blank" rel="nofollow sponsored noopener" class="action-card">
         <div class="action-info">
-          <span class="action-badge">完全無料・自動家計簿アプリ（PR）</span>
-          <div class="action-name">マネーフォワード ME（隠れ固定費0円発見）</div>
+          <span class="action-badge" id="subBadge1">10年 345,600円の出費を不用品で一括回収（PR）</span>
+          <div class="action-name">ブランドオフ（送料・査定0円宅配買取キット）</div>
+        </div>
+        <span class="action-btn">0円申込 ↗</span>
+      </a>
+      <a href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+C506SY+5NTS+5YJRM" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
+        <div class="action-info">
+          <span class="action-badge" id="subBadge2">年 34,560円の固定費を眠る旧スマホで回収（PR）</span>
+          <div class="action-name">モバゾウ（不要スマホ・iPhone0円高価買取）</div>
+        </div>
+        <span class="action-btn">無料査定 ↗</span>
+      </a>
+      <a href="https://af.moshimo.com/af/c/click?a_id=5880342&p_id=5568&pc_id=15316&pl_id=71981" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
+        <div class="action-info">
+          <span class="action-badge" id="subBadge3">3件（月2,880円）の無意識課金を0円自動検出（PR）</span>
+          <div class="action-name">マネーフォワード ME（0円自動家計簿アプリ）</div>
         </div>
         <span class="action-btn">無料で使う ↗</span>
-      </a>
-      <a href="https://af.moshimo.com/af/c/click?a_id=5880339&p_id=7778&pc_id=22539&pl_id=97004" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
-        <div class="action-info">
-          <span class="action-badge">相談完全無料・特典付（PR）</span>
-          <div class="action-name">保険マンモス（家計＆保険0円無料相談）</div>
-        </div>
-        <span class="action-btn">無料相談 ↗</span>
-      </a>
-      <a href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+CBJYGI+56WW+5YJRM" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
-        <div class="action-info">
-          <span class="action-badge">送料・査定0円・不用品を現金化（PR）</span>
-          <div class="action-name">ブランドオフ（0円宅配買取キット申込）</div>
-        </div>
-        <span class="action-btn">無料申込 ↗</span>
       </a>
     </div>
   </div>
@@ -433,6 +433,10 @@
     const total1yVal = document.getElementById('total1yVal');
     const total10yVal = document.getElementById('total10yVal');
     const selectedCount = document.getElementById('selectedCount');
+    const subActionSecTitle = document.getElementById('subActionSecTitle');
+    const subBadge1 = document.getElementById('subBadge1');
+    const subBadge2 = document.getElementById('subBadge2');
+    const subBadge3 = document.getElementById('subBadge3');
 
     function update() {
       let sum = 0;
@@ -441,10 +445,17 @@
         sum += parseInt(t.getAttribute('data-cost'), 10);
         count++;
       });
+      const y1 = sum * 12;
+      const y10 = sum * 120;
       selectedCount.textContent = count + '件選択中';
       monthlyVal.textContent = '月 ' + sum.toLocaleString() + ' 円';
-      total1yVal.textContent = '年 ' + (sum * 12).toLocaleString() + ' 円';
-      total10yVal.textContent = (sum * 120).toLocaleString() + ' 円';
+      total1yVal.textContent = '年 ' + y1.toLocaleString() + ' 円';
+      total10yVal.textContent = y10.toLocaleString() + ' 円';
+
+      subActionSecTitle.textContent = '▼ 年間 ' + y1.toLocaleString() + '円の流出を止めて0円即現金化（PR）';
+      subBadge1.textContent = '10年 ' + y10.toLocaleString() + '円の出費を不用品で一括回収（PR）';
+      subBadge2.textContent = '年 ' + y1.toLocaleString() + '円の固定費を眠る旧スマホで回収（PR）';
+      subBadge3.textContent = count + '件（月' + sum.toLocaleString() + '円）の無意識課金を0円検出（PR）';
     }
 
     document.querySelectorAll('#subGrid .sub-tile').forEach(tile => {

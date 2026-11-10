@@ -363,28 +363,28 @@
     </div>
 
     <!-- ③ 厳選3枚の解決策カード -->
-    <div class="action-sec-title">▼ 通信費を劇的に下げる格安SIM・光回線・0円管理（PR）</div>
+    <div class="action-sec-title" id="simActionSecTitle">▼ 年間 66,240円の通信費を削るSIM＆光回線（PR）</div>
     <div class="action-list">
-      <a href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+BET46Q+7JY+2BD44I" target="_blank" rel="nofollow sponsored noopener" class="action-card">
+      <a href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+BUVTIQ+4SHG+5YJRM" target="_blank" rel="nofollow sponsored noopener" class="action-card">
         <div class="action-info">
-          <span class="action-badge">使った分だけ最安級・格安SIM（PR）</span>
-          <div class="action-name">BB.exciteモバイル（月495円〜乗り換え）</div>
+          <span class="action-badge" id="simBadge1">10年 662,400円節約＋自宅ネット最安級（PR）</span>
+          <div class="action-name">おてがる光（縛りなし・業界最安級光回線）</div>
         </div>
-        <span class="action-btn">公式詳細 ↗</span>
+        <span class="action-btn">0円見積 ↗</span>
       </a>
       <a href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+C37VZM+50+6M5TEQ" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
         <div class="action-info">
-          <span class="action-badge">縛りなし＆高額還元・自宅ネット（PR）</span>
-          <div class="action-name">GMO光アクセス（通信費をまとめて削減）</div>
+          <span class="action-badge" id="simBadge2">年 66,240円浮く＋高額キャッシュバック（PR）</span>
+          <div class="action-name">GMO光アクセス（とくとくBB光・工事費0円）</div>
+        </div>
+        <span class="action-btn">特典確認 ↗</span>
+      </a>
+      <a href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+BET46Q+7JY+2BD44I" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
+        <div class="action-info">
+          <span class="action-badge" id="simBadge3">月 -5,520円削減・使った分だけ最安級（PR）</span>
+          <div class="action-name">BB.exciteモバイル（月495円〜格安SIM）</div>
         </div>
         <span class="action-btn">公式詳細 ↗</span>
-      </a>
-      <a href="https://af.moshimo.com/af/c/click?a_id=5880342&p_id=5568&pc_id=15316&pl_id=71981" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
-        <div class="action-info">
-          <span class="action-badge">完全無料・自動家計簿アプリ（PR）</span>
-          <div class="action-name">マネーフォワード ME（通信費を0円自動管理）</div>
-        </div>
-        <span class="action-btn">無料で使う ↗</span>
       </a>
     </div>
   </div>
@@ -397,6 +397,10 @@
     const save10yVal = document.getElementById('save10yVal');
     const save1yVal = document.getElementById('save1yVal');
     const saveMonthVal = document.getElementById('saveMonthVal');
+    const simActionSecTitle = document.getElementById('simActionSecTitle');
+    const simBadge1 = document.getElementById('simBadge1');
+    const simBadge2 = document.getElementById('simBadge2');
+    const simBadge3 = document.getElementById('simBadge3');
 
     function update() {
       const cur = parseInt(curSlider.value, 10);
@@ -404,9 +408,16 @@
       curVal.textContent = '月 ' + cur.toLocaleString() + ' 円';
       nextVal.textContent = '月 ' + nxt.toLocaleString() + ' 円';
       const diff = Math.max(0, cur - nxt);
+      const y1 = diff * 12;
+      const y10 = diff * 120;
       saveMonthVal.textContent = '月 -' + diff.toLocaleString() + ' 円';
-      save1yVal.textContent = '年 ' + (diff * 12).toLocaleString() + ' 円';
-      save10yVal.textContent = (diff * 120).toLocaleString() + ' 円 節約';
+      save1yVal.textContent = '年 ' + y1.toLocaleString() + ' 円';
+      save10yVal.textContent = y10.toLocaleString() + ' 円 節約';
+
+      simActionSecTitle.textContent = '▼ 年間 ' + y1.toLocaleString() + '円の通信費を削る光回線＆SIM（PR）';
+      simBadge1.textContent = '10年 ' + y10.toLocaleString() + '円節約＋自宅ネット最安級（PR）';
+      simBadge2.textContent = '年 ' + y1.toLocaleString() + '円浮く＋高額キャッシュバック（PR）';
+      simBadge3.textContent = '月 -' + diff.toLocaleString() + '円削減・使った分だけ最安級（PR）';
     }
 
     document.querySelectorAll('#simGrid .preset-btn').forEach(btn => {

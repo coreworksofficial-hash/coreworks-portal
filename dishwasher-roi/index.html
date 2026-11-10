@@ -362,29 +362,29 @@
       </div>
     </div>
 
-    <!-- ③ 厳選2枚の解決策カード -->
-    <div class="action-sec-title">▼ 賃貸でも今日から使える人気食洗機ランキング（PR）</div>
+    <!-- ③ 厳選3枚の解決策カード -->
+    <div class="action-sec-title" id="dwActionSecTitle">▼ 年間 18,600円の給湯ガス・水道代を0円診断＆回収（PR）</div>
     <div class="action-list">
-      <a id="dwRakutenLink" href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E9%25A3%259F%25E6%25B4%2597%25E6%25A9%259F%2520%25E5%25B7%25A5%25E4%25BA%258B%25E4%25B8%258D%25E8%25A6%2581%2520%25E3%2582%25BF%25E3%2583%25B3%25E3%2582%25AF%25E5%25BC%258F%2F" target="_blank" rel="nofollow sponsored noopener" class="action-card">
+      <a id="dwGasMadoLink" href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+BQ4COI+3SDQ+5YJRM" target="_blank" rel="nofollow sponsored noopener" class="action-card">
         <div class="action-info">
-          <span class="action-badge">楽天市場 人気ランキング</span>
+          <span class="action-badge" id="dwBadge1">年18,600円の給湯ガス代を根本から0円見直し（PR）</span>
+          <div class="action-name">ガス屋の窓口（プロパン最安会社0円診断）</div>
+        </div>
+        <span class="action-btn">0円診断 ↗</span>
+      </a>
+      <a id="dwEnepiGasLink" href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+BPIX2Q+2W92+NVHCY" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
+        <div class="action-info">
+          <span class="action-badge" id="dwBadge2">5年93,000円の光熱費枠＋東証プライム比較（PR）</span>
+          <div class="action-name">エネピ（都市ガス・LPガス最安0円WEB比較）</div>
+        </div>
+        <span class="action-btn">無料比較 ↗</span>
+      </a>
+      <a id="dwRakutenLink" href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E9%25A3%259F%25E6%25B4%2597%25E6%25A9%259F%2520%25E5%25B7%25A5%25E4%25BA%258B%25E4%25B8%258D%25E8%25A6%2581%2520%25E3%2582%25BF%25E3%2583%25B3%25E3%2582%25AF%25E5%25BC%258F%2F" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
+        <div class="action-info">
+          <span class="action-badge" id="dwBadge3">約23.2ヶ月で元取り・年183時間の家事消滅</span>
           <div class="action-name" id="dwRakutenTitle">タンク式食洗機 楽天売れ筋ランキング</div>
         </div>
         <span class="action-btn">楽天で見る ↗</span>
-      </a>
-      <a id="dwYahooLink" href="https://af.moshimo.com/af/c/click?a_id=5880336&p_id=1225&pc_id=1925&pl_id=18502&url=https%3A%2F%2Fshopping.yahoo.co.jp%2Fsearch%3Fp%3D%25E9%25A3%259F%25E6%25B4%2597%25E6%25A9%259F%2520%25E5%25B7%25A5%25E4%25BA%258B%25E4%25B8%258D%25E8%25A6%2581%2520%25E3%2582%25BF%25E3%2583%25B3%25E3%2582%25AF%25E5%25BC%258F" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
-        <div class="action-info">
-          <span class="action-badge">Yahoo!ショッピング PayPay還元</span>
-          <div class="action-name" id="dwYahooTitle">タンク式食洗機 Yahoo!最安値・口コミ</div>
-        </div>
-        <span class="action-btn">Yahoo!で見る ↗</span>
-      </a>
-      <a href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+BPIX2Q+2W92+NVHCY" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
-        <div class="action-info">
-          <span class="action-badge">給湯ガス代を0円WEB比較（PR）</span>
-          <div class="action-name">エネピ（プロパン・都市ガス最安0円診断）</div>
-        </div>
-        <span class="action-btn">無料診断 ↗</span>
       </a>
     </div>
   </div>
@@ -397,6 +397,10 @@
     const cashSave5yVal = document.getElementById('cashSave5yVal');
     const paybackMonthsVal = document.getElementById('paybackMonthsVal');
     const freeTimeVal = document.getElementById('freeTimeVal');
+    const dwActionSecTitle = document.getElementById('dwActionSecTitle');
+    const dwBadge1 = document.getElementById('dwBadge1');
+    const dwBadge2 = document.getElementById('dwBadge2');
+    const dwBadge3 = document.getElementById('dwBadge3');
 
     function update() {
       const price = parseInt(priceSlider.value, 10);
@@ -413,6 +417,11 @@
       cashSave5yVal.textContent = '約 ' + save5y.toLocaleString() + ' 円 節約';
       paybackMonthsVal.textContent = '約 ' + months.toFixed(1) + ' ヶ月（年' + (yearlyCashSave / 10000).toFixed(1) + '万得）';
       freeTimeVal.textContent = '年 ' + yearlyHours + ' 時間（' + yearlyDays + '日分）';
+
+      dwActionSecTitle.textContent = '▼ 年間 ' + yearlyCashSave.toLocaleString() + '円の給湯ガス・水道代を取り戻す（PR）';
+      dwBadge1.textContent = '年' + yearlyCashSave.toLocaleString() + '円の給湯ガス代を0円診断で削減（PR）';
+      dwBadge2.textContent = '5年' + save5y.toLocaleString() + '円の光熱費枠＋最安プラン比較（PR）';
+      dwBadge3.textContent = '約' + months.toFixed(1) + 'ヶ月で元取り・年' + yearlyHours + '時間の家事ゼロ';
     }
 
     document.querySelectorAll('#dwGrid .preset-btn').forEach(btn => {
@@ -426,10 +435,7 @@
         if (kw && lbl) {
           const rTarget = 'https://search.rakuten.co.jp/search/mall/' + encodeURIComponent(kw) + '/';
           document.getElementById('dwRakutenLink').href = 'https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=' + encodeURIComponent(rTarget);
-          const yTarget = 'https://shopping.yahoo.co.jp/search?p=' + encodeURIComponent(kw);
-          document.getElementById('dwYahooLink').href = 'https://af.moshimo.com/af/c/click?a_id=5880336&p_id=1225&pc_id=1925&pl_id=18502&url=' + encodeURIComponent(yTarget);
           document.getElementById('dwRakutenTitle').textContent = lbl + ' 楽天売れ筋ランキング';
-          document.getElementById('dwYahooTitle').textContent = lbl + ' Yahoo!最安値・口コミ';
         }
         update();
       });

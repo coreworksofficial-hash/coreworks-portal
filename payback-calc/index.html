@@ -362,29 +362,29 @@
       </div>
     </div>
 
-    <!-- ③ 厳選2枚の解決策カード -->
-    <div class="action-sec-title">▼ 選択中アイテムの人気ランキング・価格比較（PR）</div>
+    <!-- ③ 厳選3枚の解決策カード -->
+    <div class="action-sec-title" id="pbActionSecTitle">▼ 約117日で回収！3年で+57,800円得する選択（PR）</div>
     <div class="action-list">
       <a id="rakutenLink" href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E7%25AF%2580%25E6%25B0%25B4%25E3%2582%25B7%25E3%2583%25A3%25E3%2583%25AF%25E3%2583%25BC%25E3%2583%2598%25E3%2583%2583%25E3%2583%2589%2520%25E3%2583%259E%25E3%2582%25A4%25E3%2582%25AF%25E3%2583%25AD%25E3%2583%258A%25E3%2583%258E%25E3%2583%2590%25E3%2583%2596%25E3%2583%25AB%2F" target="_blank" rel="nofollow sponsored noopener" class="action-card">
         <div class="action-info">
-          <span class="action-badge">楽天市場 ポイント高還元</span>
+          <span class="action-badge" id="pbBadge1">約3.9ヶ月で元取り・楽天市場ポイント高還元</span>
           <div class="action-name" id="rakutenTitle">節水シャワー 楽天人気ランキング</div>
         </div>
         <span class="action-btn">楽天で比較 ↗</span>
       </a>
+      <a id="pbHighTicketLink" href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+BQ4COI+3SDQ+5YJRM" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
+        <div class="action-info">
+          <span class="action-badge" id="pbBadge2">月1,800円節水＋給湯ガス代も0円診断（PR）</span>
+          <div class="action-name" id="pbHighTicketTitle">ガス屋の窓口（プロパン最安会社0円診断）</div>
+        </div>
+        <span class="action-btn" id="pbHighTicketBtn">0円診断 ↗</span>
+      </a>
       <a href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+C6720I+1LP8+BWVTE" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
         <div class="action-info">
-          <span class="action-badge">ネット通販前に0円登録でW還元（PR）</span>
+          <span class="action-badge" id="pbBadge3">7,000円購入の前に0円経由でWポイント（PR）</span>
           <div class="action-name">ハピタス（楽天・Yahoo買物で+1%還元）</div>
         </div>
         <span class="action-btn">無料登録 ↗</span>
-      </a>
-      <a id="yahooLink" href="https://af.moshimo.com/af/c/click?a_id=5880336&p_id=1225&pc_id=1925&pl_id=18502&url=https%3A%2F%2Fshopping.yahoo.co.jp%2Fsearch%3Fp%3D%25E7%25AF%2580%25E6%25B0%25B4%25E3%2582%25B7%25E3%2583%25A3%25E3%2583%25AF%25E3%2583%25BC%25E3%2583%2598%25E3%2583%2583%25E3%2583%2589%2520%25E3%2583%259E%25E3%2582%25A4%25E3%2582%25AF%25E3%2583%25AD%25E3%2583%258A%25E3%2583%258E%25E3%2583%2590%25E3%2583%2596%25E3%2583%25AB" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
-        <div class="action-info">
-          <span class="action-badge">Yahoo!ショッピング PayPay還元</span>
-          <div class="action-name" id="yahooTitle">節水シャワー Yahoo!最安値・口コミ</div>
-        </div>
-        <span class="action-btn">Yahoo!で見る ↗</span>
       </a>
     </div>
   </div>
@@ -398,9 +398,15 @@
     const profit3yVal = document.getElementById('profit3yVal');
     const dailyCostVal = document.getElementById('dailyCostVal');
     const rakutenLink = document.getElementById('rakutenLink');
-    const yahooLink = document.getElementById('yahooLink');
     const rakutenTitle = document.getElementById('rakutenTitle');
-    const yahooTitle = document.getElementById('yahooTitle');
+    const pbActionSecTitle = document.getElementById('pbActionSecTitle');
+    const pbBadge1 = document.getElementById('pbBadge1');
+    const pbBadge2 = document.getElementById('pbBadge2');
+    const pbBadge3 = document.getElementById('pbBadge3');
+    const pbHighTicketLink = document.getElementById('pbHighTicketLink');
+    const pbHighTicketTitle = document.getElementById('pbHighTicketTitle');
+    const pbHighTicketBtn = document.getElementById('pbHighTicketBtn');
+    let currentPresetIdx = 0;
 
     function update() {
       const p = parseInt(priceSlider.value, 10);
@@ -411,24 +417,49 @@
       const days = Math.round(m * 30);
       monthsVal.textContent = '約 ' + m.toFixed(1) + ' ヶ月（' + days.toLocaleString() + '日）';
       const net3y = (s * 36) - p;
-      profit3yVal.textContent = (net3y >= 0 ? '+' : '') + net3y.toLocaleString() + ' 円';
+      const netStr = (net3y >= 0 ? '+' : '') + net3y.toLocaleString();
+      profit3yVal.textContent = netStr + ' 円';
       dailyCostVal.textContent = '約 ' + Math.max(1, Math.round(p / 1095)).toLocaleString() + ' 円/日';
+
+      pbActionSecTitle.textContent = '▼ 約' + days.toLocaleString() + '日で回収！3年で' + netStr + '円得する選択（PR）';
+      pbBadge1.textContent = '約' + m.toFixed(1) + 'ヶ月で元取り・楽天市場ポイント高還元';
+      pbBadge3.textContent = p.toLocaleString() + '円購入の前に0円経由でWポイント（PR）';
+
+      if (currentPresetIdx === 0) {
+        pbHighTicketLink.href = 'https://px.a8.net/svt/ejp?a8mat=4BGFJD+BQ4COI+3SDQ+5YJRM';
+        pbBadge2.textContent = '月' + s.toLocaleString() + '円節水＋給湯ガス代も0円診断（PR）';
+        pbHighTicketTitle.textContent = 'ガス屋の窓口（プロパン最安会社0円診断）';
+        pbHighTicketBtn.textContent = '0円診断 ↗';
+      } else if (currentPresetIdx === 1) {
+        pbHighTicketLink.href = 'https://px.a8.net/svt/ejp?a8mat=4BGFJD+BOXHGY+2W92+1NJK7M';
+        pbBadge2.textContent = '月' + s.toLocaleString() + '円節電＋電気料金プラン0円比較（PR）';
+        pbHighTicketTitle.textContent = 'エネピ（電気・ガス最安プラン0円診断）';
+        pbHighTicketBtn.textContent = '無料比較 ↗';
+      } else if (currentPresetIdx === 2) {
+        pbHighTicketLink.href = 'https://px.a8.net/svt/ejp?a8mat=4BGFJD+CBJYGI+56WW+5YJRM';
+        pbBadge2.textContent = '本体代' + p.toLocaleString() + '円を家の不用品0円査定で回収（PR）';
+        pbHighTicketTitle.textContent = 'ブランドオフ（送料・査定0円宅配買取キット）';
+        pbHighTicketBtn.textContent = '0円申込 ↗';
+      } else {
+        pbHighTicketLink.href = 'https://px.a8.net/svt/ejp?a8mat=4BGFJD+CC5E2A+5ASC+5YRHE';
+        pbBadge2.textContent = '月' + s.toLocaleString() + '円の飲料代を削減・2ヶ月無料お試し（PR）';
+        pbHighTicketTitle.textContent = 'マルチピュア（高性能浄水器2ヶ月0円体験）';
+        pbHighTicketBtn.textContent = '無料体験 ↗';
+      }
     }
 
-    document.querySelectorAll('#itemGrid .preset-btn').forEach(btn => {
+    document.querySelectorAll('#itemGrid .preset-btn').forEach((btn, idx) => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('#itemGrid .preset-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
+        currentPresetIdx = idx;
         priceSlider.value = btn.getAttribute('data-price');
         saveSlider.value = btn.getAttribute('data-save');
         const kw = btn.getAttribute('data-kw');
         const lbl = btn.getAttribute('data-label');
         const rTarget = 'https://search.rakuten.co.jp/search/mall/' + encodeURIComponent(kw) + '/';
         rakutenLink.href = 'https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=' + encodeURIComponent(rTarget);
-        const yTarget = 'https://shopping.yahoo.co.jp/search?p=' + encodeURIComponent(kw);
-        yahooLink.href = 'https://af.moshimo.com/af/c/click?a_id=5880336&p_id=1225&pc_id=1925&pl_id=18502&url=' + encodeURIComponent(yTarget);
         rakutenTitle.textContent = lbl + ' 楽天人気ランキング';
-        yahooTitle.textContent = lbl + ' Yahoo!最安値・口コミ';
         update();
       });
     });
