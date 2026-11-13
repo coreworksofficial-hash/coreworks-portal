@@ -167,13 +167,13 @@
     }
     .fv-best-info { min-width: 0; flex: 1; }
     .fv-best-sub {
-      font-size: 0.65rem; font-weight: 800; color: #67e8f9;
+      font-size: 0.62rem; font-weight: 800; color: #67e8f9;
       line-height: 1.25; margin-bottom: 2px; letter-spacing: -0.02em;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
     .fv-best-item.fv-amber .fv-best-sub { color: #fde047; }
     .fv-best-name {
-      font-size: 0.77rem; font-weight: 900; color: #ffffff;
+      font-size: 0.73rem; font-weight: 900; color: #ffffff;
       line-height: 1.25; letter-spacing: -0.02em;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
@@ -340,16 +340,27 @@
       border-radius: 14px; padding: 11px 11px;
       box-shadow: 0 4px 0 #050811, 0 6px 14px rgba(0, 0, 0, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.14);
     }
+    .pr-row.pr-hero {
+      border: 2px solid #fbbf24; border-top-color: #fef08a; border-left: 5px solid #f59e0b;
+      box-shadow: 0 5px 0 #050811, 0 0 18px rgba(245, 158, 11, 0.35), inset 0 1.5px 1px rgba(255, 255, 255, 0.22);
+    }
+    .pr-crown-pill {
+      display: table; font-size: 0.57rem; font-weight: 900;
+      color: #090d16; background: linear-gradient(90deg, #fde047 0%, #f59e0b 100%);
+      border: 1px solid #fef08a; padding: 1px 6px; border-radius: 999px; margin-bottom: 3px;
+      letter-spacing: -0.02em; white-space: nowrap;
+      box-shadow: 0 1px 4px rgba(245, 158, 11, 0.35);
+    }
     .pr-info { min-width: 0; flex: 1; }
     .pr-tag-pill {
-      display: inline-block; font-size: 0.63rem; font-weight: 900;
+      display: inline-block; font-size: 0.59rem; font-weight: 900;
       color: #34d399; background: rgba(16, 185, 129, 0.15);
       border: 1px solid rgba(52, 211, 153, 0.4);
-      padding: 1px 7px; border-radius: 999px; margin-bottom: 3px;
+      padding: 1px 6px; border-radius: 999px; margin-bottom: 3px;
       letter-spacing: -0.02em; white-space: nowrap;
     }
     .pr-name {
-      font-size: 0.78rem; font-weight: 800; color: #ffffff;
+      font-size: 0.73rem; font-weight: 800; color: #ffffff;
       line-height: 1.3; letter-spacing: -0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
     .pr-btn {
@@ -357,8 +368,8 @@
       background: linear-gradient(180deg, #fde047 0%, #f59e0b 58%, #d97706 100%);
       border: 1.5px solid #fef08a; border-top-color: #ffffff;
       color: #090d16;
-      text-decoration: none; font-size: 0.76rem; font-weight: 900;
-      padding: 8px 10px; border-radius: 10px; white-space: nowrap;
+      text-decoration: none; font-size: 0.73rem; font-weight: 900;
+      padding: 8px 9px; border-radius: 10px; white-space: nowrap;
       text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
       box-shadow: 0 3px 0 #92400e, 0 5px 10px rgba(245, 158, 11, 0.35), inset 0 1.5px 1px rgba(255, 255, 255, 0.8);
       transition: transform 0.08s ease, box-shadow 0.08s ease;
@@ -370,7 +381,78 @@
       font-size: 0.75rem; padding-top: 14px; border-top: 1px solid rgba(51, 65, 85, 0.5);
     }
     footer a { color: var(--muted); text-decoration: underline; white-space: nowrap; }
+  
+    /* v8.2 Root Anti-Overflow Strict Fit */
+    .pr-info, .fv-best-info { min-width: 0 !important; flex: 1 1 0% !important; overflow: hidden !important; }
+    .pr-crown-pill, .pr-tag-pill, .fv-best-sub {
+      display: inline-block !important;
+      max-width: 100% !important;
+      font-size: 0.49rem !important;
+      letter-spacing: -0.02em !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+    }
+    .pr-name, .fv-best-name {
+      display: block !important;
+      max-width: 100% !important;
+      font-size: 0.64rem !important;
+      letter-spacing: -0.02em !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+    }
   </style>
+<!-- Coreworks Telemetry & GA4 Hook v8.2 -->
+<script id="cw-telemetry-v82">
+(function(){
+  if (window.cwTrack) return;
+  const STORAGE_KEY = 'cw_telemetry_v1';
+  window.cwTrack = function(eventName, params) {
+    try {
+      const payload = Object.assign({
+        event: String(eventName || 'unknown'),
+        path: location.pathname,
+        ts: new Date().toISOString()
+      }, params || {});
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', payload.event, payload);
+      }
+      if (Array.isArray(window.dataLayer)) {
+        window.dataLayer.push(payload);
+      }
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        const list = raw ? JSON.parse(raw) : [];
+        list.push(payload);
+        if (list.length > 80) list.splice(0, list.length - 80);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+      } catch(e) {}
+      if (window.CW_BEACON_URL && navigator.sendBeacon) {
+        navigator.sendBeacon(window.CW_BEACON_URL, JSON.stringify(payload));
+      }
+    } catch(err) {}
+  };
+  document.addEventListener('DOMContentLoaded', function() {
+    window.cwTrack('page_view', { title: document.title });
+  });
+  document.addEventListener('click', function(e) {
+    const a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+    if (a) {
+      const href = a.getAttribute('href') || '';
+      if (href.includes('a8.net') || href.includes('moshimo.com') || href.includes('rakuten.co.jp')) {
+        const label = (a.innerText || a.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 60);
+        window.cwTrack('pr_click', { id: a.id || '', label: label, href: href.slice(0, 120) });
+      }
+    }
+    const btn = e.target && e.target.closest ? e.target.closest('.preset-btn, .sub-tile, .preset-tile, .opt-btn, .tile-btn') : null;
+    if (btn) {
+      const tLabel = (btn.innerText || btn.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 40);
+      window.cwTrack('calc_interact', { label: tLabel });
+    }
+  }, true);
+})();
+</script>
 </head>
 <body>
   <div class="wrap">
@@ -391,31 +473,31 @@
       <div class="fv-best-list" id="fvBestCalc">
         <a href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+BPIX2Q+2W92+NVHCY" target="_blank" rel="nofollow sponsored noopener" class="fv-best-item fv-cyan">
           <div class="fv-best-info">
-            <div class="fv-best-sub">① 電話勧誘・検針票なし！60秒WEB相場診断</div>
+            <div class="fv-best-sub"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fde047" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:3px;flex-shrink:0;"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>① 電話・検針票なし！最短60秒WEB診断</div>
             <div class="fv-best-name">エネピ｜プロパン・都市ガス最安0円比較</div>
           </div>
-          <span class="fv-best-cta">無料比較 ↗</span>
+          <span class="fv-best-cta">0円診断 ↗</span>
         </a>
-        <a href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+C9RNN6+2G98+614CY" target="_blank" rel="nofollow sponsored noopener" class="fv-best-item fv-amber">
+        <a href="https://px.a8.net/svt/ejp?a8mat=4BGJFR+3JES8I+33C2+BXB8Z" target="_blank" rel="nofollow sponsored noopener" class="fv-best-item fv-amber">
           <div class="fv-best-info">
-            <div class="fv-best-sub">② クレカ・住所不要｜メアドのみ30秒無料登録</div>
-            <div class="fv-best-name">ミリオンゲームDX｜0円登録＆遊んでアマギフ獲得</div>
+            <div class="fv-best-sub"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fde047" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:3px;flex-shrink:0;"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>② 段ボール・送料・返送料0円！宅配買取</div>
+            <div class="fv-best-name">専門書アカデミー｜古本・参考書0円買取</div>
           </div>
-          <span class="fv-best-cta">0円登録 ↗</span>
+          <span class="fv-best-cta">0円申込 ↗</span>
         </a>
       </div>
       <div class="fv-best-list" id="fvBestGame" style="display:none;">
         <a href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+C9RNN6+2G98+614CY" target="_blank" rel="nofollow sponsored noopener" class="fv-best-item fv-amber">
           <div class="fv-best-info">
-            <div class="fv-best-sub">① クレカ・住所不要｜メアドのみ30秒無料登録</div>
+            <div class="fv-best-sub"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fde047" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:3px;flex-shrink:0;"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>① クレカ・住所不要｜メアド30秒登録</div>
             <div class="fv-best-name">ミリオンゲームDX｜遊んでアマギフ獲得</div>
           </div>
           <span class="fv-best-cta">0円登録 ↗</span>
         </a>
-        <a href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+C7DX82+389A+6BU5U" target="_blank" rel="nofollow sponsored noopener" class="fv-best-item fv-cyan">
+        <a href="https://px.a8.net/svt/ejp?a8mat=4BGJFT+7SF6PE+3ZZC+HV7V6" target="_blank" rel="nofollow sponsored noopener" class="fv-best-item fv-cyan">
           <div class="fv-best-info">
-            <div class="fv-best-sub">② クレカ・住所不要｜毎日無料ガチャ＆ポイ活</div>
-            <div class="fv-best-name">ちょびリッチ｜0円登録でPayPay・現金交換</div>
+            <div class="fv-best-sub"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fde047" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:3px;flex-shrink:0;"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>② 登録0円・最大500pt特典｜ポイ活</div>
+            <div class="fv-best-name">ワラウ｜30秒登録で電子マネー交換</div>
           </div>
           <span class="fv-best-cta">0円登録 ↗</span>
         </a>
@@ -490,50 +572,51 @@
         <div class="pr-sec-title"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:5px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>固定費・光熱費削減で人気の無料診断（PR）</div>
         <div class="pr-list">
 
-          <div class="pr-row">
+          <div class="pr-row pr-hero">
             <div class="pr-info">
+              <div class="pr-crown-pill"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fde047" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:3px;flex-shrink:0;"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>迷ったらコレ！縛り・工事費0円＆最高還元</div>
               <div class="pr-tag-pill">工事費0円・縛りなし｜業界最高水準の高額還元（PR）</div>
-              <div class="pr-name">GMOとくとくBB光（最安級ネット＆特典確認）</div>
+              <div class="pr-name">GMOとくとくBB光（最安級ネット＆特典）</div>
             </div>
-            <a href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+C37VZM+50+6M5TEQ" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">特典確認 ↗</a>
+            <a href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+C37VZM+50+6M5TEQ" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">0円特典 ↗</a>
           </div>
 
           <div class="pr-row">
             <div class="pr-info">
               <div class="pr-tag-pill">ドコモスマホ割・工事費0円｜WEB限定特典（PR）</div>
-              <div class="pr-name">GMOとくとくBB×ドコモ光（公式特典確認）</div>
+              <div class="pr-name">GMOとくとくBB×ドコモ光（公式特典）</div>
             </div>
-            <a href="https://px.a8.net/svt/ejp?a8mat=4BGJFR+3PD4AA+50+54TT1D" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">特典確認 ↗</a>
+            <a href="https://px.a8.net/svt/ejp?a8mat=4BGJFR+3PD4AA+50+54TT1D" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">0円特典 ↗</a>
           </div>
 
           <div class="pr-row">
             <div class="pr-info">
               <div class="pr-tag-pill">しつこい電話・検針票なし｜60秒WEB相場チェック（PR）</div>
-              <div class="pr-name">エネピ（プロパン・都市ガス最安プラン0円診断）</div>
+              <div class="pr-name">エネピ（プロパン・都市ガス0円診断）</div>
             </div>
-            <a href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+BPIX2Q+2W92+NVHCY" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">無料比較 ↗</a>
+            <a href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+BPIX2Q+2W92+NVHCY" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">0円診断 ↗</a>
           </div>
 
           <div class="pr-row">
             <div class="pr-info">
               <div class="pr-tag-pill">段ボール無料・送料0円｜古本・参考書・教科書買取（PR）</div>
-              <div class="pr-name">専門書アカデミー（箱に詰めて送る0円査定）</div>
+              <div class="pr-name">専門書アカデミー（詰めて送る0円査定）</div>
             </div>
-            <a href="https://px.a8.net/svt/ejp?a8mat=4BGJFR+3JES8I+33C2+BXB8Z" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">無料査定 ↗</a>
+            <a href="https://px.a8.net/svt/ejp?a8mat=4BGJFR+3JES8I+33C2+BXB8Z" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">0円申込 ↗</a>
           </div>
 
           <div class="pr-row">
             <div class="pr-info">
-              <div class="pr-tag-pill">国認定の0円処分｜壊れたPC・小型家電の無料宅配回収（PR）</div>
-              <div class="pr-name">リネットジャパン（箱に詰めて0円回収申込）</div>
+              <div class="pr-tag-pill">国認定の0円処分｜壊れたPC・小型家電の無料回収（PR）</div>
+              <div class="pr-name">リネットジャパン（箱に詰めて0円回収）</div>
             </div>
-            <a href="https://px.a8.net/svt/ejp?a8mat=4BGJFT+7U7HIQ+1SOW+1HMIGH" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">0円申込 ↗</a>
+            <a href="https://px.a8.net/svt/ejp?a8mat=4BGJFT+7U7HIQ+1SOW+1HMIGH" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">0円回収 ↗</a>
           </div>
 
           <div class="pr-row">
             <div class="pr-info">
               <div class="pr-tag-pill">登録・利用完全0円｜スキマ時間で在宅ワーク・副業（PR）</div>
-              <div class="pr-name">クラウディア（日本最大級・無料ワーカー登録）</div>
+              <div class="pr-name">クラウディア（日本最大級・無料登録）</div>
             </div>
             <a href="https://px.a8.net/svt/ejp?a8mat=4BGJFT+7T0MB6+4F8I+BX3J6" target="_blank" rel="nofollow sponsored noopener" class="pr-btn">0円登録 ↗</a>
           </div>
@@ -596,8 +679,9 @@
         <div class="pr-sec-title"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:5px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>脳トレで遊んでギフト券・電子マネー獲得！登録0円特集（PR）</div>
         <div class="pr-list">
 
-          <div class="pr-row">
+          <div class="pr-row pr-hero">
             <div class="pr-info">
+              <div class="pr-crown-pill"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fde047" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:3px;flex-shrink:0;"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>迷ったらコレ！最短30秒・0円登録でアマギフ狙い</div>
               <div class="pr-tag-pill">クレカ・住所不要｜メアドのみで30秒無料登録＆特典（PR）</div>
               <div class="pr-name">ミリオンゲームDX（遊んでアマギフ獲得）</div>
             </div>
@@ -648,7 +732,7 @@
     </div>
 
     <footer>
-      <p style="font-size:0.7rem; white-space:nowrap;">© 2026 Coreworks ｜ <a href="/about/">運営者情報・外部送信公表</a> ｜ <a href="/apk/?v=8.2">Androidアプリ版(APK)</a></p>
+      <p style="font-size:0.65rem; white-space:nowrap;">© 2026 Coreworks ｜ <a href="/about/">運営者情報・外部送信公表</a> ｜ <a href="/apk/?v=8.2">Androidアプリ版(APK)</a></p>
       <p style="margin-top:5px; font-size:0.61rem; letter-spacing:-0.02em; color:var(--subtle);">※本サイトはアフィリエイト広告（A8.net・もしも等）を利用しています。試算結果は一般的な目安であり、実際の料金・還元額等はご契約条件により異なります。</p>
       <img src="https://i.moshimo.com/af/i/impression?a_id=5876771&p_id=54&pc_id=54&pl_id=618" width="1" height="1" style="border:none;" loading="lazy" alt="">
     </footer>

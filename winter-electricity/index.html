@@ -189,6 +189,23 @@
       text-decoration: none; color: var(--text);
       box-shadow: 0 4px 0 #020617, 0 6px 14px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.08);
     }
+    .action-card.slot-hero {
+      background: linear-gradient(180deg, rgba(30, 41, 59, 0.98) 0%, rgba(15, 23, 42, 0.99) 100%);
+      border: 2px solid #fbbf24;
+      border-top-color: #fef08a;
+      border-left: 5px solid #f59e0b;
+      padding: 10px 11px;
+      box-shadow: 0 5px 0 #020617, 0 0 18px rgba(245, 158, 11, 0.35), inset 0 1.5px 1px rgba(255, 255, 255, 0.25);
+    }
+    .slot1-crown {
+      display: table; font-size: 0.60rem; font-weight: 900;
+      color: #090d16;
+      background: linear-gradient(90deg, #fde047 0%, #f59e0b 100%);
+      border: 1px solid #fef08a;
+      padding: 1px 7px; border-radius: 999px; margin-bottom: 3px;
+      letter-spacing: -0.02em; white-space: nowrap;
+      box-shadow: 0 1px 4px rgba(245, 158, 11, 0.35);
+    }
     .action-info { flex: 1; min-width: 0; }
     .action-badge {
       display: inline-block; font-size: 0.59rem; font-weight: 900;
@@ -273,6 +290,45 @@
       padding: 0 11px 10px; font-size: 0.72rem; color: #cbd5e1; line-height: 1.55;
       border-top: 1px solid rgba(148, 163, 184, 0.14); padding-top: 8px;
     }
+  
+    /* v8.2 Anti-Overflow & Slot 1 Hero Tuning (390px Strict Fit) */
+    .action-slot { padding: 8px 9px !important; gap: 6px !important; }
+    .action-slot.slot-hero { padding: 9px 9px !important; }
+    .action-info { min-width: 0 !important; flex: 1 1 0% !important; overflow: hidden !important; }
+    .slot1-crown {
+      display: inline-flex !important;
+      max-width: 100% !important;
+      font-size: 0.49rem !important;
+      letter-spacing: -0.02em !important;
+      padding: 2px 5px !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+    }
+    .action-badge {
+      display: inline-block !important;
+      max-width: 100% !important;
+      font-size: 0.48rem !important;
+      letter-spacing: -0.02em !important;
+      padding: 1px 4px !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+    }
+    .action-name {
+      display: block !important;
+      max-width: 100% !important;
+      font-size: 0.61rem !important;
+      letter-spacing: -0.02em !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+    }
+    .action-btn {
+      padding: 7px 7px !important;
+      font-size: 0.68rem !important;
+      flex-shrink: 0 !important;
+    }
   </style>
   <script type="application/ld+json" id="faqJsonLd">
 {
@@ -306,6 +362,56 @@
   ]
 }
   </script>
+<!-- Coreworks Telemetry & GA4 Hook v8.2 -->
+<script id="cw-telemetry-v82">
+(function(){
+  if (window.cwTrack) return;
+  const STORAGE_KEY = 'cw_telemetry_v1';
+  window.cwTrack = function(eventName, params) {
+    try {
+      const payload = Object.assign({
+        event: String(eventName || 'unknown'),
+        path: location.pathname,
+        ts: new Date().toISOString()
+      }, params || {});
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', payload.event, payload);
+      }
+      if (Array.isArray(window.dataLayer)) {
+        window.dataLayer.push(payload);
+      }
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        const list = raw ? JSON.parse(raw) : [];
+        list.push(payload);
+        if (list.length > 80) list.splice(0, list.length - 80);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+      } catch(e) {}
+      if (window.CW_BEACON_URL && navigator.sendBeacon) {
+        navigator.sendBeacon(window.CW_BEACON_URL, JSON.stringify(payload));
+      }
+    } catch(err) {}
+  };
+  document.addEventListener('DOMContentLoaded', function() {
+    window.cwTrack('page_view', { title: document.title });
+  });
+  document.addEventListener('click', function(e) {
+    const a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+    if (a) {
+      const href = a.getAttribute('href') || '';
+      if (href.includes('a8.net') || href.includes('moshimo.com') || href.includes('rakuten.co.jp')) {
+        const label = (a.innerText || a.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 60);
+        window.cwTrack('pr_click', { id: a.id || '', label: label, href: href.slice(0, 120) });
+      }
+    }
+    const btn = e.target && e.target.closest ? e.target.closest('.preset-btn, .sub-tile, .preset-tile, .opt-btn, .tile-btn') : null;
+    if (btn) {
+      const tLabel = (btn.innerText || btn.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 40);
+      window.cwTrack('calc_interact', { label: tLabel });
+    }
+  }, true);
+})();
+</script>
 </head>
 <body>
   <div class="container">
@@ -366,34 +472,35 @@
     <!-- ③ 厳選3枚の解決策カード -->
     <div class="action-sec-title" id="weActionSecTitle">▼ この1冬 13,400円の損を0円診断で取り戻す（PR）</div>
     <div class="action-list">
-      <a id="weCard1" href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+BPIX2Q+2W92+NVHCY" target="_blank" rel="nofollow sponsored noopener" class="action-card">
+      <a id="weCard1" href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+BPIX2Q+2W92+NVHCY" target="_blank" rel="nofollow sponsored noopener" class="action-card slot-hero">
         <div class="action-info">
+          <span class="slot1-crown" id="weCrown1"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fde047" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:3px;flex-shrink:0;"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>迷ったらコレ！最短60秒・完全0円WEB診断</span>
           <span class="action-badge" id="weBadge1">1冬14,500円削減｜電話・検針票なし60秒診断（PR）</span>
           <div class="action-name" id="weName1">エネピ｜プロパン・都市ガス最安0円WEB診断</div>
         </div>
-        <span class="action-btn" id="weBtn1">0円比較 ↗</span>
+        <span class="action-btn" id="weBtn1">0円相場診断 ↗</span>
       </a>
       <a id="weCard2" href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+BOXHGY+2W92+1NJK7M" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
         <div class="action-info">
           <span class="action-badge" id="weBadge2">しつこい電話・検針票なし｜60秒WEB相場診断（PR）</span>
           <div class="action-name" id="weName2">エネピ｜一番安い電気料金プラン0円WEB比較</div>
         </div>
-        <span class="action-btn" id="weBtn2">0円診断 ↗</span>
+        <span class="action-btn" id="weBtn2">0円電気比較 ↗</span>
       </a>
       <a id="weCard3" href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E9%259B%25BB%25E6%25B0%2597%25E6%25AF%259B%25E5%25B8%2583%2520%25E6%25B4%2597%25E3%2581%2588%25E3%2582%258B%2F" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
         <div class="action-info">
           <span class="action-badge" id="weBadge3">1冬約1,100円！約13,400円浮く節電寝具（PR）</span>
           <div class="action-name" id="weName3">洗える省エネ電気毛布 楽天人気ランキング</div>
         </div>
-        <span class="action-btn" id="weBtn3">楽天で見る ↗</span>
+        <span class="action-btn" id="weBtn3">楽天最安確認 ↗</span>
       </a>
       <!-- 0-Yen Sub-Slot -->
       <a href="https://px.a8.net/svt/ejp?a8mat=4BGJFT+7CXWZ6+S7A+TSQTU" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
         <div class="action-info">
-          <span class="action-badge">完全0円・毎日1,000円懸賞｜光熱費の足しにクリックdeゲット（PR）</span>
-          <div class="action-name">ポイントミュージアム｜無料登録＆毎日クリックで現金・ギフト券交換</div>
+          <span class="action-badge">確定率98.9%・完全0円｜毎日1,000円懸賞＆即交換（PR）</span>
+          <div class="action-name">ポイントミュージアム｜無料登録＆クリックで現金交換</div>
         </div>
-        <span class="action-btn">0円登録 ↗</span>
+        <span class="action-btn">0円無料登録 ↗</span>
       </a>
     </div>
   </div>

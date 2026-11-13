@@ -189,6 +189,23 @@
       text-decoration: none; color: var(--text);
       box-shadow: 0 4px 0 #020617, 0 6px 14px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.08);
     }
+    .action-card.slot-hero {
+      background: linear-gradient(180deg, rgba(30, 41, 59, 0.98) 0%, rgba(15, 23, 42, 0.99) 100%);
+      border: 2px solid #fbbf24;
+      border-top-color: #fef08a;
+      border-left: 5px solid #f59e0b;
+      padding: 10px 11px;
+      box-shadow: 0 5px 0 #020617, 0 0 18px rgba(245, 158, 11, 0.35), inset 0 1.5px 1px rgba(255, 255, 255, 0.25);
+    }
+    .slot1-crown {
+      display: table; font-size: 0.60rem; font-weight: 900;
+      color: #090d16;
+      background: linear-gradient(90deg, #fde047 0%, #f59e0b 100%);
+      border: 1px solid #fef08a;
+      padding: 1px 7px; border-radius: 999px; margin-bottom: 3px;
+      letter-spacing: -0.02em; white-space: nowrap;
+      box-shadow: 0 1px 4px rgba(245, 158, 11, 0.35);
+    }
     .action-info { flex: 1; min-width: 0; }
     .action-badge {
       display: inline-block; font-size: 0.59rem; font-weight: 900;
@@ -273,6 +290,45 @@
       padding: 0 11px 10px; font-size: 0.72rem; color: #cbd5e1; line-height: 1.55;
       border-top: 1px solid rgba(148, 163, 184, 0.14); padding-top: 8px;
     }
+  
+    /* v8.2 Anti-Overflow & Slot 1 Hero Tuning (390px Strict Fit) */
+    .action-slot { padding: 8px 9px !important; gap: 6px !important; }
+    .action-slot.slot-hero { padding: 9px 9px !important; }
+    .action-info { min-width: 0 !important; flex: 1 1 0% !important; overflow: hidden !important; }
+    .slot1-crown {
+      display: inline-flex !important;
+      max-width: 100% !important;
+      font-size: 0.49rem !important;
+      letter-spacing: -0.02em !important;
+      padding: 2px 5px !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+    }
+    .action-badge {
+      display: inline-block !important;
+      max-width: 100% !important;
+      font-size: 0.48rem !important;
+      letter-spacing: -0.02em !important;
+      padding: 1px 4px !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+    }
+    .action-name {
+      display: block !important;
+      max-width: 100% !important;
+      font-size: 0.61rem !important;
+      letter-spacing: -0.02em !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+    }
+    .action-btn {
+      padding: 7px 7px !important;
+      font-size: 0.68rem !important;
+      flex-shrink: 0 !important;
+    }
   </style>
   <script type="application/ld+json" id="faqJsonLd">
 {
@@ -306,6 +362,56 @@
   ]
 }
   </script>
+<!-- Coreworks Telemetry & GA4 Hook v8.2 -->
+<script id="cw-telemetry-v82">
+(function(){
+  if (window.cwTrack) return;
+  const STORAGE_KEY = 'cw_telemetry_v1';
+  window.cwTrack = function(eventName, params) {
+    try {
+      const payload = Object.assign({
+        event: String(eventName || 'unknown'),
+        path: location.pathname,
+        ts: new Date().toISOString()
+      }, params || {});
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', payload.event, payload);
+      }
+      if (Array.isArray(window.dataLayer)) {
+        window.dataLayer.push(payload);
+      }
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        const list = raw ? JSON.parse(raw) : [];
+        list.push(payload);
+        if (list.length > 80) list.splice(0, list.length - 80);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+      } catch(e) {}
+      if (window.CW_BEACON_URL && navigator.sendBeacon) {
+        navigator.sendBeacon(window.CW_BEACON_URL, JSON.stringify(payload));
+      }
+    } catch(err) {}
+  };
+  document.addEventListener('DOMContentLoaded', function() {
+    window.cwTrack('page_view', { title: document.title });
+  });
+  document.addEventListener('click', function(e) {
+    const a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+    if (a) {
+      const href = a.getAttribute('href') || '';
+      if (href.includes('a8.net') || href.includes('moshimo.com') || href.includes('rakuten.co.jp')) {
+        const label = (a.innerText || a.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 60);
+        window.cwTrack('pr_click', { id: a.id || '', label: label, href: href.slice(0, 120) });
+      }
+    }
+    const btn = e.target && e.target.closest ? e.target.closest('.preset-btn, .sub-tile, .preset-tile, .opt-btn, .tile-btn') : null;
+    if (btn) {
+      const tLabel = (btn.innerText || btn.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 40);
+      window.cwTrack('calc_interact', { label: tLabel });
+    }
+  }, true);
+})();
+</script>
 </head>
 <body>
   <div class="container">
@@ -366,34 +472,35 @@
     <!-- ③ 厳選3枚の解決策カード -->
     <div class="action-sec-title" id="pbActionSecTitle">▼ 約117日で回収！3年で+57,800円得する選択（PR）</div>
     <div class="action-list">
-      <a id="rakutenLink" href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E7%25AF%2580%25E6%25B0%25B4%25E3%2582%25B7%25E3%2583%25A3%25E3%2583%25AF%25E3%2583%25BC%25E3%2583%2598%25E3%2583%2583%25E3%2583%2589%2520%25E3%2583%259E%25E3%2582%25A4%25E3%2582%25AF%25E3%2583%25AD%25E3%2583%258A%25E3%2583%258E%25E3%2583%2590%25E3%2583%2596%25E3%2583%25AB%2F" target="_blank" rel="nofollow sponsored noopener" class="action-card">
+      <a id="pbHighTicketLink" href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+BPIX2Q+2W92+NVHCY" target="_blank" rel="nofollow sponsored noopener" class="action-card slot-hero">
+        <div class="action-info">
+          <span class="slot1-crown" id="pbCrown1"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fde047" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:3px;flex-shrink:0;"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>迷ったらコレ！最短60秒・完全0円WEB相場診断</span>
+          <span class="action-badge" id="pbBadge2">月1,800円節水＋電話・検針票なし60秒診断（PR）</span>
+          <div class="action-name" id="pbHighTicketTitle">エネピ｜プロパン・都市ガス最安0円WEB診断</div>
+        </div>
+        <span class="action-btn" id="pbHighTicketBtn">0円相場診断 ↗</span>
+      </a>
+      <a id="pbBookRecycleLink" href="https://px.a8.net/svt/ejp?a8mat=4BGJFR+3JES8I+33C2+BXB8Z" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
+        <div class="action-info">
+          <span class="action-badge" id="pbBadge3">本体7,000円を即回収｜段ボール・送料・返送料0円（PR）</span>
+          <div class="action-name" id="pbName3">専門書アカデミー｜古本・参考書・教科書0円宅配買取</div>
+        </div>
+        <span class="action-btn" id="pbBtn3">0円買取申込 ↗</span>
+      </a>
+      <a id="rakutenLink" href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E7%25AF%2580%25E6%25B0%25B4%25E3%2582%25B7%25E3%2583%25A3%25E3%2583%25AF%25E3%2583%25BC%25E3%2583%2598%25E3%2583%2583%25E3%2583%2589%2520%25E3%2583%259E%25E3%2582%25A4%25E3%2582%25AF%25E3%2583%25AD%25E3%2583%258A%25E3%2583%258E%25E3%2583%2590%25E3%2583%2596%25E3%2583%25AB%2F" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
         <div class="action-info">
           <span class="action-badge" id="pbBadge1">約3.9ヶ月で元取り・楽天市場ポイント高還元（PR）</span>
           <div class="action-name" id="rakutenTitle">節水シャワー 楽天人気ランキング</div>
         </div>
         <span class="action-btn">楽天で比較 ↗</span>
       </a>
-      <a id="pbHighTicketLink" href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+BQ4COI+3SDQ+5YJRM" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
-        <div class="action-info">
-          <span class="action-badge" id="pbBadge2">月1,800円節水＋電話・検針票なし60秒診断（PR）</span>
-          <div class="action-name" id="pbHighTicketTitle">ガス屋の窓口｜しつこい電話なし最安0円診断</div>
-        </div>
-        <span class="action-btn" id="pbHighTicketBtn">0円診断 ↗</span>
-      </a>
-      <a href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+C6720I+1LP8+BWVTE" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
-        <div class="action-info">
-          <span class="action-badge" id="pbBadge3">クレカ・住所不要｜メアドのみで30秒無料登録＆特典（PR）</span>
-          <div class="action-name" id="pbName3">ハピタス｜7,000円購入の前に経由でW還元</div>
-        </div>
-        <span class="action-btn">無料登録 ↗</span>
-      </a>
       <!-- 0-Yen Sub-Slot -->
-      <a href="https://px.a8.net/svt/ejp?a8mat=4BGJFT+7U7HIQ+1SOW+1HMIGH" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
+      <a id="pbRenetLink" href="https://px.a8.net/svt/ejp?a8mat=4BGJFT+7U7HIQ+1SOW+1HMIGH" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
         <div class="action-info">
-          <span class="action-badge">国認定の0円処分｜壊れたPC・小型家電の無料宅配回収（PR）</span>
-          <div class="action-name">リネットジャパン｜自宅回収0円で不要家電をスッキリ処分</div>
+          <span class="action-badge" id="pbBadge4">国認定の0円処分｜壊れたPC・小型家電の無料宅配回収（PR）</span>
+          <div class="action-name" id="pbName4">リネットジャパン｜自宅回収0円で不要家電をスッキリ処分</div>
         </div>
-        <span class="action-btn">0円申込 ↗</span>
+        <span class="action-btn" id="pbBtn4">0円回収申込 ↗</span>
       </a>
     </div>
   </div>
@@ -409,10 +516,13 @@
     const rakutenLink = document.getElementById('rakutenLink');
     const rakutenTitle = document.getElementById('rakutenTitle');
     const pbActionSecTitle = document.getElementById('pbActionSecTitle');
+    const pbCrown1 = document.getElementById('pbCrown1');
     const pbBadge1 = document.getElementById('pbBadge1');
     const pbBadge2 = document.getElementById('pbBadge2');
     const pbBadge3 = document.getElementById('pbBadge3');
     const pbName3 = document.getElementById('pbName3');
+    const pbBtn3 = document.getElementById('pbBtn3');
+    const pbBookRecycleLink = document.getElementById('pbBookRecycleLink');
     const pbHighTicketLink = document.getElementById('pbHighTicketLink');
     const pbHighTicketTitle = document.getElementById('pbHighTicketTitle');
     const pbHighTicketBtn = document.getElementById('pbHighTicketBtn');
@@ -433,29 +543,47 @@
 
       pbActionSecTitle.textContent = '▼ 約' + days.toLocaleString() + '日で回収！3年で' + netStr + '円得する選択（PR）';
       pbBadge1.textContent = '約' + m.toFixed(1) + 'ヶ月で元取り・楽天市場ポイント高還元（PR）';
-      pbBadge3.textContent = 'クレカ・住所不要｜メアドのみで30秒無料登録＆特典（PR）';
-      if (pbName3) pbName3.textContent = 'ハピタス｜' + p.toLocaleString() + '円購入の前に経由でW還元';
 
       if (currentPresetIdx === 0) {
-        pbHighTicketLink.href = 'https://px.a8.net/svt/ejp?a8mat=4BGFJD+BQ4COI+3SDQ+5YJRM';
+        pbHighTicketLink.href = 'https://px.a8.net/svt/ejp?a8mat=4BGFJD+BPIX2Q+2W92+NVHCY';
+        if (pbCrown1) pbCrown1.innerHTML = '<svg width="11" height="11" viewBox="0 0 24 24" fill="#fde047" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:3px;flex-shrink:0;"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg> 迷ったらコレ！最短60秒・完全0円WEB相場診断';
         pbBadge2.textContent = '月' + s.toLocaleString() + '円節水＋電話・検針票なし60秒診断（PR）';
-        pbHighTicketTitle.textContent = 'ガス屋の窓口｜しつこい電話なし最安0円診断';
-        pbHighTicketBtn.textContent = '0円診断 ↗';
+        pbHighTicketTitle.textContent = 'エネピ｜プロパン・都市ガス最安0円WEB診断';
+        pbHighTicketBtn.textContent = '0円相場診断 ↗';
+        pbBookRecycleLink.href = 'https://px.a8.net/svt/ejp?a8mat=4BGJFR+3JES8I+33C2+BXB8Z';
+        pbBadge3.textContent = '本体' + p.toLocaleString() + '円を即回収｜段ボール・送料・返送料0円（PR）';
+        pbName3.textContent = '専門書アカデミー｜古本・参考書・教科書0円宅配買取';
+        pbBtn3.textContent = '0円買取申込 ↗';
       } else if (currentPresetIdx === 1) {
         pbHighTicketLink.href = 'https://px.a8.net/svt/ejp?a8mat=4BGFJD+BOXHGY+2W92+1NJK7M';
+        if (pbCrown1) pbCrown1.innerHTML = '<svg width="11" height="11" viewBox="0 0 24 24" fill="#fde047" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:3px;flex-shrink:0;"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg> 迷ったらコレ！最短60秒・完全0円電気ガス比較';
         pbBadge2.textContent = '月' + s.toLocaleString() + '円節電＋電話・検針票なし60秒比較（PR）';
         pbHighTicketTitle.textContent = 'エネピ｜しつこい電話なし電気ガスWEB比較';
-        pbHighTicketBtn.textContent = '無料比較 ↗';
+        pbHighTicketBtn.textContent = '0円相場比較 ↗';
+        pbBookRecycleLink.href = 'https://px.a8.net/svt/ejp?a8mat=4BGJFR+3JES8I+33C2+BXB8Z';
+        pbBadge3.textContent = '本体' + p.toLocaleString() + '円を即回収｜段ボール・送料・返送料0円（PR）';
+        pbName3.textContent = '専門書アカデミー｜古本・参考書・教科書0円宅配買取';
+        pbBtn3.textContent = '0円買取申込 ↗';
       } else if (currentPresetIdx === 2) {
-        pbHighTicketLink.href = 'https://px.a8.net/svt/ejp?a8mat=4BGFJD+CBJYGI+56WW+5YJRM';
-        pbBadge2.textContent = '本体' + p.toLocaleString() + '円回収｜査定後の返送料・キャンセル0円（PR）';
-        pbHighTicketTitle.textContent = 'ブランドオフ｜箱に詰めて送るだけ0円宅配買取';
-        pbHighTicketBtn.textContent = '0円申込 ↗';
+        pbHighTicketLink.href = 'https://px.a8.net/svt/ejp?a8mat=4BGJFR+3JES8I+33C2+BXB8Z';
+        if (pbCrown1) pbCrown1.innerHTML = '<svg width="11" height="11" viewBox="0 0 24 24" fill="#fde047" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:3px;flex-shrink:0;"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg> 迷ったらコレ！段ボール・送料・返送料すべて0円';
+        pbBadge2.textContent = '本体' + p.toLocaleString() + '円回収｜古本・参考書・教材を即現金化（PR）';
+        pbHighTicketTitle.textContent = '専門書アカデミー｜箱に詰めて送るだけ0円宅配買取';
+        pbHighTicketBtn.textContent = '0円買取申込 ↗';
+        pbBookRecycleLink.href = 'https://px.a8.net/svt/ejp?a8mat=4BGFJD+CBJYGI+56WW+5YJRM';
+        pbBadge3.textContent = '月' + s.toLocaleString() + '円時短＋不用品バッグ・時計を0円査定（PR）';
+        pbName3.textContent = 'ブランドオフ｜無料宅配キットで不用品を即現金化';
+        pbBtn3.textContent = '0円査定申込 ↗';
       } else {
-        pbHighTicketLink.href = 'https://px.a8.net/svt/ejp?a8mat=4BGFJD+CC5E2A+5ASC+5YRHE';
-        pbBadge2.textContent = '月' + s.toLocaleString() + '円の飲料代を削減・2ヶ月無料お試し（PR）';
-        pbHighTicketTitle.textContent = 'マルチピュア｜高性能浄水器2ヶ月0円体験';
-        pbHighTicketBtn.textContent = '無料体験 ↗';
+        pbHighTicketLink.href = 'https://px.a8.net/svt/ejp?a8mat=4BGJFT+7U7HIQ+1SOW+1HMIGH';
+        if (pbCrown1) pbCrown1.innerHTML = '<svg width="11" height="11" viewBox="0 0 24 24" fill="#fde047" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:3px;flex-shrink:0;"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg> 迷ったらコレ！国認定・自宅からの宅配回収0円';
+        pbBadge2.textContent = '確定率92%・国認定｜不要なPC・小型家電を0円回収（PR）';
+        pbHighTicketTitle.textContent = 'リネットジャパン｜箱に詰めて送るだけ0円自宅回収';
+        pbHighTicketBtn.textContent = '0円回収申込 ↗';
+        pbBookRecycleLink.href = 'https://px.a8.net/svt/ejp?a8mat=4BGJFR+3JES8I+33C2+BXB8Z';
+        pbBadge3.textContent = '本体' + p.toLocaleString() + '円を即回収｜段ボール・送料・返送料0円（PR）';
+        pbName3.textContent = '専門書アカデミー｜古本・参考書・教科書0円宅配買取';
+        pbBtn3.textContent = '0円買取申込 ↗';
       }
     }
 

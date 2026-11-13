@@ -1624,7 +1624,85 @@
   .modal-card.hint-empty-mode #modalZeroYenSubPrBtn {
     display: none !important;
   }
+
+  /* v8.2 1-Tap X Viral Share Button */
+  #modalShareXBtn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    width: 100% !important;
+    margin-top: 2px !important;
+    padding: 10px 12px !important;
+    border-radius: 12px !important;
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
+    border: 1.5px solid #38bdf8 !important;
+    color: #f8fafc !important;
+    font-size: 13px !important;
+    font-weight: 900 !important;
+    text-decoration: none !important;
+    box-shadow: 0 3px 0 #020617, 0 4px 12px rgba(56, 189, 248, 0.25) !important;
+    transition: transform 0.08s ease !important;
+  }
+  #modalShareXBtn:active {
+    transform: translateY(2px) scale(0.98) !important;
+  }
+  .modal-card.boss-alert #modalShareXBtn,
+  .modal-card.hint-empty-mode #modalShareXBtn {
+    display: none !important;
+  }
+
 </style>
+<!-- Coreworks Telemetry & GA4 Hook v8.2 -->
+<script id="cw-telemetry-v82">
+(function(){
+  if (window.cwTrack) return;
+  const STORAGE_KEY = 'cw_telemetry_v1';
+  window.cwTrack = function(eventName, params) {
+    try {
+      const payload = Object.assign({
+        event: String(eventName || 'unknown'),
+        path: location.pathname,
+        ts: new Date().toISOString()
+      }, params || {});
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', payload.event, payload);
+      }
+      if (Array.isArray(window.dataLayer)) {
+        window.dataLayer.push(payload);
+      }
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        const list = raw ? JSON.parse(raw) : [];
+        list.push(payload);
+        if (list.length > 80) list.splice(0, list.length - 80);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+      } catch(e) {}
+      if (window.CW_BEACON_URL && navigator.sendBeacon) {
+        navigator.sendBeacon(window.CW_BEACON_URL, JSON.stringify(payload));
+      }
+    } catch(err) {}
+  };
+  document.addEventListener('DOMContentLoaded', function() {
+    window.cwTrack('page_view', { title: document.title });
+  });
+  document.addEventListener('click', function(e) {
+    const a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+    if (a) {
+      const href = a.getAttribute('href') || '';
+      if (href.includes('a8.net') || href.includes('moshimo.com') || href.includes('rakuten.co.jp')) {
+        const label = (a.innerText || a.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 60);
+        window.cwTrack('pr_click', { id: a.id || '', label: label, href: href.slice(0, 120) });
+      }
+    }
+    const btn = e.target && e.target.closest ? e.target.closest('.preset-btn, .sub-tile, .preset-tile, .opt-btn, .tile-btn') : null;
+    if (btn) {
+      const tLabel = (btn.innerText || btn.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 40);
+      window.cwTrack('calc_interact', { label: tLabel });
+    }
+  }, true);
+})();
+</script>
 </head>
 <body>
 <div id="app">
@@ -1667,6 +1745,7 @@
       <div class="modal-comment" id="modalComment">神速の周辺視野です！</div>
       <button class="primary-btn" id="modalReviveBtn" style="display:none;">🎬 動画を見て【同じ問題】に再挑戦</button>
       <button class="primary-btn" id="modalActionBtn">次のステージへ</button>
+      <a id="modalShareXBtn" href="https://twitter.com/intent/tweet" target="_blank" rel="noopener noreferrer"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> 結果をXでシェア（挑戦状を送る）</a>
       <a href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+C9RNN6+2G98+614CY" target="_blank" rel="nofollow sponsored noopener" class="web-portal-link" id="modalZeroYenPrBtn">🎁 登録0円！遊んでAmazonギフト券GET（PR）↗</a>
       <a href="https://px.a8.net/svt/ejp?a8mat=4BGJFT+7CXWZ6+S7A+TSQTU" target="_blank" rel="nofollow sponsored noopener" class="web-portal-link" id="modalZeroYenSubPrBtn">🎯 0円登録｜クリックdeゲット＆毎日懸賞（PR）↗</a>
       <a href="/?tab=games&v=8.2" class="web-portal-link" id="modalPortalBtn">🏠 他の脳トレゲームを選ぶ（一覧へ）</a>
@@ -2978,6 +3057,7 @@
   }
 
   function startQuestion() {
+    if (!window.__cwGameStarted) { window.__cwGameStarted = true; if (window.cwTrack) window.cwTrack('game_start', { game: "speed-number" }); }
     if (!document.hidden) initAudio();
     if (window.__cwNormalizeIQ) window.__cwNormalizeIQ();
     if (stepInStage === 1) { window.__cwStageRatios = []; window.__cwStageElapsedSecs = []; window.__cwStageHintUsed = false; }
@@ -3226,6 +3306,7 @@
     modalEl.classList.add('show');
   };
 
+  window.__cwShowModal = showModal;
   function showModal({ isBossAlert, showRevive, reviveText, reviveBtnText, badge, title, iqText, comment, btnText }) {
     window.__cwModalMode = showRevive ? 'fail' : 'normal';
     modalCardEl.classList.remove('hint-empty-mode');
@@ -3287,6 +3368,26 @@
         actBtn.innerHTML = window.__cwIconify('▶️ 特別試験に挑む！');
       }
     }
+    /* v8.2 ShareX & Telemetry Hook */
+    try {
+      const shareBtn = document.getElementById('modalShareXBtn');
+      if (shareBtn) {
+        const iqVal = (typeof state !== 'undefined' && state.iq) ? state.iq : 120;
+        const stgVal = (typeof state !== 'undefined' && state.stage) ? state.stage : 1;
+        const tpl = "私の周辺視野＆反射IQは【{IQ}】（ステージ{STAGE}）でした！1から順番に何秒で押せる？ #周辺視野 #脳トレ https://coreworks-portal.pages.dev/speed-number/";
+        const shareText = tpl.replace('{IQ}', String(iqVal)).replace('{STAGE}', String(stgVal));
+        shareBtn.href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText);
+        if (!shareBtn.dataset.cwBound) {
+          shareBtn.dataset.cwBound = '1';
+          shareBtn.addEventListener('click', function() {
+            if (window.cwTrack) window.cwTrack('x_share', { game: "speed-number", iq: state.iq, stage: state.stage });
+          });
+        }
+      }
+      if (window.cwTrack && !isBossAlert) {
+        window.cwTrack(showRevive ? 'game_over' : 'stage_clear', { game: "speed-number", iq: state.iq, stage: state.stage });
+      }
+    } catch(e) {}
     modalEl.classList.add('show');
   }
 
