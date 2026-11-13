@@ -1,3 +1,1 @@
-# Coreworks Studio / ValueLens app-ads.txt
-# AdMob登録完了後、以下のコメント(#)を外してご自身のパブリッシャーID(pub-XXXXXXXXXXXXXXXX)に書き換えてください。
-# google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
+google.com, pub-5855703937788310, DIRECT, f08c47fec0942fa0
