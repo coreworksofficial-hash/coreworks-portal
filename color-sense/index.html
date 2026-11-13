@@ -1772,6 +1772,14 @@
     display: none !important;
   }
 
+  /* CW_SUBTRACT_AFF_CSS */
+  #modalZeroYenSubPrBtn { display: none !important; }
+  html.android-apk .cw-admax-slot,
+  .modal-card.boss-alert .cw-admax-slot,
+  .modal-card.hint-empty-mode .cw-admax-slot {
+    display: none !important;
+  }
+  /* CW_SUBTRACT_AFF_CSS_END */
 </style>
 <!-- Coreworks Telemetry & GA4 Hook v8.2 -->
 <script id="cw-telemetry-v82">
@@ -1851,6 +1859,13 @@
     <div class="rank-box" id="rankText">🏅 IQ 100 ｜ 色彩ルーキー</div>
     <button class="hint-btn" id="hintBtn">💡 ヒント (2)</button>
   </div>
+  <!-- CW_ADMAX_START -->
+  <div class="cw-admax-slot web-portal-link" id="cwAdmaxSlot" style="max-width:320px;width:100%;min-height:50px;max-height:52px;margin:2px auto 0;flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;border-radius:8px;">
+    <!-- admax -->
+    <script src="https://adm.shinobi.jp/s/ab18f37a417d3e423768f36961ec6592"></script>
+    <!-- admax -->
+  </div>
+  <!-- CW_ADMAX_END -->
 
   <!-- Stage Clear / Fail / Boss Alert Modal -->
   <div class="overlay-modal" id="modal">
@@ -1858,6 +1873,13 @@
       <div class="modal-badge" id="modalBadge">STAGE CLEAR!</div>
       <div class="modal-title" id="modalTitle">ステージクリア！</div>
       <div class="modal-iq" id="modalIQ">色感IQ 110</div>
+<!-- CW_ADMAX_START -->
+      <div class="cw-admax-slot web-portal-link" id="cwAdmaxSlotResult" style="max-width:320px;width:100%;min-height:50px;max-height:52px;margin:0 auto 12px;overflow:hidden;display:flex;align-items:center;justify-content:center;border-radius:8px;">
+        <!-- admax -->
+        <script src="https://adm.shinobi.jp/s/90a58684d2c7249eaf47f7d8ebaf3625"></script>
+        <!-- admax -->
+      </div>
+      <!-- CW_ADMAX_END -->
       <div class="modal-comment" id="modalComment">素晴らしい色彩感覚です！</div>
       <button class="primary-btn" id="modalReviveBtn" style="display:none;">🎬 動画を見て【同じ問題】に再挑戦</button>
       <button class="primary-btn" id="modalActionBtn">▶️ 次へ進む</button>
@@ -1865,13 +1887,6 @@
       <a href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+C9RNN6+2G98+614CY" target="_blank" rel="nofollow sponsored noopener" class="web-portal-link" id="modalZeroYenPrBtn">🎁 登録0円！遊んでAmazonギフト券GET（PR）↗</a>
       <a href="https://px.a8.net/svt/ejp?a8mat=4BGJFT+7CXWZ6+S7A+TSQTU" target="_blank" rel="nofollow sponsored noopener" class="web-portal-link" id="modalZeroYenSubPrBtn">🎯 0円登録｜クリックdeゲット＆毎日懸賞（PR）↗</a>
       <a href="/?tab=games&v=8.2" class="web-portal-link" id="modalPortalBtn">🏠 他の脳トレゲームを選ぶ（一覧へ）</a>
-<!-- CW_ADMAX_START -->
-      <div class="cw-admax-slot web-portal-link" id="cwAdmaxSlot" style="max-width:320px;width:100%;max-height:52px;margin:6px auto 0;overflow:hidden;display:flex;align-items:center;justify-content:center;border-radius:8px;">
-        <!-- admax -->
-        <script src="https://adm.shinobi.jp/s/ab18f37a417d3e423768f36961ec6592"></script>
-        <!-- admax -->
-      </div>
-      <!-- CW_ADMAX_END -->
 <!-- Coreworks In-Game Monetization & Nav -->
       <div style="width:100%; margin-top:12px; padding-top:12px; border-top:1px solid rgba(148,163,184,0.2); display:flex; flex-direction:column; gap:8px;">
         <div style="display:flex; gap:8px; width:100%;">
@@ -3364,6 +3379,21 @@
   modalReviveBtnEl.addEventListener('click', () => {
     initAudio();
     modalEl.classList.remove('show');
+    /* CW_RESUME_REVIVE_START */
+    if (window.__cwModalMode === 'resume_choice') {
+      window.__cwModalMode = 'normal';
+      modalCardEl.classList.remove('hint-empty-mode');
+      modalEl.classList.remove('show');
+      if (window.__cwSavedResume) {
+        state.mission = window.__cwSavedResume.mission;
+        state.stage = window.__cwSavedResume.stage;
+      }
+      stepInStage = 1;
+      saveProgress();
+      startQuestion();
+      return;
+    }
+    /* CW_RESUME_REVIVE_END */
     if (window.__cwModalMode === 'hint_empty') {
       window.__cwModalMode = 'normal';
       if (typeof window.__cwHintRewardCb === 'function') window.__cwHintRewardCb();
@@ -3393,6 +3423,19 @@
 
   document.getElementById('modalActionBtn').addEventListener('click', () => {
     initAudio();
+    /* CW_RESUME_ACTION_START */
+    if (window.__cwModalMode === 'resume_choice') {
+      window.__cwModalMode = 'normal';
+      modalCardEl.classList.remove('hint-empty-mode');
+      modalEl.classList.remove('show');
+      state.mission = 1;
+      state.stage = 1;
+      stepInStage = 1;
+      saveProgress();
+      startQuestion();
+      return;
+    }
+    /* CW_RESUME_ACTION_END */
     if (window.__cwModalMode === 'hint_empty') {
       window.__cwModalMode = 'normal';
       modalEl.classList.remove('show');
@@ -3750,7 +3793,47 @@
     });
   })();
 
-  startQuestion();
+  /* CW_STARTUP_BOOT_START */
+  if ((state.mission || 1) > 1 || (state.stage || 1) > 1) {
+    window.__cwSavedResume = { mission: state.mission || 1, stage: state.stage || 1 };
+    state.mission = 1;
+    state.stage = 1;
+    stepInStage = 1;
+    startQuestion();
+    clearInterval(timerId);
+    if (typeof flashTimeoutId !== 'undefined') clearTimeout(flashTimeoutId);
+    if (typeof hintFlashTimeoutId !== 'undefined') clearTimeout(hintFlashTimeoutId);
+    if (typeof isQuestionActive !== 'undefined') isQuestionActive = false;
+    if (typeof canTap !== 'undefined') canTap = false;
+    document.querySelectorAll('.panel.lit').forEach(p => p.classList.remove('lit'));
+    window.__cwModalMode = 'resume_choice';
+    modalCardEl.classList.remove('boss-alert');
+    modalCardEl.classList.add('hint-empty-mode');
+    const bEl = document.getElementById('modalBadge');
+    const tEl = document.getElementById('modalTitle');
+    const iqEl = document.getElementById('modalIQ');
+    const cEl = document.getElementById('modalComment');
+    const actBtn = document.getElementById('modalActionBtn');
+    if (bEl) bEl.style.display = 'none';
+    if (cEl) cEl.style.display = 'none';
+    if (tEl) tEl.innerHTML = window.__cwIconify('🎮 プレイ再開の確認');
+    if (iqEl) {
+      iqEl.style.display = 'inline-flex';
+      iqEl.innerHTML = window.__cwIconify('前回記録：レベル ' + window.__cwSavedResume.mission + '/5 ｜ ステージ ' + window.__cwSavedResume.stage + '/10');
+    }
+    if (modalReviveBtnEl) {
+      modalReviveBtnEl.style.display = 'block';
+      modalReviveBtnEl.innerHTML = window.__cwIconify('▶️ 続き（Lv.' + window.__cwSavedResume.mission + ' ステージ' + window.__cwSavedResume.stage + '）から再開');
+    }
+    if (actBtn) {
+      actBtn.classList.add('cw-sub-btn');
+      actBtn.innerHTML = window.__cwIconify('🔄 最初（Lv.1 ステージ1）からスタート');
+    }
+    modalEl.classList.add('show');
+  } else {
+    startQuestion();
+  }
+  /* CW_STARTUP_BOOT_END */
 })();
 </script>
 </body>
