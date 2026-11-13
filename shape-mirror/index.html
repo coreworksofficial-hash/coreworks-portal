@@ -3634,18 +3634,18 @@
     const actBtn = document.getElementById('modalActionBtn');
     if (bEl) bEl.style.display = 'none';
     if (cEl) cEl.style.display = 'none';
-    if (tEl) tEl.innerHTML = window.__cwIconify('🎮 プレイ再開の確認');
+    if (tEl) tEl.innerHTML = window.__cwIconify('👑 プレイ再開の確認');
     if (iqEl) {
       iqEl.style.display = 'inline-flex';
-      iqEl.innerHTML = window.__cwIconify('前回記録：レベル ' + window.__cwSavedResume.mission + '/5 ｜ ステージ ' + window.__cwSavedResume.stage + '/10');
+      iqEl.innerHTML = window.__cwIconify('前回：レベル ' + window.__cwSavedResume.mission + '/5 ｜ ステージ ' + window.__cwSavedResume.stage + '/10');
     }
     if (modalReviveBtnEl) {
       modalReviveBtnEl.style.display = 'block';
-      modalReviveBtnEl.innerHTML = window.__cwIconify('▶️ 続き（Lv.' + window.__cwSavedResume.mission + ' ステージ' + window.__cwSavedResume.stage + '）から再開');
+      modalReviveBtnEl.innerHTML = window.__cwIconify('▶️ 続き（Lv.' + window.__cwSavedResume.mission + '-' + window.__cwSavedResume.stage + '）から再開する');
     }
     if (actBtn) {
       actBtn.classList.add('cw-sub-btn');
-      actBtn.innerHTML = window.__cwIconify('🔄 最初（Lv.1 ステージ1）からスタート');
+      actBtn.innerHTML = window.__cwIconify('🔄 最初（Lv.1-1）からスタート');
     }
     modalEl.classList.add('show');
   } else {
