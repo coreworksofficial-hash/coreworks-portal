@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>年末調整・医療費控除 1秒還付金シミュレーター｜Coreworks</title>
+  <meta name="description" content="年収と医療費・生命保険・iDeCo等の控除額を選ぶだけで、所得税の還付金と翌年の住民税減税額（戻る税金の総額）を1秒で試算します。">
+  <link rel="canonical" href="https://coreworks-portal.pages.dev/calc_tax_refund.html">
+  <style>
+    :root {
+      --bg: #070b14;
+      --card: #11192c;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --border: rgba(148, 163, 184, 0.22);
+      --c1: #f59e0b;
+      --c2: #d97706;
+      --light: #fde047;
+      --soft-bg: rgba(245,158,11,0.15);
+      --theme-border: rgba(251,191,36,0.45);
+      --theme-glow: rgba(245,158,11,0.25);
+      --result-bg: linear-gradient(180deg, rgba(69,26,3,0.78) 0%, rgba(15,23,42,0.96) 100%);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic UI", "Meiryo", sans-serif;
+      background-color: var(--bg);
+      background-image: radial-gradient(circle at 50% 0%, var(--theme-glow), transparent 55%);
+      color: var(--text);
+      line-height: 1.45;
+      padding: 8px 12px 20px;
+      min-height: 100vh;
+    }
+    .container { max-width: 520px; margin: 0 auto; }
+
+    /* Top Bar & Compact Title */
+    .top-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .back-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 6px 12px; border-radius: 999px;
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid rgba(148,163,184,0.32);
+      box-shadow: 0 2px 0 #020617, inset 0 1px 0 rgba(255,255,255,0.1);
+      color: #e2e8f0; text-decoration: none; font-size: 0.75rem; font-weight: 800;
+    }
+    .top-tag {
+      font-size: 0.68rem; font-weight: 900; color: var(--light);
+      background: var(--soft-bg); border: 1px solid var(--theme-border);
+      padding: 3px 10px; border-radius: 999px;
+    }
+    .page-header {
+      margin-bottom: 9px; padding: 0 2px;
+    }
+    .page-title {
+      font-size: 1.15rem; font-weight: 900; color: #ffffff;
+      letter-spacing: -0.02em; line-height: 1.25;
+      display: flex; align-items: center; gap: 7px;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    }
+    .page-title svg { width: 20px; height: 20px; stroke: var(--light); flex-shrink: 0; }
+    .page-sub {
+      font-size: 0.72rem; color: #cbd5e1; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    /* ① Unified Input Card */
+    .input-card {
+      background: linear-gradient(180deg, #17223b 0%, #0f172a 100%);
+      border: 1.5px solid rgba(148, 163, 184, 0.28);
+      border-radius: 16px;
+      padding: 11px 12px;
+      margin-bottom: 10px;
+      box-shadow: 0 5px 0 #020617, 0 8px 18px rgba(0,0,0,0.42), inset 0 1px 1px rgba(255,255,255,0.1);
+    }
+    .sec-label {
+      font-size: 0.73rem; font-weight: 900; color: var(--light);
+      margin-bottom: 7px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .sec-label span.hint { font-size: 0.68rem; color: #94a3b8; font-weight: 700; }
+
+    /* 2x2 Preset Grid */
+    .preset-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 7px;
+      margin-bottom: 10px;
+    }
+    .preset-btn {
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+      border: 1.5px solid rgba(148, 163, 184, 0.26);
+      color: #cbd5e1; padding: 7px 6px; border-radius: 11px;
+      font-size: 0.74rem; font-weight: 800; cursor: pointer;
+      text-align: center; line-height: 1.25;
+      box-shadow: 0 3px 0 #020617, inset 0 1px 0 rgba(255,255,255,0.08);
+      transition: transform 0.1s;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .preset-btn small {
+      display: block; font-size: 0.62rem; color: #94a3b8; font-weight: 700; margin-top: 1px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .preset-btn.active {
+      background: linear-gradient(180deg, var(--c1) 0%, var(--c2) 100%);
+      border-color: var(--light); color: #ffffff;
+      box-shadow: 0 3px 0 #020617, 0 0 12px var(--theme-glow), inset 0 1.5px 1px rgba(255,255,255,0.35);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.45);
+    }
+    .preset-btn.active small { color: rgba(255,255,255,0.92); }
+
+    /* Sliders inside Input Card */
+    .slider-row {
+      margin-top: 8px; padding-top: 8px;
+      border-top: 1px solid rgba(148, 163, 184, 0.15);
+    }
+    .slider-row:first-of-type { margin-top: 0; }
+    .slider-top {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 5px; gap: 6px;
+    }
+    .slider-name { font-size: 0.75rem; font-weight: 800; color: #e2e8f0; white-space: nowrap; }
+    .slider-val {
+      font-size: 0.88rem; font-weight: 900; color: var(--light);
+      background: rgba(2, 6, 23, 0.65); border: 1px solid var(--theme-border);
+      padding: 2px 9px; border-radius: 8px;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    input[type="range"] {
+      -webkit-appearance: none; appearance: none;
+      width: 100%; height: 8px; border-radius: 999px;
+      background: #090e1a; border: 1px solid rgba(148,163,184,0.25);
+      outline: none; cursor: pointer;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none;
+      width: 24px; height: 24px; border-radius: 50%;
+      background: linear-gradient(180deg, var(--light) 0%, var(--c1) 55%, var(--c2) 100%);
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.65), 0 0 10px var(--theme-glow);
+      cursor: pointer;
+    }
+
+    /* ② Real-time Result Card (Immediately below Input Card, ZERO ad buttons inside) */
+    .result-card {
+      background: var(--result-bg);
+      border: 2px solid var(--theme-border);
+      border-radius: 16px;
+      padding: 12px 13px;
+      margin-bottom: 11px;
+      text-align: center;
+      box-shadow: 0 5px 0 #020617, 0 10px 24px rgba(0,0,0,0.5), 0 0 20px var(--theme-glow), inset 0 1.5px 1px rgba(255,255,255,0.18);
+    }
+    .res-eyebrow {
+      font-size: 0.72rem; font-weight: 800; color: #e2e8f0;
+      margin-bottom: 2px; white-space: nowrap;
+    }
+    .res-hero {
+      font-size: 1.72rem; font-weight: 900; color: var(--light);
+      line-height: 1.18; letter-spacing: -0.02em;
+      text-shadow: 0 2px 12px var(--theme-glow);
+      font-variant-numeric: tabular-nums;
+      margin-bottom: 8px; white-space: nowrap;
+    }
+    .res-sub-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 7px;
+    }
+    .res-pill {
+      background: rgba(2, 6, 23, 0.62);
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      border-radius: 10px; padding: 6px 6px;
+    }
+    .res-pill-lbl { font-size: 0.64rem; color: #94a3b8; font-weight: 700; white-space: nowrap; }
+    .res-pill-val {
+      font-size: 0.84rem; font-weight: 900; color: #ffffff;
+      margin-top: 1px; font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    /* ③ Curated Action Cards */
+    .action-sec-title {
+      font-size: 0.75rem; font-weight: 900; color: #cbd5e1;
+      margin: 2px 2px 6px; display: flex; align-items: center; gap: 5px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .action-list { display: flex; flex-direction: column; gap: 7px; }
+    .action-card {
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+      background: linear-gradient(180deg, #17223b 0%, #0f172a 100%);
+      border: 1.5px solid rgba(148, 163, 184, 0.26);
+      border-radius: 14px; padding: 9px 11px;
+      text-decoration: none; color: var(--text);
+      box-shadow: 0 4px 0 #020617, 0 6px 14px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+    .action-card.slot-hero {
+      background: linear-gradient(180deg, rgba(30, 41, 59, 0.98) 0%, rgba(15, 23, 42, 0.99) 100%);
+      border: 2px solid #fbbf24;
+      border-top-color: #fef08a;
+      border-left: 5px solid #f59e0b;
+      padding: 10px 11px;
+      box-shadow: 0 5px 0 #020617, 0 0 18px rgba(245, 158, 11, 0.35), inset 0 1.5px 1px rgba(255, 255, 255, 0.25);
+    }
+    .slot1-crown {
+      display: table; font-size: 0.60rem; font-weight: 900;
+      color: #090d16;
+      background: linear-gradient(90deg, #fde047 0%, #f59e0b 100%);
+      border: 1px solid #fef08a;
+      padding: 1px 7px; border-radius: 999px; margin-bottom: 3px;
+      letter-spacing: -0.02em; white-space: nowrap;
+      box-shadow: 0 1px 4px rgba(245, 158, 11, 0.35);
+    }
+    .action-info { flex: 1; min-width: 0; }
+    .action-badge {
+      display: inline-block; font-size: 0.59rem; font-weight: 900;
+      color: var(--light); background: var(--soft-bg);
+      border: 1px solid var(--theme-border);
+      padding: 1px 6px; border-radius: 999px; margin-bottom: 3px;
+      letter-spacing: -0.02em; white-space: nowrap;
+    }
+    .action-name {
+      font-size: 0.77rem; font-weight: 900; color: #ffffff;
+      line-height: 1.25; letter-spacing: -0.02em; white-space: nowrap;
+    }
+    .action-btn {
+      flex-shrink: 0;
+      padding: 8px 11px; border-radius: 10px;
+      font-size: 0.75rem; font-weight: 900;
+      color: #1e1b4b;
+      background: linear-gradient(180deg, #fde047 0%, #f59e0b 55%, #d97706 100%);
+      border: 1.5px solid #fef08a;
+      box-shadow: 0 3px 0 #78350f, inset 0 1px 1px rgba(255,255,255,0.65);
+      white-space: nowrap;
+    }
+    .action-card.secondary .action-btn {
+      color: #ffffff;
+      background: linear-gradient(180deg, var(--c1) 0%, var(--c2) 100%);
+      border-color: var(--light);
+      box-shadow: 0 3px 0 #020617, inset 0 1px 1px rgba(255,255,255,0.35);
+    }
+
+    /* === SEO Guide Table & FAQ Accordion (Below the Fold) === */
+    .seo-guide-sec {
+      max-width: 580px; margin: 18px auto 0; padding: 0 12px;
+    }
+    .seo-card {
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.96) 0%, rgba(9, 13, 22, 0.99) 100%);
+      border: 1.5px solid rgba(148, 163, 184, 0.24);
+      border-top-color: rgba(255, 255, 255, 0.22);
+      border-radius: 16px; padding: 14px 12px; margin-bottom: 12px;
+      box-shadow: 0 4px 0 #020617, 0 8px 20px rgba(0,0,0,0.45);
+    }
+    .seo-sec-title {
+      font-size: 0.84rem; font-weight: 900; color: #f8fafc;
+      margin: 0 0 10px; line-height: 1.35; display: flex; align-items: center; gap: 6px;
+    }
+    .seo-table-wrap {
+      width: 100%; overflow-x: hidden; border-radius: 10px;
+      border: 1px solid rgba(148, 163, 184, 0.22); background: rgba(2, 6, 23, 0.65);
+    }
+    .seo-table {
+      width: 100%; border-collapse: collapse; font-size: 0.72rem; text-align: left;
+    }
+    .seo-table th {
+      background: rgba(30, 41, 59, 0.92); color: #cbd5e1; font-weight: 800;
+      padding: 7px 6px; border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+      font-size: 0.68rem; white-space: nowrap;
+    }
+    .seo-table td {
+      padding: 7px 6px; border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+      color: #e2e8f0; font-weight: 700; line-height: 1.25;
+    }
+    .seo-table tr:last-child td { border-bottom: none; }
+    .seo-table td:last-child { color: var(--light, #fde047); font-weight: 900; }
+    .seo-note {
+      font-size: 0.68rem; color: #94a3b8; margin: 8px 0 0; line-height: 1.45;
+    }
+    .faq-list { display: flex; flex-direction: column; gap: 7px; }
+    .faq-item {
+      background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(148, 163, 184, 0.22);
+      border-radius: 11px; overflow: hidden;
+    }
+    .faq-item summary {
+      padding: 10px 11px; font-size: 0.76rem; font-weight: 800; color: #f1f5f9;
+      cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 8px;
+      line-height: 1.35;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after {
+      content: '＋'; font-size: 0.85rem; font-weight: 900; color: var(--light, #fde047); flex-shrink: 0;
+    }
+    .faq-item[open] summary::after { content: '－'; }
+    .faq-ans {
+      padding: 0 11px 10px; font-size: 0.72rem; color: #cbd5e1; line-height: 1.55;
+      border-top: 1px solid rgba(148, 163, 184, 0.14); padding-top: 8px;
+    }
+
+    /* v8.2 Anti-Overflow & Slot 1 Hero Tuning (390px Strict Fit) */
+    .action-slot { padding: 8px 9px !important; gap: 6px !important; }
+    .action-slot.slot-hero { padding: 9px 9px !important; }
+    .action-info { min-width: 0 !important; flex: 1 1 0% !important; overflow: hidden !important; }
+    .slot1-crown {
+      display: inline-flex !important;
+      max-width: 100% !important;
+      font-size: 0.49rem !important;
+      letter-spacing: -0.02em !important;
+      padding: 2px 5px !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+    }
+    .action-badge {
+      display: inline-block !important;
+      max-width: 100% !important;
+      font-size: 0.48rem !important;
+      letter-spacing: -0.02em !important;
+      padding: 1px 4px !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+    }
+    .action-name {
+      display: block !important;
+      max-width: 100% !important;
+      font-size: 0.61rem !important;
+      letter-spacing: -0.02em !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+    }
+    .action-btn {
+      padding: 7px 7px !important;
+      font-size: 0.68rem !important;
+      flex-shrink: 0 !important;
+    }
+  
+    /* CW_SUBTRACT_AFF_CSS */
+    .action-card.secondary { display: none !important; }
+    .cw-admax-slot iframe { margin: 0 auto !important; border-radius: 8px; }
+    /* CW_SUBTRACT_AFF_CSS_END */
+  </style>
+  <script type="application/ld+json" id="appJsonLd">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "年末調整・医療費控除 1秒還付金シミュレーター",
+  "operatingSystem": "Web",
+  "applicationCategory": "FinanceApplication",
+  "url": "https://coreworks-portal.pages.dev/calc_tax_refund.html",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "description": "年収と医療費・生命保険・iDeCo等の控除対象額から、所得税の還付金と翌年の住民税減税額を1秒で試算する無料シミュレーター。"
+}
+  </script>
+  <script type="application/ld+json" id="faqJsonLd">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "医療費控除は年間10万円を超えていなくても申告できますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "はい。総所得金額等が200万円未満の方は「所得の5%」を超えた分から医療費控除が使えます。また、市販薬（スイッチOTC医薬品）を年間1万2,000円以上購入した場合は「セルフメディケーション税制」で還付を受けられます。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "医療費控除や生命保険料控除で戻ってくるお金はいつもらえますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "所得税の還付金は、年末調整なら12月または1月の給与明細、確定申告（e-Tax）なら申告後およそ2〜3週間で指定口座に振り込まれます。住民税の減税分は翌年6月以降の住民税から自動的に差し引かれます。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "医療費控除とふるさと納税を併用すると損をしますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "併用しても損はしませんが、医療費控除の金額によってふるさと納税の控除上限額が数千円ほど下がる場合があります。また、確定申告で医療費控除を行う場合はワンストップ特例が無効になるため、ふるさと納税分も一緒に確定申告へ記載してください。"
+      }
+    }
+  ]
+}
+  </script>
+<!-- Coreworks Telemetry & GA4 Hook v8.2 -->
+<script id="cw-telemetry-v82">
+(function(){
+  if (window.cwTrack) return;
+  const STORAGE_KEY = 'cw_telemetry_v1';
+  window.cwTrack = function(eventName, params) {
+    try {
+      const payload = Object.assign({
+        event: String(eventName || 'unknown'),
+        path: location.pathname,
+        ts: new Date().toISOString()
+      }, params || {});
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', payload.event, payload);
+      }
+      if (Array.isArray(window.dataLayer)) {
+        window.dataLayer.push(payload);
+      }
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        const list = raw ? JSON.parse(raw) : [];
+        list.push(payload);
+        if (list.length > 80) list.splice(0, list.length - 80);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+      } catch(e) {}
+      if (window.CW_BEACON_URL && navigator.sendBeacon) {
+        navigator.sendBeacon(window.CW_BEACON_URL, JSON.stringify(payload));
+      }
+    } catch(err) {}
+  };
+  document.addEventListener('DOMContentLoaded', function() {
+    window.cwTrack('page_view', { title: document.title });
+  });
+  document.addEventListener('click', function(e) {
+    const a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+    if (a) {
+      const href = a.getAttribute('href') || '';
+      if (href.includes('a8.net') || href.includes('moshimo.com') || href.includes('rakuten.co.jp')) {
+        const label = (a.innerText || a.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 60);
+        window.cwTrack('pr_click', { id: a.id || '', label: label, href: href.slice(0, 120) });
+      }
+    }
+    const btn = e.target && e.target.closest ? e.target.closest('.preset-btn, .sub-tile, .preset-tile, .opt-btn, .tile-btn') : null;
+    if (btn) {
+      const tLabel = (btn.innerText || btn.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 40);
+      window.cwTrack('calc_interact', { label: tLabel });
+    }
+  }, true);
+})();
+</script>
+</head>
+<body>
+  <div class="container">
+    <div class="top-bar">
+      <a href="/?tab=tools&v=8.2" class="back-pill">← 損得計算一覧へ</a>
+      <span class="top-tag">年末調整・確定申告対応</span>
+    </div>
+    <div class="page-header">
+      <h1 class="page-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+        年末調整・医療費控除 1秒還付金計算
+      </h1>
+      <p class="page-sub">年収と医療費・控除額から「戻る税金（還付＋住民税減税）」を即算出</p>
+    </div>
+
+    <!-- ① 統合入力カード -->
+    <div class="input-card">
+      <div class="sec-label">① 申告・控除パターンを選択 <span class="hint">ワンタップ入力</span></div>
+      <div class="preset-grid" id="presetGrid">
+        <button type="button" class="preset-btn active" data-inc="500" data-exp="25" data-mode="medical">会社員＋医療費15万円<small>通院・歯科・薬代合算</small></button>
+        <button type="button" class="preset-btn" data-inc="500" data-exp="24" data-mode="deduct">会社員＋生命保険・iDeCo<small>年末調整の控除追加</small></button>
+        <button type="button" class="preset-btn" data-inc="600" data-exp="30" data-mode="deduct">副業・確定申告<small>経費・控除の還付試算</small></button>
+        <button type="button" class="preset-btn" data-inc="550" data-exp="45" data-mode="medical">出産・入院費用あり<small>高額医療費の還付試算</small></button>
+      </div>
+
+      <div class="slider-row">
+        <div class="slider-top">
+          <span class="slider-name">① 年収（万円）</span>
+          <span class="slider-val" id="incomeVal">500 万円</span>
+        </div>
+        <input type="range" id="incomeSlider" min="200" max="1500" step="25" value="500">
+      </div>
+      <div class="slider-row">
+        <div class="slider-top">
+          <span class="slider-name" id="expenseLabel">② 医療費・控除対象の年間支払額（万円）</span>
+          <span class="slider-val" id="expenseVal">15 万円</span>
+        </div>
+        <input type="range" id="expenseSlider" min="2" max="120" step="1" value="15">
+      </div>
+    </div>
+
+    <!-- ② リアルタイム計算結果カード -->
+    <div class="result-card">
+      <div class="res-eyebrow" id="resEyebrow">あなたに戻る税金（所得税還付＋住民税減税）目安総額</div>
+      <div class="res-hero" id="totalRefundVal">約 10,000 円</div>
+      <div class="res-sub-grid">
+        <div class="res-pill">
+          <div class="res-pill-lbl">振込される所得税還付</div>
+          <div class="res-pill-val" id="incomeTaxVal">約 5,000 円</div>
+        </div>
+        <div class="res-pill">
+          <div class="res-pill-lbl">翌年安くなる住民税減税</div>
+          <div class="res-pill-val" id="residentTaxVal">約 5,000 円</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CW_ADMAX_START -->
+    <div class="cw-admax-slot" id="cwAdmaxSlotResult" style="width:320px;max-width:100%;min-height:50px;margin:4px auto 9px;text-align:center;display:block;border-radius:8px;">
+      <!-- admax -->
+      <script src="https://adm.shinobi.jp/o/852a01d54c1ef0f41c5b53fc60a1e90c"></script>
+      <!-- admax -->
+    </div>
+    <!-- CW_ADMAX_END -->
+
+    <!-- ③ 厳選1枠の解決策カード -->
+    <div class="action-sec-title" id="trActionSecTitle">▼ 還付金と合わせてさらに節税枠を最大化する（PR）</div>
+    <div class="action-list">
+      <a href="https://px.a8.net/svt/ejp?a8mat=4BGJFT+7SF6PE+3ZZC+HV7V6" target="_blank" rel="nofollow sponsored noopener" class="action-card slot-hero">
+        <div class="action-info">
+          <span class="slot1-crown"><svg width="11" height="11" viewBox="0 0 24 24" fill="#fde047" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:3px;flex-shrink:0;"><path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>迷ったらコレ！最短30秒・0円登録で最大500pt</span>
+          <span class="action-badge" id="trBadge1">ふるさと納税・ネット申告前の経由でポイントW還元（PR）</span>
+          <div class="action-name">ワラウ（warau）｜30秒無料登録＆楽天ふるさと納税W還元</div>
+        </div>
+        <span class="action-btn">0円特典登録 ↗</span>
+      </a>
+      <a href="https://af.moshimo.com/af/c/click?a_id=5876771&p_id=54&pc_id=54&pl_id=616&url=https%3A%2F%2Fevent.rakuten.co.jp%2Ffurusato%2F" target="_blank" rel="nofollow sponsored noopener" class="action-card secondary">
+        <div class="action-info">
+          <span class="action-badge">自己負担2,000円でお米・日用品が届く節税制度（PR）</span>
+          <div class="action-name">楽天ふるさと納税 総合人気ランキング</div>
+        </div>
+        <span class="action-btn">返礼品を見る ↗</span>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    const incomeSlider = document.getElementById('incomeSlider');
+    const expenseSlider = document.getElementById('expenseSlider');
+    const incomeVal = document.getElementById('incomeVal');
+    const expenseVal = document.getElementById('expenseVal');
+    const totalRefundVal = document.getElementById('totalRefundVal');
+    const incomeTaxVal = document.getElementById('incomeTaxVal');
+    const residentTaxVal = document.getElementById('residentTaxVal');
+    const trActionSecTitle = document.getElementById('trActionSecTitle');
+    const trBadge1 = document.getElementById('trBadge1');
+    let currentMode = 'medical';
+
+    function getIncomeTaxRate(incMan) {
+      if (incMan <= 330) return 0.05;
+      if (incMan <= 500) return 0.10;
+      if (incMan <= 900) return 0.20;
+      if (incMan <= 1200) return 0.23;
+      return 0.33;
+    }
+
+    function update() {
+      const inc = parseInt(incomeSlider.value, 10);
+      const exp = parseInt(expenseSlider.value, 10);
+      incomeVal.textContent = inc.toLocaleString() + ' 万円';
+      expenseVal.textContent = exp.toLocaleString() + ' 万円';
+
+      const taxRate = getIncomeTaxRate(inc);
+      const resRate = 0.10;
+      let deductYen = 0;
+      if (currentMode === 'medical') {
+        if (exp > 10) {
+          deductYen = (exp - 10) * 10000;
+        } else {
+          // セルフメディケーション税制（1.2万円超）または少額控除目安
+          deductYen = Math.max(8000, Math.round((exp - 1.2) * 10000));
+        }
+      } else {
+        deductYen = exp * 10000;
+      }
+
+      const incRefund = Math.round((deductYen * taxRate) / 100) * 100;
+      const resCut = Math.round((deductYen * resRate) / 100) * 100;
+      const total = incRefund + resCut;
+
+      totalRefundVal.textContent = '約 ' + total.toLocaleString() + ' 円';
+      incomeTaxVal.textContent = '約 ' + incRefund.toLocaleString() + ' 円';
+      residentTaxVal.textContent = '約 ' + resCut.toLocaleString() + ' 円';
+
+      trActionSecTitle.textContent = '▼ 還付・減税 約' + total.toLocaleString() + '円＋節税枠を最大化する（PR）';
+      trBadge1.textContent = '年収' + inc.toLocaleString() + '万円世帯のふるさと納税・ポイ活W還元（PR）';
+    }
+
+    document.querySelectorAll('#presetGrid .preset-btn').forEach((btn, idx) => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#presetGrid .preset-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentMode = btn.getAttribute('data-mode') || 'medical';
+        incomeSlider.value = btn.getAttribute('data-inc');
+        expenseSlider.value = idx === 0 ? '15' : btn.getAttribute('data-exp');
+        update();
+      });
+    });
+    incomeSlider.addEventListener('input', update);
+    expenseSlider.addEventListener('input', update);
+    update();
+  </script>
+
+  <section class="seo-guide-sec" id="seoGuideSec">
+    <div class="seo-card">
+      <h2 class="seo-sec-title">📊 年収×医療費・控除額別「還付金＋住民税減税」早見表（2026年目安）</h2>
+      <div class="seo-table-wrap">
+        <table class="seo-table">
+          <thead>
+            <tr><th>額面年収</th><th>医療費15万円</th><th>医療費30万円</th><th>iDeCo・保険24万円</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>400万円</td><td>約10,000円</td><td>約40,000円</td><td>約48,000円</td></tr>
+            <tr><td>500万円</td><td>約10,000円</td><td>約40,000円</td><td>約48,000円</td></tr>
+            <tr><td>600万円</td><td>約15,000円</td><td>約60,000円</td><td>約72,000円</td></tr>
+            <tr><td>800万円</td><td>約15,000円</td><td>約60,000円</td><td>約72,000円</td></tr>
+            <tr><td>1,000万円</td><td>約16,500円</td><td>約66,000円</td><td>約79,200円</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="seo-note">※医療費控除は「年間支払医療費－保険金等の補填－10万円（所得200万未満は5%）」に所得税率＋住民税率（10%）を掛けた金額が還付・減税されます。</p>
+    </div>
+    <div class="seo-card">
+      <h2 class="seo-sec-title">❓ よくある質問（Q&amp;A）</h2>
+      <div class="faq-list">
+        <details class="faq-item" open>
+          <summary>Q. 医療費控除は年間10万円を超えていなくても申告できますか？</summary>
+          <div class="faq-ans">はい。総所得金額等が200万円未満の方は「所得の5%」を超えた分から医療費控除が使えます。また、対象の市販薬（スイッチOTC医薬品）を年間1万2,000円以上購入した場合は「セルフメディケーション税制」で還付を受けられます。</div>
+        </details>
+        <details class="faq-item">
+          <summary>Q. 医療費控除や生命保険料控除で戻ってくるお金はいつもらえますか？</summary>
+          <div class="faq-ans">所得税の還付金は、年末調整なら12月または1月の給与明細、確定申告（スマホe-Tax）なら申告後およそ2〜3週間で指定口座に振り込まれます。住民税の減税分は翌年6月以降の住民税から自動的に差し引かれます。</div>
+        </details>
+        <details class="faq-item">
+          <summary>Q. 医療費控除とふるさと納税を併用すると損をしますか？</summary>
+          <div class="faq-ans">併用しても損はしませんが、医療費控除の金額によってふるさと納税の控除上限額が数千円ほど下がる場合があります。また、確定申告で医療費控除を行う場合はワンストップ特例が無効になるため、ふるさと納税分も一緒に確定申告へ記載してください。</div>
+        </details>
+      </div>
+    </div>
+  <!-- CW_CROSS_NAV_START -->
+    <div class="seo-card" id="cwCrossNavCard" style="border-color:rgba(56,189,248,0.35);">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:8px;">
+        <h2 class="seo-sec-title" style="margin:0;font-size:0.80rem;">⚡ 続けて1秒診断！他の家計損得シミュレーター（登録不要）</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:7px;">
+        <a href="/calc_nisa_compound.html" class="cw-cross-item" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 10px;border-radius:12px;background:linear-gradient(180deg,#1e293b 0%,#0f172a 100%);border:1.5px solid rgba(148,163,184,0.24);border-left:4px solid #10b981;text-decoration:none;color:#f8fafc;box-shadow:0 3px 0 #020617;">
+          <div style="min-width:0;flex:1;">
+            <div style="font-size:0.60rem;font-weight:800;color:#93c5fd;line-height:1.2;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">非課税メリット＋100万円超｜毎月積立×利回りで将来資産試算</div>
+            <div style="font-size:0.74rem;font-weight:900;color:#ffffff;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">新NISA 積立・複利＆非課税メリット1秒計算機</div>
+          </div>
+          <span style="flex-shrink:0;font-size:0.68rem;font-weight:900;color:#090d16;background:linear-gradient(180deg,#fde047 0%,#f59e0b 100%);padding:5px 8px;border-radius:8px;white-space:nowrap;">1秒計算 ➔</span>
+        </a>
+        <a href="/calc_car_cost.html" class="cw-cross-item" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 10px;border-radius:12px;background:linear-gradient(180deg,#1e293b 0%,#0f172a 100%);border:1.5px solid rgba(148,163,184,0.24);border-left:4px solid #06b6d4;text-decoration:none;color:#f8fafc;box-shadow:0 3px 0 #020617;">
+          <div style="min-width:0;flex:1;">
+            <div style="font-size:0.60rem;font-weight:800;color:#93c5fd;line-height:1.2;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">10年総額496万円！？｜1回乗車あたり実質コスト＆手放し損得</div>
+            <div style="font-size:0.74rem;font-weight:900;color:#ffffff;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">マイカー維持費 vs 乗り換え 10年損得計算機</div>
+          </div>
+          <span style="flex-shrink:0;font-size:0.68rem;font-weight:900;color:#090d16;background:linear-gradient(180deg,#fde047 0%,#f59e0b 100%);padding:5px 8px;border-radius:8px;white-space:nowrap;">1秒計算 ➔</span>
+        </a>
+        <a href="/furusato-tax/" class="cw-cross-item" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 10px;border-radius:12px;background:linear-gradient(180deg,#1e293b 0%,#0f172a 100%);border:1.5px solid rgba(148,163,184,0.24);border-left:4px solid #f59e0b;text-decoration:none;color:#f8fafc;box-shadow:0 3px 0 #020617;">
+          <div style="min-width:0;flex:1;">
+            <div style="font-size:0.60rem;font-weight:800;color:#93c5fd;line-height:1.2;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">12月前の必須診断｜実質2,000円でお米・日用品＋0円ポイ活</div>
+            <div style="font-size:0.74rem;font-weight:900;color:#ffffff;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">ふるさと納税 控除上限1秒計算</div>
+          </div>
+          <span style="flex-shrink:0;font-size:0.68rem;font-weight:900;color:#090d16;background:linear-gradient(180deg,#fde047 0%,#f59e0b 100%);padding:5px 8px;border-radius:8px;white-space:nowrap;">1秒計算 ➔</span>
+        </a>
+        <a href="/winter-electricity/" class="cw-cross-item" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 10px;border-radius:12px;background:linear-gradient(180deg,#1e293b 0%,#0f172a 100%);border:1.5px solid rgba(148,163,184,0.24);border-left:4px solid #38bdf8;text-decoration:none;color:#f8fafc;box-shadow:0 3px 0 #020617;">
+          <div style="min-width:0;flex:1;">
+            <div style="font-size:0.60rem;font-weight:800;color:#93c5fd;line-height:1.2;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">年5〜6.8万円削減｜電気毛布 vs ヒーター＆プロパン0円比較</div>
+            <div style="font-size:0.74rem;font-weight:900;color:#ffffff;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">冬の暖房・電気ガス代1秒計算</div>
+          </div>
+          <span style="flex-shrink:0;font-size:0.68rem;font-weight:900;color:#090d16;background:linear-gradient(180deg,#fde047 0%,#f59e0b 100%);padding:5px 8px;border-radius:8px;white-space:nowrap;">1秒計算 ➔</span>
+        </a>
+        <a href="/sim-savings/" class="cw-cross-item" style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 10px;border-radius:12px;background:linear-gradient(180deg,#1e293b 0%,#0f172a 100%);border:1.5px solid rgba(148,163,184,0.24);border-left:4px solid #a855f7;text-decoration:none;color:#f8fafc;box-shadow:0 3px 0 #020617;">
+          <div style="min-width:0;flex:1;">
+            <div style="font-size:0.60rem;font-weight:800;color:#93c5fd;line-height:1.2;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">10年66〜96万円得｜GMOとくとくBB光・ドコモ光・WiMAX比較</div>
+            <div style="font-size:0.74rem;font-weight:900;color:#ffffff;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">スマホ×光回線 10年差額計算</div>
+          </div>
+          <span style="flex-shrink:0;font-size:0.68rem;font-weight:900;color:#090d16;background:linear-gradient(180deg,#fde047 0%,#f59e0b 100%);padding:5px 8px;border-radius:8px;white-space:nowrap;">1秒計算 ➔</span>
+        </a>
+      </div>
+      <div style="margin-top:10px;padding-top:9px;border-top:1px solid rgba(148,163,184,0.16);display:flex;justify-content:space-between;align-items:center;gap:8px;">
+        <a href="/?tab=tools&v=8.2" style="flex:1;text-align:center;padding:8px 8px;border-radius:10px;background:rgba(30,41,59,0.85);border:1px solid rgba(148,163,184,0.3);color:#e2e8f0;text-decoration:none;font-size:0.70rem;font-weight:800;white-space:nowrap;">🏠 全10計算機＆6脳トレ一覧へ</a>
+        <button type="button" onclick="(function(){var h=document.querySelector('.res-hero,.result-main,.big-val');var val=h?(h.innerText||'').trim():'';var txt='【1秒損得診断】'+document.title.split('｜')[0]+(val?' ➔ 試算結果: '+val:'')+'\n登録不要・スマホ1秒で家計の損得がわかる無料計算機👇';var url='https://twitter.com/intent/tweet?text='+encodeURIComponent(txt)+'&url='+encodeURIComponent(location.href);if(window.cwTrack)window.cwTrack('x_share',{from:location.pathname,val:val});window.open(url,'_blank','noopener,noreferrer');})()" style="flex:1;text-align:center;padding:8px 8px;border-radius:10px;background:linear-gradient(180deg,#1d9bf0 0%,#0c7abf 100%);border:1px solid #7dd3fc;color:#ffffff;font-size:0.70rem;font-weight:900;cursor:pointer;white-space:nowrap;">🐦 この試算結果をXでシェア</button>
+      </div>
+    </div>
+    <!-- CW_CROSS_NAV_END -->
+    <!-- CW_ADMAX_START -->
+    <div class="cw-admax-slot" id="cwAdmaxSlot" style="width:320px;max-width:100%;min-height:50px;margin:14px auto 6px;text-align:center;display:block;border-radius:8px;">
+      <!-- admax -->
+      <script src="https://adm.shinobi.jp/o/9e6a6115f9e2315f51570ae02c2969d7"></script>
+      <!-- admax -->
+    </div>
+    <!-- CW_ADMAX_END -->
+  </section>
+<!-- Moshimo Official Rakuten Sponsor -->
+<footer style="max-width: 580px; margin: 28px auto 16px; padding: 14px 16px 0; border-top: 1px solid rgba(148,163,184,0.18); text-align: center; font-size: 0.74rem; color: #64748b;">
+  <div style="margin-bottom: 6px;">
+    <a href="/?tab=tools&v=8.2" style="color: #94a3b8; text-decoration: none; font-weight: 700;">← 損得計算一覧へ</a>
+    <span style="margin: 0 8px; color: #475569;">｜</span>
+    <a href="/?tab=games&v=8.2" style="color: #94a3b8; text-decoration: none;">脳トレゲーム一覧</a>
+    <span style="margin: 0 8px; color: #475569;">｜</span>
+    <a href="/about/" style="color: #94a3b8; text-decoration: none;">運営者情報・外部送信公表</a>
+  </div>
+  <div style="font-size:0.63rem; letter-spacing:-0.02em; white-space:nowrap;">※本サイトはアフィリエイト広告（A8.net・もしもアフィリエイト等）を利用しています。</div>
+  <div style="font-size:0.60rem; letter-spacing:-0.02em; color:#64748b; margin-top:2px;">※試算結果は一般的な目安であり、実際の料金・削減額・控除額等はご契約条件や使用状況により異なります。最新条件は各公式サイトにてご確認ください。</div>
+  <div style="margin-top:3px; font-size:0.68rem;">© 2026 Coreworks Studio</div>
+  <img src="https://i.moshimo.com/af/i/impression?a_id=5876771&p_id=54&pc_id=54&pl_id=618" width="1" height="1" style="border:none;" loading="lazy" alt="">
+</footer>
+</body>
+</html>

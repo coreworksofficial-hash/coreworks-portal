@@ -7,7 +7,7 @@
   <meta name="description" content="登録不要・完全無料！家電の元取り計算機、冬の暖房電気代シミュレーター、サブスク・固定費10年総額チェッカー、ふるさと納税上限計算と、スマホで遊べる瞬間脳トレ・IQ診断ゲーム集。">
   <link rel="canonical" href="https://coreworks-portal.pages.dev/">
   <meta property="og:title" content="Coreworks｜1秒損得計算 ＆ 瞬間脳トレIQラボ">
-  <meta property="og:description" content="固定費・暖房費・ふるさと納税・家電元取りが1秒でわかる無料シミュレーター全7種＆瞬間脳トレIQゲーム全6種。">
+  <meta property="og:description" content="固定費・暖房費・ふるさと納税・年末調整・新NISA・車維持費が1秒でわかる無料シミュレーター全10種＆瞬間脳トレIQゲーム全6種。">
   <meta property="og:url" content="https://coreworks-portal.pages.dev/">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
@@ -17,8 +17,11 @@
     "@type": "WebSite",
     "name": "Coreworks｜1秒損得計算 ＆ 瞬間脳トレIQラボ",
     "url": "https://coreworks-portal.pages.dev/",
-    "description": "家電や暖房費の元取り1秒計算ツール全7種と、スマホで今すぐ遊べる瞬間脳トレ・IQ診断ゲーム集全6種。",
+    "description": "税金・新NISA・車維持費・家電や暖房費の元取り1秒計算ツール全10種と、スマホで今すぐ遊べる瞬間脳トレ・IQ診断ゲーム集全6種。",
     "hasPart": [
+      { "@type": "WebApplication", "name": "年末調整・医療費控除 1秒還付金シミュレーター", "url": "https://coreworks-portal.pages.dev/calc_tax_refund.html", "applicationCategory": "FinanceApplication" },
+      { "@type": "WebApplication", "name": "新NISA 積立・複利＆非課税メリット1秒計算機", "url": "https://coreworks-portal.pages.dev/calc_nisa_compound.html", "applicationCategory": "FinanceApplication" },
+      { "@type": "WebApplication", "name": "マイカー維持費 vs 乗り換え・手放し 10年損得計算機", "url": "https://coreworks-portal.pages.dev/calc_car_cost.html", "applicationCategory": "FinanceApplication" },
       { "@type": "WebApplication", "name": "買ったら何ヶ月で元が取れる？1秒計算機", "url": "https://coreworks-portal.pages.dev/payback-calc/", "applicationCategory": "FinanceApplication" },
       { "@type": "WebApplication", "name": "冬の暖房器具 電気代1秒比較シミュレーター", "url": "https://coreworks-portal.pages.dev/winter-electricity/", "applicationCategory": "FinanceApplication" },
       { "@type": "WebApplication", "name": "サブスク＆隠れ固定費 10年総額チェッカー", "url": "https://coreworks-portal.pages.dev/subscription-calc/", "applicationCategory": "FinanceApplication" },
@@ -518,12 +521,36 @@
     </div>
 
     <div class="tab-bar" role="tablist">
-      <button type="button" class="tab-btn active" data-tab="calc" onclick="switchTab('calc')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:5px;filter:drop-shadow(0 1px 1px rgba(0,0,0,0.3));"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="11" x2="10" y2="11"/><line x1="14" y1="11" x2="16" y2="11"/><line x1="8" y1="16" x2="10" y2="16"/><line x1="14" y1="16" x2="16" y2="16"/></svg>暮らしの損得計算 (7)</button>
+      <button type="button" class="tab-btn active" data-tab="calc" onclick="switchTab('calc')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:5px;filter:drop-shadow(0 1px 1px rgba(0,0,0,0.3));"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="11" x2="10" y2="11"/><line x1="14" y1="11" x2="16" y2="11"/><line x1="8" y1="16" x2="10" y2="16"/><line x1="14" y1="16" x2="16" y2="16"/></svg>暮らしの損得計算 (10)</button>
       <button type="button" class="tab-btn" data-tab="game" onclick="switchTab('game')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:5px;filter:drop-shadow(0 1px 1px rgba(0,0,0,0.3));"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>脳トレゲーム (6)</button>
     </div>
 
     <div id="pane-calc" class="tab-pane active">
       <div class="app-grid">
+      <a href="/calc_tax_refund.html?v=8.2" class="app-card card-calc theme-amber">
+        <div class="app-icon app-icon-calc"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+        <div class="app-info">
+          <div class="app-title">年末調整・医療費 還付計算</div>
+          <div class="app-sub">医療費・iDeCoで戻る税金を算出</div>
+        </div>
+        <div class="app-badge" aria-hidden="true">計算 ›</div>
+      </a>
+      <a href="/calc_nisa_compound.html?v=8.2" class="app-card card-calc theme-emerald">
+        <div class="app-icon app-icon-calc"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+        <div class="app-info">
+          <div class="app-title">新NISA 積立＆非課税計算</div>
+          <div class="app-sub">将来資産と約20%非課税枠を試算</div>
+        </div>
+        <div class="app-badge" aria-hidden="true">計算 ›</div>
+      </a>
+      <a href="/calc_car_cost.html?v=8.2" class="app-card card-calc theme-cyan">
+        <div class="app-icon app-icon-calc"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg></div>
+        <div class="app-info">
+          <div class="app-title">マイカー維持費 10年損得</div>
+          <div class="app-sub">10年維持費と1回乗車コスト算出</div>
+        </div>
+        <div class="app-badge" aria-hidden="true">計算 ›</div>
+      </a>
       <a href="/furusato-tax/?v=8.2" class="app-card card-calc theme-amber">
         <div class="app-icon app-icon-calc"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13"/><path d="M3 12h18"/><path d="M12 8c-2-3-6-3-6 0s6 0 6 0z"/><path d="M12 8c2-3 6-3 6 0s-6 0-6 0z"/></svg></div>
         <div class="app-info">
