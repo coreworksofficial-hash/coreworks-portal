@@ -1677,6 +1677,79 @@
     }
   }
   /* CW_SUBTRACT_AFF_CSS_END */
+
+  /* CW_GAME_CALC_PILLS_CSS */
+  #modalCard {
+    padding: 15px 15px !important;
+    max-height: 95vh !important;
+    overflow-y: auto !important;
+  }
+  #modalTitle {
+    font-size: 21px !important;
+    margin-bottom: 6px !important;
+  }
+  #modalIQ {
+    padding: 5px 15px !important;
+    font-size: 14.5px !important;
+    margin-bottom: 8px !important;
+  }
+  #modalComment {
+    font-size: 13.5px !important;
+    margin-bottom: 10px !important;
+  }
+  #modalActionBtn, #modalReviveBtn {
+    padding: 12px 12px !important;
+    font-size: 16px !important;
+  }
+  #modalShareXBtn {
+    margin-top: 6px !important;
+    padding: 8px 10px !important;
+    font-size: 12.2px !important;
+  }
+  #modalZeroYenPrBtn {
+    margin-top: 6px !important;
+    padding: 8px 10px !important;
+    font-size: 12px !important;
+  }
+  #cwGameCalcPills {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 6px !important;
+    width: 100% !important;
+    margin-top: 6px !important;
+  }
+  .cw-game-calc-pill {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 7px 6px !important;
+    border-radius: 11px !important;
+    background: linear-gradient(180deg, rgba(16, 185, 129, 0.22) 0%, rgba(6, 78, 59, 0.45) 100%) !important;
+    border: 1.5px solid rgba(52, 211, 153, 0.65) !important;
+    color: #a7f3d0 !important;
+    font-size: 11.2px !important;
+    font-weight: 900 !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    box-shadow: 0 2px 0 #022c22, inset 0 1px 1px rgba(255, 255, 255, 0.2) !important;
+    transition: transform 0.08s ease !important;
+  }
+  .cw-game-calc-pill:active {
+    transform: translateY(2px) !important;
+  }
+  #modalPortalBtn {
+    margin-top: 6px !important;
+    padding: 8px 10px !important;
+    font-size: 12.2px !important;
+  }
+  html.android-apk #cwGameCalcPills,
+  .modal-card.boss-alert #cwGameCalcPills,
+  .modal-card.hint-empty-mode #cwGameCalcPills {
+    display: none !important;
+  }
+  /* CW_GAME_CALC_PILLS_CSS_END */
 </style>
 <!-- Coreworks Telemetry & GA4 Hook v8.2 -->
 <script id="cw-telemetry-v82">
@@ -1774,20 +1847,27 @@
       <div class="modal-badge" id="modalBadge">STAGE CLEAR!</div>
       <div class="modal-title" id="modalTitle">ステージクリア！</div>
       <div class="modal-iq" id="modalIQ">反射IQ 110</div>
-<!-- CW_ADMAX_START -->
-      <div class="cw-admax-slot web-portal-link" id="cwAdmaxSlotResult" style="width:320px;max-width:100%;min-height:50px;margin:0 auto 12px;text-align:center;display:block;border-radius:8px;">
-        <!-- admax -->
-        <script src="https://adm.shinobi.jp/o/852a01d54c1ef0f41c5b53fc60a1e90c"></script>
-        <!-- admax -->
-      </div>
-      <!-- CW_ADMAX_END -->
       <div class="modal-comment" id="modalComment">神速の周辺視野です！</div>
       <button class="primary-btn" id="modalReviveBtn" style="display:none;">🎬 動画を見て【同じ問題】に再挑戦</button>
       <button class="primary-btn" id="modalActionBtn">次のステージへ</button>
       <a id="modalShareXBtn" href="https://twitter.com/intent/tweet" target="_blank" rel="noopener noreferrer"><svg class="svg-ic" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> 結果をXでシェア（挑戦状を送る）</a>
       <a href="https://px.a8.net/svt/ejp?a8mat=4BGFJD+C9RNN6+2G98+614CY" target="_blank" rel="nofollow sponsored noopener" class="web-portal-link" id="modalZeroYenPrBtn">🎁 登録0円！遊んでAmazonギフト券GET（PR）↗</a>
       <a href="https://px.a8.net/svt/ejp?a8mat=4BGJFT+7CXWZ6+S7A+TSQTU" target="_blank" rel="nofollow sponsored noopener" class="web-portal-link" id="modalZeroYenSubPrBtn">🎯 0円登録｜クリックdeゲット＆毎日懸賞（PR）↗</a>
+            <!-- CW_GAME_CALC_PILLS_START -->
+      <div class="web-portal-link" id="cwGameCalcPills">
+        <a href="/calc_tax_refund.html?v=8.2" class="cw-game-calc-pill" onclick="if(window.cwTrack)window.cwTrack('game_to_calc',{target:'/calc_tax_refund.html'})">💰 医療費・年末調整計算 ›</a>
+        <a href="/furusato-tax/?v=8.2" class="cw-game-calc-pill" onclick="if(window.cwTrack)window.cwTrack('game_to_calc',{target:'/furusato-tax/'})">🎁 ふるさと納税上限 ›</a>
+      </div>
+      <!-- CW_GAME_CALC_PILLS_END -->
       <a href="/?tab=games&v=8.2" class="web-portal-link" id="modalPortalBtn">🏠 他の脳トレゲームを選ぶ（一覧へ）</a>
+
+<!-- CW_ADMAX_START -->
+      <div class="cw-admax-slot web-portal-link" id="cwAdmaxSlotResult" style="width:320px;max-width:100%;min-height:50px;margin:6px auto 0;text-align:center;display:block;border-radius:8px;">
+        <!-- admax -->
+        <script src="https://adm.shinobi.jp/o/852a01d54c1ef0f41c5b53fc60a1e90c"></script>
+        <!-- admax -->
+      </div>
+      <!-- CW_ADMAX_END -->
 <!-- Coreworks In-Game Monetization & Nav -->
       <div style="width:100%; margin-top:12px; padding-top:12px; border-top:1px solid rgba(148,163,184,0.2); display:flex; flex-direction:column; gap:8px;">
         <div style="display:flex; gap:8px; width:100%;">
