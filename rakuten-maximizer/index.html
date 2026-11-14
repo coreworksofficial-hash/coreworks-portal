@@ -334,6 +334,71 @@
     .action-card.secondary { display: none !important; }
     .cw-admax-slot iframe { margin: 0 auto !important; border-radius: 8px; }
     /* CW_SUBTRACT_AFF_CSS_END */
+  
+    /* CW_NEXT_CALC_PILLS_CSS */
+    .cw-next-pills {
+      margin-top: 8px;
+      padding: 8px 9px;
+      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.78);
+      border: 1px solid rgba(148, 163, 184, 0.22);
+    }
+    .cw-next-pills-lbl {
+      font-size: 0.65rem;
+      font-weight: 900;
+      color: #cbd5e1;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      letter-spacing: -0.01em;
+    }
+    .cw-next-pills-lbl span {
+      font-size: 0.58rem;
+      font-weight: 800;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      padding: 1px 6px;
+      border-radius: 999px;
+    }
+    .cw-next-pills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
+    }
+    .cw-next-pill {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+      padding: 7px 8px;
+      border-radius: 9px;
+      background: linear-gradient(180deg, rgba(30, 41, 59, 0.92) 0%, rgba(15, 23, 42, 0.96) 100%);
+      border: 1px solid rgba(56, 189, 248, 0.32);
+      color: #f8fafc;
+      text-decoration: none;
+      font-size: 0.66rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      min-width: 0;
+      box-shadow: 0 2px 0 #020617;
+      transition: transform 0.1s;
+    }
+    .cw-next-pill:active { transform: translateY(1px); }
+    .cw-next-pill-txt {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      min-width: 0;
+    }
+    .cw-next-pill-arr {
+      flex-shrink: 0;
+      color: #fde047;
+      font-size: 0.68rem;
+      font-weight: 900;
+    }
+    /* CW_NEXT_CALC_PILLS_CSS_END */
   </style>
   <script type="application/ld+json" id="faqJsonLd">
 {
@@ -516,6 +581,15 @@
         <span class="action-btn">0円無料登録 ↗</span>
       </a>
     </div>
+    <!-- CW_NEXT_CALC_PILLS_START -->
+    <div class="cw-next-pills" id="cwNextCalcPills">
+      <div class="cw-next-pills-lbl">あわせて1秒診断 <span>登録不要・無料</span></div>
+      <div class="cw-next-pills-grid">
+        <a href="/furusato-tax/" class="cw-next-pill"><span class="cw-next-pill-txt">ふるさと納税 控除上限計算</span><span class="cw-next-pill-arr">➔</span></a>
+        <a href="/calc_tax_refund.html" class="cw-next-pill"><span class="cw-next-pill-txt">医療費・年末調整 還付計算</span><span class="cw-next-pill-arr">➔</span></a>
+      </div>
+    </div>
+    <!-- CW_NEXT_CALC_PILLS_END -->
   </div>
 
   <script>
