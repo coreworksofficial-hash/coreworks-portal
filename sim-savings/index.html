@@ -351,17 +351,29 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 6px;
       letter-spacing: -0.01em;
     }
-    .cw-next-pills-lbl span {
-      font-size: 0.58rem;
-      font-weight: 800;
-      color: #38bdf8;
-      background: rgba(56, 189, 248, 0.12);
-      border: 1px solid rgba(56, 189, 248, 0.28);
-      padding: 1px 6px;
+    .cw-share-res-pill {
+      appearance: none;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.59rem;
+      font-weight: 900;
+      color: #0f172a;
+      background: linear-gradient(180deg, #7dd3fc 0%, #38bdf8 100%);
+      border: 1px solid #bae6fd;
+      padding: 2px 8px;
       border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      box-shadow: 0 2px 0 #0369a1;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: transform 0.1s;
     }
+    .cw-share-res-pill:active { transform: translateY(1px); }
     .cw-next-pills-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -575,7 +587,13 @@
     </div>
     <!-- CW_NEXT_CALC_PILLS_START -->
     <div class="cw-next-pills" id="cwNextCalcPills">
-      <div class="cw-next-pills-lbl">あわせて1秒診断 <span>登録不要・無料</span></div>
+      <div class="cw-next-pills-lbl">
+        <span>あわせて1秒診断</span>
+        <button type="button" class="cw-share-res-pill" id="cwShareResultBtn" onclick="(function(){var t=(document.querySelector('.page-title')?document.querySelector('.page-title').innerText:'1秒損得計算').replace(/\s+/g,' ').trim();var h=(document.querySelector('.res-hero')?document.querySelector('.res-hero').innerText:'').replace(/\s+/g,' ').trim();var subs=Array.from(document.querySelectorAll('.res-pill')).map(function(p){var l=p.querySelector('.res-pill-lbl'),v=p.querySelector('.res-pill-val');return l&&v?(l.innerText.trim()+':'+v.innerText.trim()):'';}).filter(Boolean).join(' / ');if(window.cwTrack)window.cwTrack('x_share',{calc:location.pathname,result:h});var msg='【'+t+'】私の1秒試算結果は「'+h+(subs?'（'+subs+'）':'')+'」でした！ #家計管理 #固定費見直し #Coreworks';window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(msg)+'&url='+encodeURIComponent(location.origin+location.pathname),'_blank','noopener');})()">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+          試算結果をXでシェア・メモ ↗
+        </button>
+      </div>
       <div class="cw-next-pills-grid">
         <a href="/calc_nisa_compound.html" class="cw-next-pill"><span class="cw-next-pill-txt">浮いた通信費で新NISA試算</span><span class="cw-next-pill-arr">➔</span></a>
         <a href="/calc_car_cost.html" class="cw-next-pill"><span class="cw-next-pill-txt">マイカー10年維持費 診断</span><span class="cw-next-pill-arr">➔</span></a>
