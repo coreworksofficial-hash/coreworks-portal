@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coreworks 公式Androidアプリ (APK) ダウンロード一覧</title>
+  <title>瞬間脳トレ！漢字間違い探しIQ｜公式Androidアプリ (APK) ダウンロード</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     body {
@@ -11,7 +11,7 @@
       color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
       padding: 20px 14px 48px; min-height: 100vh;
     }
-    .wrap { max-width: 640px; margin: 0 auto; }
+    .wrap { max-width: 560px; margin: 0 auto; }
     .back-nav { margin-bottom: 14px; }
     .back-link {
       display: inline-flex; align-items: center; gap: 6px;
@@ -21,39 +21,31 @@
       padding: 7px 13px; border-radius: 999px;
       box-shadow: 0 3px 0 #090d16, inset 0 1px 1px rgba(255,255,255,0.25);
     }
-    h1 { font-size: 1.22rem; font-weight: 900; margin-bottom: 5px; text-align: center; white-space: nowrap; text-shadow: 0 2px 6px rgba(0,0,0,0.6); }
-    p { font-size: 0.82rem; color: #cbd5e1; text-align: center; margin-bottom: 16px; font-weight: 600; white-space: nowrap; }
+    h1 { font-size: 1.22rem; font-weight: 900; margin-bottom: 5px; text-align: center; text-shadow: 0 2px 6px rgba(0,0,0,0.6); }
+    p { font-size: 0.82rem; color: #cbd5e1; text-align: center; margin-bottom: 16px; font-weight: 600; }
     .list { display: flex; flex-direction: column; gap: 12px; }
     .apk-card {
-      --t-light: #34d399; --t-mid: #10b981; --t-dark: #059669;
-      --t-border: #a7f3d0; --t-shadow: #064e3b; --t-glow: rgba(16, 185, 129, 0.42);
-      --t-text: #042f2e; --t-tshadow: rgba(255, 255, 255, 0.55);
+      --t-light:#60a5fa; --t-mid:#3b82f6; --t-dark:#1d4ed8; --t-border:#bfdbfe; --t-shadow:#1e3a8a; --t-glow:rgba(59,130,246,0.48); --t-text:#ffffff; --t-tshadow:rgba(0,0,0,0.6);
       display: flex; align-items: center; gap: 12px;
       background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
       border: 1.5px solid #334155; border-top-color: #64748b; border-left: 5px solid var(--t-mid);
-      border-radius: 16px; padding: 11px 12px; text-decoration: none; color: inherit;
+      border-radius: 16px; padding: 14px 14px; text-decoration: none; color: inherit;
       box-shadow: 0 5px 0 #050811, 0 8px 18px rgba(0,0,0,0.5), inset 0 1.5px 1px rgba(255,255,255,0.16);
       transition: transform 0.08s ease, box-shadow 0.08s ease;
     }
     .apk-card:active { transform: translateY(3px); box-shadow: 0 2px 0 #050811; }
-    .theme-royalblue { --t-light:#60a5fa; --t-mid:#3b82f6; --t-dark:#1d4ed8; --t-border:#bfdbfe; --t-shadow:#1e3a8a; --t-glow:rgba(59,130,246,0.48); --t-text:#ffffff; --t-tshadow:rgba(0,0,0,0.6); }
-    .theme-magenta { --t-light:#e879f9; --t-mid:#d946ef; --t-dark:#9333ea; --t-border:#f5d0fe; --t-shadow:#581c87; --t-glow:rgba(217,70,239,0.48); --t-text:#ffffff; --t-tshadow:rgba(0,0,0,0.6); }
-    .theme-emerald { --t-light:#34d399; --t-mid:#10b981; --t-dark:#047857; --t-border:#a7f3d0; --t-shadow:#064e3b; --t-glow:rgba(16,185,129,0.42); --t-text:#042f2e; --t-tshadow:rgba(255,255,255,0.55); }
-    .theme-amber { --t-light:#fde047; --t-mid:#f59e0b; --t-dark:#d97706; --t-border:#fef08a; --t-shadow:#78350f; --t-glow:rgba(245,158,11,0.42); --t-text:#090d16; --t-tshadow:rgba(255,255,255,0.65); }
-    .theme-cyan { --t-light:#67e8f9; --t-mid:#06b6d4; --t-dark:#0284c7; --t-border:#cffafe; --t-shadow:#0c4a6e; --t-glow:rgba(6,182,212,0.42); --t-text:#082f49; --t-tshadow:rgba(255,255,255,0.6); }
-    .theme-crimson { --t-light:#fb7185; --t-mid:#ef4444; --t-dark:#b91c1c; --t-border:#fecaca; --t-shadow:#7f1d1d; --t-glow:rgba(239,68,68,0.45); --t-text:#ffffff; --t-tshadow:rgba(0,0,0,0.65); }
     .apk-icon {
-      width: 54px; height: 54px; border-radius: 14px; flex-shrink: 0; object-fit: cover;
+      width: 58px; height: 58px; border-radius: 14px; flex-shrink: 0; object-fit: cover;
       border: 2px solid var(--t-mid); border-top-color: #ffffff;
       box-shadow: 0 4px 0 var(--t-shadow), 0 0 14px var(--t-glow);
     }
     .apk-info { flex: 1; min-width: 0; }
-    .apk-title { font-size: 0.98rem; font-weight: 900; color: #ffffff; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .apk-pkg { font-size: 0.75rem; color: var(--t-light); font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .apk-title { font-size: 1rem; font-weight: 900; color: #ffffff; margin-bottom: 3px; }
+    .apk-pkg { font-size: 0.76rem; color: var(--t-light); font-weight: 700; }
     .apk-dl {
       background: linear-gradient(180deg, var(--t-light) 0%, var(--t-mid) 55%, var(--t-dark) 100%);
       border: 1.5px solid var(--t-border); border-top-color: #ffffff;
-      color: var(--t-text); font-weight: 900; font-size: 0.78rem; padding: 8px 11px; border-radius: 999px; flex-shrink: 0; white-space: nowrap;
+      color: var(--t-text); font-weight: 900; font-size: 0.8rem; padding: 8px 12px; border-radius: 999px; flex-shrink: 0; white-space: nowrap;
       text-shadow: 0 1px 1px var(--t-tshadow);
       box-shadow: 0 3px 0 var(--t-shadow), 0 4px 10px var(--t-glow), inset 0 1.5px 1px rgba(255,255,255,0.65);
     }
@@ -62,72 +54,37 @@
 <body>
   <div class="wrap">
     <div class="back-nav">
-      <a href="/?tab=games&v=8.0" class="back-link">← 脳トレゲーム一覧へ戻る</a>
+      <a href="/" class="back-link">← 公式トップへ戻る</a>
     </div>
-    <h1><svg style="width:1.15em;height:1.15em;vertical-align:-0.18em;margin-right:5px;" viewBox="0 0 24 24" fill="none"><rect x="5" y="2" width="14" height="20" rx="3" fill="#38bdf8" stroke="#e0f2fe" stroke-width="1.6"/><rect x="7" y="5" width="10" height="13" rx="1" fill="#0f172a"/><circle cx="12" cy="19.8" r="1" fill="#0f172a"/></svg>Coreworks 公式Androidアプリ</h1>
-    <p>瞬間脳トレIQシリーズ 公式APK直ダウンロード（全6種）</p>
+    <h1>瞬間脳トレ！漢字間違い探しIQ</h1>
+    <p>公式Androidアプリ（Google Play ＆ APK直ダウンロード）</p>
     <div class="list">
-      <a href="./KanjiBrainIQ_v6.apk?v=8.2" download="KanjiBrainIQ_v6.apk" class="apk-card theme-royalblue">
-        <img src="./icons/kanji_icon_512.png?v=8.2" alt="漢字間違い探しIQ" class="apk-icon">
+      <a href="https://play.google.com/apps/testing/com.valuelens.v2.kanjiiq" target="_blank" rel="noopener noreferrer" class="apk-card">
+        <img src="./icons/kanji_icon_512.png" alt="漢字間違い探しIQ" class="apk-icon">
         <div class="apk-info">
-          <div class="apk-title">漢字間違い探しIQ</div>
+          <div class="apk-title">Google Play クローズドテスト参加</div>
+          <div class="apk-pkg">com.valuelens.v2.kanjiiq</div>
+        </div>
+        <div class="apk-dl">Play ストア ↗</div>
+      </a>
+      <a href="./KanjiBrainIQ_v6.apk" download="KanjiBrainIQ_v6.apk" class="apk-card">
+        <img src="./icons/kanji_icon_512.png" alt="漢字間違い探しIQ" class="apk-icon">
+        <div class="apk-info">
+          <div class="apk-title">漢字間違い探しIQ（APK直接DL）</div>
           <div class="apk-pkg">KanjiBrainIQ_v6.apk</div>
-        </div>
-        <div class="apk-dl">APK DL ↓</div>
-      </a>
-      <a href="./ColorSenseIQ_v6.apk?v=8.2" download="ColorSenseIQ_v6.apk" class="apk-card theme-magenta">
-        <img src="./icons/color_icon_512.png?v=8.2" alt="色彩センス！絶対色感" class="apk-icon">
-        <div class="apk-info">
-          <div class="apk-title">色彩センス！絶対色感</div>
-          <div class="apk-pkg">ColorSenseIQ_v6.apk</div>
-        </div>
-        <div class="apk-dl">APK DL ↓</div>
-      </a>
-      <a href="./MakeTenIQ_v6.apk?v=8.2" download="MakeTenIQ_v6.apk" class="apk-card theme-emerald">
-        <img src="./icons/maketen_icon_512.png?v=8.2" alt="瞬間暗算！テンパズル" class="apk-icon">
-        <div class="apk-info">
-          <div class="apk-title">瞬間暗算！テンパズル</div>
-          <div class="apk-pkg">MakeTenIQ_v6.apk</div>
-        </div>
-        <div class="apk-dl">APK DL ↓</div>
-      </a>
-      <a href="./FlashMemoryIQ_v6.apk?v=8.2" download="FlashMemoryIQ_v6.apk" class="apk-card theme-amber">
-        <img src="./icons/memory_icon_512.png?v=8.2" alt="1秒記憶！フラッシュ" class="apk-icon">
-        <div class="apk-info">
-          <div class="apk-title">1秒記憶！フラッシュ</div>
-          <div class="apk-pkg">FlashMemoryIQ_v6.apk</div>
-        </div>
-        <div class="apk-dl">APK DL ↓</div>
-      </a>
-      <a href="./ShapeMirrorIQ_v6.apk?v=8.2" download="ShapeMirrorIQ_v6.apk" class="apk-card theme-cyan">
-        <img src="./icons/shape_icon_512.png?v=8.2" alt="直感回転！図形パズル" class="apk-icon">
-        <div class="apk-info">
-          <div class="apk-title">直感回転！図形パズル</div>
-          <div class="apk-pkg">ShapeMirrorIQ_v6.apk</div>
-        </div>
-        <div class="apk-dl">APK DL ↓</div>
-      </a>
-      <a href="./SpeedNumberIQ_v6.apk?v=8.2" download="SpeedNumberIQ_v6.apk" class="apk-card theme-crimson">
-        <img src="./icons/speed_icon_512.png?v=8.2" alt="爆速連打！数字タップ" class="apk-icon">
-        <div class="apk-info">
-          <div class="apk-title">爆速連打！数字タップ</div>
-          <div class="apk-pkg">SpeedNumberIQ_v6.apk</div>
         </div>
         <div class="apk-dl">APK DL ↓</div>
       </a>
     </div>
 
-    <footer style="margin-top: 24px; padding-top: 14px; border-top: 1px solid rgba(148,163,184,0.2); text-align: center; font-size: 0.72rem; color: #64748b;">
-      <div style="margin-bottom: 6px; white-space: nowrap;">
-        <a href="/?tab=games&v=8.1" style="color: #94a3b8; text-decoration: none; font-weight: 700;">← 脳トレ一覧へ</a>
+    <footer style="margin-top: 24px; padding-top: 14px; border-top: 1px solid rgba(148,163,184,0.2); text-align: center; font-size: 0.74rem; color: #64748b;">
+      <div style="margin-bottom: 6px;">
+        <a href="/" style="color: #94a3b8; text-decoration: none; font-weight: 700;">← トップへ</a>
         <span style="margin: 0 6px; color: #475569;">｜</span>
-        <a href="/?tab=tools&v=8.1" style="color: #94a3b8; text-decoration: none;">損得計算一覧</a>
+        <a href="/kanji-iq/" style="color: #94a3b8; text-decoration: none;">Web版を遊ぶ</a>
         <span style="margin: 0 6px; color: #475569;">｜</span>
-        <a href="/about/?v=8.2" style="color: #94a3b8; text-decoration: none;">運営者情報</a>
-        <span style="margin: 0 6px; color: #475569;">｜</span>
-        <a href="/privacy-policy/?v=8.2" style="color: #94a3b8; text-decoration: none;">ポリシー</a>
+        <a href="/privacy/" style="color: #94a3b8; text-decoration: none;">プライバシーポリシー</a>
       </div>
-      <div style="font-size:0.63rem; letter-spacing:-0.02em; white-space:nowrap;">※本サイトはアフィリエイト広告（A8.net・もしもアフィリエイト等）を利用しています。</div>
       <div style="margin-top:3px; font-size:0.68rem;">© 2026 Coreworks Studio</div>
     </footer>
   </div>
